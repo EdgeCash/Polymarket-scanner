@@ -52,8 +52,10 @@ class TelegramSender:
     def __init__(
         self, token: str, chat_id: str, client: httpx.Client | None = None, timeout: float = 10.0
     ) -> None:
-        self._token = token
-        self._chat_id = chat_id
+        # Values pasted into a host's variables page often carry a stray newline
+        # or space; a token with one in it is a broken URL, not a different token.
+        self._token = "".join(token.split())
+        self._chat_id = "".join(chat_id.split())
         self._client = client or httpx.Client(timeout=timeout)
 
     def send(self, text: str) -> bool:
@@ -64,6 +66,10 @@ class TelegramSender:
                 json={"chat_id": self._chat_id, "text": text, "disable_web_page_preview": True},
             )
         except httpx.HTTPError as exc:
+            log.error("telegram send failed: %s", type(exc).__name__)
+            return False
+        except Exception as exc:  # a malformed token or any other surprise
+            # Never log the message text or URL: they can carry the token.
             log.error("telegram send failed: %s", type(exc).__name__)
             return False
         if response.status_code != 200:
@@ -274,7 +280,11 @@ class Notifier:
         if not self.enabled:
             log.info("ALERTS_ENABLED is false, not sending:\n%s", text)
             return False
-        ok = self.sender.send(text)
+        try:
+            ok = self.sender.send(text)
+        except Exception as exc:  # sending must never take the scanner down
+            log.error("send failed: %s", type(exc).__name__)
+            return False
         if ok:
             self.sent_count += 1
         return ok
@@ -289,6 +299,10 @@ class Notifier:
             "If you can read this, alerts can reach you. "
             "You can now turn SEND_TEST_MESSAGE_ON_START back off."
         )
-        ok = self.sender.send(text)
+        try:
+            ok = self.sender.send(text)
+        except Exception as exc:  # the scanner must come up even if the phone cannot be reached
+            log.error("test message FAILED: %s", type(exc).__name__)
+            return False
         log.info("test message %s", "sent" if ok else "FAILED")
         return ok
