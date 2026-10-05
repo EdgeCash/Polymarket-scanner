@@ -1,0 +1,3035 @@
+{
+ "t0": "2026-10-11T20:00:00+00:00",
+ "polymarket_event_index": 1,
+ "side": "away",
+ "polls": [
+  {
+   "t": 0,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 450.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": null,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 5,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 445.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 10,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 440.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 15,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 435.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 20,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 430.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 25,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 425.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8915",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1185",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8815",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8815",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8915",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9015",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 30,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 420.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "14",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0585,
+         "awayWinPercentage": 0.9415,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8515",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.8615",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.8615",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1485",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8515",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8515",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.8615",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.8665",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.8715",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 35,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 400.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.35,
+         "awayWinPercentage": 0.65,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.5900",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.6000",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.6000",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.5900",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.5900",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.6000",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.6050",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.6100",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 40,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 395.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "24",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.35,
+         "awayWinPercentage": 0.65,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 75,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "PHI 25",
+       "isRedZone": false,
+       "homeTimeouts": 2,
+       "awayTimeouts": 3,
+       "possession": "21"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.5900",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.6000",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.6000",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.5900",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.5900",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.6000",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.6050",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.6100",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 60,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 120.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": null,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 65,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 115.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 70,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 110.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 75,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 105.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 80,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 100.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 85,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 95.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 25,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 25",
+       "isRedZone": false,
+       "homeTimeouts": 1,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "1.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 335,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 20.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 40,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 40",
+       "isRedZone": false,
+       "homeTimeouts": 0,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 340,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 15.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 40,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 40",
+       "isRedZone": false,
+       "homeTimeouts": 0,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  },
+  {
+   "t": 345,
+   "espn_event": {
+    "id": "401873001",
+    "uid": "s:20~l:28~e:401873001",
+    "date": "2026-10-11T13:30Z",
+    "name": "Philadelphia Eagles at Jacksonville Jaguars",
+    "shortName": "PHI @ JAX",
+    "status": {
+     "clock": 10.0,
+     "displayClock": "",
+     "period": 4,
+     "type": {
+      "id": "0",
+      "name": "STATUS_IN_PROGRESS",
+      "state": "in",
+      "completed": false,
+      "description": "",
+      "detail": "3:52 - 4th",
+      "shortDetail": "3:52 - 4th"
+     }
+    },
+    "competitions": [
+     {
+      "id": "401873001",
+      "date": "2026-10-11T13:30Z",
+      "startDate": "2026-10-11T13:30Z",
+      "neutralSite": false,
+      "timeValid": true,
+      "competitors": [
+       {
+        "id": "30",
+        "homeAway": "home",
+        "order": 0,
+        "score": "21",
+        "team": {
+         "id": "30",
+         "uid": "s:20~l:28~t:30",
+         "location": "Jacksonville",
+         "name": "Jaguars",
+         "abbreviation": "JAX",
+         "displayName": "Jacksonville Jaguars",
+         "shortDisplayName": "Jaguars"
+        }
+       },
+       {
+        "id": "21",
+        "homeAway": "away",
+        "order": 1,
+        "score": "31",
+        "team": {
+         "id": "21",
+         "uid": "s:20~l:28~t:21",
+         "location": "Philadelphia",
+         "name": "Eagles",
+         "abbreviation": "PHI",
+         "displayName": "Philadelphia Eagles",
+         "shortDisplayName": "Eagles"
+        }
+       }
+      ],
+      "situation": {
+       "lastPlay": {
+        "id": "1",
+        "text": "(3:52) J.Hurts kneels",
+        "probability": {
+         "tiePercentage": 0.0,
+         "homeWinPercentage": 0.0535,
+         "awayWinPercentage": 0.9465,
+         "secondsLeft": 232
+        }
+       },
+       "down": 1,
+       "yardLine": 40,
+       "distance": 10,
+       "downDistanceText": "2nd & 7 at JAX 35",
+       "shortDownDistanceText": "2nd & 7",
+       "possessionText": "JAX 40",
+       "isRedZone": false,
+       "homeTimeouts": 0,
+       "awayTimeouts": 3,
+       "possession": "30"
+      },
+      "odds": [
+       {
+        "details": "PHI -3.5",
+        "overUnder": 47.5,
+        "spread": 3.5
+       }
+      ],
+      "status": null
+     }
+    ]
+   },
+   "bbo": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bestBid": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "bestAsk": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "longQuote": {
+      "value": "0.9065",
+      "currency": "USD"
+     },
+     "shortQuote": {
+      "value": "0.1035",
+      "currency": "USD"
+     },
+     "lastTradePx": {
+      "value": "0.8965",
+      "currency": "USD"
+     },
+     "state": "MARKET_STATE_OPEN"
+    }
+   },
+   "book": {
+    "marketData": {
+     "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+     "bids": [
+      {
+       "px": {
+        "value": "0.8965",
+        "currency": "USD"
+       },
+       "qty": "500.0000"
+      }
+     ],
+     "offers": [
+      {
+       "px": {
+        "value": "0.9065",
+        "currency": "USD"
+       },
+       "qty": "300.0000"
+      },
+      {
+       "px": {
+        "value": "0.9115",
+        "currency": "USD"
+       },
+       "qty": "200.0000"
+      },
+      {
+       "px": {
+        "value": "0.9165",
+        "currency": "USD"
+       },
+       "qty": "400.0000"
+      },
+      {
+       "px": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "qty": "50000.0000"
+      }
+     ],
+     "state": "MARKET_STATE_OPEN",
+     "stats": null,
+     "transactTime": null
+    }
+   }
+  }
+ ],
+ "expected_alert_polls": [
+  20,
+  30,
+  340
+ ],
+ "notes": {
+  "0": "first poll: not confirmed",
+  "5": "rule 5: score cooldown (first seen at t=0)",
+  "10": "rule 5: score cooldown (first seen at t=0)",
+  "15": "rule 5: score cooldown (first seen at t=0)",
+  "20": "ALERT 1",
+  "25": "rule 6: repeat too soon",
+  "30": "ALERT 2: edge grew 3c",
+  "35": "score changed: not confirmed, and fair too low",
+  "40": "rule 2: fair too low",
+  "60": "new score: not confirmed",
+  "65": "rule 5: score cooldown",
+  "70": "rule 5: score cooldown",
+  "75": "rule 5: score cooldown",
+  "80": "rule 6: last alert at t=30, edge not 2c better",
+  "85": "rule 4: thin book",
+  "335": "situation changed (yard line): not confirmed",
+  "340": "ALERT 3: gap passed",
+  "345": "rule 6 again"
+ }
+}

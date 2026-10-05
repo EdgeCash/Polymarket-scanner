@@ -179,6 +179,18 @@ live number; our model minus 2 cents when ESPN has none; nothing when they
 differ by more than 5 cents; nothing in overtime; 99.9 cents when the leader
 can kneel the clock out; college games get `CFB_EXTRA_MARGIN` subtracted.
 
+## Fees and rules (milestone 5)
+
+`scanner/fees.py` implements `theta x contracts x price x (1 - price)` with
+banker's rounding to the cent and matches the published 100-lot table at
+every price tested (10c, 50c, 93c, 99c). `scanner/rules.py` applies the seven
+numbered winner rules and the always-on checks in order, records a near miss
+whenever a game passed rules 1 and 2 but failed later, and applies the shorter
+clinched-over list. The Under has no code path: a clinched-over evaluation
+refuses any quote that is not the Over side of its total. A recorded 18-poll
+late-game sequence (`tests/fixtures/replay_phi_jax.json`) replays through the
+rules and fires at exactly the three polls it should.
+
 ## Milestones
 
 | Tag | Milestone | Status |
@@ -187,7 +199,7 @@ can kneel the clock out; college games get `CFB_EXTRA_MARGIN` subtracted.
 | v0.2 | Polymarket reader | done |
 | v0.3 | Score feed and matching | done |
 | v0.4 | Win probability | done |
-| v0.5 | Fees and alert rules | |
+| v0.5 | Fees and alert rules | done |
 | v0.6 | Diary and scorecard | |
 | v0.7 | Phone alerts | |
 | v0.8 | Deploy and shadow weekend | |
