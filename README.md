@@ -27,6 +27,7 @@ scanner/
   polymarket.py    read-only Polymarket US client          (milestone 2)
   scores.py        ESPN score feed client                   (milestone 3)
   matching.py      pairs each Polymarket game with ESPN     (milestone 3)
+  tracker.py       freshness, two-polls-in-a-row, score age (milestone 3)
   winprob.py       win probability model                    (milestone 4)
   fees.py          fee formula                              (milestone 5)
   rules.py         alert rules                              (milestone 5)
@@ -126,13 +127,37 @@ Confirmed against the live gateway on 5 October 2026 and frozen in
 - **Not-found.** A bad slug returns HTTP 404 with `{"code": 5, ...}`; the SDK
   raises and the reader treats it as "price feed unavailable".
 
+## ESPN findings (milestone 3)
+
+- **Yard lines.** ESPN's `situation.yardLine` runs from the home end zone (0) to
+  the away end zone (100). Home possession: yards to go = `100 - yardLine`;
+  away possession: `yardLine`. Confirmed against play-by-play on 5 October
+  2026 and cross-checked on every read against `possessionText` ("CLE 16").
+  When the two disagree the yard line is dropped, not guessed.
+- **Spread.** `odds[0].spread` is the home team's spread; it is cross-checked
+  against `details` ("NO -1.5") and dropped if they disagree.
+- **ESPN win probability** is read from `situation.lastPlay.probability.
+  homeWinPercentage` when present.
+- **Status names** seen so far are mapped explicitly (scheduled, in progress,
+  end of period, halftime, final, delayed, rain delay, suspended, postponed,
+  canceled, forfeit). Any other name makes the game "unknown".
+- **Kickoff times can differ by an hour** between the two feeds (Hawai'i at
+  Arizona State: 01:30Z on ESPN, 02:30Z on Polymarket), so matching allows a
+  two-hour gap and insists on both teams matching.
+- **Matching** on the saved full-Saturday fixture pairs all 58 FBS games with
+  zero wrong pairs; the other 124 Polymarket games are FCS games that the
+  `groups=80` scoreboard does not carry.
+- **Open item still open.** Whether every FBS game carries a `situation` block
+  can only be checked on a live day; `scripts/smoke_live.py --section scores`
+  prints it for every live game.
+
 ## Milestones
 
 | Tag | Milestone | Status |
 | --- | --- | --- |
 | v0.1 | Skeleton and CI | done |
 | v0.2 | Polymarket reader | done |
-| v0.3 | Score feed and matching | |
+| v0.3 | Score feed and matching | done |
 | v0.4 | Win probability | |
 | v0.5 | Fees and alert rules | |
 | v0.6 | Diary and scorecard | |

@@ -1,0 +1,1319 @@
+{
+ "leagues": [
+  {
+   "abbreviation": "NFL",
+   "slug": "nfl"
+  }
+ ],
+ "season": {
+  "type": 2,
+  "year": 2026
+ },
+ "week": {
+  "number": 4
+ },
+ "events": [
+  {
+   "id": "401872979",
+   "uid": "s:20~l:28~e:401872979",
+   "date": "2026-10-06T00:15Z",
+   "name": "Atlanta Falcons at New Orleans Saints",
+   "shortName": "ATL @ NO",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 0,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Mon, October 5th at 8:15 PM EDT",
+     "shortDetail": "10/5 - 8:15 PM EDT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872979",
+     "date": "2026-10-06T00:15Z",
+     "startDate": "2026-10-06T00:15Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "18",
+       "homeAway": "home",
+       "order": 0,
+       "score": "0",
+       "winner": null,
+       "team": {
+        "id": "18",
+        "uid": "s:20~l:28~t:18",
+        "location": "New Orleans",
+        "name": "Saints",
+        "abbreviation": "NO",
+        "displayName": "New Orleans Saints",
+        "shortDisplayName": "Saints"
+       }
+      },
+      {
+       "id": "1",
+       "homeAway": "away",
+       "order": 1,
+       "score": "0",
+       "winner": null,
+       "team": {
+        "id": "1",
+        "uid": "s:20~l:28~t:1",
+        "location": "Atlanta",
+        "name": "Falcons",
+        "abbreviation": "ATL",
+        "displayName": "Atlanta Falcons",
+        "shortDisplayName": "Falcons"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": [
+      {
+       "details": "NO -1.5",
+       "overUnder": 47.5,
+       "spread": -1.5
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 0,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Mon, October 5th at 8:15 PM EDT",
+       "shortDetail": "10/5 - 8:15 PM EDT"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872964",
+   "uid": "s:20~l:28~e:401872964",
+   "date": "2026-10-02T00:15Z",
+   "name": "Pittsburgh Steelers at Cleveland Browns",
+   "shortName": "PIT @ CLE",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872964",
+     "date": "2026-10-02T00:15Z",
+     "startDate": "2026-10-02T00:15Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "5",
+       "homeAway": "home",
+       "order": 0,
+       "score": "27",
+       "winner": true,
+       "team": {
+        "id": "5",
+        "uid": "s:20~l:28~t:5",
+        "location": "Cleveland",
+        "name": "Browns",
+        "abbreviation": "CLE",
+        "displayName": "Cleveland Browns",
+        "shortDisplayName": "Browns"
+       }
+      },
+      {
+       "id": "23",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "winner": false,
+       "team": {
+        "id": "23",
+        "uid": "s:20~l:28~t:23",
+        "location": "Pittsburgh",
+        "name": "Steelers",
+        "abbreviation": "PIT",
+        "displayName": "Pittsburgh Steelers",
+        "shortDisplayName": "Steelers"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872965",
+   "uid": "s:20~l:28~e:401872965",
+   "date": "2026-10-04T13:30Z",
+   "name": "Indianapolis Colts at Washington Commanders",
+   "shortName": "IND VS WSH",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872965",
+     "date": "2026-10-04T13:30Z",
+     "startDate": "2026-10-04T13:30Z",
+     "neutralSite": true,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "28",
+       "homeAway": "home",
+       "order": 0,
+       "score": "13",
+       "winner": false,
+       "team": {
+        "id": "28",
+        "uid": "s:20~l:28~t:28",
+        "location": "Washington",
+        "name": "Commanders",
+        "abbreviation": "WSH",
+        "displayName": "Washington Commanders",
+        "shortDisplayName": "Commanders"
+       }
+      },
+      {
+       "id": "11",
+       "homeAway": "away",
+       "order": 1,
+       "score": "30",
+       "winner": true,
+       "team": {
+        "id": "11",
+        "uid": "s:20~l:28~t:11",
+        "location": "Indianapolis",
+        "name": "Colts",
+        "abbreviation": "IND",
+        "displayName": "Indianapolis Colts",
+        "shortDisplayName": "Colts"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872971",
+   "uid": "s:20~l:28~e:401872971",
+   "date": "2026-10-04T17:00Z",
+   "name": "New England Patriots at Buffalo Bills",
+   "shortName": "NE @ BUF",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872971",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "2",
+       "homeAway": "home",
+       "order": 0,
+       "score": "26",
+       "winner": false,
+       "team": {
+        "id": "2",
+        "uid": "s:20~l:28~t:2",
+        "location": "Buffalo",
+        "name": "Bills",
+        "abbreviation": "BUF",
+        "displayName": "Buffalo Bills",
+        "shortDisplayName": "Bills"
+       }
+      },
+      {
+       "id": "17",
+       "homeAway": "away",
+       "order": 1,
+       "score": "29",
+       "winner": true,
+       "team": {
+        "id": "17",
+        "uid": "s:20~l:28~t:17",
+        "location": "New England",
+        "name": "Patriots",
+        "abbreviation": "NE",
+        "displayName": "New England Patriots",
+        "shortDisplayName": "Patriots"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872972",
+   "uid": "s:20~l:28~e:401872972",
+   "date": "2026-10-04T17:00Z",
+   "name": "New York Jets at Chicago Bears",
+   "shortName": "NYJ @ CHI",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872972",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "3",
+       "homeAway": "home",
+       "order": 0,
+       "score": "23",
+       "winner": true,
+       "team": {
+        "id": "3",
+        "uid": "s:20~l:28~t:3",
+        "location": "Chicago",
+        "name": "Bears",
+        "abbreviation": "CHI",
+        "displayName": "Chicago Bears",
+        "shortDisplayName": "Bears"
+       }
+      },
+      {
+       "id": "20",
+       "homeAway": "away",
+       "order": 1,
+       "score": "12",
+       "winner": false,
+       "team": {
+        "id": "20",
+        "uid": "s:20~l:28~t:20",
+        "location": "New York",
+        "name": "Jets",
+        "abbreviation": "NYJ",
+        "displayName": "New York Jets",
+        "shortDisplayName": "Jets"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872969",
+   "uid": "s:20~l:28~e:401872969",
+   "date": "2026-10-04T17:00Z",
+   "name": "Jacksonville Jaguars at Cincinnati Bengals",
+   "shortName": "JAX @ CIN",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872969",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "4",
+       "homeAway": "home",
+       "order": 0,
+       "score": "17",
+       "winner": false,
+       "team": {
+        "id": "4",
+        "uid": "s:20~l:28~t:4",
+        "location": "Cincinnati",
+        "name": "Bengals",
+        "abbreviation": "CIN",
+        "displayName": "Cincinnati Bengals",
+        "shortDisplayName": "Bengals"
+       }
+      },
+      {
+       "id": "30",
+       "homeAway": "away",
+       "order": 1,
+       "score": "22",
+       "winner": true,
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872966",
+   "uid": "s:20~l:28~e:401872966",
+   "date": "2026-10-04T17:00Z",
+   "name": "Arizona Cardinals at New York Giants",
+   "shortName": "ARI @ NYG",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872966",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "19",
+       "homeAway": "home",
+       "order": 0,
+       "score": "36",
+       "winner": true,
+       "team": {
+        "id": "19",
+        "uid": "s:20~l:28~t:19",
+        "location": "New York",
+        "name": "Giants",
+        "abbreviation": "NYG",
+        "displayName": "New York Giants",
+        "shortDisplayName": "Giants"
+       }
+      },
+      {
+       "id": "22",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "winner": false,
+       "team": {
+        "id": "22",
+        "uid": "s:20~l:28~t:22",
+        "location": "Arizona",
+        "name": "Cardinals",
+        "abbreviation": "ARI",
+        "displayName": "Arizona Cardinals",
+        "shortDisplayName": "Cardinals"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872970",
+   "uid": "s:20~l:28~e:401872970",
+   "date": "2026-10-04T17:00Z",
+   "name": "Los Angeles Rams at Philadelphia Eagles",
+   "shortName": "LAR @ PHI",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872970",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "21",
+       "homeAway": "home",
+       "order": 0,
+       "score": "20",
+       "winner": false,
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      },
+      {
+       "id": "14",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "winner": true,
+       "team": {
+        "id": "14",
+        "uid": "s:20~l:28~t:14",
+        "location": "Los Angeles",
+        "name": "Rams",
+        "abbreviation": "LAR",
+        "displayName": "Los Angeles Rams",
+        "shortDisplayName": "Rams"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872968",
+   "uid": "s:20~l:28~e:401872968",
+   "date": "2026-10-04T17:00Z",
+   "name": "Green Bay Packers at Tampa Bay Buccaneers",
+   "shortName": "GB @ TB",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872968",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "27",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "winner": false,
+       "team": {
+        "id": "27",
+        "uid": "s:20~l:28~t:27",
+        "location": "Tampa Bay",
+        "name": "Buccaneers",
+        "abbreviation": "TB",
+        "displayName": "Tampa Bay Buccaneers",
+        "shortDisplayName": "Buccaneers"
+       }
+      },
+      {
+       "id": "9",
+       "homeAway": "away",
+       "order": 1,
+       "score": "17",
+       "winner": true,
+       "team": {
+        "id": "9",
+        "uid": "s:20~l:28~t:9",
+        "location": "Green Bay",
+        "name": "Packers",
+        "abbreviation": "GB",
+        "displayName": "Green Bay Packers",
+        "shortDisplayName": "Packers"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872973",
+   "uid": "s:20~l:28~e:401872973",
+   "date": "2026-10-04T17:00Z",
+   "name": "Tennessee Titans at Baltimore Ravens",
+   "shortName": "TEN @ BAL",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872973",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "33",
+       "homeAway": "home",
+       "order": 0,
+       "score": "24",
+       "winner": true,
+       "team": {
+        "id": "33",
+        "uid": "s:20~l:28~t:33",
+        "location": "Baltimore",
+        "name": "Ravens",
+        "abbreviation": "BAL",
+        "displayName": "Baltimore Ravens",
+        "shortDisplayName": "Ravens"
+       }
+      },
+      {
+       "id": "10",
+       "homeAway": "away",
+       "order": 1,
+       "score": "18",
+       "winner": false,
+       "team": {
+        "id": "10",
+        "uid": "s:20~l:28~t:10",
+        "location": "Tennessee",
+        "name": "Titans",
+        "abbreviation": "TEN",
+        "displayName": "Tennessee Titans",
+        "shortDisplayName": "Titans"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872967",
+   "uid": "s:20~l:28~e:401872967",
+   "date": "2026-10-04T17:00Z",
+   "name": "Dallas Cowboys at Houston Texans",
+   "shortName": "DAL @ HOU",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872967",
+     "date": "2026-10-04T17:00Z",
+     "startDate": "2026-10-04T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "34",
+       "homeAway": "home",
+       "order": 0,
+       "score": "30",
+       "winner": false,
+       "team": {
+        "id": "34",
+        "uid": "s:20~l:28~t:34",
+        "location": "Houston",
+        "name": "Texans",
+        "abbreviation": "HOU",
+        "displayName": "Houston Texans",
+        "shortDisplayName": "Texans"
+       }
+      },
+      {
+       "id": "6",
+       "homeAway": "away",
+       "order": 1,
+       "score": "34",
+       "winner": true,
+       "team": {
+        "id": "6",
+        "uid": "s:20~l:28~t:6",
+        "location": "Dallas",
+        "name": "Cowboys",
+        "abbreviation": "DAL",
+        "displayName": "Dallas Cowboys",
+        "shortDisplayName": "Cowboys"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872974",
+   "uid": "s:20~l:28~e:401872974",
+   "date": "2026-10-04T20:05Z",
+   "name": "Miami Dolphins at Minnesota Vikings",
+   "shortName": "MIA @ MIN",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872974",
+     "date": "2026-10-04T20:05Z",
+     "startDate": "2026-10-04T20:05Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "16",
+       "homeAway": "home",
+       "order": 0,
+       "score": "15",
+       "winner": true,
+       "team": {
+        "id": "16",
+        "uid": "s:20~l:28~t:16",
+        "location": "Minnesota",
+        "name": "Vikings",
+        "abbreviation": "MIN",
+        "displayName": "Minnesota Vikings",
+        "shortDisplayName": "Vikings"
+       }
+      },
+      {
+       "id": "15",
+       "homeAway": "away",
+       "order": 1,
+       "score": "10",
+       "winner": false,
+       "team": {
+        "id": "15",
+        "uid": "s:20~l:28~t:15",
+        "location": "Miami",
+        "name": "Dolphins",
+        "abbreviation": "MIA",
+        "displayName": "Miami Dolphins",
+        "shortDisplayName": "Dolphins"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872976",
+   "uid": "s:20~l:28~e:401872976",
+   "date": "2026-10-04T20:25Z",
+   "name": "Kansas City Chiefs at Las Vegas Raiders",
+   "shortName": "KC @ LV",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872976",
+     "date": "2026-10-04T20:25Z",
+     "startDate": "2026-10-04T20:25Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "13",
+       "homeAway": "home",
+       "order": 0,
+       "score": "27",
+       "winner": false,
+       "team": {
+        "id": "13",
+        "uid": "s:20~l:28~t:13",
+        "location": "Las Vegas",
+        "name": "Raiders",
+        "abbreviation": "LV",
+        "displayName": "Las Vegas Raiders",
+        "shortDisplayName": "Raiders"
+       }
+      },
+      {
+       "id": "12",
+       "homeAway": "away",
+       "order": 1,
+       "score": "30",
+       "winner": true,
+       "team": {
+        "id": "12",
+        "uid": "s:20~l:28~t:12",
+        "location": "Kansas City",
+        "name": "Chiefs",
+        "abbreviation": "KC",
+        "displayName": "Kansas City Chiefs",
+        "shortDisplayName": "Chiefs"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872975",
+   "uid": "s:20~l:28~e:401872975",
+   "date": "2026-10-04T20:25Z",
+   "name": "Denver Broncos at San Francisco 49ers",
+   "shortName": "DEN @ SF",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872975",
+     "date": "2026-10-04T20:25Z",
+     "startDate": "2026-10-04T20:25Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "25",
+       "homeAway": "home",
+       "order": 0,
+       "score": "24",
+       "winner": true,
+       "team": {
+        "id": "25",
+        "uid": "s:20~l:28~t:25",
+        "location": "San Francisco",
+        "name": "49ers",
+        "abbreviation": "SF",
+        "displayName": "San Francisco 49ers",
+        "shortDisplayName": "49ers"
+       }
+      },
+      {
+       "id": "7",
+       "homeAway": "away",
+       "order": 1,
+       "score": "14",
+       "winner": false,
+       "team": {
+        "id": "7",
+        "uid": "s:20~l:28~t:7",
+        "location": "Denver",
+        "name": "Broncos",
+        "abbreviation": "DEN",
+        "displayName": "Denver Broncos",
+        "shortDisplayName": "Broncos"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872977",
+   "uid": "s:20~l:28~e:401872977",
+   "date": "2026-10-04T20:25Z",
+   "name": "Los Angeles Chargers at Seattle Seahawks",
+   "shortName": "LAC @ SEA",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872977",
+     "date": "2026-10-04T20:25Z",
+     "startDate": "2026-10-04T20:25Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "26",
+       "homeAway": "home",
+       "order": 0,
+       "score": "30",
+       "winner": true,
+       "team": {
+        "id": "26",
+        "uid": "s:20~l:28~t:26",
+        "location": "Seattle",
+        "name": "Seahawks",
+        "abbreviation": "SEA",
+        "displayName": "Seattle Seahawks",
+        "shortDisplayName": "Seahawks"
+       }
+      },
+      {
+       "id": "24",
+       "homeAway": "away",
+       "order": 1,
+       "score": "23",
+       "winner": false,
+       "team": {
+        "id": "24",
+        "uid": "s:20~l:28~t:24",
+        "location": "Los Angeles",
+        "name": "Chargers",
+        "abbreviation": "LAC",
+        "displayName": "Los Angeles Chargers",
+        "shortDisplayName": "Chargers"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "401872978",
+   "uid": "s:20~l:28~e:401872978",
+   "date": "2026-10-05T00:20Z",
+   "name": "Detroit Lions at Carolina Panthers",
+   "shortName": "DET @ CAR",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401872978",
+     "date": "2026-10-05T00:20Z",
+     "startDate": "2026-10-05T00:20Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "29",
+       "homeAway": "home",
+       "order": 0,
+       "score": "32",
+       "winner": true,
+       "team": {
+        "id": "29",
+        "uid": "s:20~l:28~t:29",
+        "location": "Carolina",
+        "name": "Panthers",
+        "abbreviation": "CAR",
+        "displayName": "Carolina Panthers",
+        "shortDisplayName": "Panthers"
+       }
+      },
+      {
+       "id": "8",
+       "homeAway": "away",
+       "order": 1,
+       "score": "26",
+       "winner": false,
+       "team": {
+        "id": "8",
+        "uid": "s:20~l:28~t:8",
+        "location": "Detroit",
+        "name": "Lions",
+        "abbreviation": "DET",
+        "displayName": "Detroit Lions",
+        "shortDisplayName": "Lions"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 4,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "isTBDFlex": false
+     }
+    }
+   ]
+  }
+ ]
+}

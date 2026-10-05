@@ -45,6 +45,7 @@ class Team:
     name: str  # "Philadelphia Eagles"
     abbreviation: str  # "PHI"
     feed_id: str | None = None  # the feed's own id, kept for matching
+    location: str | None = None  # ESPN's "Philadelphia", used for matching
 
 
 @dataclass(frozen=True, slots=True)
@@ -156,6 +157,7 @@ class MarketTeam:
     name: str
     abbreviation: str
     is_long: bool
+    nickname: str = ""  # "Eagles"
 
 
 @dataclass(frozen=True, slots=True)

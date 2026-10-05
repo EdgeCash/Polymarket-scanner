@@ -253,6 +253,7 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
                         name=str(team.get("name") or ""),
                         abbreviation=_team_abbreviation(team),
                         is_long=long_ids[team_id],
+                        nickname=str(team.get("alias") or ""),
                     )
                 )
         else:
@@ -265,6 +266,7 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
                     name=str(team.get("name") or ""),
                     abbreviation=_team_abbreviation(team),
                     is_long=False,
+                    nickname=str(team.get("alias") or ""),
                 )
             )
 

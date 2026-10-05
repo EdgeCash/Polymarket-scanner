@@ -1,0 +1,1400 @@
+{
+ "leagues": [
+  {
+   "abbreviation": "NFL",
+   "slug": "nfl"
+  }
+ ],
+ "events": [
+  {
+   "id": "401873001",
+   "uid": "s:20~l:28~e:401873001",
+   "date": "2026-10-11T13:30Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873001",
+     "date": "2026-10-11T13:30Z",
+     "startDate": "2026-10-11T13:30Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": [
+      {
+       "details": "PHI -3.5",
+       "overUnder": 47.5,
+       "spread": 3.5
+      }
+     ],
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873002",
+   "uid": "s:20~l:28~e:401873002",
+   "date": "2026-10-11T17:00Z",
+   "name": "Las Vegas Raiders at New England Patriots",
+   "shortName": "LV @ NE",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "",
+    "period": 2,
+    "type": {
+     "id": "0",
+     "name": "STATUS_HALFTIME",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "Halftime",
+     "shortDetail": "Halftime"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873002",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "17",
+       "homeAway": "home",
+       "order": 0,
+       "score": "13",
+       "team": {
+        "id": "17",
+        "uid": "s:20~l:28~t:17",
+        "location": "New England",
+        "name": "Patriots",
+        "abbreviation": "NE",
+        "displayName": "New England Patriots",
+        "shortDisplayName": "Patriots"
+       }
+      },
+      {
+       "id": "13",
+       "homeAway": "away",
+       "order": 1,
+       "score": "10",
+       "team": {
+        "id": "13",
+        "uid": "s:20~l:28~t:13",
+        "location": "Las Vegas",
+        "name": "Raiders",
+        "abbreviation": "LV",
+        "displayName": "Las Vegas Raiders",
+        "shortDisplayName": "Raiders"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": [
+      {
+       "details": "NE -6.5",
+       "overUnder": 44.5,
+       "spread": -6.5
+      }
+     ],
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873003",
+   "uid": "s:20~l:28~e:401873003",
+   "date": "2026-10-11T17:00Z",
+   "name": "Minnesota Vikings at New Orleans Saints",
+   "shortName": "MIN @ NO",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "",
+    "period": 3,
+    "type": {
+     "id": "0",
+     "name": "STATUS_END_PERIOD",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "End of 3rd",
+     "shortDetail": "End of 3rd"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873003",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "18",
+       "homeAway": "home",
+       "order": 0,
+       "score": "17",
+       "team": {
+        "id": "18",
+        "uid": "s:20~l:28~t:18",
+        "location": "New Orleans",
+        "name": "Saints",
+        "abbreviation": "NO",
+        "displayName": "New Orleans Saints",
+        "shortDisplayName": "Saints"
+       }
+      },
+      {
+       "id": "16",
+       "homeAway": "away",
+       "order": 1,
+       "score": "20",
+       "team": {
+        "id": "16",
+        "uid": "s:20~l:28~t:16",
+        "location": "Minnesota",
+        "name": "Vikings",
+        "abbreviation": "MIN",
+        "displayName": "Minnesota Vikings",
+        "shortDisplayName": "Vikings"
+       }
+      }
+     ],
+     "situation": {
+      "homeTimeouts": 3,
+      "awayTimeouts": 1,
+      "possession": "16",
+      "down": 0,
+      "distance": 0,
+      "yardLine": 65,
+      "downDistanceText": null,
+      "possessionText": null
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873004",
+   "uid": "s:20~l:28~e:401873004",
+   "date": "2026-10-11T17:00Z",
+   "name": "New York Giants at Washington Commanders",
+   "shortName": "NYG @ WSH",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "",
+    "period": 5,
+    "type": {
+     "id": "0",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "",
+     "detail": "Final/OT",
+     "shortDetail": "Final/OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873004",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "28",
+       "homeAway": "home",
+       "order": 0,
+       "score": "30",
+       "team": {
+        "id": "28",
+        "uid": "s:20~l:28~t:28",
+        "location": "Washington",
+        "name": "Commanders",
+        "abbreviation": "WSH",
+        "displayName": "Washington Commanders",
+        "shortDisplayName": "Commanders"
+       }
+      },
+      {
+       "id": "19",
+       "homeAway": "away",
+       "order": 1,
+       "score": "27",
+       "team": {
+        "id": "19",
+        "uid": "s:20~l:28~t:19",
+        "location": "New York",
+        "name": "Giants",
+        "abbreviation": "NYG",
+        "displayName": "New York Giants",
+        "shortDisplayName": "Giants"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873005",
+   "uid": "s:20~l:28~e:401873005",
+   "date": "2026-10-11T17:00Z",
+   "name": "Indianapolis Colts at Pittsburgh Steelers",
+   "shortName": "IND @ PIT",
+   "status": {
+    "clock": 412.0,
+    "displayClock": "",
+    "period": 5,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "6:52 - OT",
+     "shortDetail": "6:52 - OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873005",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "23",
+       "homeAway": "home",
+       "order": 0,
+       "score": "21",
+       "team": {
+        "id": "23",
+        "uid": "s:20~l:28~t:23",
+        "location": "Pittsburgh",
+        "name": "Steelers",
+        "abbreviation": "PIT",
+        "displayName": "Pittsburgh Steelers",
+        "shortDisplayName": "Steelers"
+       }
+      },
+      {
+       "id": "11",
+       "homeAway": "away",
+       "order": 1,
+       "score": "21",
+       "team": {
+        "id": "11",
+        "uid": "s:20~l:28~t:11",
+        "location": "Indianapolis",
+        "name": "Colts",
+        "abbreviation": "IND",
+        "displayName": "Indianapolis Colts",
+        "shortDisplayName": "Colts"
+       }
+      }
+     ],
+     "situation": {
+      "homeTimeouts": 2,
+      "awayTimeouts": 2,
+      "possession": "23",
+      "down": 1,
+      "distance": 10,
+      "yardLine": 25,
+      "possessionText": "PIT 25",
+      "lastPlay": {
+       "probability": {
+        "homeWinPercentage": 0.55
+       }
+      }
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873006",
+   "uid": "s:20~l:28~e:401873006",
+   "date": "2026-10-11T17:00Z",
+   "name": "Houston Texans at Tennessee Titans",
+   "shortName": "HOU @ TEN",
+   "status": {
+    "clock": 345.0,
+    "displayClock": "",
+    "period": 2,
+    "type": {
+     "id": "0",
+     "name": "STATUS_DELAYED",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "Delayed - 2nd",
+     "shortDetail": "Delayed - 2nd"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873006",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "10",
+       "homeAway": "home",
+       "order": 0,
+       "score": "3",
+       "team": {
+        "id": "10",
+        "uid": "s:20~l:28~t:10",
+        "location": "Tennessee",
+        "name": "Titans",
+        "abbreviation": "TEN",
+        "displayName": "Tennessee Titans",
+        "shortDisplayName": "Titans"
+       }
+      },
+      {
+       "id": "34",
+       "homeAway": "away",
+       "order": 1,
+       "score": "7",
+       "team": {
+        "id": "34",
+        "uid": "s:20~l:28~t:34",
+        "location": "Houston",
+        "name": "Texans",
+        "abbreviation": "HOU",
+        "displayName": "Houston Texans",
+        "shortDisplayName": "Texans"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873007",
+   "uid": "s:20~l:28~e:401873007",
+   "date": "2026-10-11T17:00Z",
+   "name": "Cleveland Browns at New York Jets",
+   "shortName": "CLE @ NYJ",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "",
+    "period": 0,
+    "type": {
+     "id": "0",
+     "name": "STATUS_POSTPONED",
+     "state": "post",
+     "completed": false,
+     "description": "",
+     "detail": "Postponed",
+     "shortDetail": "Postponed"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873007",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "20",
+       "homeAway": "home",
+       "order": 0,
+       "score": "0",
+       "team": {
+        "id": "20",
+        "uid": "s:20~l:28~t:20",
+        "location": "New York",
+        "name": "Jets",
+        "abbreviation": "NYJ",
+        "displayName": "New York Jets",
+        "shortDisplayName": "Jets"
+       }
+      },
+      {
+       "id": "5",
+       "homeAway": "away",
+       "order": 1,
+       "score": "0",
+       "team": {
+        "id": "5",
+        "uid": "s:20~l:28~t:5",
+        "location": "Cleveland",
+        "name": "Browns",
+        "abbreviation": "CLE",
+        "displayName": "Cleveland Browns",
+        "shortDisplayName": "Browns"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873008",
+   "uid": "s:20~l:28~e:401873008",
+   "date": "2026-10-11T17:00Z",
+   "name": "Cincinnati Bengals at Miami Dolphins",
+   "shortName": "CIN @ MIA",
+   "status": {
+    "clock": 100.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "1:40 - 4th",
+     "shortDetail": "1:40 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873008",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "15",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "15",
+        "uid": "s:20~l:28~t:15",
+        "location": "Miami",
+        "name": "Dolphins",
+        "abbreviation": "MIA",
+        "displayName": "Miami Dolphins",
+        "shortDisplayName": "Dolphins"
+       }
+      },
+      {
+       "id": "4",
+       "homeAway": "away",
+       "order": 1,
+       "score": "abc",
+       "team": {
+        "id": "4",
+        "uid": "s:20~l:28~t:4",
+        "location": "Cincinnati",
+        "name": "Bengals",
+        "abbreviation": "CIN",
+        "displayName": "Cincinnati Bengals",
+        "shortDisplayName": "Bengals"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873009",
+   "uid": "s:20~l:28~e:401873009",
+   "date": "2026-10-11T17:00Z",
+   "name": "Chicago Bears at Green Bay Packers",
+   "shortName": "CHI @ GB",
+   "status": {
+    "clock": null,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "4th",
+     "shortDetail": "4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873009",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "9",
+       "homeAway": "home",
+       "order": 0,
+       "score": "20",
+       "team": {
+        "id": "9",
+        "uid": "s:20~l:28~t:9",
+        "location": "Green Bay",
+        "name": "Packers",
+        "abbreviation": "GB",
+        "displayName": "Green Bay Packers",
+        "shortDisplayName": "Packers"
+       }
+      },
+      {
+       "id": "3",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "3",
+        "uid": "s:20~l:28~t:3",
+        "location": "Chicago",
+        "name": "Bears",
+        "abbreviation": "CHI",
+        "displayName": "Chicago Bears",
+        "shortDisplayName": "Bears"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873010",
+   "uid": "s:20~l:28~e:401873010",
+   "date": "2026-10-11T17:00Z",
+   "name": "Denver Broncos at Los Angeles Chargers",
+   "shortName": "DEN @ LAC",
+   "status": {
+    "clock": 900.0,
+    "displayClock": "",
+    "period": 0,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "1st",
+     "shortDetail": "1st"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873010",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "24",
+       "homeAway": "home",
+       "order": 0,
+       "score": "0",
+       "team": {
+        "id": "24",
+        "uid": "s:20~l:28~t:24",
+        "location": "Los Angeles",
+        "name": "Chargers",
+        "abbreviation": "LAC",
+        "displayName": "Los Angeles Chargers",
+        "shortDisplayName": "Chargers"
+       }
+      },
+      {
+       "id": "7",
+       "homeAway": "away",
+       "order": 1,
+       "score": "0",
+       "team": {
+        "id": "7",
+        "uid": "s:20~l:28~t:7",
+        "location": "Denver",
+        "name": "Broncos",
+        "abbreviation": "DEN",
+        "displayName": "Denver Broncos",
+        "shortDisplayName": "Broncos"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873011",
+   "uid": "s:20~l:28~e:401873011",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873011",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873012",
+   "uid": "s:20~l:28~e:401873012",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873012",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 65,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873013",
+   "uid": "s:20~l:28~e:401873013",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_SOMETHING_NEW",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "?",
+     "shortDetail": "?"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873013",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873014",
+   "uid": "s:20~l:28~e:401873014",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 0.0,
+    "displayClock": "",
+    "period": 0,
+    "type": {
+     "id": "0",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "",
+     "detail": "Sun 1:00 PM",
+     "shortDetail": "Sun 1:00 PM"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873014",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "0",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "0",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": null,
+     "odds": [
+      {
+       "details": "JAX -3.5",
+       "overUnder": 47.5,
+       "spread": -3.5
+      }
+     ],
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873015",
+   "uid": "s:20~l:28~e:401873015",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873015",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "99"
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873016",
+   "uid": "s:20~l:28~e:401873016",
+   "date": "2026-10-11T17:00Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873016",
+     "date": "2026-10-11T17:00Z",
+     "startDate": "2026-10-11T17:00Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "30"
+     },
+     "odds": null,
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873017",
+   "uid": "s:20~l:28~e:401873001",
+   "date": "2026-10-11T13:30Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873001",
+     "date": "2026-10-11T13:30Z",
+     "startDate": "2026-10-11T13:30Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "neutral",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": [
+      {
+       "details": "PHI -3.5",
+       "overUnder": 47.5,
+       "spread": 3.5
+      }
+     ],
+     "status": null
+    }
+   ]
+  },
+  {
+   "id": "401873018",
+   "uid": "s:20~l:28~e:401873001",
+   "date": "2026-10-11T13:30Z",
+   "name": "Philadelphia Eagles at Jacksonville Jaguars",
+   "shortName": "PHI @ JAX",
+   "status": {
+    "clock": 232.0,
+    "displayClock": "",
+    "period": 4,
+    "type": {
+     "id": "0",
+     "name": "STATUS_IN_PROGRESS",
+     "state": "in",
+     "completed": false,
+     "description": "",
+     "detail": "3:52 - 4th",
+     "shortDetail": "3:52 - 4th"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401873001",
+     "date": "2026-10-11T13:30Z",
+     "startDate": "2026-10-11T13:30Z",
+     "neutralSite": false,
+     "timeValid": true,
+     "competitors": [
+      {
+       "id": "30",
+       "homeAway": "home",
+       "order": 0,
+       "score": "14",
+       "team": {
+        "id": "30",
+        "uid": "s:20~l:28~t:30",
+        "location": "Jacksonville",
+        "name": "Jaguars",
+        "abbreviation": "JAX",
+        "displayName": "Jacksonville Jaguars",
+        "shortDisplayName": "Jaguars"
+       }
+      },
+      {
+       "id": "21",
+       "homeAway": "away",
+       "order": 1,
+       "score": "24",
+       "team": {
+        "id": "21",
+        "uid": "s:20~l:28~t:21",
+        "location": "Philadelphia",
+        "name": "Eagles",
+        "abbreviation": "PHI",
+        "displayName": "Philadelphia Eagles",
+        "shortDisplayName": "Eagles"
+       }
+      }
+     ],
+     "situation": {
+      "lastPlay": {
+       "id": "1",
+       "text": "(3:52) J.Hurts kneels",
+       "probability": {
+        "tiePercentage": 0.0,
+        "homeWinPercentage": 0.02,
+        "awayWinPercentage": 0.98,
+        "secondsLeft": 232
+       }
+      },
+      "down": 2,
+      "yardLine": 35,
+      "distance": 7,
+      "downDistanceText": "2nd & 7 at JAX 35",
+      "shortDownDistanceText": "2nd & 7",
+      "possessionText": "JAX 35",
+      "isRedZone": false,
+      "homeTimeouts": 2,
+      "awayTimeouts": 3,
+      "possession": "21"
+     },
+     "odds": [
+      {
+       "details": "JAX -3.5",
+       "overUnder": 47.5,
+       "spread": 3.5
+      }
+     ],
+     "status": null
+    }
+   ]
+  }
+ ]
+}
