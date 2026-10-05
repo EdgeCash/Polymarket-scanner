@@ -37,6 +37,7 @@ scanner/
   web.py           status page and scorecard                (milestone 6)
   notify.py        phone alerts                             (milestone 7)
   loop.py          the scan loop and game-window scheduler  (milestone 8)
+  report.py        the shadow weekend report                (milestone 8)
 tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py
 docs/              winprob_report.md
@@ -220,6 +221,48 @@ copy the token into the host's secrets as `TELEGRAM_BOT_TOKEN`; then message
 the new bot once and open `https://api.telegram.org/bot<TOKEN>/getUpdates` in
 the phone browser to read your `chat.id` for `TELEGRAM_CHAT_ID`.
 
+## Running it for real (milestone 8)
+
+`scanner/loop.py` ties everything together. One pass every 5 seconds while a
+game is live: refresh the game list (every 60 s), read both ESPN scoreboards,
+match, grade finished games, find candidates (late 4th quarter with a fair
+price near the bar, or a clinched total), read prices only for those, apply
+the rules, send and record, then re-read prices 30 s and 2 min after each
+alert. The loop sleeps when no game is within 30 minutes of kickoff and checks
+the game list every 15 minutes while asleep. `/health` shows which state it is
+in.
+
+Useful commands:
+
+```bash
+python -m scanner                      # run the loop and the status pages
+python -m scanner --once               # one pass (or "asleep") and exit
+python -m scanner --dry-run            # settings only
+python -m scanner --send-test-message  # the owner's phone check (ignores ALERTS_ENABLED)
+python -m scanner --shadow-report      # print the shadow weekend report; add --send to send it
+```
+
+### Hosting (needs the owner's approval before anything is paid for)
+
+Any host that runs one Docker container continuously with a persistent disk
+and web-editable environment variables will do; Railway, Render and Fly.io
+all fit and cost roughly $5 to $10 a month. Steps, all doable from a phone:
+
+1. Create the service from this GitHub repository with the Docker build
+   context set to `polymarket-scanner/` (Dockerfile at that path).
+2. Attach a persistent volume mounted at `/data` (the diary lives at
+   `/data/diary.db`).
+3. Set the environment variables from `.env.example`. Secrets
+   (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `STATUS_TOKEN`) go in the host's
+   secret store. Leave `ALERTS_ENABLED=false` for the shadow weekend.
+4. Expose port 8080 and open `https://<host>/health?token=<STATUS_TOKEN>`
+   on the phone.
+5. Enable deploy-on-push from `main`. Deploy only on a Tuesday or Wednesday,
+   never during a game window.
+
+After the shadow weekend, run `python -m scanner --shadow-report --send` (or
+read the diary) and decide whether to set `ALERTS_ENABLED=true`.
+
 ## Milestones
 
 | Tag | Milestone | Status |
@@ -231,5 +274,5 @@ the phone browser to read your `chat.id` for `TELEGRAM_CHAT_ID`.
 | v0.5 | Fees and alert rules | done |
 | v0.6 | Diary and scorecard | done |
 | v0.7 | Phone alerts | code done; owner test message pending |
-| v0.8 | Deploy and shadow weekend | |
+| v0.8 | Deploy and shadow weekend | loop code done; deploy needs the owner |
 | v1.0 | Go live | |

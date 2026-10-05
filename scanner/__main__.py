@@ -19,6 +19,8 @@ def setup_logging(level: str) -> None:
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
         stream=sys.stdout,
     )
+    # httpx logs every request at INFO; the scanner makes thousands a day.
+    logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -36,6 +38,12 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="send one test message to the configured Telegram chat and exit",
     )
+    parser.add_argument(
+        "--shadow-report",
+        action="store_true",
+        help="print the shadow report from the diary (and send it when --send is given)",
+    )
+    parser.add_argument("--send", action="store_true", help="with --shadow-report: also send it")
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -53,6 +61,23 @@ def main(argv: list[str] | None = None) -> int:
         from scanner.notify import Notifier
 
         return 0 if Notifier(settings).send_test_message() else 1
+
+    if args.shadow_report:
+        from datetime import UTC, datetime
+
+        from scanner.diary import Diary
+        from scanner.notify import DryRunSender, build_sender
+        from scanner.report import shadow_report
+
+        text = shadow_report(Diary(settings.DATABASE_PATH), datetime.now(UTC), settings.TZ)
+        print(text)
+        if args.send:
+            sender = build_sender(settings)
+            if isinstance(sender, DryRunSender):
+                log.warning("Telegram is not configured; report printed only")
+                return 1
+            return 0 if sender.send(text) else 1
+        return 0
 
     from scanner.loop import run
 
