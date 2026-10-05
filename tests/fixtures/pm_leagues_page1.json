@@ -1,0 +1,454 @@
+{
+ "leagues": [
+  {
+   "id": 41,
+   "slug": "dota2",
+   "name": "Dota 2",
+   "abbreviation": null,
+   "sportId": 10,
+   "isOperational": true,
+   "activeSeriesId": 64
+  },
+  {
+   "id": 236,
+   "slug": "etpl",
+   "name": "European T20 Premier League",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 312
+  },
+  {
+   "id": 240,
+   "slug": "ncaams",
+   "name": "NCAA Men's Soccer",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 319
+  },
+  {
+   "id": 182,
+   "slug": "icaa",
+   "name": "ICAA",
+   "abbreviation": null,
+   "sportId": 19,
+   "isOperational": true,
+   "activeSeriesId": 215
+  },
+  {
+   "id": 33,
+   "slug": "rbccana",
+   "name": "RBC Canadian Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 54
+  },
+  {
+   "id": 51,
+   "slug": "intf",
+   "name": "Friendlies",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 72
+  },
+  {
+   "id": 80,
+   "slug": "ittf",
+   "name": "ITTF",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 103
+  },
+  {
+   "id": 81,
+   "slug": "ttelite",
+   "name": "TT Elite Series",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 104
+  },
+  {
+   "id": 65,
+   "slug": "t20blastw",
+   "name": "T20 Blast (W)",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 88
+  },
+  {
+   "id": 58,
+   "slug": "itfme",
+   "name": "ITF Mens",
+   "abbreviation": null,
+   "sportId": 8,
+   "isOperational": true,
+   "activeSeriesId": 79
+  },
+  {
+   "id": 59,
+   "slug": "itfwo",
+   "name": "ITF Womens",
+   "abbreviation": null,
+   "sportId": 8,
+   "isOperational": true,
+   "activeSeriesId": 80
+  },
+  {
+   "id": 70,
+   "slug": "rockclas",
+   "name": "Rocket Classic",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 93
+  },
+  {
+   "id": 88,
+   "slug": "lmx",
+   "name": "Liga MX",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 111
+  },
+  {
+   "id": 36,
+   "slug": "us",
+   "name": "U.S. Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 57
+  },
+  {
+   "id": 179,
+   "slug": "mlp",
+   "name": "Major League Pickleball",
+   "abbreviation": null,
+   "sportId": 18,
+   "isOperational": true,
+   "activeSeriesId": 214
+  },
+  {
+   "id": 67,
+   "slug": "t20i",
+   "name": "T20 International (M)",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 90
+  },
+  {
+   "id": 68,
+   "slug": "t20iw",
+   "name": "T20 International (W)",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 91
+  },
+  {
+   "id": 60,
+   "slug": "kbo",
+   "name": "KBO",
+   "abbreviation": null,
+   "sportId": 5,
+   "isOperational": true,
+   "activeSeriesId": 81
+  },
+  {
+   "id": 62,
+   "slug": "3m",
+   "name": "3M Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 84
+  },
+  {
+   "id": 175,
+   "slug": "pdcdarts",
+   "name": "Professional Darts Corporation",
+   "abbreviation": null,
+   "sportId": 17,
+   "isOperational": true,
+   "activeSeriesId": 210
+  },
+  {
+   "id": 189,
+   "slug": "ligpor",
+   "name": "Liga Portugal",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 223
+  },
+  {
+   "id": 61,
+   "slug": "npb",
+   "name": "NPB",
+   "abbreviation": null,
+   "sportId": 5,
+   "isOperational": true,
+   "activeSeriesId": 82
+  },
+  {
+   "id": 177,
+   "slug": "wtt",
+   "name": "WTT",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 212
+  },
+  {
+   "id": 39,
+   "slug": "travcham",
+   "name": "Travelers Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 60
+  },
+  {
+   "id": 66,
+   "slug": "t20worldcupw",
+   "name": "Women's T20 World Cup",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 89
+  },
+  {
+   "id": 183,
+   "slug": "dodgeball",
+   "name": "Dodgeball",
+   "abbreviation": null,
+   "sportId": 19,
+   "isOperational": true,
+   "activeSeriesId": 215
+  },
+  {
+   "id": 7,
+   "slug": "cfb",
+   "name": "CFB",
+   "abbreviation": "CFB",
+   "sportId": 3,
+   "isOperational": true,
+   "activeSeriesId": 225
+  },
+  {
+   "id": 69,
+   "slug": "cpl",
+   "name": "Caribbean Premier League",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 92
+  },
+  {
+   "id": 193,
+   "slug": "spl",
+   "name": "Saudi Pro League",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 228
+  },
+  {
+   "id": 184,
+   "slug": "motogp",
+   "name": "MotoGP",
+   "abbreviation": null,
+   "sportId": 11,
+   "isOperational": true,
+   "activeSeriesId": 216
+  },
+  {
+   "id": 57,
+   "slug": "corapunt",
+   "name": "Corales Puntacana Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 78
+  },
+  {
+   "id": 75,
+   "slug": "fibawcq",
+   "name": "FIBA",
+   "abbreviation": null,
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 98
+  },
+  {
+   "id": 201,
+   "slug": "usc",
+   "name": "UEFA Super Cup",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 240
+  },
+  {
+   "id": 231,
+   "slug": "egpl",
+   "name": "Egyptian Premier League",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 300
+  },
+  {
+   "id": 82,
+   "slug": "czechligapro",
+   "name": "Czech Liga Pro",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 105
+  },
+  {
+   "id": 83,
+   "slug": "russialigapro",
+   "name": "Russia Liga Pro",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 106
+  },
+  {
+   "id": 52,
+   "slug": "genescot",
+   "name": "Genesis Scottish Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 73
+  },
+  {
+   "id": 84,
+   "slug": "ttcup",
+   "name": "TT Cup",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 107
+  },
+  {
+   "id": 85,
+   "slug": "setkacup",
+   "name": "Setka Cup",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 108
+  },
+  {
+   "id": 86,
+   "slug": "ttchallenger",
+   "name": "Challenger Series",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 109
+  },
+  {
+   "id": 87,
+   "slug": "wincup",
+   "name": "Win Cup",
+   "abbreviation": null,
+   "sportId": 16,
+   "isOperational": true,
+   "activeSeriesId": 110
+  },
+  {
+   "id": 195,
+   "slug": "tsl",
+   "name": "S\u00fcper Lig",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 230
+  },
+  {
+   "id": 53,
+   "slug": "iscocham",
+   "name": "ISCO Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 74
+  },
+  {
+   "id": 71,
+   "slug": "misc",
+   "name": "Misc",
+   "abbreviation": null,
+   "sportId": 14,
+   "isOperational": true,
+   "activeSeriesId": 94
+  },
+  {
+   "id": 133,
+   "slug": "sclc",
+   "name": "Scottish League Cup",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 157
+  },
+  {
+   "id": 43,
+   "slug": "johndeer",
+   "name": "John Deere Classic",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 66
+  },
+  {
+   "id": 135,
+   "slug": "ekst",
+   "name": "Ekstraklasa",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 159
+  },
+  {
+   "id": 72,
+   "slug": "theopen",
+   "name": "The Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 95
+  },
+  {
+   "id": 137,
+   "slug": "svnp",
+   "name": "PrvaLiga",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 161
+  },
+  {
+   "id": 139,
+   "slug": "atbl",
+   "name": "Austrian Bundesliga",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 163
+  }
+ ]
+}

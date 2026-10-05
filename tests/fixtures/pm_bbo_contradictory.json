@@ -1,0 +1,48 @@
+{
+ "marketData": {
+  "marketSlug": "aec-nfl-atl-no-2026-10-05",
+  "currentPx": {
+   "value": "0.4637",
+   "currency": "USD"
+  },
+  "lastTradePx": {
+   "value": "0.4625",
+   "currency": "USD"
+  },
+  "settlementPx": null,
+  "sharesTraded": "914114.4100",
+  "openInterest": "343998.8800",
+  "bestAsk": {
+   "value": "0.4650",
+   "currency": "USD"
+  },
+  "bestBid": {
+   "value": "0.4625",
+   "currency": "USD"
+  },
+  "askDepth": 66,
+  "bidDepth": 60,
+  "lastPriceSample": {
+   "longPx": {
+    "value": "0.4625",
+    "currency": "USD"
+   },
+   "shortPx": {
+    "value": "0.5375",
+    "currency": "USD"
+   },
+   "ts": "2026-10-05T13:47:18.089367893Z"
+  },
+  "longQuote": {
+   "value": "0.4650",
+   "currency": "USD"
+  },
+  "shortQuote": {
+   "value": "0.6000",
+   "currency": "USD"
+  },
+  "state": "MARKET_STATE_OPEN",
+  "bidShares": "5500000",
+  "askShares": "5900000"
+ }
+}

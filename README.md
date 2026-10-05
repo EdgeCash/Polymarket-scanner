@@ -95,12 +95,43 @@ Secrets live only in the host's secrets store. `.env` is git-ignored.
 - **ESPN scoreboard** (unofficial, undocumented) for the real game situation.
   All ESPN parsing is isolated in `scores.py` and every field is validated.
 
+## Polymarket findings (milestone 2)
+
+Confirmed against the live gateway on 5 October 2026 and frozen in
+`tests/fixtures/pm_*.json`:
+
+- **Long and short pricing rule.** A game's moneyline is one instrument. The
+  side with `marketSides[].long == true` is bought at the **best ask**; the
+  other side is bought at **1 minus the best bid**. The event feed's own per-side
+  `quote` fields equal exactly those values (ATL Falcons long: quote 0.4650 =
+  best ask; NO Saints short: quote 0.5375 = 1 - 0.4625 best bid). The reader
+  computes the price from the BBO and refuses to price a side if the feed's
+  `longQuote`/`shortQuote` disagrees.
+- **Market types.** The moneyline is `sportsMarketType ==
+  "football_team_full_game_winner"`. The full-game total is
+  `"football_team_full_game_total"`; its long side is described `"Over"` and
+  its short side `"Under"`, and the reader identifies the Over by that label,
+  not by assuming long. Team totals (`football_team_points_full_game_total`),
+  half and quarter totals, spreads and props are ignored.
+- **College football slug.** Discovered at startup by paging `GET /v2/leagues`
+  and picking the league in the NFL's sport whose slug, name or abbreviation
+  is CFB/NCAAF/college football. Today it resolves to `cfb`, on the second page.
+  Polymarket US lists 182 college games for the coming week, FCS included.
+- **Request volume.** The reader spaces requests at 5 per second at most; the
+  live smoke test ran at about 2 per second. The events endpoint pages with
+  `limit`/`offset` (default page size 10, so the reader asks for 100).
+- **Order book.** `markets.book` returns `bids` and `offers` as
+  `{px: {value}, qty}` levels. Buying the short side means hitting bids, so the
+  short side's buy levels are each bid at `1 - price` for the same quantity.
+- **Not-found.** A bad slug returns HTTP 404 with `{"code": 5, ...}`; the SDK
+  raises and the reader treats it as "price feed unavailable".
+
 ## Milestones
 
 | Tag | Milestone | Status |
 | --- | --- | --- |
 | v0.1 | Skeleton and CI | done |
-| v0.2 | Polymarket reader | |
+| v0.2 | Polymarket reader | done |
 | v0.3 | Score feed and matching | |
 | v0.4 | Win probability | |
 | v0.5 | Fees and alert rules | |

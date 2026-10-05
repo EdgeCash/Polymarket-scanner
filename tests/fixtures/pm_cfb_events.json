@@ -1,0 +1,1410 @@
+{
+ "type": "sport",
+ "typeTitle": "Games",
+ "section": "general",
+ "sectionTitle": "Sport",
+ "events": [
+  {
+   "id": "123211",
+   "slug": "cfb-soumis-troy-2026-10-06",
+   "title": "Southern Miss vs. Troy",
+   "startTime": "2026-10-07T00:00:00Z",
+   "startDate": "2026-10-07T00:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 17363,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "cfb-2026",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 1166,
+     "name": "Southern Miss",
+     "abbreviation": "soumis",
+     "league": "cfb",
+     "alias": "Golden Eagles",
+     "safeName": "Southern Miss",
+     "displayAbbreviation": "USM",
+     "providerId": 143
+    },
+    {
+     "id": 1307,
+     "name": "Troy",
+     "abbreviation": "troy",
+     "league": "cfb",
+     "alias": "Trojans",
+     "safeName": "Troy",
+     "displayAbbreviation": "TROY",
+     "providerId": 333
+    }
+   ],
+   "markets": [
+    {
+     "id": "1146366",
+     "slug": "asc-cfb-soumis-troy-2026-10-06-pos-38pt5",
+     "question": "Will the Southern Miss cover 38.5 vs the Troy in Southern Miss vs. Troy?",
+     "title": "Troy wins by over 38.5 points",
+     "titleShort": "TROY -38.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 38.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9150",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2292214",
+       "long": true,
+       "teamId": 1166,
+       "identifier": "asc-cfb-soumis-troy-2026-10-06-pos-38pt5",
+       "description": "+38.50",
+       "price": "0.9150",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2292215",
+       "long": false,
+       "teamId": 1307,
+       "identifier": "asc-cfb-soumis-troy-2026-10-06-pos-38pt5",
+       "description": "-38.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.085",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1146367",
+     "slug": "asc-cfb-soumis-troy-2026-10-06-pos-41pt5",
+     "question": "Will the Southern Miss cover 41.5 vs the Troy in Southern Miss vs. Troy?",
+     "title": "Troy wins by over 41.5 points",
+     "titleShort": "TROY -41.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 41.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2292216",
+       "long": true,
+       "teamId": 1166,
+       "identifier": "asc-cfb-soumis-troy-2026-10-06-pos-41pt5",
+       "description": "+41.50",
+       "price": "0.9200",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2292217",
+       "long": false,
+       "teamId": 1307,
+       "identifier": "asc-cfb-soumis-troy-2026-10-06-pos-41pt5",
+       "description": "-41.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1176958",
+     "slug": "tsc-cfb-soumis-troy-2026-10-06-1h-9pt5",
+     "question": "Will the total in Southern Miss vs. Troy be more than 9.5?",
+     "title": "Over 9.5 total points in 1st half",
+     "titleShort": "Over 9.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 9.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2353398",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-1h-9pt5",
+       "description": "Over",
+       "price": "0.8100",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2353399",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-1h-9pt5",
+       "description": "Under",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.19",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1177701",
+     "slug": "tsc-cfb-soumis-troy-2026-10-06-tt-soumis-6pt5",
+     "question": "Will the total in Southern Miss vs. Troy be more than 6.5?",
+     "title": "Southern Miss over 6.5 total points",
+     "titleShort": "USM over 6.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 6.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2354884",
+       "long": true,
+       "teamId": 1166,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-tt-soumis-6pt5",
+       "description": "Over",
+       "price": "0.8900",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2354885",
+       "long": false,
+       "teamId": 1166,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-tt-soumis-6pt5",
+       "description": "Under",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.11",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1146414",
+     "slug": "tsc-cfb-soumis-troy-2026-10-06-total-44pt5",
+     "question": "Will the total in Southern Miss vs. Troy be more than 44.5?",
+     "title": "Over 44.5 total points",
+     "titleShort": "Over 44.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 44.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.6100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6500",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2292310",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-total-44pt5",
+       "description": "Over",
+       "price": "0.6100",
+       "quote": {
+        "value": "0.6500",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2292311",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-total-44pt5",
+       "description": "Under",
+       "price": "0.6500",
+       "quote": {
+        "value": "0.39",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1146422",
+     "slug": "tsc-cfb-soumis-troy-2026-10-06-total-52pt5",
+     "question": "Will the total in Southern Miss vs. Troy be more than 52.5?",
+     "title": "Over 52.5 total points",
+     "titleShort": "Over 52.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 52.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4300",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2292326",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-total-52pt5",
+       "description": "Over",
+       "price": "0.4000",
+       "quote": {
+        "value": "0.4300",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2292327",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-soumis-troy-2026-10-06-total-52pt5",
+       "description": "Under",
+       "price": "0.4300",
+       "quote": {
+        "value": "0.6",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1016456",
+     "slug": "aec-cfb-soumis-troy-2026-10-06",
+     "question": "Who will win in the upcoming football event Southern Miss vs Troy scheduled for October 7, 2026 at 12:00 AM UTC?",
+     "title": "Southern Miss vs Troy",
+     "titleShort": "USM vs TROY",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.2200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2250",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2032396",
+       "long": true,
+       "teamId": 1166,
+       "identifier": "aec-cfb-soumis-troy-2026-10-06",
+       "description": "Golden Eagles",
+       "price": "0.2200",
+       "quote": {
+        "value": "0.2250",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2032397",
+       "long": false,
+       "teamId": 1307,
+       "identifier": "aec-cfb-soumis-troy-2026-10-06",
+       "description": "Trojans",
+       "price": "0.2250",
+       "quote": {
+        "value": "0.78",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "131856",
+   "slug": "cfb-ind-nebr-2026-10-10",
+   "title": "Indiana vs. Nebraska",
+   "startTime": "2026-10-10T16:00:00Z",
+   "startDate": "2026-10-10T16:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 16674,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "cfb-2026",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 1124,
+     "name": "Indiana",
+     "abbreviation": "ind",
+     "league": "cfb",
+     "alias": "Hoosiers",
+     "safeName": "Indiana",
+     "displayAbbreviation": "IND",
+     "providerId": 93
+    },
+    {
+     "id": 1130,
+     "name": "Nebraska",
+     "abbreviation": "nebr",
+     "league": "cfb",
+     "alias": "Cornhuskers",
+     "safeName": "Nebraska",
+     "displayAbbreviation": "NEB",
+     "providerId": 99
+    }
+   ],
+   "markets": [
+    {
+     "id": "1176984",
+     "slug": "tsc-cfb-ind-nebr-2026-10-10-1h-15pt5",
+     "question": "Will the total in Indiana vs. Nebraska be more than 15.5?",
+     "title": "Over 15.5 total points in 1st half",
+     "titleShort": "Over 15.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 15.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.6900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2353450",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-1h-15pt5",
+       "description": "Over",
+       "price": "0.6900",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2353451",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-1h-15pt5",
+       "description": "Under",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.31",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1177751",
+     "slug": "tsc-cfb-ind-nebr-2026-10-10-tt-ind-12pt5",
+     "question": "Will the total in Indiana vs. Nebraska be more than 12.5?",
+     "title": "Indiana over 12.5 total points",
+     "titleShort": "IND over 12.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 12.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2354984",
+       "long": true,
+       "teamId": 1124,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-tt-ind-12pt5",
+       "description": "Over",
+       "price": "0.9200",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2354985",
+       "long": false,
+       "teamId": 1124,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-tt-ind-12pt5",
+       "description": "Under",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1149661",
+     "slug": "asc-cfb-ind-nebr-2026-10-10-pos-16pt5",
+     "question": "Will the Indiana cover 16.5 vs the Nebraska in Indiana vs. Nebraska?",
+     "title": "Nebraska wins by over 16.5 points",
+     "titleShort": "NEB -16.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 16.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9850",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2298804",
+       "long": true,
+       "teamId": 1124,
+       "identifier": "asc-cfb-ind-nebr-2026-10-10-pos-16pt5",
+       "description": "+16.50",
+       "price": "0.9300",
+       "quote": {
+        "value": "0.9850",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2298805",
+       "long": false,
+       "teamId": 1130,
+       "identifier": "asc-cfb-ind-nebr-2026-10-10-pos-16pt5",
+       "description": "-16.50",
+       "price": "0.9850",
+       "quote": {
+        "value": "0.07",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1149660",
+     "slug": "asc-cfb-ind-nebr-2026-10-10-pos-14pt5",
+     "question": "Will the Indiana cover 14.5 vs the Nebraska in Indiana vs. Nebraska?",
+     "title": "Nebraska wins by over 14.5 points",
+     "titleShort": "NEB -14.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 14.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9250",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2298802",
+       "long": true,
+       "teamId": 1124,
+       "identifier": "asc-cfb-ind-nebr-2026-10-10-pos-14pt5",
+       "description": "+14.50",
+       "price": "0.9250",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2298803",
+       "long": false,
+       "teamId": 1130,
+       "identifier": "asc-cfb-ind-nebr-2026-10-10-pos-14pt5",
+       "description": "-14.50",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.075",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1113479",
+     "slug": "aec-cfb-ind-nebr-2026-10-10",
+     "question": "Who will win in the upcoming football event Indiana vs Nebraska scheduled for October 10, 2026 at 4:00 PM UTC?",
+     "title": "Indiana vs Nebraska",
+     "titleShort": "IND vs NEB",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7450",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2226442",
+       "long": true,
+       "teamId": 1124,
+       "identifier": "aec-cfb-ind-nebr-2026-10-10",
+       "description": "Hoosiers",
+       "price": "0.7400",
+       "quote": {
+        "value": "0.7450",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2226443",
+       "long": false,
+       "teamId": 1130,
+       "identifier": "aec-cfb-ind-nebr-2026-10-10",
+       "description": "Cornhuskers",
+       "price": "0.7450",
+       "quote": {
+        "value": "0.26",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1149665",
+     "slug": "tsc-cfb-ind-nebr-2026-10-10-total-44pt5",
+     "question": "Will the total in Indiana vs. Nebraska be more than 44.5?",
+     "title": "Over 44.5 total points",
+     "titleShort": "Over 44.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 44.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.6900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2298812",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-44pt5",
+       "description": "Over",
+       "price": "0.6900",
+       "quote": {
+        "value": "0.7400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2298813",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-44pt5",
+       "description": "Under",
+       "price": "0.7400",
+       "quote": {
+        "value": "0.31",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1149673",
+     "slug": "tsc-cfb-ind-nebr-2026-10-10-total-52pt5",
+     "question": "Will the total in Indiana vs. Nebraska be more than 52.5?",
+     "title": "Over 52.5 total points",
+     "titleShort": "Over 52.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 52.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2298828",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-52pt5",
+       "description": "Over",
+       "price": "0.4800",
+       "quote": {
+        "value": "0.4900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2298829",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-52pt5",
+       "description": "Under",
+       "price": "0.4900",
+       "quote": {
+        "value": "0.52",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1182505",
+     "slug": "tsc-cfb-ind-nebr-2026-10-10-total-58pt5",
+     "question": "Will the total in Indiana vs. Nebraska be more than 58.5?",
+     "title": "Over 58.5 total points",
+     "titleShort": "Over 58.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 58.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2364492",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-58pt5",
+       "description": "Over",
+       "price": "0.3200",
+       "quote": {
+        "value": "0.3800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2364493",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ind-nebr-2026-10-10-total-58pt5",
+       "description": "Under",
+       "price": "0.3800",
+       "quote": {
+        "value": "0.68",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "131859",
+   "slug": "cfb-ucf-okst-2026-10-10",
+   "title": "UCF vs. Oklahoma State",
+   "startTime": "2026-10-10T16:00:00Z",
+   "startDate": "2026-10-10T16:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 16676,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "cfb-2026",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 1074,
+     "name": "UCF",
+     "abbreviation": "ucf",
+     "league": "cfb",
+     "alias": "Knights",
+     "safeName": "UCF",
+     "displayAbbreviation": "UCF",
+     "providerId": 8
+    },
+    {
+     "id": 1144,
+     "name": "Oklahoma State",
+     "abbreviation": "okst",
+     "league": "cfb",
+     "alias": "Cowboys",
+     "safeName": "Oklahoma State",
+     "displayAbbreviation": "OKST",
+     "providerId": 113
+    }
+   ],
+   "markets": [
+    {
+     "id": "1203712",
+     "slug": "asc-cfb-ucf-okst-2026-10-10-pos-35pt5",
+     "question": "Will the UCF cover 35.5 vs the Oklahoma State in UCF vs. Oklahoma State?",
+     "title": "Oklahoma State wins by over 35.5 points",
+     "titleShort": "OKST -35.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 35.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2406906",
+       "long": true,
+       "teamId": 1074,
+       "identifier": "asc-cfb-ucf-okst-2026-10-10-pos-35pt5",
+       "description": "+35.50",
+       "price": "0.9200",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2406907",
+       "long": false,
+       "teamId": 1144,
+       "identifier": "asc-cfb-ucf-okst-2026-10-10-pos-35pt5",
+       "description": "-35.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1203713",
+     "slug": "asc-cfb-ucf-okst-2026-10-10-pos-38pt5",
+     "question": "Will the UCF cover 38.5 vs the Oklahoma State in UCF vs. Oklahoma State?",
+     "title": "Oklahoma State wins by over 38.5 points",
+     "titleShort": "OKST -38.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 38.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2406908",
+       "long": true,
+       "teamId": 1074,
+       "identifier": "asc-cfb-ucf-okst-2026-10-10-pos-38pt5",
+       "description": "+38.50",
+       "price": "0.9200",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2406909",
+       "long": false,
+       "teamId": 1144,
+       "identifier": "asc-cfb-ucf-okst-2026-10-10-pos-38pt5",
+       "description": "-38.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1204643",
+     "slug": "tsc-cfb-ucf-okst-2026-10-10-1h-16pt5",
+     "question": "Will the total in UCF vs. Oklahoma State be more than 16.5?",
+     "title": "Over 16.5 total points in 1st half",
+     "titleShort": "Over 16.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 16.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.6800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2408768",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-1h-16pt5",
+       "description": "Over",
+       "price": "0.6800",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2408769",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-1h-16pt5",
+       "description": "Under",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.32",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1205101",
+     "slug": "tsc-cfb-ucf-okst-2026-10-10-tt-okst-16pt5",
+     "question": "Will the total in UCF vs. Oklahoma State be more than 16.5?",
+     "title": "Oklahoma State over 16.5 total points",
+     "titleShort": "OKST over 16.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 16.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2409684",
+       "long": true,
+       "teamId": 1144,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-tt-okst-16pt5",
+       "description": "Over",
+       "price": "0.8900",
+       "quote": {
+        "value": "0.9600",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2409685",
+       "long": false,
+       "teamId": 1144,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-tt-okst-16pt5",
+       "description": "Under",
+       "price": "0.9600",
+       "quote": {
+        "value": "0.11",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1204057",
+     "slug": "tsc-cfb-ucf-okst-2026-10-10-total-44pt5",
+     "question": "Will the total in UCF vs. Oklahoma State be more than 44.5?",
+     "title": "Over 44.5 total points",
+     "titleShort": "Over 44.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 44.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.7000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7500",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2407596",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-44pt5",
+       "description": "Over",
+       "price": "0.7000",
+       "quote": {
+        "value": "0.7500",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2407597",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-44pt5",
+       "description": "Under",
+       "price": "0.7500",
+       "quote": {
+        "value": "0.3",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1204065",
+     "slug": "tsc-cfb-ucf-okst-2026-10-10-total-52pt5",
+     "question": "Will the total in UCF vs. Oklahoma State be more than 52.5?",
+     "title": "Over 52.5 total points",
+     "titleShort": "Over 52.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 52.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2407612",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-52pt5",
+       "description": "Over",
+       "price": "0.5300",
+       "quote": {
+        "value": "0.5400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2407613",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-52pt5",
+       "description": "Under",
+       "price": "0.5400",
+       "quote": {
+        "value": "0.47",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1204071",
+     "slug": "tsc-cfb-ucf-okst-2026-10-10-total-58pt5",
+     "question": "Will the total in UCF vs. Oklahoma State be more than 58.5?",
+     "title": "Over 58.5 total points",
+     "titleShort": "Over 58.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 58.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2407624",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-58pt5",
+       "description": "Over",
+       "price": "0.3300",
+       "quote": {
+        "value": "0.3900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2407625",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-cfb-ucf-okst-2026-10-10-total-58pt5",
+       "description": "Under",
+       "price": "0.3900",
+       "quote": {
+        "value": "0.67",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1113482",
+     "slug": "aec-cfb-ucf-okst-2026-10-10",
+     "question": "Who will win in the upcoming football event UCF vs Oklahoma State scheduled for October 10, 2026 at 4:00 PM UTC?",
+     "title": "UCF vs Oklahoma State",
+     "titleShort": "UCF vs OKST",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.2200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2250",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2226448",
+       "long": true,
+       "teamId": 1074,
+       "identifier": "aec-cfb-ucf-okst-2026-10-10",
+       "description": "Knights",
+       "price": "0.2200",
+       "quote": {
+        "value": "0.2250",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2226449",
+       "long": false,
+       "teamId": 1144,
+       "identifier": "aec-cfb-ucf-okst-2026-10-10",
+       "description": "Cowboys",
+       "price": "0.2250",
+       "quote": {
+        "value": "0.78",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "league": {
+  "name": "CFB",
+  "slug": "cfb",
+  "image": "https://static.polymarket.us/images/new-category-icons/Icon-Football.png",
+  "isOperational": true,
+  "id": 7,
+  "sportId": 3,
+  "tagId": 6,
+  "resolution": "https://www.ncaa.com/",
+  "ordering": "away",
+  "activeSeriesId": 225,
+  "createdAt": "2026-03-05T18:30:42Z",
+  "abbreviation": "CFB"
+ }
+}

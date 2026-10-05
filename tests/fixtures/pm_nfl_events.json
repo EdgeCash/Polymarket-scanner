@@ -1,0 +1,2578 @@
+{
+ "type": "sport",
+ "typeTitle": "Games",
+ "section": "general",
+ "sectionTitle": "Sport",
+ "events": [
+  {
+   "id": "119961",
+   "slug": "nfl-atl-no-2026-10-05",
+   "title": "ATL Falcons vs. NO Saints",
+   "startTime": "2026-10-06T00:15:00Z",
+   "startDate": "2026-10-06T00:15:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19517,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 49,
+     "name": "Atlanta Falcons",
+     "abbreviation": "atl",
+     "league": "nfl",
+     "alias": "Falcons",
+     "safeName": "ATL Falcons",
+     "displayAbbreviation": "ATL",
+     "providerId": 2
+    },
+    {
+     "id": 70,
+     "name": "New Orleans Saints",
+     "abbreviation": "no",
+     "league": "nfl",
+     "alias": "Saints",
+     "safeName": "NO Saints",
+     "displayAbbreviation": "NO",
+     "providerId": 22
+    }
+   ],
+   "markets": [
+    {
+     "id": "1003089",
+     "slug": "asc-nfl-atl-no-2026-10-05-pos-30pt5",
+     "question": "Will the Atlanta Falcons cover 30.5 vs the New Orleans Saints in ATL Falcons vs. NO Saints?",
+     "title": "New Orleans Saints wins by over 30.5 points",
+     "titleShort": "NO -30.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 30.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2005662",
+       "long": true,
+       "teamId": 49,
+       "identifier": "asc-nfl-atl-no-2026-10-05-pos-30pt5",
+       "description": "+30.50",
+       "price": "0.9700",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2005663",
+       "long": false,
+       "teamId": 70,
+       "identifier": "asc-nfl-atl-no-2026-10-05-pos-30pt5",
+       "description": "-30.50",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.03",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1003090",
+     "slug": "asc-nfl-atl-no-2026-10-05-pos-33pt5",
+     "question": "Will the Atlanta Falcons cover 33.5 vs the New Orleans Saints in ATL Falcons vs. NO Saints?",
+     "title": "New Orleans Saints wins by over 33.5 points",
+     "titleShort": "NO -33.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 33.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9750",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2005664",
+       "long": true,
+       "teamId": 49,
+       "identifier": "asc-nfl-atl-no-2026-10-05-pos-33pt5",
+       "description": "+33.50",
+       "price": "0.9750",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2005665",
+       "long": false,
+       "teamId": 70,
+       "identifier": "asc-nfl-atl-no-2026-10-05-pos-33pt5",
+       "description": "-33.50",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.025",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1009575",
+     "slug": "tsc-nfl-atl-no-2026-10-05-tt-atl-9pt5",
+     "question": "Will the total in ATL Falcons vs. NO Saints be more than 9.5?",
+     "title": "Atlanta Falcons over 9.5 total points",
+     "titleShort": "ATL over 9.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 9.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2018634",
+       "long": true,
+       "teamId": 49,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-tt-atl-9pt5",
+       "description": "Over",
+       "price": "0.9500",
+       "quote": {
+        "value": "0.9600",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2018635",
+       "long": false,
+       "teamId": 49,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-tt-atl-9pt5",
+       "description": "Under",
+       "price": "0.9600",
+       "quote": {
+        "value": "0.05",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1009426",
+     "slug": "tsc-nfl-atl-no-2026-10-05-1h-14pt5",
+     "question": "Will the total in ATL Falcons vs. NO Saints be more than 14.5?",
+     "title": "Over 14.5 total points in 1st half",
+     "titleShort": "Over 14.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 14.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8700",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2018336",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-1h-14pt5",
+       "description": "Over",
+       "price": "0.8600",
+       "quote": {
+        "value": "0.8700",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2018337",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-1h-14pt5",
+       "description": "Under",
+       "price": "0.8700",
+       "quote": {
+        "value": "0.14",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1003546",
+     "slug": "tsc-nfl-atl-no-2026-10-05-total-44pt5",
+     "question": "Will the total in ATL Falcons vs. NO Saints be more than 44.5?",
+     "title": "Over 44.5 total points",
+     "titleShort": "Over 44.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 44.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5950",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6000",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2006576",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-44pt5",
+       "description": "Over",
+       "price": "0.5950",
+       "quote": {
+        "value": "0.6000",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2006577",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-44pt5",
+       "description": "Under",
+       "price": "0.6000",
+       "quote": {
+        "value": "0.405",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1003549",
+     "slug": "tsc-nfl-atl-no-2026-10-05-total-47pt5",
+     "question": "Will the total in ATL Falcons vs. NO Saints be more than 47.5?",
+     "title": "Over 47.5 total points",
+     "titleShort": "Over 47.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 47.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5050",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5100",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2006582",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-47pt5",
+       "description": "Over",
+       "price": "0.5050",
+       "quote": {
+        "value": "0.5100",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2006583",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-47pt5",
+       "description": "Under",
+       "price": "0.5100",
+       "quote": {
+        "value": "0.495",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "978699",
+     "slug": "aec-nfl-atl-no-2026-10-05",
+     "question": "Who will win in the upcoming football event Atlanta Falcons vs New Orleans Saints scheduled for October 6, 2026 at 12:15 AM UTC?",
+     "title": "ATL Falcons vs NO Saints",
+     "titleShort": "ATL vs NO",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4625",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4650",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "1956882",
+       "long": true,
+       "teamId": 49,
+       "identifier": "aec-nfl-atl-no-2026-10-05",
+       "description": "Falcons",
+       "price": "0.4625",
+       "quote": {
+        "value": "0.4650",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "1956883",
+       "long": false,
+       "teamId": 70,
+       "identifier": "aec-nfl-atl-no-2026-10-05",
+       "description": "Saints",
+       "price": "0.4650",
+       "quote": {
+        "value": "0.5375",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1003553",
+     "slug": "tsc-nfl-atl-no-2026-10-05-total-50pt5",
+     "question": "Will the total in ATL Falcons vs. NO Saints be more than 50.5?",
+     "title": "Over 50.5 total points",
+     "titleShort": "Over 50.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 50.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4150",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2006590",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-50pt5",
+       "description": "Over",
+       "price": "0.4100",
+       "quote": {
+        "value": "0.4150",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2006591",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-atl-no-2026-10-05-total-50pt5",
+       "description": "Under",
+       "price": "0.4150",
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129629",
+   "slug": "nfl-phi-jax-2026-10-11",
+   "title": "PHI Eagles vs. JAC Jaguars",
+   "startTime": "2026-10-11T13:30:00Z",
+   "startDate": "2026-10-11T13:30:00Z",
+   "live": true,
+   "ended": null,
+   "score": "24-14",
+   "period": "Q4",
+   "elapsed": "56:08",
+   "gameId": 19518,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": {
+    "id": 1,
+    "gameId": 19518,
+    "type": "football",
+    "score": "24-14",
+    "elapsed": "56:08",
+    "period": "Q4",
+    "live": true,
+    "ended": false,
+    "footballState": {
+     "down": 2,
+     "yard": 35,
+     "possessionProviderId": "26"
+    },
+    "mainSpreadLine": -7.5,
+    "mainTotalLine": 47.5
+   },
+   "teams": [
+    {
+     "id": 73,
+     "name": "Philadelphia Eagles",
+     "abbreviation": "phi",
+     "league": "nfl",
+     "alias": "Eagles",
+     "safeName": "PHI Eagles",
+     "displayAbbreviation": "PHI",
+     "providerId": 26
+    },
+    {
+     "id": 62,
+     "name": "Jacksonville Jaguars",
+     "abbreviation": "jax",
+     "league": "nfl",
+     "alias": "Jaguars",
+     "safeName": "JAC Jaguars",
+     "displayAbbreviation": "JAX",
+     "providerId": 15
+    }
+   ],
+   "markets": [
+    {
+     "id": "1130723",
+     "slug": "asc-nfl-phi-jax-2026-10-11-pos-33pt5",
+     "question": "Will the Philadelphia Eagles cover 33.5 vs the Jacksonville Jaguars in PHI Eagles vs. JAC Jaguars?",
+     "title": "Jacksonville Jaguars wins by over 33.5 points",
+     "titleShort": "JAX -33.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 33.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2260928",
+       "long": true,
+       "teamId": 73,
+       "identifier": "asc-nfl-phi-jax-2026-10-11-pos-33pt5",
+       "description": "+33.50",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2260929",
+       "long": false,
+       "teamId": 62,
+       "identifier": "asc-nfl-phi-jax-2026-10-11-pos-33pt5",
+       "description": "-33.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.06",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1130722",
+     "slug": "asc-nfl-phi-jax-2026-10-11-pos-30pt5",
+     "question": "Will the Philadelphia Eagles cover 30.5 vs the Jacksonville Jaguars in PHI Eagles vs. JAC Jaguars?",
+     "title": "Jacksonville Jaguars wins by over 30.5 points",
+     "titleShort": "JAX -30.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 30.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2260926",
+       "long": true,
+       "teamId": 73,
+       "identifier": "asc-nfl-phi-jax-2026-10-11-pos-30pt5",
+       "description": "+30.50",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2260927",
+       "long": false,
+       "teamId": 62,
+       "identifier": "asc-nfl-phi-jax-2026-10-11-pos-30pt5",
+       "description": "-30.50",
+       "price": "0.9800",
+       "quote": {
+        "value": "0.06",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1132176",
+     "slug": "tsc-nfl-phi-jax-2026-10-11-tt-jax-13pt5",
+     "question": "Will the total in PHI Eagles vs. JAC Jaguars be more than 13.5?",
+     "title": "Jacksonville Jaguars over 13.5 total points",
+     "titleShort": "JAX over 13.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 13.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9000",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2263834",
+       "long": true,
+       "teamId": 62,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-tt-jax-13pt5",
+       "description": "Over",
+       "price": "0.8500",
+       "quote": {
+        "value": "0.9000",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2263835",
+       "long": false,
+       "teamId": 62,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-tt-jax-13pt5",
+       "description": "Under",
+       "price": "0.9000",
+       "quote": {
+        "value": "0.15",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1132085",
+     "slug": "tsc-nfl-phi-jax-2026-10-11-1h-14pt5",
+     "question": "Will the total in PHI Eagles vs. JAC Jaguars be more than 14.5?",
+     "title": "Over 14.5 total points in 1st half",
+     "titleShort": "Over 14.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 14.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.7700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2263652",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-1h-14pt5",
+       "description": "Over",
+       "price": "0.7700",
+       "quote": {
+        "value": "0.8200",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2263653",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-1h-14pt5",
+       "description": "Under",
+       "price": "0.8200",
+       "quote": {
+        "value": "0.23",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131317",
+     "slug": "tsc-nfl-phi-jax-2026-10-11-total-41pt5",
+     "question": "Will the total in PHI Eagles vs. JAC Jaguars be more than 41.5?",
+     "title": "Over 41.5 total points",
+     "titleShort": "Over 41.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 41.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5450",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5500",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2262116",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-total-41pt5",
+       "description": "Over",
+       "price": "0.5450",
+       "quote": {
+        "value": "0.5500",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2262117",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-total-41pt5",
+       "description": "Under",
+       "price": "0.5500",
+       "quote": {
+        "value": "0.455",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131324",
+     "slug": "tsc-nfl-phi-jax-2026-10-11-total-47pt5",
+     "question": "Will the total in PHI Eagles vs. JAC Jaguars be more than 47.5?",
+     "title": "Over 47.5 total points",
+     "titleShort": "Over 47.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 47.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3650",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3700",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2262130",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-total-47pt5",
+       "description": "Over",
+       "price": "0.3650",
+       "quote": {
+        "value": "0.3700",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2262131",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-phi-jax-2026-10-11-total-47pt5",
+       "description": "Under",
+       "price": "0.3700",
+       "quote": {
+        "value": "0.635",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1083081",
+     "slug": "aec-nfl-phi-jax-2026-10-11",
+     "question": "Who will win in the upcoming football event Philadelphia Eagles vs Jacksonville Jaguars scheduled for October 11, 2026 at 1:30 PM UTC?",
+     "title": "PHI Eagles vs JAC Jaguars",
+     "titleShort": "PHI vs JAX",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2165646",
+       "long": true,
+       "teamId": 73,
+       "identifier": "aec-nfl-phi-jax-2026-10-11",
+       "description": "Eagles",
+       "price": "0.3350",
+       "quote": {
+        "value": "0.9400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2165647",
+       "long": false,
+       "teamId": 62,
+       "identifier": "aec-nfl-phi-jax-2026-10-11",
+       "description": "Jaguars",
+       "price": "0.3375",
+       "quote": {
+        "value": "0.0700",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129632",
+   "slug": "nfl-lv-ne-2026-10-11",
+   "title": "LV Raiders vs. NE Patriots",
+   "startTime": "2026-10-11T17:00:00Z",
+   "startDate": "2026-10-11T17:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19521,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 66,
+     "name": "Las Vegas Raiders",
+     "abbreviation": "lv",
+     "league": "nfl",
+     "alias": "Raiders",
+     "safeName": "LV Raiders",
+     "displayAbbreviation": "LV",
+     "providerId": 25
+    },
+    {
+     "id": 69,
+     "name": "New England Patriots",
+     "abbreviation": "ne",
+     "league": "nfl",
+     "alias": "Patriots",
+     "safeName": "NE Patriots",
+     "displayAbbreviation": "NE",
+     "providerId": 21
+    }
+   ],
+   "markets": [
+    {
+     "id": "1130889",
+     "slug": "asc-nfl-lv-ne-2026-10-11-pos-35pt5",
+     "question": "Will the Las Vegas Raiders cover 35.5 vs the New England Patriots in LV Raiders vs. NE Patriots?",
+     "title": "New England Patriots wins by over 35.5 points",
+     "titleShort": "NE -35.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 35.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261260",
+       "long": true,
+       "teamId": 66,
+       "identifier": "asc-nfl-lv-ne-2026-10-11-pos-35pt5",
+       "description": "+35.50",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261261",
+       "long": false,
+       "teamId": 69,
+       "identifier": "asc-nfl-lv-ne-2026-10-11-pos-35pt5",
+       "description": "-35.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.06",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1130888",
+     "slug": "asc-nfl-lv-ne-2026-10-11-pos-33pt5",
+     "question": "Will the Las Vegas Raiders cover 33.5 vs the New England Patriots in LV Raiders vs. NE Patriots?",
+     "title": "New England Patriots wins by over 33.5 points",
+     "titleShort": "NE -33.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 33.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9350",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9850",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261258",
+       "long": true,
+       "teamId": 66,
+       "identifier": "asc-nfl-lv-ne-2026-10-11-pos-33pt5",
+       "description": "+33.50",
+       "price": "0.9350",
+       "quote": {
+        "value": "0.9850",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261259",
+       "long": false,
+       "teamId": 69,
+       "identifier": "asc-nfl-lv-ne-2026-10-11-pos-33pt5",
+       "description": "-33.50",
+       "price": "0.9850",
+       "quote": {
+        "value": "0.065",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1134692",
+     "slug": "tsc-nfl-lv-ne-2026-10-11-tt-ne-10pt5",
+     "question": "Will the total in LV Raiders vs. NE Patriots be more than 10.5?",
+     "title": "New England Patriots over 10.5 total points",
+     "titleShort": "NE over 10.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 10.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2268866",
+       "long": true,
+       "teamId": 69,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-tt-ne-10pt5",
+       "description": "Over",
+       "price": "0.8900",
+       "quote": {
+        "value": "0.9600",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2268867",
+       "long": false,
+       "teamId": 69,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-tt-ne-10pt5",
+       "description": "Under",
+       "price": "0.9600",
+       "quote": {
+        "value": "0.11",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1134601",
+     "slug": "tsc-nfl-lv-ne-2026-10-11-1h-13pt5",
+     "question": "Will the total in LV Raiders vs. NE Patriots be more than 13.5?",
+     "title": "Over 13.5 total points in 1st half",
+     "titleShort": "Over 13.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 13.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2268684",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-1h-13pt5",
+       "description": "Over",
+       "price": "0.8200",
+       "quote": {
+        "value": "0.8800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2268685",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-1h-13pt5",
+       "description": "Under",
+       "price": "0.8800",
+       "quote": {
+        "value": "0.18",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131465",
+     "slug": "tsc-nfl-lv-ne-2026-10-11-total-44pt5",
+     "question": "Will the total in LV Raiders vs. NE Patriots be more than 44.5?",
+     "title": "Over 44.5 total points",
+     "titleShort": "Over 44.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 44.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5150",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5200",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2262412",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-total-44pt5",
+       "description": "Over",
+       "price": "0.5150",
+       "quote": {
+        "value": "0.5200",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2262413",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-lv-ne-2026-10-11-total-44pt5",
+       "description": "Under",
+       "price": "0.5200",
+       "quote": {
+        "value": "0.485",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129634",
+   "slug": "nfl-min-no-2026-10-11",
+   "title": "MIN Vikings vs. NO Saints",
+   "startTime": "2026-10-11T17:00:00Z",
+   "startDate": "2026-10-11T17:00:00Z",
+   "live": false,
+   "ended": true,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19522,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 68,
+     "name": "Minnesota Vikings",
+     "abbreviation": "min",
+     "league": "nfl",
+     "alias": "Vikings",
+     "safeName": "MIN Vikings",
+     "displayAbbreviation": "MIN",
+     "providerId": 20
+    },
+    {
+     "id": 70,
+     "name": "New Orleans Saints",
+     "abbreviation": "no",
+     "league": "nfl",
+     "alias": "Saints",
+     "safeName": "NO Saints",
+     "displayAbbreviation": "NO",
+     "providerId": 22
+    }
+   ],
+   "markets": [
+    {
+     "id": "1130936",
+     "slug": "asc-nfl-min-no-2026-10-11-pos-27pt5",
+     "question": "Will the Minnesota Vikings cover 27.5 vs the New Orleans Saints in MIN Vikings vs. NO Saints?",
+     "title": "New Orleans Saints wins by over 27.5 points",
+     "titleShort": "NO -27.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 27.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261354",
+       "long": true,
+       "teamId": 68,
+       "identifier": "asc-nfl-min-no-2026-10-11-pos-27pt5",
+       "description": "+27.50",
+       "price": "0.9300",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261355",
+       "long": false,
+       "teamId": 70,
+       "identifier": "asc-nfl-min-no-2026-10-11-pos-27pt5",
+       "description": "-27.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.07",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1130938",
+     "slug": "asc-nfl-min-no-2026-10-11-pos-28pt5",
+     "question": "Will the Minnesota Vikings cover 28.5 vs the New Orleans Saints in MIN Vikings vs. NO Saints?",
+     "title": "New Orleans Saints wins by over 28.5 points",
+     "titleShort": "NO -28.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 28.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261358",
+       "long": true,
+       "teamId": 68,
+       "identifier": "asc-nfl-min-no-2026-10-11-pos-28pt5",
+       "description": "+28.50",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261359",
+       "long": false,
+       "teamId": 70,
+       "identifier": "asc-nfl-min-no-2026-10-11-pos-28pt5",
+       "description": "-28.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.06",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1134904",
+     "slug": "tsc-nfl-min-no-2026-10-11-tt-min-13pt5",
+     "question": "Will the total in MIN Vikings vs. NO Saints be more than 13.5?",
+     "title": "Minnesota Vikings over 13.5 total points",
+     "titleShort": "MIN over 13.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 13.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2269290",
+       "long": true,
+       "teamId": 68,
+       "identifier": "tsc-nfl-min-no-2026-10-11-tt-min-13pt5",
+       "description": "Over",
+       "price": "0.7400",
+       "quote": {
+        "value": "0.8400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2269291",
+       "long": false,
+       "teamId": 68,
+       "identifier": "tsc-nfl-min-no-2026-10-11-tt-min-13pt5",
+       "description": "Under",
+       "price": "0.8400",
+       "quote": {
+        "value": "0.26",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1083087",
+     "slug": "aec-nfl-min-no-2026-10-11",
+     "question": "Who will win in the upcoming football event Minnesota Vikings vs New Orleans Saints scheduled for October 11, 2026 at 5:00 PM UTC?",
+     "title": "MIN Vikings vs NO Saints",
+     "titleShort": "MIN vs NO",
+     "active": false,
+     "closed": true,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": null,
+     "bestAskQuote": null,
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "CLOSED",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2165658",
+       "long": true,
+       "teamId": 68,
+       "identifier": "aec-nfl-min-no-2026-10-11",
+       "description": "Vikings",
+       "price": "0.5175",
+       "quote": null,
+       "tradable": false,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2165659",
+       "long": false,
+       "teamId": 70,
+       "identifier": "aec-nfl-min-no-2026-10-11",
+       "description": "Saints",
+       "price": "0.5200",
+       "quote": null,
+       "tradable": false,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1134830",
+     "slug": "tsc-nfl-min-no-2026-10-11-1h-15pt5",
+     "question": "Will the total in MIN Vikings vs. NO Saints be more than 15.5?",
+     "title": "Over 15.5 total points in 1st half",
+     "titleShort": "Over 15.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 15.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": null,
+     "bestAskQuote": null,
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2269142",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-min-no-2026-10-11-1h-15pt5",
+       "description": "Over",
+       "price": "0.0100",
+       "quote": null,
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2269143",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-min-no-2026-10-11-1h-15pt5",
+       "description": "Under",
+       "price": "0.9900",
+       "quote": null,
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129637",
+   "slug": "nfl-nyg-was-2026-10-11",
+   "title": "NY Giants vs. WAS Commanders",
+   "startTime": "2026-10-11T17:00:00Z",
+   "startDate": "2026-10-11T17:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19526,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 71,
+     "name": "New York Giants",
+     "abbreviation": "nyg",
+     "league": "nfl",
+     "alias": "Giants",
+     "safeName": "NY Giants",
+     "displayAbbreviation": "NYG",
+     "providerId": 23
+    },
+    {
+     "id": 79,
+     "name": "Washington Commanders",
+     "abbreviation": "was",
+     "league": "nfl",
+     "alias": "Commanders",
+     "safeName": "WAS Commanders",
+     "displayAbbreviation": "WAS",
+     "providerId": 35
+    }
+   ],
+   "markets": [
+    {
+     "id": "1131021",
+     "slug": "asc-nfl-nyg-was-2026-10-11-pos-33pt5",
+     "question": "Will the New York Giants cover 33.5 vs the Washington Commanders in NY Giants vs. WAS Commanders?",
+     "title": "Washington Commanders wins by over 33.5 points",
+     "titleShort": "WAS -33.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 33.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9350",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261524",
+       "long": true,
+       "teamId": 71,
+       "identifier": "asc-nfl-nyg-was-2026-10-11-pos-33pt5",
+       "description": "+33.50",
+       "price": "0.9350",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261525",
+       "long": false,
+       "teamId": 79,
+       "identifier": "asc-nfl-nyg-was-2026-10-11-pos-33pt5",
+       "description": "-33.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.065",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131020",
+     "slug": "asc-nfl-nyg-was-2026-10-11-pos-30pt5",
+     "question": "Will the New York Giants cover 30.5 vs the Washington Commanders in NY Giants vs. WAS Commanders?",
+     "title": "Washington Commanders wins by over 30.5 points",
+     "titleShort": "WAS -30.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 30.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9850",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261522",
+       "long": true,
+       "teamId": 71,
+       "identifier": "asc-nfl-nyg-was-2026-10-11-pos-30pt5",
+       "description": "+30.50",
+       "price": "0.9200",
+       "quote": {
+        "value": "0.9850",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261523",
+       "long": false,
+       "teamId": 79,
+       "identifier": "asc-nfl-nyg-was-2026-10-11-pos-30pt5",
+       "description": "-30.50",
+       "price": "0.9850",
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135472",
+     "slug": "tsc-nfl-nyg-was-2026-10-11-tt-was-10pt5",
+     "question": "Will the total in NY Giants vs. WAS Commanders be more than 10.5?",
+     "title": "Washington Commanders over 10.5 total points",
+     "titleShort": "WAS over 10.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 10.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2270426",
+       "long": true,
+       "teamId": 79,
+       "identifier": "tsc-nfl-nyg-was-2026-10-11-tt-was-10pt5",
+       "description": "Over",
+       "price": "0.8900",
+       "quote": {
+        "value": "0.9400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2270427",
+       "long": false,
+       "teamId": 79,
+       "identifier": "tsc-nfl-nyg-was-2026-10-11-tt-was-10pt5",
+       "description": "Under",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.11",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135379",
+     "slug": "tsc-nfl-nyg-was-2026-10-11-1h-13pt5",
+     "question": "Will the total in NY Giants vs. WAS Commanders be more than 13.5?",
+     "title": "Over 13.5 total points in 1st half",
+     "titleShort": "Over 13.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 13.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8600",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2270240",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-nyg-was-2026-10-11-1h-13pt5",
+       "description": "Over",
+       "price": "0.8000",
+       "quote": {
+        "value": "0.8600",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2270241",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-nyg-was-2026-10-11-1h-13pt5",
+       "description": "Under",
+       "price": "0.8600",
+       "quote": {
+        "value": "0.2",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1083092",
+     "slug": "aec-nfl-nyg-was-2026-10-11",
+     "question": "Who will win in the upcoming football event New York Giants vs Washington Commanders scheduled for October 11, 2026 at 5:00 PM UTC?",
+     "title": "NY Giants vs WAS Commanders",
+     "titleShort": "NYG vs WAS",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": null,
+     "bestAskQuote": null,
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2165668",
+       "long": true,
+       "teamId": 71,
+       "identifier": "aec-nfl-nyg-was-2026-10-11",
+       "description": "Giants",
+       "price": "0.3725",
+       "quote": null,
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2165669",
+       "long": false,
+       "teamId": 79,
+       "identifier": "aec-nfl-nyg-was-2026-10-11",
+       "description": "Commanders",
+       "price": "0.3750",
+       "quote": null,
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129639",
+   "slug": "nfl-ind-pit-2026-10-11",
+   "title": "IND Colts vs. PIT Steelers",
+   "startTime": "2026-10-11T17:00:00Z",
+   "startDate": "2026-10-11T17:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19524,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [
+    {
+     "id": 61,
+     "name": "Indianapolis Colts",
+     "abbreviation": "ind",
+     "league": "nfl",
+     "alias": "Colts",
+     "safeName": "IND Colts",
+     "displayAbbreviation": "IND",
+     "providerId": 14
+    },
+    {
+     "id": 74,
+     "name": "Pittsburgh Steelers",
+     "abbreviation": "pit",
+     "league": "nfl",
+     "alias": "Steelers",
+     "safeName": "PIT Steelers",
+     "displayAbbreviation": "PIT",
+     "providerId": 28
+    }
+   ],
+   "markets": [
+    {
+     "id": "1131062",
+     "slug": "asc-nfl-ind-pit-2026-10-11-pos-28pt5",
+     "question": "Will the Indianapolis Colts cover 28.5 vs the Pittsburgh Steelers in IND Colts vs. PIT Steelers?",
+     "title": "Pittsburgh Steelers wins by over 28.5 points",
+     "titleShort": "PIT -28.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 28.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261606",
+       "long": true,
+       "teamId": 61,
+       "identifier": "asc-nfl-ind-pit-2026-10-11-pos-28pt5",
+       "description": "+28.50",
+       "price": "0.9300",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261607",
+       "long": false,
+       "teamId": 74,
+       "identifier": "asc-nfl-ind-pit-2026-10-11-pos-28pt5",
+       "description": "-28.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.07",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131063",
+     "slug": "asc-nfl-ind-pit-2026-10-11-pos-30pt5",
+     "question": "Will the Indianapolis Colts cover 30.5 vs the Pittsburgh Steelers in IND Colts vs. PIT Steelers?",
+     "title": "Pittsburgh Steelers wins by over 30.5 points",
+     "titleShort": "PIT -30.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 30.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9350",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261608",
+       "long": true,
+       "teamId": 61,
+       "identifier": "asc-nfl-ind-pit-2026-10-11-pos-30pt5",
+       "description": "+30.50",
+       "price": "0.9350",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261609",
+       "long": false,
+       "teamId": 74,
+       "identifier": "asc-nfl-ind-pit-2026-10-11-pos-30pt5",
+       "description": "-30.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.065",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135683",
+     "slug": "tsc-nfl-ind-pit-2026-10-11-tt-ind-9pt5",
+     "question": "Will the total in IND Colts vs. PIT Steelers be more than 9.5?",
+     "title": "Indianapolis Colts over 9.5 total points",
+     "titleShort": "IND over 9.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 9.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9400",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2270848",
+       "long": true,
+       "teamId": 61,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-tt-ind-9pt5",
+       "description": "Over",
+       "price": "0.8900",
+       "quote": {
+        "value": "0.9400",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2270849",
+       "long": false,
+       "teamId": 61,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-tt-ind-9pt5",
+       "description": "Under",
+       "price": "0.9400",
+       "quote": {
+        "value": "0.11",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135609",
+     "slug": "tsc-nfl-ind-pit-2026-10-11-1h-13pt5",
+     "question": "Will the total in IND Colts vs. PIT Steelers be more than 13.5?",
+     "title": "Over 13.5 total points in 1st half",
+     "titleShort": "Over 13.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 13.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8600",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2270700",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-1h-13pt5",
+       "description": "Over",
+       "price": "0.8100",
+       "quote": {
+        "value": "0.8600",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2270701",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-1h-13pt5",
+       "description": "Under",
+       "price": "0.8600",
+       "quote": {
+        "value": "0.19",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1083096",
+     "slug": "aec-nfl-ind-pit-2026-10-11",
+     "question": "Who will win in the upcoming football event Indianapolis Colts vs Pittsburgh Steelers scheduled for October 11, 2026 at 5:00 PM UTC?",
+     "title": "IND Colts vs PIT Steelers",
+     "titleShort": "IND vs PIT",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": null,
+     "bestBidQuote": {
+      "value": "0.4400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4425",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2165676",
+       "long": true,
+       "teamId": 61,
+       "identifier": "aec-nfl-ind-pit-2026-10-11",
+       "description": "Colts",
+       "price": "0.4400",
+       "quote": {
+        "value": "0.4425",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2165677",
+       "long": false,
+       "teamId": 74,
+       "identifier": "aec-nfl-ind-pit-2026-10-11",
+       "description": "Steelers",
+       "price": "0.4425",
+       "quote": {
+        "value": "0.56",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131584",
+     "slug": "tsc-nfl-ind-pit-2026-10-11-total-47pt5",
+     "question": "Will the total in IND Colts vs. PIT Steelers be more than 47.5?",
+     "title": "Over 47.5 total points",
+     "titleShort": "Over 47.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 47.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3950",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4300",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2262650",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-total-47pt5",
+       "description": "Over",
+       "price": "0.3950",
+       "quote": {
+        "value": "0.4300",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2262651",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-total-47pt5",
+       "description": "Under",
+       "price": "0.4300",
+       "quote": {
+        "value": "0.605",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1131586",
+     "slug": "tsc-nfl-ind-pit-2026-10-11-total-50pt5",
+     "question": "Will the total in IND Colts vs. PIT Steelers be more than 50.5?",
+     "title": "Over 50.5 total points",
+     "titleShort": "Over 50.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 50.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3550",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2262654",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-total-50pt5",
+       "description": null,
+       "price": "0.3200",
+       "quote": {
+        "value": "0.3550",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2262655",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-ind-pit-2026-10-11-total-50pt5",
+       "description": null,
+       "price": "0.3550",
+       "quote": {
+        "value": "0.68",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "129635",
+   "slug": "nfl-hou-ten-2026-10-11",
+   "title": "HOU Texans vs. TEN Titans",
+   "startTime": "2026-10-11T17:00:00Z",
+   "startDate": "2026-10-11T17:00:00Z",
+   "live": null,
+   "ended": null,
+   "score": null,
+   "period": "NS",
+   "elapsed": null,
+   "gameId": 19525,
+   "active": true,
+   "closed": false,
+   "seriesSlug": "nfl-2025",
+   "eventState": null,
+   "teams": [],
+   "markets": [
+    {
+     "id": "1130979",
+     "slug": "asc-nfl-hou-ten-2026-10-11-pos-17pt5",
+     "question": "Will the Houston Texans cover 17.5 vs the Tennessee Titans in HOU Texans vs. TEN Titans?",
+     "title": "Tennessee Titans wins by over 17.5 points",
+     "titleShort": "TEN -17.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 17.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261440",
+       "long": true,
+       "teamId": 60,
+       "identifier": "asc-nfl-hou-ten-2026-10-11-pos-17pt5",
+       "description": "+17.50",
+       "price": "0.9500",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261441",
+       "long": false,
+       "teamId": 78,
+       "identifier": "asc-nfl-hou-ten-2026-10-11-pos-17pt5",
+       "description": "-17.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.05",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1130980",
+     "slug": "asc-nfl-hou-ten-2026-10-11-pos-19pt5",
+     "question": "Will the Houston Texans cover 19.5 vs the Tennessee Titans in HOU Texans vs. TEN Titans?",
+     "title": "Tennessee Titans wins by over 19.5 points",
+     "titleShort": "TEN -19.5",
+     "active": true,
+     "closed": false,
+     "marketType": "spreads",
+     "sportsMarketType": "football_team_full_game_spread",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "line": 19.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.9550",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.005,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2261442",
+       "long": true,
+       "teamId": 60,
+       "identifier": "asc-nfl-hou-ten-2026-10-11-pos-19pt5",
+       "description": "+19.50",
+       "price": "0.9550",
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2261443",
+       "long": false,
+       "teamId": 78,
+       "identifier": "asc-nfl-hou-ten-2026-10-11-pos-19pt5",
+       "description": "-19.50",
+       "price": "0.9900",
+       "quote": {
+        "value": "0.045",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135242",
+     "slug": "tsc-nfl-hou-ten-2026-10-11-tt-ten-5pt5",
+     "question": "Will the total in HOU Texans vs. TEN Titans be more than 5.5?",
+     "title": "Tennessee Titans over 5.5 total points",
+     "titleShort": "TEN over 5.5 points",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_team_points_full_game_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 5.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9500",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2269966",
+       "long": true,
+       "teamId": 78,
+       "identifier": "tsc-nfl-hou-ten-2026-10-11-tt-ten-5pt5",
+       "description": "Over",
+       "price": "0.5800",
+       "quote": {
+        "value": "0.9500",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2269967",
+       "long": false,
+       "teamId": 78,
+       "identifier": "tsc-nfl-hou-ten-2026-10-11-tt-ten-5pt5",
+       "description": "Under",
+       "price": "0.9500",
+       "quote": {
+        "value": "0.42",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1135151",
+     "slug": "tsc-nfl-hou-ten-2026-10-11-1h-11pt5",
+     "question": "Will the total in HOU Texans vs. TEN Titans be more than 11.5?",
+     "title": "Over 11.5 total points in 1st half",
+     "titleShort": "Over 11.5 1H",
+     "active": true,
+     "closed": false,
+     "marketType": "totals",
+     "sportsMarketType": "football_game_first_half_total",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "line": 11.5,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8800",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.01,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": "points",
+     "marketSides": [
+      {
+       "id": "2269784",
+       "long": true,
+       "teamId": null,
+       "identifier": "tsc-nfl-hou-ten-2026-10-11-1h-11pt5",
+       "description": "Over",
+       "price": "0.8200",
+       "quote": {
+        "value": "0.8800",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2269785",
+       "long": false,
+       "teamId": null,
+       "identifier": "tsc-nfl-hou-ten-2026-10-11-1h-11pt5",
+       "description": "Under",
+       "price": "0.8800",
+       "quote": {
+        "value": "0.18",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    },
+    {
+     "id": "1083089",
+     "slug": "aec-nfl-hou-ten-2026-10-11",
+     "question": "Who will win in the upcoming football event Houston Texans vs Tennessee Titans scheduled for October 11, 2026 at 5:00 PM UTC?",
+     "title": "HOU Texans vs TEN Titans",
+     "titleShort": "HOU vs TEN",
+     "active": true,
+     "closed": false,
+     "marketType": "moneyline",
+     "sportsMarketType": "football_team_full_game_winner",
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "line": null,
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.7275",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7325",
+      "currency": "USD"
+     },
+     "orderPriceMinTickSize": 0.0025,
+     "ep3Status": "OPEN",
+     "spreadTotalSuffix": null,
+     "marketSides": [
+      {
+       "id": "2165662",
+       "long": true,
+       "teamId": 60,
+       "identifier": "aec-nfl-hou-ten-2026-10-11",
+       "description": "Texans",
+       "price": "0.7275",
+       "quote": {
+        "value": "0.7325",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      },
+      {
+       "id": "2165663",
+       "long": false,
+       "teamId": 78,
+       "identifier": "aec-nfl-hou-ten-2026-10-11",
+       "description": "Titans",
+       "price": "0.7325",
+       "quote": {
+        "value": "0.2725",
+        "currency": "USD"
+       },
+       "tradable": true,
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "league": {
+  "name": "NFL",
+  "slug": "nfl",
+  "image": "https://static.polymarket.us/images/new-category-icons/Icon-Rugby.png",
+  "isOperational": true,
+  "id": 1,
+  "sportId": 3,
+  "tagId": 1,
+  "resolution": "https://www.nfl.com/",
+  "ordering": "away",
+  "activeSeriesId": 2,
+  "createdAt": "2026-03-05T18:30:42Z",
+  "abbreviation": "NFL"
+ }
+}

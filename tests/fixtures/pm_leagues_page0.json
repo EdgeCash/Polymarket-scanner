@@ -1,0 +1,454 @@
+{
+ "leagues": [
+  {
+   "id": 54,
+   "slug": "uefa",
+   "name": "UEFA",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": null
+  },
+  {
+   "id": 5,
+   "slug": "mlb",
+   "name": "MLB",
+   "abbreviation": "MLB",
+   "sportId": 5,
+   "isOperational": true,
+   "activeSeriesId": 15
+  },
+  {
+   "id": 42,
+   "slug": "f1",
+   "name": "Formula 1",
+   "abbreviation": null,
+   "sportId": 11,
+   "isOperational": true,
+   "activeSeriesId": 184
+  },
+  {
+   "id": 55,
+   "slug": "boxing",
+   "name": "Boxing",
+   "abbreviation": null,
+   "sportId": 12,
+   "isOperational": true,
+   "activeSeriesId": 75
+  },
+  {
+   "id": 37,
+   "slug": "poly-open",
+   "name": "Polymarket Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 58
+  },
+  {
+   "id": 34,
+   "slug": "itfm",
+   "name": "ITF Men",
+   "abbreviation": null,
+   "sportId": 8,
+   "isOperational": true,
+   "activeSeriesId": 55
+  },
+  {
+   "id": 35,
+   "slug": "itfw",
+   "name": "ITF Women",
+   "abbreviation": null,
+   "sportId": 8,
+   "isOperational": true,
+   "activeSeriesId": 56
+  },
+  {
+   "id": 48,
+   "slug": "fwc",
+   "name": "World Cup",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 69
+  },
+  {
+   "id": 11,
+   "slug": "masters",
+   "name": "Golf",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 14
+  },
+  {
+   "id": 31,
+   "slug": "cjcupbyr",
+   "name": "THE CJ CUP Byron Nelson",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 52
+  },
+  {
+   "id": 10,
+   "slug": "ucl",
+   "name": "UCL",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 12
+  },
+  {
+   "id": 9,
+   "slug": "epl",
+   "name": "EPL",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 11
+  },
+  {
+   "id": 77,
+   "slug": "nbasl",
+   "name": "NBA Summer League",
+   "abbreviation": null,
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 100
+  },
+  {
+   "id": 4,
+   "slug": "cbb",
+   "name": "CBB",
+   "abbreviation": "CBB",
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 7
+  },
+  {
+   "id": 28,
+   "slug": "wnba",
+   "name": "WNBA",
+   "abbreviation": null,
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 49
+  },
+  {
+   "id": 2,
+   "slug": "nba",
+   "name": "NBA",
+   "abbreviation": "NBA",
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 4
+  },
+  {
+   "id": 8,
+   "slug": "mls",
+   "name": "MLS",
+   "abbreviation": "MLS",
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 10
+  },
+  {
+   "id": 56,
+   "slug": "cham",
+   "name": "TOUR Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 77
+  },
+  {
+   "id": 78,
+   "slug": "cycling",
+   "name": "Cycling",
+   "abbreviation": null,
+   "sportId": 15,
+   "isOperational": true,
+   "activeSeriesId": null
+  },
+  {
+   "id": 3,
+   "slug": "nhl",
+   "name": "NHL",
+   "abbreviation": "NHL",
+   "sportId": 4,
+   "isOperational": true,
+   "activeSeriesId": 6
+  },
+  {
+   "id": 1,
+   "slug": "nfl",
+   "name": "NFL",
+   "abbreviation": "NFL",
+   "sportId": 3,
+   "isOperational": true,
+   "activeSeriesId": 2
+  },
+  {
+   "id": 16,
+   "slug": "lal",
+   "name": "La Liga",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 20
+  },
+  {
+   "id": 50,
+   "slug": "cws",
+   "name": "CWS",
+   "abbreviation": null,
+   "sportId": 5,
+   "isOperational": true,
+   "activeSeriesId": 71
+  },
+  {
+   "id": 14,
+   "slug": "bun",
+   "name": "Bundesliga",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 18
+  },
+  {
+   "id": 6,
+   "slug": "ufc",
+   "name": "UFC",
+   "abbreviation": "UFC",
+   "sportId": 6,
+   "isOperational": true,
+   "activeSeriesId": 8
+  },
+  {
+   "id": 17,
+   "slug": "wcbb",
+   "name": "WCBB",
+   "abbreviation": null,
+   "sportId": 1,
+   "isOperational": true,
+   "activeSeriesId": 21
+  },
+  {
+   "id": 24,
+   "slug": "cadi",
+   "name": "Cadillac Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 45
+  },
+  {
+   "id": 22,
+   "slug": "lol",
+   "name": "League of Legends",
+   "abbreviation": null,
+   "sportId": 10,
+   "isOperational": true,
+   "activeSeriesId": 33
+  },
+  {
+   "id": 25,
+   "slug": "onefmyrtbeac",
+   "name": "ONEflight Myrtle Beach Classic",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 46
+  },
+  {
+   "id": 26,
+   "slug": "trui",
+   "name": "Truist Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 47
+  },
+  {
+   "id": 132,
+   "slug": "atpcq",
+   "name": "ATP Challenger Qualifiers",
+   "abbreviation": null,
+   "sportId": 8,
+   "isOperational": true,
+   "activeSeriesId": 156
+  },
+  {
+   "id": 20,
+   "slug": "ipl",
+   "name": "IPL",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 30
+  },
+  {
+   "id": 19,
+   "slug": "rbcheri",
+   "name": "RBC Heritage",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 29
+  },
+  {
+   "id": 98,
+   "slug": "flc",
+   "name": "Chance Liga",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 122
+  },
+  {
+   "id": 21,
+   "slug": "cs2",
+   "name": "CS2",
+   "abbreviation": null,
+   "sportId": 10,
+   "isOperational": true,
+   "activeSeriesId": 32
+  },
+  {
+   "id": 30,
+   "slug": "charschw",
+   "name": "Charles Schwab Challenge",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 51
+  },
+  {
+   "id": 23,
+   "slug": "cod",
+   "name": "Call of Duty",
+   "abbreviation": null,
+   "sportId": 10,
+   "isOperational": true,
+   "activeSeriesId": 34
+  },
+  {
+   "id": 49,
+   "slug": "twc",
+   "name": "Worst Cup",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 70
+  },
+  {
+   "id": 18,
+   "slug": "valetexa",
+   "name": "Valero Texas Open",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 24
+  },
+  {
+   "id": 73,
+   "slug": "test",
+   "name": "Test International",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 96
+  },
+  {
+   "id": 38,
+   "slug": "indy500",
+   "name": "Indy 500",
+   "abbreviation": null,
+   "sportId": 11,
+   "isOperational": true,
+   "activeSeriesId": 59
+  },
+  {
+   "id": 32,
+   "slug": "pgacham",
+   "name": "PGA Championship",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 53
+  },
+  {
+   "id": 234,
+   "slug": "nb1",
+   "name": "Hungarian NB I",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 308
+  },
+  {
+   "id": 29,
+   "slug": "memotour",
+   "name": "the Memorial Tournament pres. by Workday",
+   "abbreviation": null,
+   "sportId": 7,
+   "isOperational": true,
+   "activeSeriesId": 50
+  },
+  {
+   "id": 64,
+   "slug": "t20blast",
+   "name": "T20 Blast (M)",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 87
+  },
+  {
+   "id": 174,
+   "slug": "mlsas",
+   "name": "MLS All-Star Game",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 209
+  },
+  {
+   "id": 15,
+   "slug": "sea",
+   "name": "Serie A",
+   "abbreviation": null,
+   "sportId": 2,
+   "isOperational": true,
+   "activeSeriesId": 19
+  },
+  {
+   "id": 181,
+   "slug": "blw",
+   "name": "Big League Wiffle Ball",
+   "abbreviation": null,
+   "sportId": 19,
+   "isOperational": true,
+   "activeSeriesId": 215
+  },
+  {
+   "id": 63,
+   "slug": "mlc",
+   "name": "Major League Cricket",
+   "abbreviation": null,
+   "sportId": 9,
+   "isOperational": true,
+   "activeSeriesId": 86
+  },
+  {
+   "id": 40,
+   "slug": "valorant",
+   "name": "Valorant",
+   "abbreviation": null,
+   "sportId": 10,
+   "isOperational": true,
+   "activeSeriesId": 63
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "marketData": {
+  "marketSlug": "aec-nfl-phi-jax-2026-10-11",
+  "bids": [
+   {
+    "px": {
+     "value": "0.9300",
+     "currency": "USD"
+    },
+    "qty": "150.0000"
+   },
+   {
+    "px": {
+     "value": "0.9250",
+     "currency": "USD"
+    },
+    "qty": "400.0000"
+   }
+  ],
+  "offers": [
+   {
+    "px": {
+     "value": "0.9300",
+     "currency": "USD"
+    },
+    "qty": "100.0000"
+   },
+   {
+    "px": {
+     "value": "0.9350",
+     "currency": "USD"
+    },
+    "qty": "100.0000"
+   },
+   {
+    "px": {
+     "value": "0.9400",
+     "currency": "USD"
+    },
+    "qty": "250.0000"
+   },
+   {
+    "px": {
+     "value": "0.9600",
+     "currency": "USD"
+    },
+    "qty": "2000.0000"
+   },
+   {
+    "px": {
+     "value": "0.9900",
+     "currency": "USD"
+    },
+    "qty": "50000.0000"
+   }
+  ],
+  "state": "MARKET_STATE_OPEN",
+  "stats": null,
+  "transactTime": "2026-10-11T20:41:07Z"
+ }
+}
