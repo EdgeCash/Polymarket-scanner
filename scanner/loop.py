@@ -429,6 +429,9 @@ class Scanner:
                     return 1
                 log.error("cannot start (%s), retrying in 60s", exc)
                 self._sleep(60)
+        if self.settings.SEND_TEST_MESSAGE_ON_START:
+            log.info("SEND_TEST_MESSAGE_ON_START is set: sending the owner's test message")
+            self.notifier.send_test_message()
         self._refresh_games(self._now(), force=True)
         while not self.stop_event.is_set():
             now = self._now()
