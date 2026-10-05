@@ -84,6 +84,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `DATABASE_PATH` | `/data/diary.db` | Diary location |
 | `TZ` | `America/Chicago` | Time zone for messages |
 | `PORT` | `8080` | Status page port |
+| `SEND_TEST_MESSAGE_ON_START` | `false` | Flip to true once: one test message at startup, whatever `ALERTS_ENABLED` says |
 | `TELEGRAM_BOT_TOKEN` | none | Secret |
 | `TELEGRAM_CHAT_ID` | none | Secret |
 | `STATUS_TOKEN` | none | Secret that unlocks the status and scorecard pages |
@@ -241,23 +242,30 @@ python -m scanner --send-test-message  # the owner's phone check (ignores ALERTS
 python -m scanner --shadow-report      # print the shadow weekend report; add --send to send it
 ```
 
-### Hosting (needs the owner's approval before anything is paid for)
+### Hosting: Railway
 
-Any host that runs one Docker container continuously with a persistent disk
-and web-editable environment variables will do; Railway, Render and Fly.io
-all fit and cost roughly $5 to $10 a month. Steps, all doable from a phone:
+The owner chose Railway (Hobby plan, about $5 a month). `railway.json` sets the
+build to the Dockerfile, restarts the container if it ever exits, and uses `/`
+(which needs no token) as the health check. Everything below is done in Safari
+on the iPad.
 
-1. Create the service from this GitHub repository; the Dockerfile is at the
-   root.
-2. Attach a persistent volume mounted at `/data` (the diary lives at
-   `/data/diary.db`).
-3. Set the environment variables from `.env.example`. Secrets
-   (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `STATUS_TOKEN`) go in the host's
-   secret store. Leave `ALERTS_ENABLED=false` for the shadow weekend.
-4. Expose port 8080 and open `https://<host>/health?token=<STATUS_TOKEN>`
-   on the phone.
-5. Enable deploy-on-push from `main`. Deploy only on a Tuesday or Wednesday,
-   never during a game window.
+1. railway.com → log in with GitHub → **New Project** → **Deploy from GitHub
+   repo** → `EdgeCash/polymarket-scanner`. Railway builds the Dockerfile.
+2. Open the service → **Variables** → **Raw Editor** and paste the settings
+   from `.env.example`. Keep `ALERTS_ENABLED=false`. Fill in
+   `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and a made-up `STATUS_TOKEN`
+   (a long random phrase). Leave `PORT` out: Railway sets it.
+3. Service → **Settings** → **Volumes** → add a volume with mount path `/data`.
+4. Service → **Settings** → **Networking** → **Generate Domain**. Open
+   `https://<domain>/health?token=<STATUS_TOKEN>` on the iPad. It should say
+   "sleeping" with the next wake time, or "awake" during a game window.
+5. Phone check (milestone 7): set `SEND_TEST_MESSAGE_ON_START=true`, let
+   Railway redeploy, confirm the message on the phone, then set it back to
+   `false`. Do this on a weekday, never during a game window.
+
+Railway redeploys on every push to `main`, so merge only on a Tuesday or
+Wednesday. Logs are under the service's **Deployments** tab; the diary can be
+downloaded from the volume page if you ever want the raw file.
 
 After the shadow weekend, run `python -m scanner --shadow-report --send` (or
 read the diary) and decide whether to set `ALERTS_ENABLED=true`.

@@ -47,6 +47,9 @@ class Settings(BaseSettings):
     CLINCHED_OVERS_ENABLED: bool = True
     LEAGUES: str = "nfl,cfb"
     DRY_RUN: bool = False
+    # Set to true once, from the host's variables page, to prove the phone is
+    # reachable: one test message goes out at startup whatever ALERTS_ENABLED says.
+    SEND_TEST_MESSAGE_ON_START: bool = False
 
     # Polling
     SCORE_POLL_SECONDS: float = Field(5, gt=0)

@@ -286,7 +286,8 @@ class Notifier:
             return False
         text = (
             "Test message from the Polymarket football scanner. "
-            "If you can read this, alerts can reach you."
+            "If you can read this, alerts can reach you. "
+            "You can now turn SEND_TEST_MESSAGE_ON_START back off."
         )
         ok = self.sender.send(text)
         log.info("test message %s", "sent" if ok else "FAILED")

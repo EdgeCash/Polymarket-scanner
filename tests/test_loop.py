@@ -479,3 +479,29 @@ def test_unknown_or_delayed_states_never_reach_the_rules(model):
     summary = scanner.scan_once()
     assert summary.candidates == 0 and summary.alerts == []
     assert all(s.status is GameStatus.DELAYED for s in scanner.last_scores[League.NFL])
+
+
+def test_startup_test_message_switch_sends_once_whatever_alerts_enabled_says(model):
+    clock = Clock()
+    scanner, reader, feed, sender = build(
+        clock,
+        model,
+        enabled=False,
+        SEND_TEST_MESSAGE_ON_START=True,
+        TELEGRAM_BOT_TOKEN="t",
+        TELEGRAM_CHAT_ID="c",
+    )
+    feed.states[League.NFL] = [poll(0)["espn_event"]]
+    assert scanner.run_forever(once=True) == 0
+    assert len(sender.messages) == 1
+    assert sender.messages[0].startswith("Test message from the Polymarket football scanner")
+    # alerts stay off: the heartbeat that an awake pass would send was not sent
+    assert not any(m.startswith("Scanner is up") for m in sender.messages)
+
+
+def test_without_the_switch_nothing_is_sent_at_startup(model):
+    clock = Clock()
+    scanner, reader, feed, sender = build(clock, model, enabled=False)
+    feed.states[League.NFL] = [poll(0)["espn_event"]]
+    assert scanner.run_forever(once=True) == 0
+    assert sender.messages == []
