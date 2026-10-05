@@ -11,9 +11,9 @@ COPY pyproject.toml README.md ./
 COPY scanner ./scanner
 RUN pip install --no-cache-dir .
 
-# The diary lives on a persistent volume mounted here.
+# The diary lives on a persistent volume mounted here by the host. (No VOLUME
+# instruction: Railway rejects it and mounts its own volume at this path.)
 RUN mkdir -p /data
-VOLUME ["/data"]
 
 EXPOSE 8080
 
