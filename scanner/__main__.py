@@ -31,6 +31,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--once", action="store_true", help="run one scan pass and exit (used for checks)"
     )
+    parser.add_argument(
+        "--send-test-message",
+        action="store_true",
+        help="send one test message to the configured Telegram chat and exit",
+    )
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -43,6 +48,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.dry_run:
         log.info("dry run complete, exiting")
         return 0
+
+    if args.send_test_message:
+        from scanner.notify import Notifier
+
+        return 0 if Notifier(settings).send_test_message() else 1
 
     from scanner.loop import run
 

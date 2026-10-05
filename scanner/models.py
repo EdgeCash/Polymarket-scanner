@@ -217,6 +217,7 @@ class Availability:
     contracts: float
     average_price: float | None
     best_price: float | None
+    worst_price: float | None = None  # the dearest level still counted
 
 
 @dataclass(slots=True)
@@ -241,6 +242,7 @@ class Alert:
     edge: float
     dollars_available: float
     average_price: float | None
+    worst_price: float | None = None  # dearest price included in dollars_available
     situation: dict = field(default_factory=dict)
     polymarket_score: str | None = None
     polymarket_score_differs: bool = False

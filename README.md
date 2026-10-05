@@ -203,6 +203,23 @@ phone pages (or JSON with `Accept: application/json`); both need
 `STATUS_TOKEN` as `?token=` or the `X-Status-Token` header and return 503 when
 no token is configured, so the pages are never open.
 
+## Phone alerts (milestone 7)
+
+`scanner/notify.py` puts Telegram behind one `send(text)` call. The bot token
+and chat id come from `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`; the sender
+never logs the request URL, which carries the token. With `ALERTS_ENABLED`
+false nothing leaves the box, alerts included; the message text is still
+built and stored in the diary so the shadow weekend records exactly what would
+have been sent. Both message layouts are snapshot-tested against the examples
+in the brief. One deliberate exception to the switch: `python -m scanner
+--send-test-message` sends a single test message so the owner can confirm the
+phone is reachable before going live.
+
+Setting up the bot from a phone: message @BotFather on Telegram, `/newbot`,
+copy the token into the host's secrets as `TELEGRAM_BOT_TOKEN`; then message
+the new bot once and open `https://api.telegram.org/bot<TOKEN>/getUpdates` in
+the phone browser to read your `chat.id` for `TELEGRAM_CHAT_ID`.
+
 ## Milestones
 
 | Tag | Milestone | Status |
@@ -213,6 +230,6 @@ no token is configured, so the pages are never open.
 | v0.4 | Win probability | done |
 | v0.5 | Fees and alert rules | done |
 | v0.6 | Diary and scorecard | done |
-| v0.7 | Phone alerts | |
+| v0.7 | Phone alerts | code done; owner test message pending |
 | v0.8 | Deploy and shadow weekend | |
 | v1.0 | Go live | |
