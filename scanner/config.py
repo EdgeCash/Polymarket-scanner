@@ -21,6 +21,9 @@ ESPN_MISSING_MARGIN = 0.02  # fair = model - 2 cents when ESPN has no number
 DEFAULT_THETA = 0.0695  # taker fee coefficient from the fee schedule, 1 Oct 2026
 CLINCHED_FAIR_PRICE = 0.995  # a clinched over is priced at 99.5 cents, not 100
 KNEEL_FAIR_PRICE = 0.999  # leader has the ball and can kneel the clock out
+MODEL_MAX_PRICE = 0.995  # the model alone never prices anything above 99.5 cents
+NFL_TWO_MINUTE_WARNING = 120.0  # the NFL clock stops once at 2:00, like an extra timeout
+KNEEL_SECONDS_PER_DOWN = 40.0  # a kneel burns a 40 second play clock
 GAME_LIST_REFRESH_SECONDS = 60.0  # how often the Polymarket game list is re-read
 POLYMARKET_MAX_RPS = 5.0  # stay well under the 25/s published limit
 FEED_FAILURE_ALERT_SECONDS = 120.0  # a source failing this long sends a message

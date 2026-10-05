@@ -29,6 +29,8 @@ scanner/
   matching.py      pairs each Polymarket game with ESPN     (milestone 3)
   tracker.py       freshness, two-polls-in-a-row, score age (milestone 3)
   winprob.py       win probability model                    (milestone 4)
+  winprob_features.py  feature vector shared with training  (milestone 4)
+  winprob_model.json   the trained model                    (milestone 4)
   fees.py          fee formula                              (milestone 5)
   rules.py         alert rules                              (milestone 5)
   diary.py         SQLite log and grading                   (milestone 6)
@@ -151,6 +153,32 @@ Confirmed against the live gateway on 5 October 2026 and frozen in
   can only be checked on a live day; `scripts/smoke_live.py --section scores`
   prints it for every live game.
 
+## Win probability model (milestone 4)
+
+`scanner/winprob_model.json` is trained by `scripts/train_winprob.py` on
+nflverse play-by-play (the files `nflreadpy` downloads; the script fetches
+them directly, so the scanner has no dependency on that package). It is a
+logistic regression on sign-symmetric 4th-quarter features with every weight
+constrained to be non-negative, so by construction a bigger lead, less time
+for the leader and having the ball never lower the leading team's price. An
+isotonic calibration map fitted on separate seasons sits on top, and the
+runtime caps the model at 99.5 cents. Results on the held-out 2024 and 2025
+seasons are in [`docs/winprob_report.md`](docs/winprob_report.md); plays
+priced at 95% or higher won 99.3% of the time against a 98.8% prediction.
+
+The running scanner loads the JSON in milliseconds and evaluates it in pure
+Python. It never trains. To retrain:
+
+```bash
+pip install -e ".[train]"
+python scripts/train_winprob.py --data-dir data/nflverse   # downloads ~240 MB once
+```
+
+Fair price rules (`scanner/winprob.py`): the lower of our model and ESPN's
+live number; our model minus 2 cents when ESPN has none; nothing when they
+differ by more than 5 cents; nothing in overtime; 99.9 cents when the leader
+can kneel the clock out; college games get `CFB_EXTRA_MARGIN` subtracted.
+
 ## Milestones
 
 | Tag | Milestone | Status |
@@ -158,7 +186,7 @@ Confirmed against the live gateway on 5 October 2026 and frozen in
 | v0.1 | Skeleton and CI | done |
 | v0.2 | Polymarket reader | done |
 | v0.3 | Score feed and matching | done |
-| v0.4 | Win probability | |
+| v0.4 | Win probability | done |
 | v0.5 | Fees and alert rules | |
 | v0.6 | Diary and scorecard | |
 | v0.7 | Phone alerts | |
