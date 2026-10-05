@@ -318,6 +318,7 @@ def evaluate_winner(
         situation={**_situation(state), "fair_reason": fair.reason, "score_age_seconds": age},
         polymarket_score=game.display_score,
         polymarket_score_differs=polymarket_score_differs(game.display_score, state),
+        pick_side=side.value,
         enabled=settings.ALERTS_ENABLED,
     )
     return Decision(alert, None, "alert")

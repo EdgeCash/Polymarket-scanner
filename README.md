@@ -191,6 +191,18 @@ refuses any quote that is not the Over side of its total. A recorded 18-poll
 late-game sequence (`tests/fixtures/replay_phi_jax.json`) replays through the
 rules and fires at exactly the three polls it should.
 
+## Diary and scorecard (milestone 6)
+
+`scanner/diary.py` writes every alert, near miss, follow-up price and outcome
+to SQLite at `DATABASE_PATH` (WAL mode, one file on the persistent volume).
+Grading settles a winner alert at $1, $0 or 50 cents for an NFL tie, a
+clinched-over alert at $1 when the final combined score is above the line,
+and marks alerts on postponed or cancelled games "not graded" so they stay out
+of the totals. `scanner/web.py` serves `/health` and `/scorecard` as one-column
+phone pages (or JSON with `Accept: application/json`); both need
+`STATUS_TOKEN` as `?token=` or the `X-Status-Token` header and return 503 when
+no token is configured, so the pages are never open.
+
 ## Milestones
 
 | Tag | Milestone | Status |
@@ -200,7 +212,7 @@ rules and fires at exactly the three polls it should.
 | v0.3 | Score feed and matching | done |
 | v0.4 | Win probability | done |
 | v0.5 | Fees and alert rules | done |
-| v0.6 | Diary and scorecard | |
+| v0.6 | Diary and scorecard | done |
 | v0.7 | Phone alerts | |
 | v0.8 | Deploy and shadow weekend | |
 | v1.0 | Go live | |

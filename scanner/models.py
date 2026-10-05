@@ -246,6 +246,7 @@ class Alert:
     polymarket_score_differs: bool = False
     line: float | None = None
     combined_score: int | None = None
+    pick_side: str | None = None  # "home" or "away" for winner alerts, for grading
     message: str = ""
     enabled: bool = False  # whether ALERTS_ENABLED was true when it fired
 
