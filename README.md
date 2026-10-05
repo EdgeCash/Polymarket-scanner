@@ -46,7 +46,6 @@ docs/              winprob_report.md
 ## Running locally
 
 ```bash
-cd polymarket-scanner
 python3.12 -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev]"
 cp .env.example .env            # edit if needed; never commit .env
@@ -248,8 +247,8 @@ Any host that runs one Docker container continuously with a persistent disk
 and web-editable environment variables will do; Railway, Render and Fly.io
 all fit and cost roughly $5 to $10 a month. Steps, all doable from a phone:
 
-1. Create the service from this GitHub repository with the Docker build
-   context set to `polymarket-scanner/` (Dockerfile at that path).
+1. Create the service from this GitHub repository; the Dockerfile is at the
+   root.
 2. Attach a persistent volume mounted at `/data` (the diary lives at
    `/data/diary.db`).
 3. Set the environment variables from `.env.example`. Secrets
