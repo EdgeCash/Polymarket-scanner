@@ -460,6 +460,10 @@ class PolymarketReader:
             self._backoff_until = self._clock() + self._backoff_seconds
             self._backoff_seconds = min(self._backoff_seconds * 2, 30.0)
             raise
+        except PolymarketError:
+            raise
+        except Exception as exc:  # whatever the transport is, a failure is one kind
+            raise PolymarketError(f"{type(exc).__name__}: {exc}") from exc
         self._backoff_seconds = 1.0
         return result
 
