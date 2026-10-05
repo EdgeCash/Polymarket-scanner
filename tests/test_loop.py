@@ -505,3 +505,54 @@ def test_without_the_switch_nothing_is_sent_at_startup(model):
     feed.states[League.NFL] = [poll(0)["espn_event"]]
     assert scanner.run_forever(once=True) == 0
     assert sender.messages == []
+
+
+class ExplodingTransport:
+    """A transport that fails in a way the SDK would not translate."""
+
+    def get(self, path, query=None):
+        raise RuntimeError("HTTP 500 from the gateway")
+
+
+def test_any_transport_failure_becomes_a_price_feed_failure():
+    from scanner.polymarket import PolymarketError, PolymarketReader
+
+    reader = PolymarketReader(transport=ExplodingTransport(), sleep=lambda s: None)
+    with pytest.raises(PolymarketError):
+        reader.discover_leagues()
+
+
+def test_startup_and_refresh_survive_unexpected_exceptions(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model, games={League.NFL: [phi_jax_game()]})
+
+    def boom(league, slug):
+        raise RuntimeError("unexpected")
+
+    reader.list_games = boom
+    scanner.games_refreshed_at = None
+    scanner._refresh_games(clock.now(), force=True)  # must not raise
+    assert "unexpected" in scanner.status.last_error
+    assert scanner.price_fail_since is not None
+
+    fresh = Scanner(
+        load_settings(DATABASE_PATH=":memory:"),
+        reader=reader,
+        feed=feed,
+        notifier=Notifier(load_settings(DATABASE_PATH=":memory:"), FakeSender()),
+        diary=Diary(":memory:"),
+        model=model,
+        now=clock.now,
+        sleep=clock.sleep,
+    )
+    reader.discover_leagues = lambda: (_ for _ in ()).throw(RuntimeError("surprise"))
+    assert fresh.run_forever(once=True) == 1  # reported, not crashed
+    assert "surprise" in fresh.status.last_error
+
+
+def test_score_feed_surprise_counts_as_a_feed_failure(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model)
+    feed.fetch = lambda league: (_ for _ in ()).throw(KeyError("competitors"))
+    scanner.scan_once()
+    assert scanner.score_fail_since is not None

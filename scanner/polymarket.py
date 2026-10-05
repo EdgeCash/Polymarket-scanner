@@ -74,13 +74,13 @@ class SdkTransport:
         self._client = PolymarketUS(timeout=timeout, max_retries=1)
 
     def get(self, path: str, query: dict[str, Any] | None = None) -> Any:
-        from polymarket_us import APIConnectionError, APITimeoutError, RateLimitError
+        from polymarket_us import RateLimitError
 
         try:
             return self._client.get(path, query=query)
         except RateLimitError as exc:
             raise RateLimited(str(exc)) from exc
-        except (APIConnectionError, APITimeoutError) as exc:
+        except Exception as exc:  # any API, connection or decoding failure
             raise PolymarketError(f"{type(exc).__name__}: {exc}") from exc
 
     def close(self) -> None:
