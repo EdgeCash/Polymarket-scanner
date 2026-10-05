@@ -300,3 +300,38 @@ def test_test_message_command_needs_telegram_configured(monkeypatch):
     )
     assert entry.main(["--send-test-message"]) == 0
     assert sent and sent[0].startswith("Test message from the Polymarket football scanner")
+
+
+def test_token_and_chat_id_are_cleaned_of_pasted_whitespace():
+    seen = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["url"] = str(request.url)
+        seen["json"] = json.loads(request.read())
+        return httpx.Response(200, json={"ok": True})
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    sender = TelegramSender("123:SECRET\n", " 9999 \n", client=client)
+    assert sender.send("hi") is True
+    assert seen["url"] == "https://api.telegram.org/bot123:SECRET/sendMessage"
+    assert seen["json"]["chat_id"] == "9999"
+
+
+def test_a_sender_that_raises_never_crashes_the_notifier(caplog):
+    class Exploding:
+        def send(self, text):
+            raise httpx.InvalidURL("Invalid non-printable ASCII character in URL")
+
+    caplog.set_level(logging.ERROR)
+    notifier = Notifier(load_settings(ALERTS_ENABLED=True), Exploding())
+    assert notifier.send_system("hello") is False
+    assert notifier.send_test_message() is False
+    assert notifier.send_alert(brief_winner_alert()) is False
+    assert "InvalidURL" in caplog.text
+    assert "hello" not in caplog.text  # message bodies are not logged on failure
+
+
+def test_a_token_with_a_newline_cannot_crash_the_real_sender():
+    sender = TelegramSender("123:SECRET\n", "9999")
+    sender._token = "bad\ntoken"  # bypass the cleaning to prove the catch-all works
+    assert sender.send("hi") is False

@@ -167,6 +167,9 @@ class Scanner:
             self.status.games_watched = sum(len(g) for g in self.games.values())
         except PolymarketError as exc:
             self._price_failed(now, f"game list: {exc}")
+        except Exception as exc:  # a surprise must not take the scanner down
+            log.exception("game list refresh failed")
+            self._price_failed(now, f"game list: {type(exc).__name__}: {exc}")
 
     def _price_failed(self, now: datetime, detail: str) -> None:
         if self.price_fail_since is None:
@@ -192,6 +195,11 @@ class Scanner:
                 failed = True
                 self.status.last_error = str(exc)
                 log.warning("score feed: %s", exc)
+                continue
+            except Exception as exc:  # malformed data the parser did not expect
+                failed = True
+                self.status.last_error = f"{type(exc).__name__}: {exc}"
+                log.exception("score feed %s failed unexpectedly", league.value)
                 continue
             self.last_scores[league] = states
             self.tracker.update_all(states)
@@ -423,7 +431,8 @@ class Scanner:
         while not self.leagues:
             try:
                 self.start()
-            except PolymarketError as exc:
+            except Exception as exc:  # keep retrying; the web pages stay up meanwhile
+                self.status.last_error = f"startup: {type(exc).__name__}: {exc}"
                 if once:
                     log.error("cannot start: %s", exc)
                     return 1
