@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 from fastapi.testclient import TestClient
 
 from scanner.books import BookLine
@@ -271,12 +272,18 @@ def test_matchup_pages_render_from_the_diary():
         {"weather": {"temperature": 61, "precipitation": 10, "gust": 8}},
         at_time,
     )
+    from scanner.projection import fit, project
+
+    ratings = fit(diary.football_games("nfl"), "nfl")
+    projection = project(ratings, "5", "23", False, book)  # CLE at home to PIT
+    diary.upsert_projection("nfl", upcoming.game_id, at_time, "CLE", "PIT", projection, at_time)
     status = RuntimeStatus()
     status.gamelog = {
         "last_refresh": at_time.isoformat(),
         "games": {"nfl": 1},
         "backlog": 0,
         "stale": 12,
+        "projected": 1,
     }
     client = TestClient(create_app(settings, diary, status))
     assert client.get("/matchups").status_code == 401
@@ -286,6 +293,7 @@ def test_matchup_pages_render_from_the_diary():
     cle_logo = "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png"
     assert f"<img class='logo-sm' src='{cle_logo}' alt='CLE'>" in listing
     assert "CLE -2.5, total 41.5" in listing and "implied 19.5 – 22.0" in listing
+    assert f"model CLE {-projection['raw']['margin']:+.1f}, total" in listing
     page = client.get(f"/matchup/nfl/{upcoming.game_id}?token=phone-secret").text
     assert "<title>PIT at CLE</title>" in page
     assert "Pittsburgh Steelers" in page and "Cleveland Browns" in page
@@ -293,6 +301,13 @@ def test_matchup_pages_render_from_the_diary():
     assert "<span>Market implied score</span><b>PIT 19.5 – CLE 22.0</b>" in page
     assert "<span>Book win probability</span><b>CLE 58% / PIT 42%</b>" in page
     assert "Off 1st" in page and "Overall 1st of 2" in page and "Def 2nd" in page
+    assert "<h2>Projection</h2>" in page and "<th>Model</th><th>Blend</th><th>Book</th>" in page
+    assert (
+        "<td class='label'>Spread (CLE)</td>" in page and "<td class='label'>1st half</td>" in page
+    )
+    assert "Model vs book: " in page and "points more than the book" in page
+    assert "Thin: fewer than 3 games" in page
+    assert "1 and 1 games used, blend 14% model" in page
     assert "61°F, 10% rain, gusts 8 mph" in page
     assert "<td class='label'>Points</td>" in page and "<h2>Defense</h2>" in page
     assert "vs PIT 27-24" in page  # CLE's last result, from the log
@@ -305,7 +320,57 @@ def test_matchup_pages_render_from_the_diary():
     assert client.get("/matchup/nfl/999?token=phone-secret").status_code == 404
     assert client.get("/matchup/mlb/1?token=phone-secret").status_code == 404
     health = client.get("/health?token=phone-secret").text
-    assert "<th>Game log</th><td>last" in health and "NFL 1 games, 12 to re-read" in health
+    assert "<th>Game log</th><td>last" in health
+    assert "NFL 1 games, 12 to re-read, 1 sheets projected" in health
+    data = client.get(
+        f"/matchup/nfl/{upcoming.game_id}", headers={"accept": "application/json"}
+    ).json()
+    assert data["projection"]["raw"]["margin"] == pytest.approx(projection["raw"]["margin"])
+
+
+def test_scorecard_shows_the_projection_model():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+    from tests.conftest import load_fixture
+
+    client, _ = make_client()
+    scorecard = client.get("/scorecard?token=phone-secret").text
+    assert "Projection model (football" in scorecard and "no projections yet" in scorecard
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    kickoff = datetime(2026, 10, 4, 17, 0, tzinfo=UTC)
+    projection = {
+        "model": "v1",
+        "raw": {"margin": 4.0, "total": 44.0, "home_win": 0.6},
+        "blend": {"margin": 3.0, "total": 43.0, "home_win": 0.58},
+        "book": {"margin": 2.0, "total": 42.0, "home_win": 0.55},
+    }
+    diary.upsert_projection("nfl", record.game_id, kickoff, "CLE", "PIT", projection, kickoff)
+    diary.store_football_game(record, kickoff + timedelta(hours=4))
+    assert diary.grade_projections("nfl", kickoff + timedelta(hours=6)) == 1
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    scorecard = client.get("/scorecard?token=phone-secret").text
+    assert "<th>Graded</th><td class='num'>1 (NFL 1), 0 open</td>" in scorecard
+    assert (
+        "<th>Avg margin miss: model / blend / book</th><td class='num'>1.0 / 0.0 / 1.0</td>"
+        in scorecard
+    )
+    assert (
+        "Spread record, model 1+ pts off the book</th><td class='num'>1-0-0 (100%)</td>"
+        in scorecard
+    )
+    assert "Total record, model 5+ pts off the book</th><td class='num'>0-0-0</td>" in scorecard
+    assert "NFL PIT at CLE" in scorecard and "CLE -4.0 / 44.0" in scorecard and "24-27" in scorecard
+    assert "home win" in scorecard and "over win" in scorecard
+    data = client.get(
+        "/scorecard?token=phone-secret", headers={"accept": "application/json"}
+    ).json()
+    assert data["projections"]["graded"] == 1
+    off = make_client(PROJECTION_ENABLED=False)[0].get("/scorecard?token=phone-secret").text
+    assert "<h2>Projection model</h2><p class='note'>off</p>" in off
 
 
 def replace_slate(game, **changes):

@@ -501,3 +501,62 @@ def test_an_older_diary_gains_the_football_columns_and_its_rows_read_as_stale(tm
     assert diary.football_games_stale("nfl") == [] and diary.football_games_stale("cfb") == []
     diary.close()
     Diary(path).close()  # opening a migrated diary again changes nothing
+
+
+def test_projections_update_until_graded_from_the_log_and_feed_the_scorecard():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    kickoff = datetime(2026, 10, 11, 17, 0, tzinfo=UTC)
+    first = {
+        "model": "v1",
+        "raw": {"margin": 4.0, "total": 44.0, "home_win": 0.6},
+        "blend": {"margin": 3.0, "total": 43.0, "home_win": 0.58},
+        "book": {"margin": 2.0, "total": 42.0, "home_win": 0.55},
+    }
+    later = {**first, "raw": {"margin": 5.0, "total": 45.0, "home_win": 0.62}}
+    t0 = kickoff - timedelta(hours=30)
+    diary.upsert_projection("nfl", record.game_id, kickoff, "CLE", "PIT", first, t0)
+    diary.upsert_projection(
+        "nfl", record.game_id, kickoff, "CLE", "PIT", later, t0 + timedelta(hours=1)
+    )
+    row = diary.projection("nfl", record.game_id)
+    assert row["projection"] == later and row["first_projection"] == first
+    assert (
+        row["made_at"] == t0.isoformat()
+        and row["updated_at"] == (t0 + timedelta(hours=1)).isoformat()
+    )
+    assert row["outcome"] is None and row["grades"] is None and row["model"] == "v1"
+    assert list(diary.open_projections("nfl")) == [record.game_id]
+    assert diary.open_projections("cfb") == {}
+
+    # Not graded within the grace period, nor before the game's record is in the log.
+    assert diary.grade_projections("nfl", kickoff + timedelta(hours=1)) == 0
+    assert diary.grade_projections("nfl", kickoff + timedelta(hours=6)) == 0
+    diary.store_football_game(record, kickoff + timedelta(hours=4))
+    assert diary.grade_projections("nfl", kickoff + timedelta(hours=6)) == 1
+    row = diary.projection("nfl", record.game_id)
+    assert row["outcome"] == "graded" and row["grades"]["final"] == {"home": 27, "away": 24}
+    assert row["grades"]["ats"] == {"side": "home", "gap": 3.0, "result": "win"}  # 3 beat the 2
+    assert row["grades"]["clv"]["margin"] == pytest.approx(-2.5 - 2.0)  # closed CLE +2.5
+    assert diary.open_projections("nfl") == {}
+    diary.upsert_projection("nfl", record.game_id, kickoff, "CLE", "PIT", first, kickoff)
+    assert diary.projection("nfl", record.game_id)["projection"] == later  # graded rows are fixed
+
+    # A game that never lands in the log is given up on after ten days.
+    ghost_kickoff = kickoff - timedelta(days=12)
+    diary.upsert_projection("nfl", "ghost", ghost_kickoff, "AAA", "BBB", first, ghost_kickoff)
+    assert diary.grade_projections("nfl", kickoff) == 0
+    assert diary.projection("nfl", "ghost")["outcome"] == OUTCOME_NOT_GRADED
+
+    summary = diary.projection_summary()
+    assert summary["graded"] == 1 and summary["open"] == 0 and summary["by_sport"] == {"nfl": 1}
+    assert summary["margin_error"]["raw"] == 2.0 and summary["ats"]["3"]["wins"] == 1
+    recent = summary["recent"][0]
+    assert (recent["home"], recent["away"], recent["raw_margin"]) == ("CLE", "PIT", 5.0)
+    assert recent["final"] == {"home": 27, "away": 24} and recent["ou"]["side"] == "over"
+    assert diary.projection_summary(since=kickoff + timedelta(days=1))["graded"] == 0
+    assert diary.scorecard()["projections"]["graded"] == 1

@@ -587,6 +587,38 @@ def test_new_games_come_before_re_reads():
     assert summary.games_stored == 2 and summary.reread == 0 and summary.stale == 1
 
 
+def test_refresh_projects_upcoming_games_and_grades_them_once_the_game_lands():
+    log, diary, feed = build()
+    add_upcoming(feed)  # CLE v PIT again, 20 hours out
+    summary = log.refresh("nfl", NOW, budget=40)
+    assert summary.projected == 1 and summary.graded == 0
+    row = diary.projection("nfl", "upcoming-1")
+    assert row is not None and row["home"] == "CLE" and row["away"] == "PIT"
+    proj = row["projection"]
+    assert proj["games_used"] == {"home": 3, "away": 3} and not proj["thin"]
+    assert proj["raw"]["margin"] > 0  # CLE beat PIT in every logged game
+    assert proj["book"] is None  # the week fixture carries no line for the added game
+    assert sheet_from_diary(diary, "nfl", "upcoming-1")["projection"] == proj
+
+    # The game is played and its record lands in the log: the projection is graded.
+    played = replace(diary.football_games("nfl")[0], game_id="upcoming-1")
+    diary.store_football_game(played, NOW + timedelta(hours=24))
+    summary = log.refresh("nfl", NOW + timedelta(hours=30), budget=40)
+    assert summary.projected == 0 and summary.graded == 1
+    assert diary.projection("nfl", "upcoming-1")["outcome"] == "graded"
+
+
+def test_projections_can_be_switched_off():
+    settings = load_settings(DATABASE_PATH=":memory:", PROJECTION_ENABLED=False)
+    diary = Diary(":memory:")
+    feed = FakeFeed()
+    add_upcoming(feed)
+    log = FootballLog(settings, diary, feed=feed, now=lambda: NOW)
+    summary = log.refresh("nfl", NOW, budget=40)
+    assert summary.projected == 0 and diary.projection("nfl", "upcoming-1") is None
+    assert sheet_from_diary(diary, "nfl", "upcoming-1")["projection"] is None
+
+
 def test_past_weeks_are_backfilled_and_failures_do_not_stop_the_pass():
     log, diary, feed = build()
     feed.past[("nfl", 2)] = {
