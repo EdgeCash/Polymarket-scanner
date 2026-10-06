@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
+from scanner.books import BookLine
 from scanner.config import load_settings
 from scanner.diary import Diary
 from scanner.gamelog import (
@@ -13,11 +14,14 @@ from scanner.gamelog import (
     GameLogError,
     GameRecord,
     TeamRef,
+    _first_half_yards,
+    _team_ref,
     aggregate,
     build_sheet,
     first_half,
     last_n,
     league_ranks,
+    margin_ranks,
     parse_game_summary,
     parse_upcoming_summary,
     parse_week_scoreboard,
@@ -69,6 +73,65 @@ def test_nfl_summary_becomes_a_game_record_with_both_box_scores():
     assert home["plays"] is not None and home["sacks_taken"] is not None
     assert home["possession_seconds"] is not None and 0 < home["possession_seconds"] < 3600
     assert home["total_yards"] > 0 and home["penalty_yards"] is not None
+    assert record.home.logo == "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
+    assert (record.home.color, record.away.color) == ("472a08", "000000")
+    # First-half splits: touchdowns from the scoring plays, yards from the play-by-play.
+    assert (home["first_half_pass_td"], home["first_half_rush_td"]) == (1, 2)
+    assert (away["first_half_pass_td"], away["first_half_rush_td"]) == (1, 0)
+    assert (home["first_half_pass_yards"], home["first_half_rush_yards"]) == (181, 41)
+    assert home["first_half_total_yards"] == 222
+    assert (away["first_half_pass_yards"], away["first_half_rush_yards"]) == (109, 60)
+    assert home["first_half_total_yards"] < home["total_yards"]
+
+
+def test_first_half_yards_come_from_the_drives_and_skip_penalties_and_turnovers():
+    home = TeamRef("5", "CLE", "Cleveland Browns")
+
+    def play(kind, yards, period, **extra):
+        return {"type": {"text": kind}, "statYardage": yards, "period": {"number": period}, **extra}
+
+    raw = {
+        "drives": {
+            "previous": [
+                {
+                    "team": {"id": "5"},
+                    "plays": [
+                        play("Pass Reception", 10, 1),
+                        play("Rush", 5, 2),
+                        play("Penalty", 15, 1, isPenalty=True),
+                        play("Sack", -7, 2),
+                        play("Pass Incompletion", 0, 2),
+                        play("Rush", 40, 3),  # second half
+                        play("Pass Interception Return", 12, 1),
+                        play("Kickoff", 60, 1),
+                    ],
+                },
+                {"team": {"abbreviation": "PIT"}, "plays": [play("Rush", 20, 1)]},
+            ]
+        }
+    }
+    assert _first_half_yards(raw, home) == {
+        "home": {"pass": 3, "rush": 5, "total": 8},
+        "away": {"pass": 0, "rush": 20, "total": 20},
+    }
+    assert _first_half_yards({"drives": {}}, home) is None
+    assert _first_half_yards({"drives": {"previous": "nope"}}, home) is None
+    only_second_half = {
+        "drives": {"previous": [{"team": {"id": "5"}, "plays": [play("Rush", 9, 4)]}]}
+    }
+    assert _first_half_yards(only_second_half, home) is None
+
+
+def test_team_ref_keeps_only_secure_logos_and_six_digit_colours():
+    team = {"id": 1, "abbreviation": "aaa", "displayName": "Team A", "color": "abc"}
+    assert _team_ref({**team, "logos": [{"href": "https://a.espncdn.com/x.png"}]}).logo == (
+        "https://a.espncdn.com/x.png"
+    )
+    assert _team_ref({**team, "logo": "http://a.espncdn.com/x.png"}).logo is None
+    assert (
+        _team_ref(team).color is None and _team_ref({**team, "color": "00ff00"}).color == "00ff00"
+    )
+    assert _team_ref(team).abbreviation == "AAA" and _team_ref({"id": 1}) is None
 
 
 def test_college_summary_lacks_sacks_so_plays_are_counted_from_attempts():
@@ -83,6 +146,12 @@ def test_college_summary_lacks_sacks_so_plays_are_counted_from_attempts():
         record.home_stats["plays"] == record.home_stats["pass_att"] + record.home_stats["rush_att"]
     )
     assert record.away_stats["first_half_points"] == 10
+    assert record.home.logo == "https://a.espncdn.com/i/teamlogos/ncaa/500/324.png"
+    assert record.home.color == "006f71"
+    assert (
+        record.home_stats["first_half_pass_yards"],
+        record.home_stats["first_half_rush_yards"],
+    ) == (132, 100)
     assert parse_game_summary({"header": {}}, "cfb") is None
     assert parse_game_summary("nonsense", "cfb") is None
 
@@ -142,6 +211,11 @@ def stats(
         "sacks_taken": sacks,
         "pass_td": pass_td,
         "rush_td": rush_td,
+        "first_half_pass_td": 1,
+        "first_half_rush_td": 0,
+        "first_half_pass_yards": pass_yards // 2,
+        "first_half_rush_yards": rush_yards // 2,
+        "first_half_total_yards": pass_yards // 2 + rush_yards // 2,
     }
 
 
@@ -207,12 +281,18 @@ def test_aggregate_computes_per_game_figures_and_rates():
     assert first_half(games) == {
         "ppg": pytest.approx((17 + 10 + 7 + 21) / 4),
         "ppg_allowed": pytest.approx((3 + 14 + 21 + 10) / 4),
+        "pass_ypg": pytest.approx((125 + 150 + 90 + 155) / 4),
+        "rush_ypg": pytest.approx((60 + 45 + 30 + 75) / 4),
+        "pass_td": 1.0,
+        "rush_td": 0.0,
+        "pass_ypg_allowed": pytest.approx((75 + 100 + 130 + 110) / 4),
+        "rush_ypg_allowed": pytest.approx((40 + 50 + 70 + 55) / 4),
+        "pass_td_allowed": 1.0,
+        "rush_td_allowed": 0.0,
     }
     empty = aggregate([])
-    assert all(v is None for v in empty.values()) and first_half([]) == {
-        "ppg": None,
-        "ppg_allowed": None,
-    }
+    assert all(v is None for v in empty.values())
+    assert all(v is None for v in first_half([]).values())
     assert set(empty) == {m.key for m in METRICS}
 
 
@@ -238,6 +318,12 @@ def test_ranks_count_strictly_better_teams():
     assert "pace" not in ranks["1"]  # neither direction is better
     last3, _ = league_ranks(RECORDS, "last3")
     assert last3["4"]["ppg"] == 1 and last3["1"]["ppg"] == 2  # A: 24, 14, 35; D: 28, 23
+
+
+def test_overall_rank_is_the_season_point_margin():
+    # D +8.5, A +6.75, C -3, B -13.7 per game
+    assert margin_ranks(RECORDS) == {"4": 1, "1": 2, "3": 3, "2": 4}
+    assert margin_ranks([]) == {}
 
 
 # -- the sheet ----------------------------------------------------------------------
@@ -293,6 +379,27 @@ def test_build_sheet_fills_both_teams_and_advantages():
     }
     assert sheet["weather"]["temperature"] == 74 and sheet["predictor"]["home"] == 60.0
     assert sheet["polymarket"] == {"home": 0.55, "away": 0.47} and sheet["book"] is None
+    assert sheet["implied"] is None and sheet["win_probability"] is None
+    assert home["summary_ranks"] == {"offense": 1, "defense": 2, "overall": 2}
+    assert away["summary_ranks"] == {"offense": 4, "defense": 4, "overall": 4}
+    assert home["logo"] is None and home["color"] is None
+
+
+def test_build_sheet_turns_the_book_line_into_an_implied_score():
+    book = BookLine("DraftKings", -180, 150, None, 47.5, -110, -110, -3.5, -110, -110)
+    row = upcoming_row(book=book.as_dict())
+    row["slate"]["home"]["logo"] = "https://a.espncdn.com/i/teamlogos/nfl/500/aaa.png"
+    row["slate"]["home"]["color"] = "123456"
+    sheet = build_sheet(row, RECORDS, {}, None)
+    # AAA -3.5 with a total of 47.5: the market expects AAA 25.5, BBB 22.
+    assert sheet["implied"] == {"home": 25.5, "away": 22.0}
+    assert sheet["win_probability"]["home"] == pytest.approx(0.6164, abs=1e-3)
+    assert sheet["win_probability"]["away"] == pytest.approx(0.3836, abs=1e-3)
+    assert sheet["book"].provider == "DraftKings"
+    assert sheet["home"]["logo"] == "https://a.espncdn.com/i/teamlogos/nfl/500/aaa.png"
+    assert sheet["home"]["color"] == "123456" and sheet["away"]["logo"] is None
+    no_total = BookLine("DraftKings", -180, 150, None, None, None, None, -3.5, -110, -110)
+    assert build_sheet(upcoming_row(book=no_total.as_dict()), RECORDS, {}, None)["implied"] is None
 
 
 def test_sheet_from_diary_uses_stored_rows_and_the_pregame_line():

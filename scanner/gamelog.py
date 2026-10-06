@@ -60,6 +60,11 @@ STAT_KEYS = (
     "sacks_taken",
     "pass_td",
     "rush_td",
+    "first_half_pass_td",
+    "first_half_rush_td",
+    "first_half_pass_yards",
+    "first_half_rush_yards",
+    "first_half_total_yards",
 )
 
 
@@ -69,6 +74,8 @@ class TeamRef:
     abbreviation: str
     name: str
     location: str = ""
+    logo: str | None = None  # ESPN's logo image address
+    color: str | None = None  # the team's colour, as "RRGGBB"
 
 
 @dataclass(frozen=True, slots=True)
@@ -123,6 +130,8 @@ def vars_of(team: TeamRef) -> dict:
         "abbreviation": team.abbreviation,
         "name": team.name,
         "location": team.location,
+        "logo": team.logo,
+        "color": team.color,
     }
 
 
@@ -210,8 +219,19 @@ def _team_ref(team: Any, fallback_id: Any = None) -> TeamRef | None:
     name = team.get("displayName") or team.get("name")
     if team_id is None or not isinstance(abbreviation, str) or not isinstance(name, str):
         return None
+    logo = team.get("logo")
+    if not isinstance(logo, str):
+        logos = team.get("logos")
+        first = logos[0] if isinstance(logos, list) and logos else None
+        logo = first.get("href") if isinstance(first, dict) else None
+    color = team.get("color")
     return TeamRef(
-        str(team_id), abbreviation.strip().upper(), name.strip(), str(team.get("location") or "")
+        str(team_id),
+        abbreviation.strip().upper(),
+        name.strip(),
+        str(team.get("location") or ""),
+        logo if isinstance(logo, str) and logo.startswith("https://") else None,
+        color if isinstance(color, str) and len(color) == 6 else None,
     )
 
 
@@ -393,7 +413,8 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
     if set(stats) != {"home", "away"}:
         return None
 
-    touchdowns = {"home": [0, 0], "away": [0, 0]}  # [pass, rush]
+    # [pass TD, rush TD, first-half pass TD, first-half rush TD]
+    touchdowns = {"home": [0, 0, 0, 0], "away": [0, 0, 0, 0]}
     for play in raw.get("scoringPlays") or []:
         if not isinstance(play, dict):
             continue
@@ -402,16 +423,27 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
         text = str((play.get("type") or {}).get("text") or "").lower()
         if "touchdown" not in text:
             continue
+        period = _int((play.get("period") or {}).get("number"))
+        early = period is not None and period <= 2
         if text.startswith("passing"):
             touchdowns[side][0] += 1
+            touchdowns[side][2] += int(early)
         elif text.startswith("rushing"):
             touchdowns[side][1] += 1
+            touchdowns[side][3] += int(early)
+    half_yards = _first_half_yards(raw, home)
     home_lines, away_lines = _lines(sides["home"]), _lines(sides["away"])
     for side, score, lines in (("home", home_score, home_lines), ("away", away_score, away_lines)):
         stats[side]["points"] = score
         stats[side]["first_half_points"] = sum(lines[:2]) if len(lines) >= 2 else None
         stats[side]["pass_td"] = touchdowns[side][0]
         stats[side]["rush_td"] = touchdowns[side][1]
+        stats[side]["first_half_pass_td"] = touchdowns[side][2]
+        stats[side]["first_half_rush_td"] = touchdowns[side][3]
+        yards = half_yards.get(side) if half_yards else None
+        stats[side]["first_half_pass_yards"] = yards["pass"] if yards else None
+        stats[side]["first_half_rush_yards"] = yards["rush"] if yards else None
+        stats[side]["first_half_total_yards"] = yards["total"] if yards else None
     season = header.get("season") if isinstance(header.get("season"), dict) else {}
     return GameRecord(
         sport=sport,
@@ -429,6 +461,52 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
         home_stats=stats["home"],
         away_stats=stats["away"],
     )
+
+
+PASS_PLAY_WORDS = ("reception", "incompletion", "passing touchdown", "sack")
+RUSH_PLAY_WORDS = ("rush",)
+
+
+def _first_half_yards(raw: dict, home: TeamRef) -> dict[str, dict[str, int]] | None:
+    """First-half passing and rushing yards for each side, from the play-by-play.
+
+    ESPN's box score has no first-half split, so the drives are added up: every
+    play in the first two quarters that was a pass, a sack or a rush, by the
+    yardage ESPN credits it. Penalty plays are left out. None without drives.
+    """
+    drives = raw.get("drives") if isinstance(raw.get("drives"), dict) else {}
+    previous = drives.get("previous")
+    if not isinstance(previous, list):
+        return None
+    out = {side: {"pass": 0, "rush": 0, "total": 0} for side in ("home", "away")}
+    seen = False
+    for drive in previous:
+        if not isinstance(drive, dict):
+            continue
+        team = drive.get("team") if isinstance(drive.get("team"), dict) else {}
+        if str(team.get("id")) == home.team_id or team.get("abbreviation") == home.abbreviation:
+            side = "home"
+        else:
+            side = "away"
+        for play in drive.get("plays") or []:
+            if not isinstance(play, dict) or play.get("isPenalty"):
+                continue
+            period = _int((play.get("period") or {}).get("number"))
+            if period is None or period > 2:
+                continue
+            kind = str((play.get("type") or {}).get("text") or "").lower()
+            if "interception" in kind or "fumble" in kind:
+                continue
+            yards = _int(play.get("statYardage")) or 0
+            if any(word in kind for word in PASS_PLAY_WORDS):
+                out[side]["pass"] += yards
+            elif any(word in kind for word in RUSH_PLAY_WORDS):
+                out[side]["rush"] += yards
+            else:
+                continue
+            out[side]["total"] += yards
+            seen = True
+    return out if seen else None
 
 
 def parse_upcoming_summary(raw: Any) -> dict:
@@ -500,7 +578,20 @@ METRICS: tuple[Metric, ...] = (
 )
 METRIC_BY_KEY = {m.key: m for m in METRICS}
 SECTIONS = ("Offense", "Defense", "Situational")
-FIRST_HALF_KEYS = {"ppg": "first_half_points", "ppg_allowed": "first_half_points"}
+# Metrics with a first-half figure: (own or opponent's stats, the per-game stat key).
+FIRST_HALF_SOURCES = {
+    "ppg": ("own", "first_half_points"),
+    "pass_ypg": ("own", "first_half_pass_yards"),
+    "pass_td": ("own", "first_half_pass_td"),
+    "rush_ypg": ("own", "first_half_rush_yards"),
+    "rush_td": ("own", "first_half_rush_td"),
+    "ppg_allowed": ("opp", "first_half_points"),
+    "pass_ypg_allowed": ("opp", "first_half_pass_yards"),
+    "pass_td_allowed": ("opp", "first_half_pass_td"),
+    "rush_ypg_allowed": ("opp", "first_half_rush_yards"),
+    "rush_td_allowed": ("opp", "first_half_rush_td"),
+}
+FIRST_HALF_KEYS = set(FIRST_HALF_SOURCES)
 
 
 def _mean(values: list) -> float | None:
@@ -560,10 +651,12 @@ def aggregate(games: list[TeamGame]) -> dict[str, float | None]:
 
 
 def first_half(games: list[TeamGame]) -> dict[str, float | None]:
-    return {
-        "ppg": _mean([g.own.get("first_half_points") for g in games]),
-        "ppg_allowed": _mean([g.opp.get("first_half_points") for g in games]),
-    }
+    """First-half per-game figures for the metrics that have one."""
+    out = {}
+    for key, (side, stat) in FIRST_HALF_SOURCES.items():
+        rows = [g.own if side == "own" else g.opp for g in games]
+        out[key] = _mean([r.get(stat) for r in rows])
+    return out
 
 
 def team_games(records: list[GameRecord], team_id: str) -> list[TeamGame]:
@@ -644,6 +737,20 @@ def league_ranks(
     return ranks, len(teams)
 
 
+def margin_ranks(records: list[GameRecord]) -> dict[str, int]:
+    """Season point margin per game, ranked: the sheet's "overall" rank."""
+    teams: dict[str, TeamRef] = {}
+    for record in records:
+        teams[record.home.team_id] = record.home
+        teams[record.away.team_id] = record.away
+    margins: dict[str, float | None] = {}
+    for team_id in teams:
+        figures = aggregate(team_games(records, team_id))
+        ppg, allowed = figures.get("ppg"), figures.get("ppg_allowed")
+        margins[team_id] = None if ppg is None or allowed is None else ppg - allowed
+    return rank_values(margins, True)
+
+
 def streak(games: list[TeamGame]) -> str:
     if not games:
         return ""
@@ -661,7 +768,13 @@ def streak(games: list[TeamGame]) -> str:
 
 
 def team_block(
-    side: str, slate: dict, records: list[GameRecord], ranks: dict, season_ranks: dict, kickoff
+    side: str,
+    slate: dict,
+    records: list[GameRecord],
+    ranks: dict,
+    season_ranks: dict,
+    kickoff,
+    overall: dict | None = None,
 ) -> dict:
     team = slate[side]
     games = team_games(records, team["team_id"])
@@ -679,10 +792,18 @@ def team_block(
         }
         for g in games[-5:]
     ]
+    team_season_rank = season_ranks.get(team["team_id"], {})
     return {
         "team_id": team["team_id"],
         "abbreviation": team["abbreviation"],
         "name": team["name"],
+        "logo": team.get("logo"),
+        "color": team.get("color"),
+        "summary_ranks": {
+            "offense": team_season_rank.get("ppg"),
+            "defense": team_season_rank.get("ppg_allowed"),
+            "overall": (overall or {}).get(team["team_id"]),
+        },
         "record": (slate.get("records") or {}).get(side) or {},
         "poll_rank": (slate.get("ranks") or {}).get(side),
         "games": len(games),
@@ -708,8 +829,19 @@ def build_sheet(
     kickoff = _time(slate.get("date"))
     ranks, league_size = league_ranks(records, "last3")
     season_ranks, _ = league_ranks(records, "season")
-    home = team_block("home", slate, records, ranks, season_ranks, kickoff)
-    away = team_block("away", slate, records, ranks, season_ranks, kickoff)
+    overall = margin_ranks(records)
+    home = team_block("home", slate, records, ranks, season_ranks, kickoff, overall)
+    away = team_block("away", slate, records, ranks, season_ranks, kickoff, overall)
+    book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
+    implied = None
+    if book is not None and book.total is not None and book.home_spread is not None:
+        # The spread is the home team's handicap: TROY -10.5 with a total of 50.5
+        # means the market expects TROY 30.5, the visitor 20.
+        implied = {
+            "home": (book.total - book.home_spread) / 2.0,
+            "away": (book.total + book.home_spread) / 2.0,
+        }
+    fair = book.fair_moneyline() if book is not None else None
     advantages = {}
     for metric in METRICS:
         if metric.higher_is_better is None:
@@ -729,7 +861,9 @@ def build_sheet(
         "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
         "weather": extra.get("weather"),
         "predictor": extra.get("predictor"),
-        "book": BookLine.from_dict(slate.get("book")) if slate.get("book") else None,
+        "book": book,
+        "implied": implied,
+        "win_probability": None if fair is None else {"home": fair[0], "away": fair[1]},
         "polymarket": polymarket,
         "home": home,
         "away": away,

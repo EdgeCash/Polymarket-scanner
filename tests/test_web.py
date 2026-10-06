@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from fastapi.testclient import TestClient
 
+from scanner.books import BookLine
 from scanner.config import load_settings
 from scanner.diary import Diary
 from scanner.web import RuntimeStatus, create_app
@@ -27,6 +28,35 @@ def test_pages_require_the_status_token():
     assert client.get("/scorecard?token=wrong").status_code == 401
     assert client.get("/scorecard?token=phone-secret").status_code == 200
     assert client.get("/health", headers={"X-Status-Token": "phone-secret"}).status_code == 200
+
+
+def test_one_visit_with_the_token_signs_the_device_in():
+    client, _ = make_client()
+    assert client.get("/health").status_code == 401
+    wrong = client.get("/health?token=wrong")
+    assert wrong.status_code == 401 and "set-cookie" not in wrong.headers
+    signed = client.get("/health?token=phone-secret")
+    assert signed.status_code == 200
+    cookie = signed.headers["set-cookie"]
+    assert cookie.startswith("scanner_token=") and "HttpOnly" in cookie and "SameSite=lax" in cookie
+    assert "Max-Age=31536000" in cookie
+    # From now on the address needs no token on this device.
+    assert client.get("/health").status_code == 200
+    assert client.get("/scorecard").status_code == 200
+    assert client.get("/matchups").status_code == 200
+    assert "?token=" not in client.get("/health").text
+    assert "/logout" in client.get("/health").text
+    signed_out = client.get("/logout")
+    assert signed_out.status_code == 200 and "Signed out" in signed_out.text
+    assert client.get("/health").status_code == 401
+    stranger, _ = make_client()
+    stranger.cookies.set("scanner_token", "wrong")
+    assert stranger.get("/health").status_code == 401
+    # A token-less page never sets a cookie: only the token in the address signs in.
+    assert (
+        "set-cookie"
+        not in client.get("/health", headers={"X-Status-Token": "phone-secret"}).headers
+    )
 
 
 def test_pages_are_closed_when_no_token_is_configured():
@@ -232,7 +262,8 @@ def test_matchup_pages_render_from_the_diary():
     for name in ("espn_nfl_summary_final.json",):
         diary.store_football_game(parse_game_summary(load_fixture(name), "nfl"), at_time)
     _, _, games = parse_week_scoreboard(load_fixture("espn_nfl_week4.json"), "nfl")
-    upcoming = replace_slate(games[0], completed=False, date=at_time)
+    book = BookLine("DraftKings", -150, 130, None, 41.5, -110, -110, -2.5, -110, -110)
+    upcoming = replace_slate(games[0], completed=False, date=at_time, book=book)
     diary.store_football_upcoming(upcoming, at_time)
     diary.update_football_upcoming_extra(
         "nfl",
@@ -245,11 +276,18 @@ def test_matchup_pages_render_from_the_diary():
     client = TestClient(create_app(settings, diary, status))
     assert client.get("/matchups").status_code == 401
     listing = client.get("/matchups?token=phone-secret").text
-    assert "<h2>NFL</h2>" in listing and f"/matchup/nfl/{upcoming.game_id}?token=" in listing
-    assert "PIT at CLE" in listing and "NFL 1 games" in listing
+    assert "<h2>NFL</h2>" in listing and f"href='/matchup/nfl/{upcoming.game_id}'" in listing
+    assert "?token=" not in listing and "NFL 1 games" in listing
+    cle_logo = "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png"
+    assert f"<img class='logo-sm' src='{cle_logo}' alt='CLE'>" in listing
+    assert "CLE -2.5, total 41.5" in listing and "implied 19.5 – 22.0" in listing
     page = client.get(f"/matchup/nfl/{upcoming.game_id}?token=phone-secret").text
     assert "<title>PIT at CLE</title>" in page
     assert "Pittsburgh Steelers" in page and "Cleveland Browns" in page
+    assert f"<img src='{cle_logo}' alt='CLE'>" in page  # the team card
+    assert "<span>Market implied score</span><b>PIT 19.5 – CLE 22.0</b>" in page
+    assert "<span>Book win probability</span><b>CLE 58% / PIT 42%</b>" in page
+    assert "Off 1st" in page and "Overall 1st of 2" in page and "Def 2nd" in page
     assert "61°F, 10% rain, gusts 8 mph" in page
     assert "<td class='label'>Points</td>" in page and "<h2>Defense</h2>" in page
     assert "vs PIT 27-24" in page  # CLE's last result, from the log
