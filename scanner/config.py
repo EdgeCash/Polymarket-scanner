@@ -16,6 +16,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # changes the safety rules, which the brief says needs the owner's say-so.
 SCORE_STALE_SECONDS = 15.0  # a score read older than this cannot trigger an alert
 PRICE_STALE_SECONDS = 5.0  # a price read older than this cannot trigger an alert
+FRESHNESS_SKEW_SECONDS = 3.0  # a read stamped this far "after now" is fine: same clock
 MODEL_ESPN_MAX_DISAGREEMENT = 0.05  # model and ESPN must agree within 5 cents
 ESPN_MISSING_MARGIN = 0.02  # fair = model - 2 cents when ESPN has no number
 DEFAULT_THETA = 0.0695  # taker fee coefficient from the fee schedule, 1 Oct 2026

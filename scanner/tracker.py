@@ -9,15 +9,21 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from scanner.config import FRESHNESS_SKEW_SECONDS
 from scanner.models import GameState, GameStatus, League
 
 GameKey = tuple[League, str]
 
 
 def is_fresh(fetched_at: datetime, now: datetime, max_age_seconds: float) -> bool:
-    """True when a read is recent enough to act on. Future stamps are not fresh."""
+    """True when a read is recent enough to act on.
+
+    A pass notes ``now`` when it starts and then reads the feeds, so a read is
+    normally stamped a fraction of a second after ``now``. That is fresh. A stamp
+    far in the future means a clock problem and is not.
+    """
     age = (now - fetched_at).total_seconds()
-    return 0.0 <= age <= max_age_seconds
+    return -FRESHNESS_SKEW_SECONDS <= age <= max_age_seconds
 
 
 class GameTracker:

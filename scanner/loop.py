@@ -312,6 +312,7 @@ class Scanner:
         decision = evaluate_winner(book=None, **common)
         if decision.reason == "rule 4: no book":
             book = self._book(match.polymarket.moneyline_slug or "")
+            common["now"] = self._now()
             decision = evaluate_winner(book=book, **common)
         return decision
 
@@ -352,7 +353,9 @@ class Scanner:
             )
             decision = evaluate_clinched(book=None, **common)
             if decision.reason == "rule 4: no book":
-                decision = evaluate_clinched(book=self._book(total.market_slug), **common)
+                book = self._book(total.market_slug)
+                common["now"] = self._now()
+                decision = evaluate_clinched(book=book, **common)
             decisions.append(decision)
         return decisions
 
@@ -364,6 +367,7 @@ class Scanner:
         self._refresh_games(now)
         leagues = [lg for lg in self.leagues if self.games.get(lg)]
         self._fetch_scores(now, leagues)
+        now = self._now()  # the reads above took time; rules measure from here
 
         matches: list[Match] = []
         unmatched = 0

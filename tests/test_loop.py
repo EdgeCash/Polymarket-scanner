@@ -604,3 +604,44 @@ def test_last_error_on_the_status_page_is_short(model):
     assert (
         scanner.status.last_error == "Cloudflare rate-limit page (error 1015: temporarily banned)"
     )
+
+
+def test_reads_that_take_real_time_still_count_as_fresh(model):
+    """Regression: on the first live night every evaluation failed 'stale score'.
+
+    The pass noted its start time, then the ESPN and Polymarket reads were stamped a
+    fraction of a second later, which the freshness check treated as 'from the
+    future'. Here the fakes advance the clock inside each read, as real reads do.
+    """
+    clock = Clock()
+    scanner, reader, feed, sender = build(clock, model, enabled=True)
+
+    real_fetch = feed.fetch
+
+    def slow_fetch(league):
+        clock.t += 0.8  # ESPN took most of a second
+        return real_fetch(league)
+
+    feed.fetch = slow_fetch
+    real_quotes = reader.quotes_for_game
+    real_book = reader.book
+
+    def slow_quotes(game):
+        clock.t += 0.3
+        return real_quotes(game)
+
+    def slow_book(slug):
+        clock.t += 0.3
+        return real_book(slug)
+
+    reader.quotes_for_game = slow_quotes
+    reader.book = slow_book
+
+    feed.states[League.NFL] = [poll(0)["espn_event"]]
+    first = scanner.scan_once(at(0))
+    assert first.near_misses[0].reason == "not confirmed on two polls"
+    clock.t = 20
+    feed.states[League.NFL] = [poll(20)["espn_event"]]
+    second = scanner.scan_once(at(20))
+    assert [m.reason for m in second.near_misses] == []
+    assert len(second.alerts) == 1
