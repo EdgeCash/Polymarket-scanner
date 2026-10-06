@@ -14,6 +14,7 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
     zone = ZoneInfo(tz)
     alerts = diary.alerts_since(since)
     misses = diary.near_misses_by_reason(since)
+    miss_split = diary.near_misses_by_type(since)
     events = [
         e for e in diary.events(limit=500) if datetime.fromisoformat(e["created_at"]) >= since
     ]
@@ -53,10 +54,11 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
             f"${a['dollars_available']:,.0f} -> {a['outcome'] or 'ungraded'}"
         )
     if misses:
-        lines.append(
-            "Near misses: "
-            + ", ".join(f"{r} {n}" for r, n in sorted(misses.items(), key=lambda kv: -kv[1]))
-        )
+        for kind, title in (("winner", "winner"), ("clinched_over", "over")):
+            reasons = miss_split.get(kind, {})
+            if reasons:
+                ranked = sorted(reasons.items(), key=lambda kv: -kv[1])
+                lines.append(f"Near misses ({title}): " + ", ".join(f"{r} {n}" for r, n in ranked))
     else:
         lines.append("Near misses: none")
     lines.append(

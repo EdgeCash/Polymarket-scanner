@@ -72,3 +72,21 @@ def test_pages_never_leak_the_token_or_secrets():
     page = client.get("/health?token=phone-secret").text
     assert "phone-secret" not in page
     assert client.get("/").json()["pages"] == ["/health", "/scorecard"]
+
+
+def test_scorecard_near_miss_table_names_the_alert_type():
+    from scanner.models import League, NearMiss
+    from tests.conftest import at
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    diary.record_near_miss(
+        NearMiss(at(1), League.NFL, "g", "s", "PHI", "stale score", 0.98, 0.93, None)
+    )
+    diary.record_near_miss(
+        NearMiss(at(2), League.NFL, "g", "s", "OVER 47.5", "edge too small", 0.995, 0.99, 0.004)
+    )
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "<td>Winner</td><td>stale score</td>" in page
+    assert "<td>Over</td><td>edge too small</td>" in page

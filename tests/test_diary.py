@@ -250,3 +250,27 @@ def test_events_are_logged_newest_first():
     diary.log_event("feed_failure", "Score feed is failing", at(5))
     kinds = [e["kind"] for e in diary.events()]
     assert kinds == ["feed_failure", "heartbeat"]
+
+
+def test_near_misses_are_also_split_by_alert_type():
+    diary = Diary(":memory:")
+    diary.record_near_miss(
+        NearMiss(at(1), League.NFL, "g", "s", "PHI", "stale score", 0.98, 0.93, None)
+    )
+    diary.record_near_miss(
+        NearMiss(at(2), League.NFL, "g", "s", "PHI", "rule 3: edge too small", 0.98, 0.99, 0.004)
+    )
+    diary.record_near_miss(
+        NearMiss(at(3), League.NFL, "g", "s", "OVER 47.5", "stale score", 0.995, 0.99, None)
+    )
+    diary.record_near_miss(
+        NearMiss(at(4), League.NFL, "g", "s", "OVER 41.5", "edge too small", 0.995, 0.99, 0.004)
+    )
+    split = diary.near_misses_by_type()
+    assert split == {
+        "winner": {"stale score": 1, "rule 3: edge too small": 1},
+        "clinched_over": {"stale score": 1, "edge too small": 1},
+    }
+    card = diary.scorecard()
+    assert card["near_misses_by_type"] == split
+    assert card["near_misses"]["stale score"] == 2
