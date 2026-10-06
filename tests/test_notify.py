@@ -335,3 +335,23 @@ def test_a_token_with_a_newline_cannot_crash_the_real_sender():
     sender = TelegramSender("123:SECRET\n", "9999")
     sender._token = "bad\ntoken"  # bypass the cleaning to prove the catch-all works
     assert sender.send("hi") is False
+
+
+def test_shadow_report_splits_near_misses_by_type():
+    from datetime import UTC, datetime
+
+    from scanner.diary import Diary
+    from scanner.models import League, NearMiss
+    from scanner.report import shadow_report
+    from tests.conftest import at
+
+    diary = Diary(":memory:")
+    diary.record_near_miss(
+        NearMiss(at(1), League.NFL, "g", "s", "PHI", "stale score", 0.98, 0.93, None)
+    )
+    diary.record_near_miss(
+        NearMiss(at(2), League.NFL, "g", "s", "OVER 47.5", "edge too small", 0.995, 0.99, 0.004)
+    )
+    text = shadow_report(diary, datetime(2026, 10, 12, 12, 0, tzinfo=UTC), "America/Chicago")
+    assert "Near misses (winner): stale score 1" in text
+    assert "Near misses (over): edge too small 1" in text

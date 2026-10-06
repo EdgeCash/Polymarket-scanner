@@ -118,13 +118,16 @@ def render_scorecard(card: dict, settings: Settings) -> str:
         )
         return f"<h2>{html.escape(title)}</h2><table>{body}</table>"
 
-    misses = card["near_misses"]
+    by_type = card.get("near_misses_by_type") or {}
+    labelled = [("Winner", r, n) for r, n in by_type.get("winner", {}).items()] + [
+        ("Over", r, n) for r, n in by_type.get("clinched_over", {}).items()
+    ]
     miss_rows = (
         "".join(
-            f"<tr><td>{html.escape(reason)}</td><td class='num'>{n}</td></tr>"
-            for reason, n in sorted(misses.items(), key=lambda kv: -kv[1])
+            f"<tr><td>{kind}</td><td>{html.escape(reason)}</td><td class='num'>{n}</td></tr>"
+            for kind, reason, n in sorted(labelled, key=lambda row: (-row[2], row[0]))
         )
-        or "<tr><td>none</td><td class='num'>0</td></tr>"
+        or "<tr><td colspan='2'>none</td><td class='num'>0</td></tr>"
     )
     generated = html.escape(_local(card["generated_at"], settings.TZ))
     zone = html.escape(settings.TZ)
@@ -141,7 +144,7 @@ worse prices, and a few weeks is a small sample.</p>
 {section("Winner alerts", card["by_type"]["winner"])}
 {section("Clinched-over alerts", card["by_type"]["clinched_over"])}
 <h2>Near misses by reason</h2>
-<table>{miss_rows}</table>
+<table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
 </body></html>"""
 
