@@ -212,7 +212,10 @@ and marks alerts on postponed or cancelled games "not graded" so they stay out
 of the totals. `scanner/web.py` serves `/health` and `/scorecard` as one-column
 phone pages (or JSON with `Accept: application/json`); both need
 `STATUS_TOKEN` as `?token=` or the `X-Status-Token` header and return 503 when
-no token is configured, so the pages are never open.
+no token is configured, so the pages are never open. Opening any page once with
+`?token=` signs that device in: the token is kept in an `HttpOnly` cookie for a
+year, so the links between pages carry no token and a bookmark of `/matchups`
+works on its own. `/logout` clears the cookie. A wrong token sets nothing.
 
 ## Phone alerts (milestone 7)
 
@@ -271,7 +274,9 @@ on the iPad.
    `https://<domain>/health?token=<STATUS_TOKEN>` on the iPad. It should say
    "sleeping" with the next wake time, or "awake" during a game window. The
    "Build" row shows the short git commit Railway deployed, so you can check
-   that a merge has gone live without opening Railway.
+   that a merge has gone live without opening Railway. That one visit signs
+   the iPad in for a year; after it, `https://<domain>/matchups` with no token
+   works, and a bookmark of it is enough.
 5. Phone check (milestone 7): set `SEND_TEST_MESSAGE_ON_START=true`, let
    Railway redeploy, confirm the message on the phone, then set it back to
    `false`. Do this on a weekday, never during a game window.
@@ -370,8 +375,8 @@ and college football: a weekly scoreboard listing every game with scores,
 quarter scores, records and the book's line, and a summary per game with the
 box score (first downs, third and fourth downs, total, passing and rushing
 yards, penalties, turnovers, possession, and in the NFL plays and sacks), the
-scoring plays, and for a game still to come the venue, weather and ESPN's own
-projection.
+scoring plays, the drive-by-drive play list, each team's logo and colour, and
+for a game still to come the venue, weather and ESPN's own projection.
 
 `scanner/gamelog.py` fetches each finished game once and keeps it in the diary
 (`football_games`), on the same thread as the pre-game scan: the current and
@@ -383,14 +388,23 @@ with their weather and venue re-read hourly. From those rows it builds, for each
 team, season, home-or-away, first-half and last-three figures (points, passing
 and rushing yards and touchdowns, yards per play, third downs, sacks, turnovers,
 their "allowed" twins, turnover margin, penalties, pace, possession) and ranks
-every team in the log on each one over its last three games.
+every team in the log on each one over its last three games. ESPN's box score
+has no first-half split, so the first-half passing and rushing yards are added
+up from the play-by-play (every pass, sack or rush in the first two quarters,
+penalty plays left out) and the first-half touchdowns from the scoring plays.
 
-`/matchups` lists the upcoming games with a sheet; `/matchup/{sport}/{game id}`
-is the sheet: both teams' records, streaks, rest days and last five results,
-kickoff in the owner's zone, venue, surface, weather, the book's line, the
-Polymarket prices the pre-game scan last saw, ESPN's projection, and the three
-stat tables with the advantage on each row. Both pages need the status token.
-Nothing on a sheet is a recommendation, and the pages never place anything.
+`/matchups` lists the upcoming games with a sheet, each with its logos, the
+book's line and the market implied score; `/matchup/{sport}/{game id}` is the
+sheet: a card per team with its logo, record, streak, rest days, season offence,
+defence and overall (point margin) ranks and last five results, then kickoff in
+the owner's zone, venue, surface, weather, the book's line, the market implied
+score, the book's win probability with the margin removed, the Polymarket prices
+the pre-game scan last saw, ESPN's projection, and the three stat tables with
+the advantage on each row. The implied score is arithmetic on the book's line:
+with the home team at -3.5 and a total of 47.5 the market expects 25.5 to 22,
+home = (total - home spread) / 2 and away = (total + home spread) / 2. Both
+pages need the status token (or the cookie). Nothing on a sheet is a
+recommendation, and the pages never place anything.
 `python -m scanner --gamelog-once` runs one refresh by hand.
 
 ## Milestones

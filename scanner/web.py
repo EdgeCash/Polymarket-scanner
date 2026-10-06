@@ -12,8 +12,8 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from zoneinfo import ZoneInfo
 
-from fastapi import FastAPI, Header, Query, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import Cookie, FastAPI, Header, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 from scanner import __version__
 from scanner.books import BookLine
@@ -21,11 +21,16 @@ from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import FIRST_HALF_KEYS, FOOTBALL, METRICS, SECTIONS, sheet_from_diary
 
+COOKIE = "scanner_token"
+COOKIE_MAX_AGE = 365 * 24 * 3600  # a year: the owner signs in once per device
+LOCAL_HOSTS = ("testserver", "localhost", "127.0.0.1")
+
 STYLE = """
 <style>
-  :root { color-scheme: light dark; }
+  :root { color-scheme: light dark; --bg: #fff; --bg-alt: #f1f1f1; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #121212; --bg-alt: #1e1e1e; } }
   body { font-family: -apple-system, system-ui, sans-serif; margin: 0; padding: 16px;
-         max-width: 480px; font-size: 17px; line-height: 1.45; }
+         max-width: 480px; font-size: 17px; line-height: 1.45; background: var(--bg); }
   h1 { font-size: 22px; margin: 0 0 12px; }
   h2 { font-size: 18px; margin: 20px 0 8px; }
   table { border-collapse: collapse; width: 100%; }
@@ -37,22 +42,40 @@ STYLE = """
   code { font-size: 14px; }
   body.wide { max-width: 1100px; }
   .wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table.sheet { font-size: 13px; white-space: nowrap; }
-  table.sheet th, table.sheet td { padding: 5px 6px; text-align: right; }
-  table.sheet th.label, table.sheet td.label { text-align: left; }
-  table.sheet td.l3 { font-weight: 600; }
-  table.sheet th.side { text-align: center; }
-  .r1 { color: #1a7f37; font-weight: 600; } .r2 { color: #b26a00; font-weight: 600; }
-  .r3 { color: #b42318; font-weight: 600; }
-  .chip { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 12px;
-          margin: 2px 2px 0 0; color: #fff; }
+  table.sheet { font-size: 13px; white-space: nowrap; border: 1px solid #8884; }
+  table.sheet th, table.sheet td { padding: 6px 7px; text-align: right; }
+  table.sheet th, table.sheet td { border-bottom: 1px solid #8883; }
+  table.sheet th { font-size: 11px; text-transform: uppercase; opacity: .75; }
+  table.sheet th { letter-spacing: .03em; }
+  table.sheet th.label, table.sheet td.label { text-align: left; font-weight: 600; }
+  table.sheet th.label:first-child, table.sheet td.label:first-child {
+    position: sticky; left: 0; background: var(--bg); z-index: 1; }
+  table.sheet td.l3 { font-weight: 700; }
+  table.sheet th.side { text-align: center; font-size: 13px; opacity: 1; }
+  table.sheet tr:nth-child(even) td { background: #8881; }
+  table.sheet tr:nth-child(even) td.label:first-child { background: var(--bg-alt); }
+  td.when, td.who { white-space: nowrap; }
+  td.r1 { color: #1a7f37; font-weight: 700; background: #1a7f3722 !important; }
+  td.r2 { color: #b26a00; font-weight: 700; background: #b26a0022 !important; }
+  td.r3 { color: #b42318; font-weight: 700; background: #b4231822 !important; }
+  .chip { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 12px;
+          margin: 3px 3px 0 0; color: #fff; font-weight: 600; }
   .win { background: #1a7f37; } .loss { background: #b42318; }
+  .band { background: #0f172a; color: #fff; border-radius: 12px; padding: 14px; }
+  .band .note { opacity: .75; }
   .cards { display: flex; flex-wrap: wrap; gap: 12px; }
-  .card { flex: 1 1 260px; border: 1px solid #8884; border-radius: 8px; padding: 10px; }
-  .card h2 { margin: 0 0 4px; }
-  .strip { display: flex; flex-wrap: wrap; gap: 14px; font-size: 14px; margin: 12px 0; }
-  .strip div span { display: block; font-size: 11px; opacity: 0.7; text-transform: uppercase; }
-  .adv { text-align: center; font-weight: 700; }
+  .card { flex: 1 1 280px; display: flex; gap: 12px; align-items: flex-start; }
+  .card img { width: 64px; height: 64px; object-fit: contain; flex: none; }
+  .card h2 { margin: 0; font-size: 22px; line-height: 1.1; }
+  .card .ranks span { display: inline-block; margin-right: 10px; }
+  .strip { display: flex; flex-wrap: wrap; gap: 16px 22px; font-size: 14px; margin: 12px 0;
+           background: #1f6f8b; color: #fff; border-radius: 10px; padding: 12px 14px; }
+  .strip div span { display: block; font-size: 11px; opacity: 0.8; text-transform: uppercase; }
+  .strip div b { font-size: 16px; }
+  .adv { text-align: center; }
+  .adv img { width: 22px; height: 22px; vertical-align: middle; }
+  .logo-sm { width: 20px; height: 20px; vertical-align: middle; margin-right: 4px; }
+  .implied { font-size: 20px; font-weight: 700; }
 </style>
 """
 
@@ -183,6 +206,7 @@ worse prices, and a few weeks is a small sample.</p>
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
+<p class="note"><a href="/health">Status</a> · <a href="/matchups">Matchups</a></p>
 </body></html>"""
 
 
@@ -337,7 +361,23 @@ def _zone_label(tz: str) -> str:
     return ZONE_LABELS.get(tz) or tz
 
 
-def _team_card(team: dict, label: str) -> str:
+def _ordinal(n: int | None) -> str:
+    if n is None:
+        return "–"
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def _logo(team: dict, klass: str = "") -> str:
+    logo = team.get("logo")
+    if not logo:
+        return ""
+    alt = html.escape(team.get("abbreviation") or "")
+    klass_attr = f" class='{klass}'" if klass else ""
+    return f"<img{klass_attr} src='{html.escape(logo)}' alt='{alt}'>"
+
+
+def _team_card(team: dict, label: str, league_size: int) -> str:
     record = team.get("record") or {}
     chips = []
     for g in team.get("last5") or []:
@@ -350,7 +390,7 @@ def _team_card(team: dict, label: str) -> str:
     chip_html = "".join(chips) or "<span class='note'>no games in the log yet</span>"
     bits = []
     if record.get("total"):
-        bits.append(f"{record['total']} overall")
+        bits.append(f"{record['total']}")
     if record.get("home"):
         bits.append(f"{record['home']} home")
     if record.get("road"):
@@ -359,12 +399,21 @@ def _team_card(team: dict, label: str) -> str:
         bits.append(f"streak {team['streak']}")
     if team.get("rest_days") is not None:
         bits.append(f"{team['rest_days']} days rest")
+    ranks = team.get("summary_ranks") or {}
+    rank_html = ""
+    if any(v is not None for v in ranks.values()):
+        rank_html = (
+            "<div class='ranks note'>"
+            f"<span>Off {_ordinal(ranks.get('offense'))}</span>"
+            f"<span>Def {_ordinal(ranks.get('defense'))}</span>"
+            f"<span>Overall {_ordinal(ranks.get('overall'))} of {league_size}</span></div>"
+        )
     poll = f" <span class='note'>#{team['poll_rank']}</span>" if team.get("poll_rank") else ""
     return (
-        f"<div class='card'><span class='note'>{html.escape(label)}</span>"
-        f"<h2>{html.escape(team['abbreviation'])}{poll} "
-        f"<span class='note'>{html.escape(team['name'])}</span></h2>"
-        f"<div class='note'>{html.escape(' · '.join(bits))}</div><div>{chip_html}</div></div>"
+        f"<div class='card'>{_logo(team)}<div><span class='note'>{html.escape(label)}</span>"
+        f"<h2>{html.escape(team['name'])}{poll}</h2>"
+        f"<div class='note'>{html.escape(' · '.join(bits))}</div>{rank_html}"
+        f"<div>{chip_html}</div></div></div>"
     )
 
 
@@ -373,7 +422,8 @@ def _cents(value: float | None) -> str:
 
 
 def _strip(sheet: dict, settings: Settings) -> str:
-    items = [("Kickoff", _kickoff(sheet.get("kickoff"), settings.TZ))]
+    home, away = sheet["home"]["abbreviation"], sheet["away"]["abbreviation"]
+    items: list[tuple[str, str]] = [("Kickoff", _kickoff(sheet.get("kickoff"), settings.TZ))]
     venue = sheet.get("venue") or {}
     place = venue.get("name") or ""
     if venue.get("city"):
@@ -400,7 +450,6 @@ def _strip(sheet: dict, settings: Settings) -> str:
             text += f", gusts {weather['gust']} mph"
         items.append(("Weather", text))
     book: BookLine | None = sheet.get("book")
-    home, away = sheet["home"]["abbreviation"], sheet["away"]["abbreviation"]
     if book is not None:
         parts = []
         if book.home_spread is not None:
@@ -411,16 +460,34 @@ def _strip(sheet: dict, settings: Settings) -> str:
             parts.append(f"total {book.total:g}")
         if parts:
             items.append((book.provider or "Book", ", ".join(parts)))
+    implied = sheet.get("implied") or {}
+    if implied.get("home") is not None:
+        items.append(
+            ("Market implied score", f"{away} {implied['away']:.1f} – {home} {implied['home']:.1f}")
+        )
+    win = sheet.get("win_probability") or {}
+    if win.get("home") is not None:
+        items.append(
+            (
+                "Book win probability",
+                f"{home} {win['home'] * 100:.0f}% / {away} {win['away'] * 100:.0f}%",
+            )
+        )
     pm = sheet.get("polymarket") or {}
     if pm.get("home") is not None or pm.get("away") is not None:
         items.append(
-            ("Polymarket", f"{home} {_cents(pm.get('home'))} / {away} {_cents(pm.get('away'))}")
+            (
+                "Polymarket to win",
+                f"{home} {_cents(pm.get('home'))} / {away} {_cents(pm.get('away'))}",
+            )
         )
     predictor = sheet.get("predictor") or {}
     if predictor.get("home") is not None:
         text = f"{home} {predictor['home']:.1f}% / {away} {predictor['away']:.1f}%"
         items.append(("ESPN projection", text))
-    cells = "".join(f"<div><span>{html.escape(k)}</span>{html.escape(v)}</div>" for k, v in items)
+    cells = "".join(
+        f"<div><span>{html.escape(k)}</span><b>{html.escape(v)}</b></div>" for k, v in items
+    )
     return f"<div class='strip'>{cells}</div>"
 
 
@@ -446,14 +513,18 @@ def _metric_cells(team: dict, metric, league_size: int, reverse: bool) -> str:
 
 def _section_table(sheet: dict, section: str) -> str:
     away, home, n = sheet["away"], sheet["home"], sheet["league_size"]
-    away_head = f"{html.escape(away['abbreviation'])} ({away['games']} games)"
-    home_head = f"{html.escape(home['abbreviation'])} ({home['games']} games)"
-    columns = "<th>Season</th><th>{split}</th><th>1st half</th><th>Last 3</th><th>Rank</th>"
+    away_head = (
+        f"{_logo(away, 'logo-sm')}{html.escape(away['abbreviation'])} ({away['games']} games)"
+    )
+    home_head = (
+        f"{_logo(home, 'logo-sm')}{html.escape(home['abbreviation'])} ({home['games']} games)"
+    )
+    columns = "<th>Season</th><th>{split}</th><th>1st half</th><th>Last 3</th><th>L3 rank</th>"
     head = (
         f"<tr><th class='label'></th><th class='side' colspan='5'>{away_head}</th><th></th>"
         f"<th class='side' colspan='5'>{home_head}</th><th class='label'></th></tr>"
         f"<tr><th class='label'>Statistic</th>{columns.format(split='Away')}<th>Adv</th>"
-        "<th>Rank</th><th>Last 3</th><th>1st half</th><th>Home</th><th>Season</th>"
+        "<th>L3 rank</th><th>Last 3</th><th>1st half</th><th>Home</th><th>Season</th>"
         "<th class='label'>Statistic</th></tr>"
     )
     rows = []
@@ -461,11 +532,14 @@ def _section_table(sheet: dict, section: str) -> str:
         if metric.section != section:
             continue
         adv = sheet["advantages"].get(metric.key)
-        adv_text = "–" if adv is None else html.escape(sheet[adv]["abbreviation"])
+        if adv is None:
+            adv_html = "–"
+        else:
+            adv_html = _logo(sheet[adv], "") or html.escape(sheet[adv]["abbreviation"])
         label = html.escape(metric.label)
         rows.append(
             f"<tr><td class='label'>{label}</td>{_metric_cells(away, metric, n, False)}"
-            f"<td class='adv'>{adv_text}</td>{_metric_cells(home, metric, n, True)}"
+            f"<td class='adv'>{adv_html}</td>{_metric_cells(home, metric, n, True)}"
             f"<td class='label'>{label}</td></tr>"
         )
     table = f"<table class='sheet'>{head}{''.join(rows)}</table>"
@@ -479,12 +553,15 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
     sections = "".join(_section_table(sheet, section) for section in SECTIONS)
     week = f", week {sheet['week']}" if sheet.get("week") else ""
     subtitle = html.escape(sheet["sport"].upper() + week)
+    n = sheet["league_size"]
     footnote = (
         f"Per-game figures from ESPN box scores for this season's {sheet['games_in_log']} "
-        f"logged games. Ranks are among the {sheet['league_size']} teams in the log, over each "
-        'team\'s last 3 games; green is the top third, red the bottom third. "Away" and '
-        '"Home" are the team\'s own games at that venue type. Sacks and plays are not in '
-        "college box scores, so those rows show a dash there. Nothing on this page is a "
+        f"logged games. Ranks are among the {n} teams in the log; the table ranks use each "
+        "team's last 3 games, the Off, Def and Overall ranks under the names use the season "
+        "(points, points allowed, point margin). Green is the top third, red the bottom third. "
+        '"Away" and "Home" are the team\'s own games at that venue type. First-half yards '
+        "come from the play-by-play. Sacks and plays are not in college box scores. The market "
+        "implied score is the book's total split by its spread. Nothing on this page is a "
         "recommendation."
     )
     return f"""<!doctype html>
@@ -492,9 +569,11 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>{STYLE}</head>
 <body class="wide">
-<p class="note"><a href="/matchups?token=">All matchups</a> (add your token)</p>
-<h1>{html.escape(title)} <span class="note">{subtitle}</span></h1>
-<div class="cards">{_team_card(away, "Away")}{_team_card(home, "Home")}</div>
+<p class="note"><a href="/matchups">All matchups</a> · <a href="/health">Status</a></p>
+<div class="band">
+<h1 style="margin-top:0">{html.escape(title)} <span class="note">{subtitle}</span></h1>
+<div class="cards">{_team_card(away, "Away", n)}{_team_card(home, "Home", n)}</div>
+</div>
 {_strip(sheet, settings)}
 {sections}
 <p class="note">{footnote}</p>
@@ -516,13 +595,19 @@ def render_matchups(by_sport: dict[str, list[dict]], settings: Settings, status)
                 line = f"{slate['home']['abbreviation']} {book.home_spread:+g}"
                 if book.total is not None:
                     line += f", total {book.total:g}"
+                    implied_home = (book.total - book.home_spread) / 2.0
+                    implied_away = (book.total + book.home_spread) / 2.0
+                    implied = f"implied {implied_away:.1f} – {implied_home:.1f}"
+                    line += f"<br><span class='note'>{implied}</span>"
             joiner = "vs" if slate.get("neutral") else "at"
-            name = f"{slate['away']['abbreviation']} {joiner} {slate['home']['abbreviation']}"
-            href = f"/matchup/{html.escape(sport)}/{html.escape(row['game_id'])}?token="
+            away_name = _logo(slate["away"], "logo-sm") + html.escape(slate["away"]["abbreviation"])
+            home_name = _logo(slate["home"], "logo-sm") + html.escape(slate["home"]["abbreviation"])
+            name = f"{away_name} {joiner} {home_name}"
+            href = f"/matchup/{html.escape(sport)}/{html.escape(row['game_id'])}"
             items.append(
-                f"<tr><td>{html.escape(kickoff.strftime('%a %-I:%M %p'))}</td>"
-                f"<td><a href='{href}'>{html.escape(name)}</a></td>"
-                f"<td class='num'>{html.escape(line)}</td></tr>"
+                f"<tr><td class='when'>{html.escape(kickoff.strftime('%a %-I:%M %p'))}</td>"
+                f"<td class='who'><a href='{href}'>{name}</a></td>"
+                f"<td class='num'>{line}</td></tr>"
             )
         empty = "<tr><td colspan='3' class='note'>no games in the next two days</td></tr>"
         blocks.append(
@@ -535,9 +620,10 @@ def render_matchups(by_sport: dict[str, list[dict]], settings: Settings, status)
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matchups</title>{STYLE}</head>
 <body>
+<p class="note"><a href="/health">Status</a> · <a href="/scorecard">Scorecard</a></p>
 <h1>Matchups</h1>
 <p class="note">Upcoming football games with a matchup sheet. Times are {zone_label}.
-Add your token to each link. Game log: {log_note}.</p>
+Game log: {log_note}.</p>
 {"".join(blocks)}
 </body></html>"""
 
@@ -602,8 +688,8 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
 <body>
 <h1>Scanner status: <span class="{klass}">{"ok" if feeds_ok else "feed trouble"}</span></h1>
 <table>{body}</table>
-<p class="note"><a href="/scorecard?token=">Scorecard</a> ·
-<a href="/matchups?token=">Matchups</a> (add your token)</p>
+<p class="note"><a href="/scorecard">Scorecard</a> · <a href="/matchups">Matchups</a> ·
+<a href="/logout">Sign out of this device</a></p>
 </body></html>"""
 
 
@@ -625,14 +711,27 @@ def _jsonable(value):
 def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastAPI:
     app = FastAPI(title="polymarket-scanner", docs_url=None, redoc_url=None, openapi_url=None)
 
-    def authorised(token: str | None, header: str | None) -> bool:
+    def authorised(token: str | None, header: str | None, cookie: str | None = None) -> bool:
         expected = settings.STATUS_TOKEN.get_secret_value() if settings.STATUS_TOKEN else ""
         if not expected:
             return False
-        for candidate in (token, header):
+        for candidate in (token, header, cookie):
             if candidate and secrets.compare_digest(candidate, expected):
                 return True
         return False
+
+    def remember(response: Response, request: Request, token: str | None) -> Response:
+        """Sign the device in when the token came in the address: a cookie for a year."""
+        if token and authorised(token, None):
+            response.set_cookie(
+                COOKIE,
+                token,
+                max_age=COOKIE_MAX_AGE,
+                httponly=True,
+                samesite="lax",
+                secure=request.url.hostname not in LOCAL_HOSTS,
+            )
+        return response
 
     def denied() -> JSONResponse:
         if not settings.STATUS_TOKEN or not settings.STATUS_TOKEN.get_secret_value():
@@ -644,35 +743,44 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         request: Request,
         token: str | None = Query(default=None),
         x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
     ):
-        if not authorised(token, x_status_token):
+        if not authorised(token, x_status_token, scanner_token):
             return denied()
         if "application/json" in request.headers.get("accept", ""):
-            return JSONResponse({**status.as_dict(), "commit": settings.short_commit})
-        return HTMLResponse(render_health(status, settings))
+            page = JSONResponse({**status.as_dict(), "commit": settings.short_commit})
+        else:
+            page = HTMLResponse(render_health(status, settings))
+        return remember(page, request, token)
 
     @app.get("/scorecard", response_class=HTMLResponse)
     def scorecard(
         request: Request,
         token: str | None = Query(default=None),
         x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
     ):
-        if not authorised(token, x_status_token):
+        if not authorised(token, x_status_token, scanner_token):
             return denied()
         card = diary.scorecard()
         if "application/json" in request.headers.get("accept", ""):
-            return JSONResponse(card)
-        return HTMLResponse(render_scorecard(card, settings))
+            page = JSONResponse(card)
+        else:
+            page = HTMLResponse(render_scorecard(card, settings))
+        return remember(page, request, token)
 
     @app.get("/matchups", response_class=HTMLResponse)
     def matchups(
+        request: Request,
         token: str | None = Query(default=None),
         x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
     ):
-        if not authorised(token, x_status_token):
+        if not authorised(token, x_status_token, scanner_token):
             return denied()
         by_sport = {sport: diary.football_upcoming(sport) for sport in FOOTBALL}
-        return HTMLResponse(render_matchups(by_sport, settings, status))
+        page = HTMLResponse(render_matchups(by_sport, settings, status))
+        return remember(page, request, token)
 
     @app.get("/matchup/{sport}/{game_id}", response_class=HTMLResponse)
     def matchup(
@@ -681,15 +789,30 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         request: Request,
         token: str | None = Query(default=None),
         x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
     ):
-        if not authorised(token, x_status_token):
+        if not authorised(token, x_status_token, scanner_token):
             return denied()
         sheet = sheet_from_diary(diary, sport, game_id) if sport in FOOTBALL else None
         if sheet is None:
             return JSONResponse({"error": "no sheet for this game"}, status_code=404)
         if "application/json" in request.headers.get("accept", ""):
-            return JSONResponse(_jsonable(sheet))
-        return HTMLResponse(render_matchup(sheet, settings))
+            page = JSONResponse(_jsonable(sheet))
+        else:
+            page = HTMLResponse(render_matchup(sheet, settings))
+        return remember(page, request, token)
+
+    @app.get("/logout", response_class=HTMLResponse)
+    def logout():
+        page = HTMLResponse(
+            "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+            "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+            f"<title>Signed out</title>{STYLE}</head><body><h1>Signed out</h1>"
+            "<p>This device no longer holds the token. Open any page with "
+            "<code>?token=...</code> to sign in again.</p></body></html>"
+        )
+        page.delete_cookie(COOKIE)
+        return page
 
     @app.get("/")
     def root():

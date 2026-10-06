@@ -67,7 +67,8 @@
         "isActive": true,
         "venue": {
          "id": "3679"
-        }
+        },
+        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png"
        },
        "score": "27",
        "linescores": [
@@ -135,7 +136,8 @@
         "isActive": true,
         "venue": {
          "id": "3752"
-        }
+        },
+        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png"
        },
        "score": "24",
        "linescores": [

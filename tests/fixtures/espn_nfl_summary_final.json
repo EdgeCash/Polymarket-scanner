@@ -38,7 +38,198 @@
        "name": "Browns",
        "nickname": "Browns",
        "abbreviation": "CLE",
-       "displayName": "Cleveland Browns"
+       "displayName": "Cleveland Browns",
+       "color": "472a08",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-06-25T18:47Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T18:47Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-06-25T18:47Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T18:47Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/grayscale.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "grayscale"
+         ],
+         "lastUpdated": "2026-03-30T20:28Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/539babc5-e5fb-753b-8ae1-c15032a91ef4/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        }
+       ]
       },
       "score": "27",
       "linescores": [
@@ -83,7 +274,198 @@
        "name": "Steelers",
        "nickname": "Steelers",
        "abbreviation": "PIT",
-       "displayName": "Pittsburgh Steelers"
+       "displayName": "Pittsburgh Steelers",
+       "color": "000000",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-06-25T18:56Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/pit.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T18:56Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-06-25T18:56Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/pit.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T18:56Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/grayscale.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "grayscale"
+         ],
+         "lastUpdated": "2026-03-31T12:53Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/debcd592-8d53-71f1-fc15-5c8b8ef9df6e/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:30Z"
+        }
+       ]
       },
       "score": "24",
       "linescores": [
@@ -138,7 +520,23 @@
    "abbreviation": "NFL",
    "shortName": "NFL",
    "slug": "nfl",
-   "isTournament": false
+   "isTournament": false,
+   "logos": [
+    {
+     "href": "https://a.espncdn.com/i/teamlogos/leagues/500/nfl.png",
+     "rel": [
+      "full",
+      "default"
+     ]
+    },
+    {
+     "href": "https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png",
+     "rel": [
+      "full",
+      "dark"
+     ]
+    }
+   ]
   }
  },
  "boxscore": {
@@ -152,7 +550,9 @@
      "name": "Steelers",
      "abbreviation": "PIT",
      "displayName": "Pittsburgh Steelers",
-     "shortDisplayName": "Steelers"
+     "shortDisplayName": "Steelers",
+     "color": "000000",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
     },
     "statistics": [
      {
@@ -318,7 +718,9 @@
      "name": "Browns",
      "abbreviation": "CLE",
      "displayName": "Cleveland Browns",
-     "shortDisplayName": "Browns"
+     "shortDisplayName": "Browns",
+     "color": "472a08",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
     },
     "statistics": [
      {
@@ -486,7 +888,9 @@
      "name": "Steelers",
      "abbreviation": "PIT",
      "displayName": "Pittsburgh Steelers",
-     "shortDisplayName": "Steelers"
+     "shortDisplayName": "Steelers",
+     "color": "000000",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
     },
     "statistics": [
      {
@@ -1567,7 +1971,9 @@
      "name": "Browns",
      "abbreviation": "CLE",
      "displayName": "Cleveland Browns",
-     "shortDisplayName": "Browns"
+     "shortDisplayName": "Browns",
+     "color": "472a08",
+     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
     },
     "statistics": [
      {
@@ -2754,7 +3160,55 @@
     "id": "23",
     "uid": "s:20~l:28~t:23",
     "displayName": "Pittsburgh Steelers",
-    "abbreviation": "PIT"
+    "abbreviation": "PIT",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2783,7 +3237,55 @@
     "id": "5",
     "uid": "s:20~l:28~t:5",
     "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+    "abbreviation": "CLE",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2812,7 +3314,55 @@
     "id": "5",
     "uid": "s:20~l:28~t:5",
     "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+    "abbreviation": "CLE",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2841,7 +3391,55 @@
     "id": "5",
     "uid": "s:20~l:28~t:5",
     "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+    "abbreviation": "CLE",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2870,7 +3468,55 @@
     "id": "23",
     "uid": "s:20~l:28~t:23",
     "displayName": "Pittsburgh Steelers",
-    "abbreviation": "PIT"
+    "abbreviation": "PIT",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "field-goal",
@@ -2899,7 +3545,55 @@
     "id": "23",
     "uid": "s:20~l:28~t:23",
     "displayName": "Pittsburgh Steelers",
-    "abbreviation": "PIT"
+    "abbreviation": "PIT",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2928,7 +3622,55 @@
     "id": "5",
     "uid": "s:20~l:28~t:5",
     "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+    "abbreviation": "CLE",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "field-goal",
@@ -2957,7 +3699,55 @@
     "id": "23",
     "uid": "s:20~l:28~t:23",
     "displayName": "Pittsburgh Steelers",
-    "abbreviation": "PIT"
+    "abbreviation": "PIT",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/pit.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:56Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "touchdown",
@@ -2986,7 +3776,55 @@
     "id": "5",
     "uid": "s:20~l:28~t:5",
     "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+    "abbreviation": "CLE",
+    "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "default"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/nfl/500-dark/scoreboard/cle.png",
+      "width": 500,
+      "height": 500,
+      "alt": "",
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ],
+      "lastUpdated": "2024-06-25T18:47Z"
+     }
+    ]
    },
    "scoringType": {
     "name": "field-goal",
@@ -3087,7 +3925,21 @@
    "provider": {
     "id": "100",
     "name": "DraftKings",
-    "priority": 1
+    "priority": 1,
+    "logos": [
+     {
+      "href": "https://a.espncdn.com/i/betting/Draftkings_Light.svg",
+      "rel": [
+       "light"
+      ]
+     },
+     {
+      "href": "https://a.espncdn.com/i/betting/Draftkings_Dark.svg",
+      "rel": [
+       "dark"
+      ]
+     }
+    ]
    },
    "details": "PIT -2.5",
    "overUnder": 38.5,
@@ -3185,6 +4037,12 @@
     }
    },
    "header": {
+    "logo": {
+     "dark": "https://a.espncdn.com/i/espnbet/dark/espn-bet-square-off.svg",
+     "light": "https://a.espncdn.com/i/espnbet/espn-bet-square-off.svg",
+     "exclusivesLogoDark": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg",
+     "exclusivesLogoLight": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg"
+    },
     "text": "Game Odds"
    },
    "footer": {
@@ -3192,24 +4050,3105 @@
    }
   }
  ],
- "againstTheSpread": [
-  {
-   "team": {
-    "id": "23",
-    "uid": "s:20~l:28~t:23",
-    "displayName": "Pittsburgh Steelers",
-    "abbreviation": "PIT"
+ "drives": {
+  "previous": [
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 9,
+    "offensivePlays": 3,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 1
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "C.Boswell kicks 55 yards from PIT 35 to CLV 10. R.Sanders to CLV 31 for 21 yards (C.Holcomb; J.Sawyer).PENALTY on CLV-W.Reid, Offensive Holding, 10 yards, enforced at CLV 26."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to D.Boston to CLV 21 for 5 yards (A.Samuel)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right guard to CLV 23 for 2 yards (P.Queen)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to I.Bond to CLV 25 for 2 yards (J.Ramsey) [T.Watt]."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 15,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " C.Bojorquez punts 68 yards to PIT 7, Center-R.Sunahara. K.Wetjen pushed ob at PIT 22 for 15 yards (B.Whiteheart)."
+     }
+    ]
    },
-   "records": []
-  },
-  {
-   "team": {
-    "id": "5",
-    "uid": "s:20~l:28~t:5",
-    "displayName": "Cleveland Browns",
-    "abbreviation": "CLE"
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 78,
+    "offensivePlays": 17,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 1
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren left tackle to PIT 26 for 4 yards (T.Campbell)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete deep right to D.Metcalf."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) PENALTY on PIT-M.Pittman, False Start, 5 yards, enforced at PIT 26 - No Play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 15,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to D.Metcalf to PIT 36 for 15 yards (R.Hickman)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren left guard to PIT 37 for 1 yard (C.Schwesinger)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short left to D.Washington to PIT 43 for 6 yards (R.Hickman; G.Delpit)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": -23,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short middle to D.Metcalf to 50 for 7 yards (G.Delpit; C.Schwesinger).PENALTY on PIT-D.Metcalf, Taunting, 15 yards, enforced at 50."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass incomplete deep right to R.Wilson.PENALTY on CLV-D.Ward, Illegal Contact, 5 yards, enforced at PIT 35 - No Play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren right guard to PIT 40 for no gain (Q.Williams; C.Schwesinger)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 11,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass short middle to J.Warren to CLV 49 for 11 yards (Q.Williams; C.Schwesinger)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "PENALTY on CLV-M.Hall, Neutral Zone Infraction, 5 yards, enforced at CLV 49 - No Play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren up the middle to CLV 38 for 6 yards (M.Harden; R.Hickman). CLV-M.Graham was injured during the play."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 07:27."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren right guard to CLV 37 for 1 yard (E.Mascarenas-Arnold)."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": -7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at CLV 44 for -7 yards (M.Collins)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 9,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to M.Pittman to CLV 35 for 9 yards (D.Ward).PENALTY on CLV-M.Collins, Roughing the Passer, 15 yards, enforced at CLV 35.Penalty on CLV-M.Harden, Illegal Contact, declined.Penalty on CLV-J.Verse, Unnecessary Roughness, declined."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass incomplete short left to B.Skowronek."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren left guard to CLV 11 for 9 yards (T.Campbell)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "T.Homer right guard to CLV 9 for 2 yards (I.McGuire)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": -3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "T.Homer up the middle to CLV 12 for -3 yards (M.Collins, Q.Williams)."
+     },
+     {
+      "type": {
+       "id": "67",
+       "text": "Passing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 12,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "(Shotgun) A.Rodgers pass short middle to R.Wilson for 12 yards, TOUCHDOWN. C.Boswell extra point is GOOD, Center-C.Kuntz, Holder-C.Johnston."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 02:59."
+     }
+    ]
    },
-   "records": []
-  }
- ]
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 22,
+    "offensivePlays": 4,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 1
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Boswell kicks 65 yards from PIT 35 to end zone, Touchback to the CLV 35."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 21,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass deep left to K.Concepcion to PIT 44 for 21 yards (J.Brisker) [C.Heyward]."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete deep left to D.Boston (J.Dean)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins left end to PIT 43 for 1 yard (T.Watt)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete deep right to D.Boston (A.Samuel)."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Bojorquez punts 42 yards to PIT 1, impetus ends at PIT 1, Center-R.Sunahara, downed by CLV-D.Thomas."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 01:21."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 28,
+    "offensivePlays": 4,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 1
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "PENALTY on CLV-J.Verse, Encroachment, 5 yards, enforced at PIT 1 - No Play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 8,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren right end to PIT 14 for 8 yards (E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to J.Warren pushed ob at PIT 23 for 9 yards (C.Schwesinger, D.Ward)."
+     },
+     {
+      "type": {
+       "id": "2",
+       "text": "End Period",
+       "abbreviation": "EP"
+      },
+      "period": {
+       "number": 1
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "END QUARTER 1"
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren up the middle to PIT 29 for 6 yards (Q.Williams; E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "26",
+       "text": "Pass Interception Return",
+       "abbreviation": "INTR"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass deep right intended for M.Pittman INTERCEPTED by D.Ward (S.Williams) at CLV 44. D.Ward to CLV 44 for no gain (M.Pittman)."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 56,
+    "offensivePlays": 4,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right tackle to CLV 47 for 3 yards (N.Herbig)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 13,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to H.Fannin pushed ob at PIT 40 for 13 yards (J.Brisker; J.Dean)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 12,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short middle to Q.Judkins to PIT 28 for 12 yards (C.Holcomb; A.Samuel)."
+     },
+     {
+      "type": {
+       "id": "68",
+       "text": "Rushing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 28,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "(Shotgun) J.McLaughlin right end for 28 yards, TOUCHDOWN. A.Szmyt extra point is GOOD, Center-R.Sunahara, Holder-C.Bojorquez."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 12:14."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 5,
+    "offensivePlays": 3,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 20,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 62 yards from CLV 35 to PIT 3. K.Wetjen to PIT 23 for 20 yards (D.McMillon)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to D.Washington to PIT 23 for no gain (R.Hickman; A.Huntington)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) A.Rodgers pass short left to P.Freiermuth to PIT 28 for 5 yards (G.Delpit)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short middle to D.Metcalf (E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " C.Johnston punts 46 yards to CLV 26, Center-C.Kuntz, fair catch by K.Concepcion."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 10:38."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 74,
+    "offensivePlays": 4,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 60,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass deep left to D.Boston to PIT 14 for 60 yards (D.Everette)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #1 by CLV at 09:50."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "D.Watson pass short left to K.Concepcion pushed ob at PIT 9 for 5 yards (P.Queen)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to Q.Judkins to PIT 2 for 7 yards (Y.Black)."
+     },
+     {
+      "type": {
+       "id": "68",
+       "text": "Rushing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "Z.Zinter reported in as eligible.  Q.Judkins right guard for 2 yards, TOUCHDOWN. A.Szmyt extra point is GOOD, Center-R.Sunahara, Holder-C.Bojorquez."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 08:28."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 35,
+    "offensivePlays": 7,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 65 yards from CLV 35 to end zone, Touchback to the PIT 35."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short middle to P.Freiermuth to PIT 44 for 9 yards (G.Delpit)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) J.Warren right guard to PIT 46 for 2 yards (J.Verse; M.Collins)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 24,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle) J.Warren left end to CLV 30 for 24 yards (T.Campbell; S.Williams)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) A.Rodgers pass incomplete short left to M.Pittman (T.Campbell)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) A.Rodgers pass short right to M.Pittman pushed ob at CLV 24 for 6 yards (D.Ward)."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": -6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at CLV 30 for -6 yards (I.McGuire)."
+     },
+     {
+      "type": {
+       "id": "60",
+       "text": "Field Goal Missed",
+       "abbreviation": "FGM"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 48,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " C.Boswell 48 yard field goal is No Good, Wide Left, Center-C.Kuntz, Holder-C.Johnston."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 05:21."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 62,
+    "offensivePlays": 11,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to K.Concepcion to CLV 45 for 7 yards (C.Heyward). PIT-J.Dean was injured during the play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins left tackle to CLV 47 for 2 yards (N.Herbig; C.Heyward)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) PENALTY on CLV-L.Wypler, False Start, 5 yards, enforced at CLV 47 - No Play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to D.Boston to PIT 49 for 9 yards (D.Everette)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete short middle to K.Concepcion (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 25,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to K.Concepcion to PIT 24 for 25 yards (D.Everette)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Q.Judkins left end to PIT 23 for 1 yard (C.Heyward; P.Queen)."
+     },
+     {
+      "type": {
+       "id": "75",
+       "text": "Two-minute warning",
+       "abbreviation": "2Min Warn"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Two-Minute Warning"
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to Q.Judkins pushed ob at PIT 14 for 9 yards (P.Queen)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right guard to PIT 10 for 4 yards (Y.Black)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #1 by PIT at 01:47."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to D.Boston ran ob at PIT 4 for 6 yards.Penalty on PIT-P.Queen, Defensive Holding, declined.The Replay Official reviewed the first down ruling, and the play was REVERSED.(Shotgun) D.Watson pass short right to D.Boston ran ob at PIT 5 for 5 yards.PENALTY on PIT-P.Queen, Defensive Holding, 5 yards, enforced at PIT 10 - No Play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "D.Watson pass short left to Q.Judkins to PIT 1 for 4 yards (J.Brisker)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #2 by PIT at 01:29."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": -1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Q.Judkins right tackle to PIT 2 for -1 yards (A.Highsmith, C.Heyward)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #3 by PIT at 01:25."
+     },
+     {
+      "type": {
+       "id": "67",
+       "text": "Passing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "(Shotgun) D.Watson pass short right to H.Fannin for 2 yards, TOUCHDOWN.Penalty on PIT-T.Watt, Defensive Offside, declined. A.Szmyt extra point is GOOD, Center-R.Sunahara, Holder-C.Bojorquez."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 01:22."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 59,
+    "offensivePlays": 6,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 27,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 64 yards from CLV 35 to PIT 1. K.Wetjen to PIT 28 for 27 yards (A.Huntington; E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete deep left to P.Freiermuth. CLV-M.Hall was injured during the play."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #2 by CLV at 01:06."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 49,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass deep middle to R.Wilson to CLV 23 for 49 yards (T.Campbell)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) A.Rodgers pass incomplete short right to R.Wilson [J.Verse].PENALTY on CLV-M.Harden, Defensive Holding, 5 yards, enforced at CLV 23 - No Play."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at CLV 24 for -6 yards (A.Huntington).PENALTY on CLV-S.Williams, Illegal Use of Hands, 5 yards, enforced at CLV 18 - No Play."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short middle to R.Wilson [A.Huntington]."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short left to J.Warren (Q.Williams)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short middle [D.Barnett]."
+     },
+     {
+      "type": {
+       "id": "59",
+       "text": "Field Goal Good",
+       "abbreviation": "FG"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 31,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "C.Boswell 31 yard field goal is GOOD, Center-C.Kuntz, Holder-C.Johnston."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": -1,
+    "offensivePlays": 1,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 2
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "C.Boswell kicks 63 yards from PIT 35 to CLV 2. R.Sanders to CLV 31 for 29 yards (L.Nichols).PENALTY on CLV-W.Reid, Offensive Holding, 10 yards, enforced at CLV 26."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": -1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "D.Watson kneels to CLV 15 for -1 yards."
+     },
+     {
+      "type": {
+       "id": "65",
+       "text": "End of Half",
+       "abbreviation": "EH"
+      },
+      "period": {
+       "number": 2
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "END QUARTER 2"
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 0,
+    "offensivePlays": 3,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 25,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 55 yards from CLV 35 to PIT 10. K.Wetjen to PIT 35 for 25 yards (M.Corley)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren left end to PIT 34 for -1 yards (J.Verse)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "J.Warren right end to PIT 35 for 1 yard (M.Collins; C.Schwesinger)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short left to J.Warren."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " C.Johnston punts 57 yards to CLV 8, Center-C.Kuntz. K.Concepcion to CLV 22 for 14 yards (P.Wilson).\nPENALTY on CLV-M.Harden, Offensive Holding, 4 yards, enforced at CLV 8."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 8,
+    "offensivePlays": 5,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short middle to Q.Judkins to CLV 9 for 5 yards (P.Queen; R.Spears-Jennings).PENALTY on PIT-T.Watt, Defensive Offside, 5 yards, enforced at CLV 4 - No Play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right tackle to CLV 10 for 1 yard (K.Benton; P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to R.Sanders to CLV 15 for 5 yards (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete short left to K.Concepcion (D.Everette)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to R.Sanders to CLV 17 for 2 yards (P.Wilson; J.Brisker)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) PENALTY on CLV-K.Concepcion, False Start, 5 yards, enforced at CLV 17 - No Play."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete short right to Q.Judkins (T.Watt)."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 15,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Bojorquez punts 60 yards to PIT 28, Center-R.Sunahara. K.Wetjen to PIT 43 for 15 yards (D.Thomas; D.McMillon)."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 10:10."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 2,
+    "offensivePlays": 3,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren up the middle to PIT 48 for 5 yards (C.Schwesinger; R.Hickman)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass incomplete short left to D.Metcalf (E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at PIT 45 for -3 yards (A.Huntington)."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 10,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " C.Johnston punts 49 yards to CLV 6, Center-C.Kuntz. K.Concepcion pushed ob at CLV 16 for 10 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 08:38."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 34,
+    "offensivePlays": 8,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " (Shotgun) D.Watson right end to CLV 23 for 7 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right guard to CLV 32 for 9 yards (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) R.Sanders left guard to CLV 38 for 6 yards (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins up the middle to CLV 47 for 9 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins up the middle to 50 for 3 yards (T.Watt)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 9,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short middle to J.Jeudy to PIT 41 for 9 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) R.Sanders right guard to PIT 38 for 3 yards (J.Sawyer; S.Joseph)."
+     },
+     {
+      "type": {
+       "id": "29",
+       "text": "Fumble Recovery (Opponent)"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson up the middle to PIT 43 for -5 yards (T.Watt). FUMBLES (T.Watt), RECOVERED by PIT-T.Watt at 50."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 04:13."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 5,
+    "offensivePlays": 5,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass short left to B.Skowronek to CLV 43 for 7 yards (T.Campbell). ** Injury Update: CLV-M.Hall has returned to the game."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 13,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren left guard to CLV 30 for 13 yards (G.Delpit)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) PENALTY on PIT-M.Iheanachor, False Start, 5 yards, enforced at CLV 30 - No Play."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete deep right to R.Wilson [S.Williams]."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete deep middle to D.Metcalf [A.Huntington]."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": -10,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at CLV 45 for -10 yards (M.Hall)."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Johnston punts 45 yards to end zone, Center-C.Kuntz, Touchback."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 01:13."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 15,
+    "offensivePlays": 4,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 3
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right guard to CLV 25 for 5 yards (Y.Black; S.Joseph)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 3,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins up the middle to CLV 28 for 3 yards (C.Heyward)."
+     },
+     {
+      "type": {
+       "id": "2",
+       "text": "End Period",
+       "abbreviation": "EP"
+      },
+      "period": {
+       "number": 3
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "END QUARTER 3"
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins up the middle to CLV 35 for 7 yards (P.Queen; R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "26",
+       "text": "Pass Interception Return",
+       "abbreviation": "INTR"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass deep middle intended for D.Boston INTERCEPTED by R.Spears-Jennings [J.Sawyer] at PIT 23. R.Spears-Jennings to PIT 23 for no gain (D.Boston).PENALTY on PIT-D.Everette, Defensive Pass Interference, 42 yards, enforced at CLV 35 - No Play.The Replay Official reviewed the pass was not tipped ruling, and the play was REVERSED.(Shotgun) D.Watson pass deep middle intended for D.Boston INTERCEPTED by R.Spears-Jennings (J.Sawyer) [J.Sawyer] at PIT 23. R.Spears-Jennings to PIT 23 for no gain (D.Boston)."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 77,
+    "offensivePlays": 6,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren right guard to PIT 30 for 7 yards (I.McGuire; E.McNeil-Warren)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "J.Warren left tackle to PIT 33 for 3 yards (T.Campbell).PENALTY on PIT-M.Pittman, Illegal Shift, 5 yards, enforced at PIT 30 - No Play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 43,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass deep right to D.Metcalf to CLV 32 for 43 yards (M.Harden) [D.Ward]."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers sacked at CLV 36 for -4 yards (S.Williams)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 13,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to J.Warren to CLV 23 for 13 yards (G.Delpit). CLV-G.Delpit was injured during the play."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 2,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren left guard to CLV 21 for 2 yards (C.Schwesinger)."
+     },
+     {
+      "type": {
+       "id": "67",
+       "text": "Passing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 21,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "(Shotgun) A.Rodgers pass deep middle to D.Washington for 21 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. A.Rodgers pass to J.Warren is complete. ATTEMPT FAILS. ** Injury Update: CLV-G.Delpit has returned to the game."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 10:10."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 40,
+    "offensivePlays": 7,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 33,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Boswell kicks 64 yards from PIT 35 to CLV 1. M.Corley to CLV 34 for 33 yards (C.Holcomb)."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson sacked at CLV 30 for -4 yards (T.Watt)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 10,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to Q.Judkins to CLV 40 for 10 yards (K.Benton)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 21,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson scrambles left end to PIT 39 for 21 yards (R.Spears-Jennings).PENALTY on PIT-A.Samuel, Defensive Holding, 5 yards, enforced at PIT 39."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) Q.Judkins right tackle to PIT 33 for 1 yard (K.Benton)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete short left to H.Fannin."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #1 by CLV at 07:39."
+     },
+     {
+      "type": {
+       "id": "9",
+       "text": "Fumble Recovery (Own)"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 7,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson scrambles right end to PIT 31 for 2 yards (C.Heyward). FUMBLES (C.Heyward), and recovers at PIT 26."
+     },
+     {
+      "type": {
+       "id": "59",
+       "text": "Field Goal Good",
+       "abbreviation": "FG"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 44,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": " A.Szmyt 44 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez."
+     },
+     {
+      "type": {
+       "id": "74",
+       "text": "Official Timeout",
+       "abbreviation": "Off TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Official Timeout at 06:37."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 5,
+    "offensivePlays": 3,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 24,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 57 yards from CLV 35 to PIT 8. K.Wetjen pushed ob at PIT 32 for 24 yards (D.Thomas)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) J.Warren up the middle to PIT 37 for 5 yards (C.Schwesinger; A.Huntington)."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Rodgers pass incomplete short right to J.Warren."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short left to P.Freiermuth."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Johnston punts 62 yards to CLV 1, Center-C.Kuntz, downed by PIT-B.Echols."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 18,
+    "offensivePlays": 5,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "D.Watson up the middle to CLV 2 for 1 yard (Y.Black; C.Heyward).Penalty on CLV-K.Concepcion, Illegal Shift, declined."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 15,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to D.Boston to CLV 17 for 15 yards (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Q.Judkins up the middle to CLV 18 for 1 yard (J.Brisker; Y.Black)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short right to Q.Judkins to CLV 19 for 1 yard (J.Brisker)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #1 by PIT at 03:47."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete deep left to H.Fannin."
+     },
+     {
+      "type": {
+       "id": "52",
+       "text": "Punt",
+       "abbreviation": "PUNT"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Bojorquez punts 81 yards to end zone, Center-R.Sunahara, Touchback."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 80,
+    "offensivePlays": 8,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 13,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to R.Wilson to PIT 33 for 13 yards (M.Harden). PIT-R.Wilson was injured during the play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 22,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass deep left to D.Metcalf pushed ob at CLV 45 for 22 yards (T.Campbell)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short right to G.Bernard to CLV 39 for 6 yards (D.Ward)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 28,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) A.Rodgers pass deep left to D.Metcalf pushed ob at CLV 11 for 28 yards (T.Campbell). CLV-T.Campbell was injured during the play."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) PENALTY on PIT, Delay of Game, 5 yards, enforced at CLV 11 - No Play."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 5,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass short middle to G.Bernard to CLV 11 for 5 yards (M.Blackmon)."
+     },
+     {
+      "type": {
+       "id": "75",
+       "text": "Two-minute warning",
+       "abbreviation": "2Min Warn"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Two-Minute Warning"
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short right to D.Washington (R.Hickman). ** Injury Update: CLV-T.Campbell has returned to the game."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short middle to D.Washington."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 8,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass incomplete short middle to D.Washington (E.McNeil-Warren).PENALTY on CLV-E.McNeil-Warren, Defensive Pass Interference, 8 yards, enforced at CLV 11 - No Play."
+     },
+     {
+      "type": {
+       "id": "67",
+       "text": "Passing Touchdown",
+       "abbreviation": "TD"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 3,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "A.Rodgers pass short right to P.Freiermuth for 3 yards, TOUCHDOWN. TWO-POINT CONVERSION ATTEMPT. A.Rodgers rushes up the middle. ATTEMPT SUCCEEDS."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 1,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": " PENALTY on CLV-J.Verse, Defensive Offside, 1 yard, enforced at CLV 2 - No Play."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": 36,
+    "offensivePlays": 7,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 26,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "C.Boswell kicks 65 yards from PIT 35 to CLV 0. R.Sanders to CLV 26 for 26 yards (L.Nichols)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 17,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass deep middle to J.Jeudy to CLV 43 for 17 yards (A.Samuel)."
+     },
+     {
+      "type": {
+       "id": "8",
+       "text": "Penalty",
+       "abbreviation": "PEN"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -5,
+      "isPenalty": true,
+      "scoringPlay": false,
+      "text": "(No Huddle, Shotgun) PENALTY on CLV-Z.Johnson, False Start, 5 yards, enforced at CLV 43 - No Play.  10-second runoff."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 12,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short left to H.Fannin pushed ob at 50 for 12 yards (J.Brisker)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 10,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short middle to J.Jeudy ran ob at PIT 40 for 10 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "24",
+       "text": "Pass Reception",
+       "abbreviation": "REC"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 6,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass short middle to K.Concepcion to PIT 34 for 6 yards (R.Spears-Jennings)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #2 by PIT at 00:38."
+     },
+     {
+      "type": {
+       "id": "7",
+       "text": "Sack"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -4,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson sacked at PIT 38 for -4 yards (P.Wilson)."
+     },
+     {
+      "type": {
+       "id": "21",
+       "text": "Timeout",
+       "abbreviation": "TO"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "Timeout #2 by CLV at 00:19."
+     },
+     {
+      "type": {
+       "id": "3",
+       "text": "Pass Incompletion"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) D.Watson pass incomplete short right to K.Concepcion."
+     },
+     {
+      "type": {
+       "id": "59",
+       "text": "Field Goal Good",
+       "abbreviation": "FG"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 56,
+      "isPenalty": false,
+      "scoringPlay": true,
+      "text": "A.Szmyt 56 yard field goal is GOOD, Center-R.Sunahara, Holder-C.Bojorquez."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "23",
+     "abbreviation": "PIT"
+    },
+    "yards": 0,
+    "offensivePlays": 1,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "53",
+       "text": "Kickoff",
+       "abbreviation": "K"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "A.Szmyt kicks 65 yards from CLV 35 to end zone, Touchback to the PIT 35."
+     },
+     {
+      "type": {
+       "id": "26",
+       "text": "Pass Interception Return",
+       "abbreviation": "INTR"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "(Shotgun) A.Rodgers pass deep right intended for R.Wilson INTERCEPTED by G.Delpit at CLV 18. G.Delpit to CLV 18 for no gain (R.Wilson). ** Injury Update: PIT-R.Wilson has returned to the game."
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "5",
+     "abbreviation": "CLE"
+    },
+    "yards": -1,
+    "offensivePlays": 1,
+    "start": {
+     "period": {
+      "type": "quarter",
+      "number": 4
+     }
+    },
+    "plays": [
+     {
+      "type": {
+       "id": "5",
+       "text": "Rush",
+       "abbreviation": "RUSH"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": -1,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": " D.Watson kneels to CLV 17 for -1 yards."
+     },
+     {
+      "type": {
+       "id": "66",
+       "text": "End of Game",
+       "abbreviation": "EG"
+      },
+      "period": {
+       "number": 4
+      },
+      "statYardage": 0,
+      "isPenalty": false,
+      "scoringPlay": false,
+      "text": "END GAME"
+     }
+    ]
+   }
+  ]
+ }
 }
