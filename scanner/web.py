@@ -20,6 +20,7 @@ from scanner.books import BookLine
 from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import FIRST_HALF_KEYS, FOOTBALL, METRICS, SECTIONS, sheet_from_diary
+from scanner.stakes import gate
 
 COOKIE = "scanner_token"
 COOKIE_MAX_AGE = 365 * 24 * 3600  # a year: the owner signs in once per device
@@ -51,7 +52,7 @@ STYLE = """
   table.sheet th.label:first-child, table.sheet td.label:first-child {
     position: sticky; left: 0; background: var(--bg); z-index: 1; }
   table.sheet td.l3 { font-weight: 700; }
-  table.sheet td.left { text-align: left; }
+  table.sheet th.left, table.sheet td.left { text-align: left; }
   table.sheet th.side { text-align: center; font-size: 13px; opacity: 1; }
   table.sheet tr:nth-child(even) td { background: #8881; }
   table.sheet tr:nth-child(even) td.label:first-child { background: var(--bg-alt); }
@@ -205,6 +206,7 @@ worse prices, and a few weeks is a small sample.</p>
 {_observation_section(card.get("observations") or {}, settings)}
 {_pregame_section(card.get("pregame") or {}, settings)}
 {_projection_section(card.get("projections") or {}, settings)}
+{_stake_section(card.get("stakes") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
@@ -376,6 +378,65 @@ def _projection_section(pj: dict, settings: Settings) -> str:
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
 
 
+def _stake_section(st: dict, settings: Settings) -> str:
+    """What the model would have staked, and how that paper money did."""
+    title = "Stake suggestions (shadow until the gate opens, nothing placed)"
+    if not settings.STAKE_ENABLED or not settings.PROJECTION_ENABLED:
+        return "<h2>Stake suggestions</h2><p class='note'>off</p>"
+    if not st or not st.get("suggested"):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>no suggestions yet</p>"
+    markets = ", ".join(
+        f"{k} {v['suggested']}" for k, v in st["by_market"].items() if v["suggested"]
+    )
+    rows = [
+        ("Suggested", f"{st['suggested']} ({st['open']} open, {st['shown']} shown on a sheet)"),
+        ("By market", markets or "none"),
+        ("Graded", f"{st['graded']} ({st['not_graded']} not graded)"),
+        ("Wins / losses / pushes", f"{st['wins']} / {st['losses']} / {st['pushes']}"),
+        ("Staked (paper)", _money(st["staked"])),
+        ("Profit (paper, after fees)", _money(st["profit"])),
+        ("Return on stake", _pct(st["roi"])),
+        ("Avg edge when suggested", _signed_cents(st["avg_edge"])),
+    ]
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    recent = "".join(
+        "<tr><td>{when}<br>{game}</td><td>{side}<br><span class='note'>{market}</span></td>"
+        "<td class='num'>{buy}<br>{model}</td><td class='num'>{edge}<br>{stake}</td>"
+        "<td>{result}</td></tr>".format(
+            when=html.escape(_local(r["kickoff"], settings.TZ)),
+            game=html.escape(f"{r['sport'].upper()} {r['away']} at {r['home']}"),
+            side=html.escape(r["side_label"]),
+            market=html.escape(r["market"] + ("" if r["gate_open"] else ", shadow")),
+            buy=html.escape(f"{r['buy_price'] * 100:.1f}c"),
+            model=html.escape(f"model {r['model_prob'] * 100:.1f}%"),
+            edge=html.escape(_signed_cents(r["edge"])),
+            stake=html.escape(f"${r['stake']:.0f}"),
+            result=html.escape(
+                f"{r['outcome']} {_money(r['profit'])}"
+                if r["outcome"] in ("win", "loss", "push")
+                else (r["outcome"] or "open")
+            ),
+        )
+        for r in st.get("recent") or []
+    )
+    table = (
+        "<table><tr><th>Game</th><th>Side</th><th>Price / model</th><th>Edge / stake</th>"
+        f"<th>Result</th></tr>{recent}</table>"
+        if recent
+        else ""
+    )
+    note = (
+        "<p class='note'>A stake is a quarter-Kelly share of the bankroll on the blended "
+        "projection's probability against the last Polymarket price seen, after the fee, "
+        f"when the edge clears {settings.STAKE_MIN_EDGE * 100:g}c. Rows are recorded whether "
+        "or not the sheet showed them; shadow rows are the ones it did not. Profit is at the "
+        "suggested stake, after fees. Nothing is placed.</p>"
+    )
+    return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
+
+
 def _pregame_health(status: RuntimeStatus, settings: Settings) -> str:
     if not settings.PREGAME_ENABLED:
         return "off"
@@ -407,6 +468,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['stale']} to re-read"
     if gl.get("projected"):
         text += f", {gl['projected']} sheets projected"
+    if gl.get("staked"):
+        text += f", {gl['staked']} stakes open"
     if gl.get("error"):
         text += f"; error: {gl['error']}"
     return text
@@ -662,6 +725,56 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
     )
 
 
+def _stake_block(sheet: dict, settings: Settings) -> str:
+    """What the model would stake, shown only once its record in the sport has earned it."""
+    if not settings.STAKE_ENABLED or not settings.PROJECTION_ENABLED:
+        return ""
+    status = gate(sheet.get("model_record"), settings)
+    sport = html.escape(sheet["sport"].upper())
+    if not status["open"]:
+        clv = status["clv"]
+        moved = (
+            "no closing lines graded yet"
+            if clv is None
+            else f"the line has moved the model's way {clv:+.1f} points on average"
+        )
+        return (
+            f"<h2>Stake</h2><p class='note'>Hidden until the model has earned it: "
+            f"{status['graded']} of {status['needed']} {sport} games graded, {moved}. "
+            "Shadow suggestions are being recorded and graded on the scorecard.</p>"
+        )
+    rows = sheet.get("stakes") or []
+    if not rows:
+        return (
+            f"<h2>Stake</h2><p class='note'>No edge of {settings.STAKE_MIN_EDGE * 100:g}c or more "
+            "after fees at the last Polymarket prices seen.</p>"
+        )
+    body = "".join(
+        f"<tr><td class='label'>{html.escape(r['side_label'])}<br>"
+        f"<span class='note'>{html.escape(r['market'])}</span></td>"
+        f"<td class='l3'>${r['stake']:.0f}</td>"
+        f"<td>{r['buy_price'] * 100:.1f}c</td><td>{r['model_prob'] * 100:.1f}%</td>"
+        f"<td>{html.escape(_signed_cents(r['edge']))}</td></tr>"
+        for r in rows
+    )
+    head = (
+        "<tr><th class='label'>Side</th><th>Stake</th><th>Price</th>"
+        "<th>Model</th><th>Edge</th></tr>"
+    )
+    seen = rows[0].get("price_at")
+    when = f" ({_local(seen, settings.TZ)})" if seen else ""
+    note = (
+        "Quarter-Kelly of the blended probability against the last Polymarket price the "
+        f"pre-game scan saw{when}, after the fee, capped at {settings.STAKE_MAX_SHARE * 100:g}% "
+        f"of a ${settings.BANKROLL:,.0f} bankroll. A suggestion graded on the scorecard, not "
+        "an order; nothing is placed."
+    )
+    return (
+        "<h2>Stake</h2><div class='wrap'>"
+        f"<table class='sheet'>{head}{body}</table></div><p class='note'>{html.escape(note)}</p>"
+    )
+
+
 def _metric_cells(team: dict, metric, league_size: int, reverse: bool) -> str:
     key = metric.key
     season = _fmt(team["season"].get(key), metric.decimals, metric.percent)
@@ -748,6 +861,7 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 </div>
 {_strip(sheet, settings)}
 {_projection_block(sheet, settings)}
+{_stake_block(sheet, settings)}
 {sections}
 <p class="note">{footnote}</p>
 </body></html>"""

@@ -277,6 +277,24 @@ def test_matchup_pages_render_from_the_diary():
     ratings = fit(diary.football_games("nfl"), "nfl")
     projection = project(ratings, "5", "23", False, book)  # CLE at home to PIT
     diary.upsert_projection("nfl", upcoming.game_id, at_time, "CLE", "PIT", projection, at_time)
+    stake = {
+        "market": "moneyline",
+        "side": "home",
+        "side_label": "CLE",
+        "line": None,
+        "buy_price": 0.5,
+        "fee": 0.017375,
+        "model_prob": 0.62,
+        "edge": 0.102625,
+        "kelly": 0.2126,
+        "share": 0.05,
+        "stake": 50.0,
+        "contracts": 96.64,
+    }
+    kickoff = datetime.fromisoformat("2026-10-07T00:00:00+00:00")
+    diary.sync_stakes(
+        "nfl", upcoming.game_id, kickoff, "CLE", "PIT", [stake], False, 1000, None, at_time
+    )
     status = RuntimeStatus()
     status.gamelog = {
         "last_refresh": at_time.isoformat(),
@@ -284,6 +302,7 @@ def test_matchup_pages_render_from_the_diary():
         "backlog": 0,
         "stale": 12,
         "projected": 1,
+        "staked": 1,
     }
     client = TestClient(create_app(settings, diary, status))
     assert client.get("/matchups").status_code == 401
@@ -307,6 +326,21 @@ def test_matchup_pages_render_from_the_diary():
     )
     assert "Model vs book: " in page and "points more than the book" in page
     assert "Thin: fewer than 3 games" in page
+    assert "<h2>Stake</h2><p class='note'>Hidden until the model has earned it: 0 of 50 NFL" in page
+    assert "no closing lines graded yet" in page and "$50" not in page
+    shown = (
+        TestClient(
+            create_app(
+                load_settings(STATUS_TOKEN="phone-secret", STAKE_GATE_GAMES=0), diary, status
+            )
+        )
+        .get(f"/matchup/nfl/{upcoming.game_id}?token=phone-secret")
+        .text
+    )
+    assert "<th class='label'>Side</th><th>Stake</th><th>Price</th>" in shown
+    assert "<td class='label'>CLE<br><span class='note'>moneyline</span></td>" in shown
+    assert "<td class='l3'>$50</td><td>50.0c</td><td>62.0%</td><td>+10.3c</td>" in shown
+    assert "capped at 5% of a $1,000 bankroll" in shown and "nothing is placed" in shown
     assert "1 and 1 games used, blend 14% model" in page
     assert "61°F, 10% rain, gusts 8 mph" in page
     assert "<td class='label'>Points</td>" in page and "<h2>Defense</h2>" in page
@@ -321,7 +355,7 @@ def test_matchup_pages_render_from_the_diary():
     assert client.get("/matchup/mlb/1?token=phone-secret").status_code == 404
     health = client.get("/health?token=phone-secret").text
     assert "<th>Game log</th><td>last" in health
-    assert "NFL 1 games, 12 to re-read, 1 sheets projected" in health
+    assert "NFL 1 games, 12 to re-read, 1 sheets projected, 1 stakes open" in health
     data = client.get(
         f"/matchup/nfl/{upcoming.game_id}", headers={"accept": "application/json"}
     ).json()
@@ -371,6 +405,60 @@ def test_scorecard_shows_the_projection_model():
     assert data["projections"]["graded"] == 1
     off = make_client(PROJECTION_ENABLED=False)[0].get("/scorecard?token=phone-secret").text
     assert "<h2>Projection model</h2><p class='note'>off</p>" in off
+    assert "<h2>Stake suggestions</h2><p class='note'>off</p>" in off
+
+
+def test_scorecard_shows_the_stake_suggestions():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+    from tests.conftest import load_fixture
+
+    client, _ = make_client()
+    assert "no suggestions yet" in client.get("/scorecard?token=phone-secret").text
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    kickoff = datetime(2026, 10, 4, 17, 0, tzinfo=UTC)
+    stake = {
+        "market": "spread",
+        "side": "home",
+        "side_label": "CLE -2.5",
+        "line": -2.5,
+        "buy_price": 0.45,
+        "fee": 0.0172,
+        "model_prob": 0.544,
+        "edge": 0.0768,
+        "kelly": 0.1441,
+        "share": 0.036,
+        "stake": 36.0,
+        "contracts": 77.0,
+    }
+    diary.sync_stakes(
+        "nfl",
+        record.game_id,
+        kickoff,
+        "CLE",
+        "PIT",
+        [stake],
+        True,
+        1000,
+        None,
+        kickoff - timedelta(hours=2),
+    )
+    diary.store_football_game(record, kickoff + timedelta(hours=4))
+    assert diary.grade_stakes("nfl", kickoff + timedelta(hours=6)) == 1
+    page = (
+        TestClient(create_app(settings, diary, RuntimeStatus()))
+        .get("/scorecard?token=phone-secret")
+        .text
+    )
+    assert "Stake suggestions (shadow until the gate opens" in page
+    assert "<th>Suggested</th><td class='num'>1 (0 open, 1 shown on a sheet)</td>" in page
+    assert "<th>Wins / losses / pushes</th><td class='num'>1 / 0 / 0</td>" in page
+    assert "<th>Staked (paper)</th><td class='num'>$36.00</td>" in page
+    assert "NFL PIT at CLE" in page and "CLE -2.5<br><span class='note'>spread</span>" in page
+    assert "win $" in page and "model 54.4%" in page
 
 
 def replace_slate(game, **changes):

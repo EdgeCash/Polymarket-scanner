@@ -129,6 +129,17 @@ class Settings(BaseSettings):
     # The football projection model: fitted from the game log each pass, written to
     # every upcoming sheet beside the book's line, graded in the diary, never sent.
     PROJECTION_ENABLED: bool = True
+    # What the model would stake on Polymarket: a quarter-Kelly share of BANKROLL on
+    # the blended probability against the last Polymarket price seen, after the
+    # fee, when the edge clears STAKE_MIN_EDGE. Recorded and graded from day one;
+    # shown on the sheet only once the model has STAKE_GATE_GAMES graded games in
+    # that sport with the closing line moving its way. Never placed.
+    STAKE_ENABLED: bool = True
+    BANKROLL: float = Field(1000, ge=0)
+    STAKE_MIN_EDGE: float = Field(0.03, ge=0, le=1)
+    STAKE_KELLY_FRACTION: float = Field(0.25, gt=0, le=1)
+    STAKE_MAX_SHARE: float = Field(0.05, gt=0, le=1)
+    STAKE_GATE_GAMES: int = Field(50, ge=0)
 
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"

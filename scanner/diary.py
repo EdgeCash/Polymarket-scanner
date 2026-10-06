@@ -222,6 +222,38 @@ CREATE TABLE IF NOT EXISTS projections (
     graded_at TEXT,
     PRIMARY KEY (sport, game_id)
 );
+CREATE TABLE IF NOT EXISTS stakes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    kickoff TEXT NOT NULL,
+    home TEXT NOT NULL,
+    away TEXT NOT NULL,
+    market TEXT NOT NULL,
+    side TEXT NOT NULL,
+    side_label TEXT NOT NULL,
+    line REAL,
+    buy_price REAL NOT NULL,
+    fee REAL NOT NULL,
+    model_prob REAL NOT NULL,
+    edge REAL NOT NULL,
+    kelly REAL NOT NULL,
+    share REAL NOT NULL,
+    stake REAL NOT NULL,
+    contracts REAL NOT NULL,
+    bankroll REAL NOT NULL,
+    price_at TEXT,
+    gate_open INTEGER NOT NULL DEFAULT 0,
+    outcome TEXT,
+    settlement REAL,
+    profit REAL,
+    final_home INTEGER,
+    final_away INTEGER,
+    graded_at TEXT,
+    UNIQUE (sport, game_id, market)
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
 CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
@@ -1015,23 +1047,26 @@ class Diary:
                 graded += 1
         return graded
 
-    def projection_summary(self, since: datetime | None = None) -> dict:
+    def projection_summary(self, since: datetime | None = None, sport: str | None = None) -> dict:
         """How the model has done against the final scores and the book."""
         from scanner.projection import summarise
 
+        where, params = ["outcome = 'graded'"], []
+        if since is not None:
+            where.append("kickoff >= ?")
+            params.append(_iso(since))
+        if sport is not None:
+            where.append("sport = ?")
+            params.append(sport)
         with self._lock:
-            if since is None:
-                rows = self._conn.execute(
-                    "SELECT * FROM projections WHERE outcome = 'graded' ORDER BY kickoff DESC"
-                ).fetchall()
-            else:
-                rows = self._conn.execute(
-                    "SELECT * FROM projections WHERE outcome = 'graded' AND kickoff >= ? "
-                    "ORDER BY kickoff DESC",
-                    (_iso(since),),
-                ).fetchall()
+            rows = self._conn.execute(
+                f"SELECT * FROM projections WHERE {' AND '.join(where)} ORDER BY kickoff DESC",
+                params,
+            ).fetchall()
             open_count = self._conn.execute(
                 "SELECT COUNT(*) AS n FROM projections WHERE outcome IS NULL"
+                + ("" if sport is None else " AND sport = ?"),
+                () if sport is None else (sport,),
             ).fetchone()["n"]
         rows = [self._projection_row(r) for r in rows]
         out = summarise([r["grades"] for r in rows])
@@ -1054,6 +1089,187 @@ class Diary:
             for r in rows[:10]
         ]
         return out
+
+    # -- what the model would stake ------------------------------------------------
+
+    def sync_stakes(
+        self,
+        sport: str,
+        game_id: str,
+        kickoff: datetime,
+        home: str,
+        away: str,
+        suggestions: list[dict],
+        gate_open: bool,
+        bankroll: float,
+        price_at: str | None,
+        at: datetime,
+    ) -> int:
+        """Make a game's open stake rows match this pass's suggestions.
+
+        One row per market: written or updated while the game is still to come,
+        dropped when the edge has gone, locked at kickoff and left to be graded.
+        """
+        if kickoff <= at:
+            return 0
+        with self._lock:
+            kept = []
+            for row in suggestions:
+                kept.append(row["market"])
+                self._conn.execute(
+                    """INSERT INTO stakes (created_at, updated_at, sport, game_id, kickoff, home,
+                       away, market, side, side_label, line, buy_price, fee, model_prob, edge,
+                       kelly, share, stake, contracts, bankroll, price_at, gate_open)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                       ON CONFLICT(sport, game_id, market) DO UPDATE SET
+                       updated_at = excluded.updated_at, kickoff = excluded.kickoff,
+                       side = excluded.side, side_label = excluded.side_label,
+                       line = excluded.line, buy_price = excluded.buy_price, fee = excluded.fee,
+                       model_prob = excluded.model_prob, edge = excluded.edge,
+                       kelly = excluded.kelly, share = excluded.share, stake = excluded.stake,
+                       contracts = excluded.contracts, bankroll = excluded.bankroll,
+                       price_at = excluded.price_at, gate_open = excluded.gate_open
+                       WHERE stakes.outcome IS NULL""",
+                    (
+                        _iso(at),
+                        _iso(at),
+                        sport,
+                        game_id,
+                        _iso(kickoff),
+                        home,
+                        away,
+                        row["market"],
+                        row["side"],
+                        row["side_label"],
+                        row["line"],
+                        row["buy_price"],
+                        row["fee"],
+                        row["model_prob"],
+                        row["edge"],
+                        row["kelly"],
+                        row["share"],
+                        row["stake"],
+                        row["contracts"],
+                        bankroll,
+                        price_at,
+                        int(gate_open),
+                    ),
+                )
+            placeholders = ",".join("?" for _ in kept) or "''"
+            self._conn.execute(
+                f"DELETE FROM stakes WHERE sport = ? AND game_id = ? AND outcome IS NULL "
+                f"AND market NOT IN ({placeholders})",
+                (sport, game_id, *kept),
+            )
+        return len(kept)
+
+    def stakes_for(self, sport: str, game_id: str) -> list[dict]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM stakes WHERE sport = ? AND game_id = ? ORDER BY edge DESC",
+                (sport, game_id),
+            ).fetchall()
+        return [dict(r) for r in rows]
+
+    def grade_stakes(self, sport: str, now: datetime, grace_hours: float = 4.0) -> int:
+        """Settle open stakes whose game is in the log; grade like the alerts are graded."""
+        from scanner.stakes import profit, settle
+
+        graded = 0
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM stakes WHERE sport = ? AND outcome IS NULL AND kickoff < ?",
+                (sport, _iso(now - timedelta(hours=grace_hours))),
+            ).fetchall()
+            for row in rows:
+                game = self._conn.execute(
+                    "SELECT home_score, away_score FROM football_games "
+                    "WHERE sport = ? AND game_id = ?",
+                    (sport, row["game_id"]),
+                ).fetchone()
+                if game is None:
+                    if datetime.fromisoformat(row["kickoff"]) < now - timedelta(days=10):
+                        self._conn.execute(
+                            "UPDATE stakes SET outcome = ?, graded_at = ? WHERE id = ?",
+                            (OUTCOME_NOT_GRADED, _iso(now), row["id"]),
+                        )
+                    continue
+                outcome, settlement = settle(
+                    row["market"], row["side"], row["line"], game["home_score"], game["away_score"]
+                )
+                gain = profit(dict(row), settlement) if outcome != OUTCOME_NOT_GRADED else None
+                self._conn.execute(
+                    """UPDATE stakes SET outcome = ?, settlement = ?, profit = ?, final_home = ?,
+                       final_away = ?, graded_at = ? WHERE id = ?""",
+                    (
+                        outcome,
+                        settlement,
+                        gain,
+                        game["home_score"],
+                        game["away_score"],
+                        _iso(now),
+                        row["id"],
+                    ),
+                )
+                graded += 1
+        return graded
+
+    def stake_summary(self, since: datetime | None = None) -> dict:
+        """What the model would have staked, and how that paper money did."""
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute("SELECT * FROM stakes ORDER BY kickoff DESC").fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM stakes WHERE kickoff >= ? ORDER BY kickoff DESC", (_iso(since),)
+                ).fetchall()
+        rows = [dict(r) for r in rows]
+        graded = [r for r in rows if r["outcome"] in ("win", "loss", "push")]
+        staked = sum(r["stake"] for r in graded)
+        gain = sum(r["profit"] or 0.0 for r in graded)
+        by_market = {}
+        for market in ("moneyline", "total", "spread"):
+            subset = [r for r in graded if r["market"] == market]
+            by_market[market] = {
+                "suggested": sum(1 for r in rows if r["market"] == market),
+                "wins": sum(1 for r in subset if r["outcome"] == "win"),
+                "losses": sum(1 for r in subset if r["outcome"] == "loss"),
+                "pushes": sum(1 for r in subset if r["outcome"] == "push"),
+                "profit": sum(r["profit"] or 0.0 for r in subset),
+            }
+        return {
+            "suggested": len(rows),
+            "open": sum(1 for r in rows if r["outcome"] is None),
+            "shown": sum(1 for r in rows if r["gate_open"]),
+            "graded": len(graded),
+            "not_graded": sum(1 for r in rows if r["outcome"] == OUTCOME_NOT_GRADED),
+            "wins": sum(1 for r in graded if r["outcome"] == "win"),
+            "losses": sum(1 for r in graded if r["outcome"] == "loss"),
+            "pushes": sum(1 for r in graded if r["outcome"] == "push"),
+            "staked": staked,
+            "profit": gain,
+            "roi": (gain / staked) if staked else None,
+            "avg_edge": (sum(r["edge"] for r in rows) / len(rows)) if rows else None,
+            "by_market": by_market,
+            "recent": [
+                {
+                    "kickoff": r["kickoff"],
+                    "sport": r["sport"],
+                    "home": r["home"],
+                    "away": r["away"],
+                    "market": r["market"],
+                    "side_label": r["side_label"],
+                    "buy_price": r["buy_price"],
+                    "model_prob": r["model_prob"],
+                    "edge": r["edge"],
+                    "stake": r["stake"],
+                    "outcome": r["outcome"],
+                    "profit": r["profit"],
+                    "gate_open": bool(r["gate_open"]),
+                }
+                for r in rows[:10]
+            ],
+        }
 
     # -- events (heartbeats, failures, paused messages) ----------------------
 
@@ -1245,6 +1461,7 @@ class Diary:
             "observations": self.observation_summary(since),
             "pregame": self.pregame_summary(since),
             "projections": self.projection_summary(since),
+            "stakes": self.stake_summary(since),
         }
 
     @staticmethod

@@ -36,9 +36,13 @@ GAP_BUCKETS = (1.0, 2.0, 3.0, 5.0)  # the scorecard's "model differs from the bo
 class SportTuning:
     hfa: float  # home-field advantage, in points of margin
     sigma: float  # standard deviation of the final margin around the projection
+    sigma_total: float  # the same for the final total
 
 
-TUNING = {"nfl": SportTuning(hfa=1.8, sigma=13.5), "cfb": SportTuning(hfa=2.8, sigma=16.5)}
+TUNING = {
+    "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=10.5),
+    "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=13.0),
+}
 
 
 @dataclass
@@ -52,6 +56,7 @@ class Ratings:
     first_half_share: float
     hfa: float
     sigma: float
+    sigma_total: float
     games_fitted: int
     offense: dict[str, float] = field(default_factory=dict)  # points above average scored
     defense: dict[str, float] = field(default_factory=dict)  # points above average allowed
@@ -141,6 +146,7 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
         first_half_share=first_half_share,
         hfa=tuning.hfa,
         sigma=tuning.sigma,
+        sigma_total=tuning.sigma_total,
         games_fitted=len(records),
         offense=offense,
         defense=defense,
@@ -219,6 +225,7 @@ def project(
             "points": ratings.league_points,
             "hfa": ratings.hfa,
             "sigma": ratings.sigma,
+            "sigma_total": ratings.sigma_total,
             "points_per_yard": ratings.points_per_yard,
             "first_half_share": ratings.first_half_share,
             "games": ratings.games_fitted,

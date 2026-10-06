@@ -88,6 +88,12 @@ All settings are environment variables. Defaults are from the build brief.
 | `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
 | `GAMELOG_ENABLED` | `true` | The football game log and matchup sheets |
 | `PROJECTION_ENABLED` | `true` | The football projection model on the sheets and scorecard |
+| `STAKE_ENABLED` | `true` | Record (and, once earned, show) what the model would stake |
+| `BANKROLL` | `1000` | Dollars the stake suggestions are sized from |
+| `STAKE_MIN_EDGE` | `0.03` | Edge after fees a suggestion needs, in probability |
+| `STAKE_KELLY_FRACTION` | `0.25` | Share of the full Kelly stake to suggest |
+| `STAKE_MAX_SHARE` | `0.05` | Largest suggestion as a share of the bankroll |
+| `STAKE_GATE_GAMES` | `50` | Graded projections per sport before the sheet shows stakes |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -447,7 +453,30 @@ sat from the book (1, 2, 3 and 5 points) so no threshold is chosen for the
 owner; and whether the closing line moved the model's way. The scorecard's
 "Projection model" section shows all of it, with the book as the bar to beat.
 `PROJECTION_ENABLED=false` switches the model off. Nothing in it sends or places
-anything; a stake suggestion is a separate, later decision.
+anything.
+
+### Stake suggestions
+
+The owner set a bankroll of $1,000 (`BANKROLL`). `scanner/stakes.py` turns the
+blended projection into what the model would stake on Polymarket: for each
+market the pre-game scan has a price for (the moneyline, and the total and
+spread at the book's line), the blend's probability for each side (the margin
+and total against the sport's usual spread of results) is set against the last
+Polymarket price seen, after the taker fee. When the edge clears
+`STAKE_MIN_EDGE` (3 cents), the stake is a quarter of the Kelly share
+(`STAKE_KELLY_FRACTION`) of the bankroll, capped at `STAKE_MAX_SHARE` (5%).
+Suggestions go to the diary (`stakes`) as one row per market, updated each pass
+until kickoff, dropped if the edge goes, locked at kickoff and settled at the
+final like the alerts are (a tie pays half, a push costs nothing), with the
+paper profit at the suggested stake after fees.
+
+The sheet shows the Stake table only once the model has earned it in that
+sport: `STAKE_GATE_GAMES` (50) graded projections with the closing line moving
+the model's way on average. Until then the sheet says so and the rows are
+recorded as shadow suggestions; the scorecard's "Stake suggestions" section
+shows all of them, shown or not, with wins, losses, pushes, money staked, profit
+and return. `STAKE_ENABLED=false` switches the layer off. A suggestion is a
+number on a page: nothing here places anything.
 
 ## Milestones
 
