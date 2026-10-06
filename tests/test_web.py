@@ -58,6 +58,19 @@ def test_health_renders_for_a_phone_and_as_json():
     assert "version" in data
 
 
+def test_health_shows_the_build_commit(monkeypatch):
+    monkeypatch.delenv("GIT_COMMIT", raising=False)
+    monkeypatch.delenv("RAILWAY_GIT_COMMIT_SHA", raising=False)
+    client, _ = make_client()
+    page = client.get("/health?token=phone-secret").text
+    assert "<th>Build</th><td>unknown</td>" in page
+    client, _ = make_client(GIT_COMMIT="e039edb0f1e2d3c4b5a6978877665544332211")
+    page = client.get("/health?token=phone-secret").text
+    assert "<th>Build</th><td>e039edb</td>" in page
+    data = client.get("/health?token=phone-secret", headers={"accept": "application/json"}).json()
+    assert data["commit"] == "e039edb"
+
+
 def test_scorecard_json_matches_the_diary():
     client, _ = make_client()
     data = client.get(

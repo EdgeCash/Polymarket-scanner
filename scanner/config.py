@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Fixed operating constants from the brief. These are not settings: changing them
@@ -78,6 +78,11 @@ class Settings(BaseSettings):
     TZ: str = "America/Chicago"
     PORT: int = Field(8080, ge=1, le=65535)
     LOG_LEVEL: str = "INFO"
+    # The git commit this build came from, shown on the health page so a deploy
+    # can be checked from the phone. Railway sets RAILWAY_GIT_COMMIT_SHA itself.
+    GIT_COMMIT: str = Field(
+        "", validation_alias=AliasChoices("GIT_COMMIT", "RAILWAY_GIT_COMMIT_SHA")
+    )
 
     # Secrets. Never logged, never shown.
     TELEGRAM_BOT_TOKEN: SecretStr | None = None
@@ -94,6 +99,12 @@ class Settings(BaseSettings):
         if not names:
             raise ValueError("LEAGUES must name at least one league")
         return ",".join(names)
+
+    @property
+    def short_commit(self) -> str:
+        """The first seven characters of the build's commit, or ``unknown``."""
+        commit = "".join(self.GIT_COMMIT.split())
+        return commit[:7] if commit else "unknown"
 
     @property
     def leagues(self) -> tuple[str, ...]:

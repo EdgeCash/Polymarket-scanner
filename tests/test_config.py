@@ -76,3 +76,16 @@ def test_dry_run_logs_settings_with_secrets_hidden_and_exits_cleanly(monkeypatch
     assert "status-secret" not in captured
     assert 'ALERTS_ENABLED": false' in captured
     assert "nothing is sent" in captured
+
+
+def test_commit_comes_from_railways_variable_or_git_commit(monkeypatch):
+    monkeypatch.delenv("GIT_COMMIT", raising=False)
+    assert Settings().short_commit == "unknown"
+    monkeypatch.setenv("RAILWAY_GIT_COMMIT_SHA", "e039edb1234567890abcdef\n")
+    assert Settings().GIT_COMMIT == "e039edb1234567890abcdef\n"
+    assert Settings().short_commit == "e039edb"
+    monkeypatch.setenv("GIT_COMMIT", "abc1234ffff")
+    assert Settings().short_commit == "abc1234"
+    monkeypatch.delenv("GIT_COMMIT")
+    monkeypatch.delenv("RAILWAY_GIT_COMMIT_SHA")
+    assert Settings(GIT_COMMIT="  0123456789  ").short_commit == "0123456"
