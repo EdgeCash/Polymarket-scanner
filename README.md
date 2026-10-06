@@ -86,6 +86,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `PREGAME_SCAN_MINUTES` | `15` | How often the pre-game scan runs |
 | `PREGAME_MIN_EDGE` | `0.03` | Recording threshold: edge after fee against the book's vig-free number |
 | `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
+| `GAMELOG_ENABLED` | `true` | The football game log and matchup sheets |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -360,6 +361,37 @@ alert is a separate decision for the owner.
 `python -m scanner --pregame-once` runs one scan by hand and prints what it
 found. Milestone check on 6 October 2026: 14 sports, 31 games matched, 26 with
 a book line, no gaps at 3 cents on a quiet Tuesday morning.
+
+## Football game log and matchup sheets
+
+The owner reads matchup sheets before deciding anything and was paying a
+subscription for them. ESPN's free endpoints carry the raw material for the NFL
+and college football: a weekly scoreboard listing every game with scores,
+quarter scores, records and the book's line, and a summary per game with the
+box score (first downs, third and fourth downs, total, passing and rushing
+yards, penalties, turnovers, possession, and in the NFL plays and sacks), the
+scoring plays, and for a game still to come the venue, weather and ESPN's own
+projection.
+
+`scanner/gamelog.py` fetches each finished game once and keeps it in the diary
+(`football_games`), on the same thread as the pre-game scan: the current and
+next week's scoreboards every pass, earlier weeks until each is complete, and at
+most `GAMELOG_BACKFILL_PER_PASS` (40) summaries per pass with a quarter-second
+gap between requests, so the first college backfill takes a couple of hours and
+a normal week a minute. Upcoming games within 48 hours go to `football_upcoming`
+with their weather and venue re-read hourly. From those rows it builds, for each
+team, season, home-or-away, first-half and last-three figures (points, passing
+and rushing yards and touchdowns, yards per play, third downs, sacks, turnovers,
+their "allowed" twins, turnover margin, penalties, pace, possession) and ranks
+every team in the log on each one over its last three games.
+
+`/matchups` lists the upcoming games with a sheet; `/matchup/{sport}/{game id}`
+is the sheet: both teams' records, streaks, rest days and last five results,
+kickoff in the owner's zone, venue, surface, weather, the book's line, the
+Polymarket prices the pre-game scan last saw, ESPN's projection, and the three
+stat tables with the advantage on each row. Both pages need the status token.
+Nothing on a sheet is a recommendation, and the pages never place anything.
+`python -m scanner --gamelog-once` runs one refresh by hand.
 
 ## Milestones
 

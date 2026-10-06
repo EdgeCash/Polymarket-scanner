@@ -84,7 +84,7 @@ def test_pages_never_leak_the_token_or_secrets():
     client, _ = make_client()
     page = client.get("/health?token=phone-secret").text
     assert "phone-secret" not in page
-    assert client.get("/").json()["pages"] == ["/health", "/scorecard"]
+    assert client.get("/").json()["pages"] == ["/health", "/scorecard", "/matchups"]
 
 
 def test_scorecard_near_miss_table_names_the_alert_type():
@@ -215,3 +215,57 @@ def test_scorecard_and_health_show_the_pregame_scan():
         "<h2>Pre-game gaps</h2><p class='note'>off</p>"
         in client.get("/scorecard?token=phone-secret").text
     )
+
+
+# -- matchup sheets ---------------------------------------------------------------
+
+
+def test_matchup_pages_render_from_the_diary():
+    from datetime import datetime
+
+    from scanner.gamelog import parse_game_summary, parse_week_scoreboard
+    from tests.conftest import load_fixture
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    at_time = datetime.fromisoformat("2026-10-06T12:00:00+00:00")
+    for name in ("espn_nfl_summary_final.json",):
+        diary.store_football_game(parse_game_summary(load_fixture(name), "nfl"), at_time)
+    _, _, games = parse_week_scoreboard(load_fixture("espn_nfl_week4.json"), "nfl")
+    upcoming = replace_slate(games[0], completed=False, date=at_time)
+    diary.store_football_upcoming(upcoming, at_time)
+    diary.update_football_upcoming_extra(
+        "nfl",
+        upcoming.game_id,
+        {"weather": {"temperature": 61, "precipitation": 10, "gust": 8}},
+        at_time,
+    )
+    status = RuntimeStatus()
+    status.gamelog = {"last_refresh": at_time.isoformat(), "games": {"nfl": 1}, "backlog": 0}
+    client = TestClient(create_app(settings, diary, status))
+    assert client.get("/matchups").status_code == 401
+    listing = client.get("/matchups?token=phone-secret").text
+    assert "<h2>NFL</h2>" in listing and f"/matchup/nfl/{upcoming.game_id}?token=" in listing
+    assert "PIT at CLE" in listing and "NFL 1 games" in listing
+    page = client.get(f"/matchup/nfl/{upcoming.game_id}?token=phone-secret").text
+    assert "<title>PIT at CLE</title>" in page
+    assert "Pittsburgh Steelers" in page and "Cleveland Browns" in page
+    assert "61°F, 10% rain, gusts 8 mph" in page
+    assert "<td class='label'>Points</td>" in page and "<h2>Defense</h2>" in page
+    assert "vs PIT 27-24" in page  # CLE's last result, from the log
+    assert "Nothing on this page is a recommendation" in page
+    data = client.get(
+        f"/matchup/nfl/{upcoming.game_id}?token=phone-secret",
+        headers={"accept": "application/json"},
+    ).json()
+    assert data["home"]["abbreviation"] == "CLE" and data["league_size"] == 2
+    assert client.get("/matchup/nfl/999?token=phone-secret").status_code == 404
+    assert client.get("/matchup/mlb/1?token=phone-secret").status_code == 404
+    health = client.get("/health?token=phone-secret").text
+    assert "<th>Game log</th><td>last" in health and "NFL 1 games" in health
+
+
+def replace_slate(game, **changes):
+    from dataclasses import replace
+
+    return replace(game, **changes)

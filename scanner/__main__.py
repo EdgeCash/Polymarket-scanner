@@ -45,6 +45,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--send", action="store_true", help="with --shadow-report: also send it")
     parser.add_argument(
+        "--gamelog-once",
+        action="store_true",
+        help="refresh the football game log once (one budget of summaries) and exit",
+    )
+    parser.add_argument(
         "--pregame-once",
         action="store_true",
         help="run one pre-game scan across every configured sport, print what it found, exit",
@@ -83,6 +88,21 @@ def main(argv: list[str] | None = None) -> int:
                 return 1
             return 0 if sender.send(text) else 1
         return 0
+
+    if args.gamelog_once:
+        from scanner.diary import Diary
+        from scanner.gamelog import FootballLog
+
+        diary = Diary(settings.DATABASE_PATH)
+        summaries = FootballLog(settings, diary).refresh_all()
+        for s in summaries:
+            print(
+                f"{s.sport}: season {s.season} week {s.week}; {s.games_stored} games stored, "
+                f"{s.summaries_fetched} summaries fetched, {s.backlog} still to fetch, "
+                f"{s.upcoming} upcoming" + (f"; errors: {'; '.join(s.errors)}" if s.errors else "")
+            )
+        print("games in the log:", diary.football_game_counts())
+        return 0 if not any(s.errors for s in summaries) else 1
 
     if args.pregame_once:
         from scanner.diary import Diary

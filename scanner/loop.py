@@ -744,10 +744,15 @@ def run(settings: Settings, once: bool = False) -> int:
     status = RuntimeStatus()
     if not once:
         serve_web(settings, diary, status)
-        if settings.PREGAME_ENABLED:
+        gamelog = None
+        if settings.GAMELOG_ENABLED:
+            from scanner.gamelog import FootballLog
+
+            gamelog = FootballLog(settings, diary)
+        if settings.PREGAME_ENABLED or gamelog is not None:
             from scanner.pregame import PregameScanner
 
-            PregameScanner(settings, diary, status).start_thread()
+            PregameScanner(settings, diary, status, gamelog=gamelog).start_thread()
     scanner = Scanner(settings, diary=diary, status=status)
     try:
         return scanner.run_forever(once=once)
