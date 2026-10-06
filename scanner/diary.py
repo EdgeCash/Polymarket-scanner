@@ -166,11 +166,52 @@ CREATE TABLE IF NOT EXISTS pregame_gaps (
     final_away INTEGER,
     graded_at TEXT
 );
+CREATE TABLE IF NOT EXISTS football_games (
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    season INTEGER,
+    week INTEGER,
+    date TEXT NOT NULL,
+    neutral INTEGER NOT NULL DEFAULT 0,
+    home_id TEXT NOT NULL,
+    home_abbr TEXT NOT NULL,
+    home_name TEXT NOT NULL,
+    away_id TEXT NOT NULL,
+    away_abbr TEXT NOT NULL,
+    away_name TEXT NOT NULL,
+    home_score INTEGER NOT NULL,
+    away_score INTEGER NOT NULL,
+    home_lines TEXT NOT NULL,
+    away_lines TEXT NOT NULL,
+    home_stats TEXT NOT NULL,
+    away_stats TEXT NOT NULL,
+    fetched_at TEXT NOT NULL,
+    PRIMARY KEY (sport, game_id)
+);
+CREATE TABLE IF NOT EXISTS football_weeks (
+    sport TEXT NOT NULL,
+    season INTEGER NOT NULL,
+    week INTEGER NOT NULL,
+    fetched_at TEXT NOT NULL,
+    complete INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (sport, season, week)
+);
+CREATE TABLE IF NOT EXISTS football_upcoming (
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    date TEXT NOT NULL,
+    slate TEXT NOT NULL,
+    extra TEXT NOT NULL DEFAULT '{}',
+    fetched_at TEXT NOT NULL,
+    summary_fetched_at TEXT,
+    PRIMARY KEY (sport, game_id)
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
 CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
 CREATE INDEX IF NOT EXISTS pregame_lines_game ON pregame_lines (sport, feed_id, id);
 CREATE INDEX IF NOT EXISTS pregame_gaps_game ON pregame_gaps (sport, feed_id);
+CREATE INDEX IF NOT EXISTS football_games_season ON football_games (sport, season, date);
 """
 
 ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
@@ -663,6 +704,155 @@ class Diary:
             "positive_clv_share": (positive / len(closed)) if closed else None,
             "recent": recent,
         }
+
+    # -- the football game log --------------------------------------------------
+
+    def store_football_game(self, record, at: datetime) -> None:
+        """Keep a finished game's box scores. Replaces an earlier copy of the same game."""
+        with self._lock:
+            self._conn.execute(
+                """INSERT OR REPLACE INTO football_games (sport, game_id, season, week, date,
+                   neutral, home_id, home_abbr, home_name, away_id, away_abbr, away_name,
+                   home_score, away_score, home_lines, away_lines, home_stats, away_stats,
+                   fetched_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    record.sport,
+                    record.game_id,
+                    record.season,
+                    record.week,
+                    _iso(record.date),
+                    int(record.neutral),
+                    record.home.team_id,
+                    record.home.abbreviation,
+                    record.home.name,
+                    record.away.team_id,
+                    record.away.abbreviation,
+                    record.away.name,
+                    record.home_score,
+                    record.away_score,
+                    json.dumps(list(record.home_lines)),
+                    json.dumps(list(record.away_lines)),
+                    json.dumps(record.home_stats),
+                    json.dumps(record.away_stats),
+                    _iso(at),
+                ),
+            )
+
+    def football_game_ids(self, sport: str) -> set[str]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT game_id FROM football_games WHERE sport = ?", (sport,)
+            ).fetchall()
+        return {str(r["game_id"]) for r in rows}
+
+    def football_games(self, sport: str, season: int | None = None) -> list:
+        """Every stored game of a season (or all seasons), as GameRecord objects, oldest first."""
+        from scanner.gamelog import GameRecord, TeamRef
+
+        with self._lock:
+            if season is None:
+                rows = self._conn.execute(
+                    "SELECT * FROM football_games WHERE sport = ? ORDER BY date", (sport,)
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM football_games WHERE sport = ? AND season = ? ORDER BY date",
+                    (sport, season),
+                ).fetchall()
+        out = []
+        for r in rows:
+            out.append(
+                GameRecord(
+                    sport=r["sport"],
+                    game_id=r["game_id"],
+                    season=r["season"],
+                    week=r["week"],
+                    date=datetime.fromisoformat(r["date"]),
+                    neutral=bool(r["neutral"]),
+                    home=TeamRef(r["home_id"], r["home_abbr"], r["home_name"]),
+                    away=TeamRef(r["away_id"], r["away_abbr"], r["away_name"]),
+                    home_score=r["home_score"],
+                    away_score=r["away_score"],
+                    home_lines=tuple(json.loads(r["home_lines"])),
+                    away_lines=tuple(json.loads(r["away_lines"])),
+                    home_stats=json.loads(r["home_stats"]),
+                    away_stats=json.loads(r["away_stats"]),
+                )
+            )
+        return out
+
+    def football_game_counts(self) -> dict[str, int]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT sport, COUNT(*) AS n FROM football_games GROUP BY sport"
+            ).fetchall()
+        return {r["sport"]: int(r["n"]) for r in rows}
+
+    def football_week_complete(self, sport: str, season: int, week: int) -> bool:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT complete FROM football_weeks WHERE sport = ? AND season = ? AND week = ?",
+                (sport, season, week),
+            ).fetchone()
+        return bool(row and row["complete"])
+
+    def mark_football_week(
+        self, sport: str, season: int, week: int, complete: bool, at: datetime
+    ) -> None:
+        with self._lock:
+            self._conn.execute(
+                "INSERT OR REPLACE INTO football_weeks (sport, season, week, fetched_at, complete) "
+                "VALUES (?,?,?,?,?)",
+                (sport, season, week, _iso(at), int(complete)),
+            )
+
+    def store_football_upcoming(self, game, at: datetime) -> None:
+        """Keep (or refresh) an upcoming game's scoreboard entry; the summary extras stay."""
+        with self._lock:
+            self._conn.execute(
+                """INSERT INTO football_upcoming (sport, game_id, date, slate, fetched_at)
+                   VALUES (?,?,?,?,?)
+                   ON CONFLICT(sport, game_id) DO UPDATE SET date = excluded.date,
+                   slate = excluded.slate, fetched_at = excluded.fetched_at""",
+                (game.sport, game.game_id, _iso(game.date), json.dumps(game.as_dict()), _iso(at)),
+            )
+
+    def update_football_upcoming_extra(
+        self, sport: str, game_id: str, extra: dict, at: datetime
+    ) -> None:
+        with self._lock:
+            self._conn.execute(
+                "UPDATE football_upcoming SET extra = ?, summary_fetched_at = ? "
+                "WHERE sport = ? AND game_id = ?",
+                (json.dumps(extra), _iso(at), sport, game_id),
+            )
+
+    def delete_football_upcoming_before(self, sport: str, before: datetime) -> None:
+        with self._lock:
+            self._conn.execute(
+                "DELETE FROM football_upcoming WHERE sport = ? AND date < ?", (sport, _iso(before))
+            )
+
+    @staticmethod
+    def _upcoming_row(row) -> dict:
+        out = dict(row)
+        out["slate"] = json.loads(out["slate"])
+        out["extra"] = json.loads(out["extra"] or "{}")
+        return out
+
+    def football_upcoming(self, sport: str) -> list[dict]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM football_upcoming WHERE sport = ? ORDER BY date", (sport,)
+            ).fetchall()
+        return [self._upcoming_row(r) for r in rows]
+
+    def football_upcoming_game(self, sport: str, game_id: str) -> dict | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM football_upcoming WHERE sport = ? AND game_id = ?", (sport, game_id)
+            ).fetchone()
+        return self._upcoming_row(row) if row else None
 
     # -- events (heartbeats, failures, paused messages) ----------------------
 

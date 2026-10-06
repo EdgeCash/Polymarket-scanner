@@ -351,10 +351,12 @@ class PregameScanner:
         reader: PolymarketReader | None = None,
         feed: BookFeed | None = None,
         now: Callable[[], datetime] = lambda: datetime.now(UTC),
+        gamelog=None,
     ) -> None:
         self.settings = settings
         self.diary = diary
         self.status = status
+        self.gamelog = gamelog  # a FootballLog, refreshed after each scan on this thread
         self.reader = reader or PolymarketReader(max_rps=PREGAME_MAX_RPS)
         self.feed = feed or BookFeed()
         self._now = now
@@ -544,16 +546,47 @@ class PregameScanner:
     def run_forever(self) -> None:
         while not self.stop_event.is_set():
             started = time.monotonic()
-            try:
-                self.scan_once()
-            except Exception as exc:  # the thread must survive anything
-                log.exception("pre-game scan failed")
-                self.status.pregame = {
-                    **(self.status.pregame or {}),
-                    "error": short_error(f"{type(exc).__name__}: {exc}"),
-                }
+            if self.settings.PREGAME_ENABLED:
+                try:
+                    self.scan_once()
+                except Exception as exc:  # the thread must survive anything
+                    log.exception("pre-game scan failed")
+                    self.status.pregame = {
+                        **(self.status.pregame or {}),
+                        "error": short_error(f"{type(exc).__name__}: {exc}"),
+                    }
+            if self.gamelog is not None:
+                self.refresh_gamelog()
             elapsed = time.monotonic() - started
             self.stop_event.wait(max(30.0, self.settings.PREGAME_SCAN_MINUTES * 60 - elapsed))
+
+    def refresh_gamelog(self) -> None:
+        """Bring the football game log up to date and note the result on the status page."""
+        now = self._now()
+        try:
+            summaries = self.gamelog.refresh_all(now)
+        except Exception as exc:  # the thread must survive anything
+            log.exception("game log refresh failed")
+            self.status.gamelog = {
+                **(self.status.gamelog or {}),
+                "error": short_error(f"{type(exc).__name__}: {exc}"),
+            }
+            return
+        errors = [e for s in summaries for e in s.errors]
+        self.status.gamelog = {
+            "last_refresh": now.isoformat(),
+            "games": self.diary.football_game_counts(),
+            "upcoming": {s.sport: s.upcoming for s in summaries},
+            "backlog": sum(s.backlog for s in summaries),
+            "fetched": sum(s.summaries_fetched for s in summaries),
+            "error": "; ".join(short_error(e) for e in errors[:2]) or None,
+        }
+        log.info(
+            "game log: %s games, %d fetched, %d still to fetch",
+            self.status.gamelog["games"],
+            self.status.gamelog["fetched"],
+            self.status.gamelog["backlog"],
+        )
 
     def start_thread(self) -> threading.Thread:
         thread = threading.Thread(target=self.run_forever, name="pregame", daemon=True)

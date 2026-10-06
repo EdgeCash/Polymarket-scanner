@@ -58,6 +58,12 @@ PREGAME_SPORT_KEYS = (
 )
 PREGAME_MAX_RPS = 1.0  # the pre-game thread's own, slower request ceiling
 PREGAME_GRADE_DELAY_HOURS = 3.0  # a gap is graded once the game should be over
+GAMELOG_BACKFILL_PER_PASS = 40  # finished games fetched into the log per pass
+GAMELOG_REQUEST_GAP_SECONDS = 0.25  # pause between ESPN summary requests
+GAMELOG_UPCOMING_HOURS = 48.0  # how far ahead matchup sheets are prepared
+GAMELOG_UPCOMING_REFRESH_MINUTES = (
+    60.0  # how often an upcoming game's weather and venue are re-read
+)
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -116,6 +122,10 @@ class Settings(BaseSettings):
     PREGAME_SCAN_MINUTES: float = Field(15, gt=0)
     PREGAME_MIN_EDGE: float = Field(0.03, ge=0, le=1)
     PREGAME_HORIZON_HOURS: float = Field(36, gt=0)
+
+    # Football game log and matchup sheets: every finished NFL and college game's box
+    # score kept in the diary, and a sheet per upcoming game on the status site.
+    GAMELOG_ENABLED: bool = True
 
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"
