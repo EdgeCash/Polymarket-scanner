@@ -216,6 +216,16 @@ CREATE INDEX IF NOT EXISTS football_games_season ON football_games (sport, seaso
 
 ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
 
+# The stored football game format. Rows written by an older parser are re-read once
+# so that fields the parser has since learned (first-half yards, the closing line)
+# fill in. Bump it when parse_game_summary learns something worth a re-read.
+FOOTBALL_GAME_VERSION = 2
+# Columns added after a table first shipped: (table, column, definition).
+MIGRATIONS = (
+    ("football_games", "version", "INTEGER NOT NULL DEFAULT 1"),
+    ("football_games", "book", "TEXT"),
+)
+
 OUTCOME_WIN = "win"
 OUTCOME_LOSS = "loss"
 OUTCOME_TIE = "tie"
@@ -252,6 +262,14 @@ class Diary:
             if path != ":memory:":
                 self._conn.execute("PRAGMA journal_mode=WAL")
             self._conn.executescript(SCHEMA)
+            self._migrate()
+
+    def _migrate(self) -> None:
+        """Add columns that newer code expects to tables an older diary already has."""
+        for table, column, definition in MIGRATIONS:
+            present = {r["name"] for r in self._conn.execute(f"PRAGMA table_info({table})")}
+            if column not in present:
+                self._conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
 
     def close(self) -> None:
         with self._lock:
@@ -709,12 +727,13 @@ class Diary:
 
     def store_football_game(self, record, at: datetime) -> None:
         """Keep a finished game's box scores. Replaces an earlier copy of the same game."""
+        book = json.dumps(record.book.as_dict()) if record.book is not None else None
         with self._lock:
             self._conn.execute(
                 """INSERT OR REPLACE INTO football_games (sport, game_id, season, week, date,
                    neutral, home_id, home_abbr, home_name, away_id, away_abbr, away_name,
                    home_score, away_score, home_lines, away_lines, home_stats, away_stats,
-                   fetched_at) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                   fetched_at, version, book) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (
                     record.sport,
                     record.game_id,
@@ -735,6 +754,8 @@ class Diary:
                     json.dumps(record.home_stats),
                     json.dumps(record.away_stats),
                     _iso(at),
+                    FOOTBALL_GAME_VERSION,
+                    book,
                 ),
             )
 
@@ -745,8 +766,27 @@ class Diary:
             ).fetchall()
         return {str(r["game_id"]) for r in rows}
 
+    def football_games_stale(self, sport: str, limit: int | None = None) -> list[str]:
+        """Games stored by an older parser, oldest first: the ones worth a re-read."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT game_id FROM football_games WHERE sport = ? AND version < ? "
+                "ORDER BY date LIMIT ?",
+                (sport, FOOTBALL_GAME_VERSION, -1 if limit is None else limit),
+            ).fetchall()
+        return [str(r["game_id"]) for r in rows]
+
+    def mark_football_game_version(self, sport: str, game_id: str, version: int) -> None:
+        """Record which parser a stored game went through (without re-storing it)."""
+        with self._lock:
+            self._conn.execute(
+                "UPDATE football_games SET version = ? WHERE sport = ? AND game_id = ?",
+                (version, sport, game_id),
+            )
+
     def football_games(self, sport: str, season: int | None = None) -> list:
         """Every stored game of a season (or all seasons), as GameRecord objects, oldest first."""
+        from scanner.books import BookLine
         from scanner.gamelog import GameRecord, TeamRef
 
         with self._lock:
@@ -777,6 +817,7 @@ class Diary:
                     away_lines=tuple(json.loads(r["away_lines"])),
                     home_stats=json.loads(r["home_stats"]),
                     away_stats=json.loads(r["away_stats"]),
+                    book=BookLine.from_dict(json.loads(r["book"])) if r["book"] else None,
                 )
             )
         return out

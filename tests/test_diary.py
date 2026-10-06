@@ -4,7 +4,14 @@ from dataclasses import replace
 
 import pytest
 
-from scanner.diary import OUTCOME_LOSS, OUTCOME_NOT_GRADED, OUTCOME_TIE, OUTCOME_WIN, Diary
+from scanner.diary import (
+    FOOTBALL_GAME_VERSION,
+    OUTCOME_LOSS,
+    OUTCOME_NOT_GRADED,
+    OUTCOME_TIE,
+    OUTCOME_WIN,
+    Diary,
+)
 from scanner.models import Alert, AlertType, GameStatus, League, NearMiss
 from scanner.rules import AlertHistory
 from scanner.scores import parse_scoreboard
@@ -448,3 +455,49 @@ def test_observations_are_recorded_graded_and_counted_once_per_game_and_pick():
     rows = diary.observations_since(at(0))
     assert [r["outcome"] for r in rows] == [OUTCOME_WIN, OUTCOME_WIN, OUTCOME_WIN, OUTCOME_LOSS]
     assert diary.scorecard()["observations"]["picks"] == 2
+
+
+OLD_FOOTBALL_GAMES = """
+CREATE TABLE football_games (
+    sport TEXT NOT NULL, game_id TEXT NOT NULL, season INTEGER, week INTEGER,
+    date TEXT NOT NULL, neutral INTEGER NOT NULL DEFAULT 0,
+    home_id TEXT NOT NULL, home_abbr TEXT NOT NULL, home_name TEXT NOT NULL,
+    away_id TEXT NOT NULL, away_abbr TEXT NOT NULL, away_name TEXT NOT NULL,
+    home_score INTEGER NOT NULL, away_score INTEGER NOT NULL,
+    home_lines TEXT NOT NULL, away_lines TEXT NOT NULL,
+    home_stats TEXT NOT NULL, away_stats TEXT NOT NULL, fetched_at TEXT NOT NULL,
+    PRIMARY KEY (sport, game_id)
+);
+"""
+
+
+def test_an_older_diary_gains_the_football_columns_and_its_rows_read_as_stale(tmp_path):
+    import sqlite3
+
+    from scanner.gamelog import parse_game_summary
+
+    path = str(tmp_path / "old.db")
+    conn = sqlite3.connect(path)
+    conn.executescript(OLD_FOOTBALL_GAMES)
+    conn.execute(
+        "INSERT INTO football_games VALUES ('nfl', 'old-1', 2026, 3, '2026-09-27T17:00:00+00:00',"
+        " 0, '5', 'CLE', 'Cleveland Browns', '23', 'PIT', 'Pittsburgh Steelers', 27, 24,"
+        " '[0, 21, 0, 6]', '[7, 3, 7, 7]', '{\"points\": 27}', '{\"points\": 24}',"
+        " '2026-10-01T00:00:00+00:00')"
+    )
+    conn.commit()
+    conn.close()
+
+    diary = Diary(path)
+    assert diary.football_games_stale("nfl") == ["old-1"]
+    old = diary.football_games("nfl")[0]
+    assert old.game_id == "old-1" and old.book is None and old.home_stats == {"points": 27}
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    diary.store_football_game(record, at(0))
+    assert diary.football_games_stale("nfl") == ["old-1"]  # the new row is current
+    fresh = [g for g in diary.football_games("nfl") if g.game_id == record.game_id][0]
+    assert fresh.book is not None and fresh.book.total == 38.5
+    diary.mark_football_game_version("nfl", "old-1", FOOTBALL_GAME_VERSION)
+    assert diary.football_games_stale("nfl") == [] and diary.football_games_stale("cfb") == []
+    diary.close()
+    Diary(path).close()  # opening a migrated diary again changes nothing

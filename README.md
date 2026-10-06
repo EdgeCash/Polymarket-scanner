@@ -383,7 +383,12 @@ for a game still to come the venue, weather and ESPN's own projection.
 next week's scoreboards every pass, earlier weeks until each is complete, and at
 most `GAMELOG_BACKFILL_PER_PASS` (40) summaries per pass with a quarter-second
 gap between requests, so the first college backfill takes a couple of hours and
-a normal week a minute. Upcoming games within 48 hours go to `football_upcoming`
+a normal week a minute. Each stored game carries the format version of the parser
+that read it; when the parser learns something worth a re-read (first-half yards,
+the closing line), the version is bumped and older rows are read again once with
+whatever budget new games leave, oldest first. The summary's `pickcenter` block
+is the book's line as it closed, kept with the game for grading. Upcoming games
+within 48 hours go to `football_upcoming`
 with their weather and venue re-read hourly. From those rows it builds, for each
 team, season, home-or-away, first-half and last-three figures (points, passing
 and rushing yards and touchdowns, yards per play, third downs, sacks, turnovers,

@@ -272,7 +272,12 @@ def test_matchup_pages_render_from_the_diary():
         at_time,
     )
     status = RuntimeStatus()
-    status.gamelog = {"last_refresh": at_time.isoformat(), "games": {"nfl": 1}, "backlog": 0}
+    status.gamelog = {
+        "last_refresh": at_time.isoformat(),
+        "games": {"nfl": 1},
+        "backlog": 0,
+        "stale": 12,
+    }
     client = TestClient(create_app(settings, diary, status))
     assert client.get("/matchups").status_code == 401
     listing = client.get("/matchups?token=phone-secret").text
@@ -300,7 +305,7 @@ def test_matchup_pages_render_from_the_diary():
     assert client.get("/matchup/nfl/999?token=phone-secret").status_code == 404
     assert client.get("/matchup/mlb/1?token=phone-secret").status_code == 404
     health = client.get("/health?token=phone-secret").text
-    assert "<th>Game log</th><td>last" in health and "NFL 1 games" in health
+    assert "<th>Game log</th><td>last" in health and "NFL 1 games, 12 to re-read" in health
 
 
 def replace_slate(game, **changes):

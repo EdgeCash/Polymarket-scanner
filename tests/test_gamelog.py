@@ -82,6 +82,13 @@ def test_nfl_summary_becomes_a_game_record_with_both_box_scores():
     assert home["first_half_total_yards"] == 222
     assert (away["first_half_pass_yards"], away["first_half_rush_yards"]) == (109, 60)
     assert home["first_half_total_yards"] < home["total_yards"]
+    # The closing line rides along from the summary's pickcenter block.
+    assert record.book is not None and record.book.provider == "DraftKings"
+    assert (record.book.home_spread, record.book.total) == (2.5, 38.5)
+    assert (record.book.home_ml, record.book.away_ml) == (124, -148)
+    raw = load_fixture("espn_nfl_summary_final.json")
+    del raw["pickcenter"]
+    assert parse_game_summary(raw, "nfl").book is None
 
 
 def test_first_half_yards_come_from_the_drives_and_skip_penalties_and_turnovers():
@@ -148,6 +155,7 @@ def test_college_summary_lacks_sacks_so_plays_are_counted_from_attempts():
     assert record.away_stats["first_half_points"] == 10
     assert record.home.logo == "https://a.espncdn.com/i/teamlogos/ncaa/500/324.png"
     assert record.home.color == "006f71"
+    assert record.book is not None and (record.book.home_spread, record.book.total) == (2.5, 50.5)
     assert (
         record.home_stats["first_half_pass_yards"],
         record.home_stats["first_half_rush_yards"],
@@ -449,6 +457,7 @@ class FakeFeed:
         self.past = {}  # (sport, week) -> raw scoreboard
         self.calls: list[tuple] = []
         self.fail_summaries = False
+        self.broken: set[str] = set()  # game ids whose summary has no usable box score
 
     def week(self, sport, week=None):
         self.calls.append(("week", sport, week))
@@ -462,6 +471,8 @@ class FakeFeed:
         self.calls.append(("summary", sport, game_id))
         if self.fail_summaries:
             raise GameLogError("timeout")
+        if game_id in self.broken:
+            return {"header": {}}
         fixture = "espn_nfl_summary_final.json" if sport == "nfl" else "espn_cfb_summary_final.json"
         raw = load_fixture(fixture)
         raw["header"]["competitions"][0]["id"] = game_id  # the same box score under the asked id
@@ -529,6 +540,51 @@ def test_refresh_stores_each_finished_game_once_within_the_budget():
     summary = log.refresh("nfl", NOW + timedelta(minutes=30))
     assert summary.summaries_fetched == 0 and diary.football_game_counts() == {"nfl": 3}
     assert [c for c in feed.calls if c[0] == "week"] == [("week", "nfl", None), ("week", "nfl", 5)]
+
+
+def test_games_from_an_older_parser_are_read_again_with_the_leftover_budget():
+    log, diary, feed = build()
+    log.refresh("nfl", NOW, budget=40)
+    stored = diary.football_games("nfl")
+    assert len(stored) == 3 and all(g.book is not None for g in stored)
+    assert diary.football_games_stale("nfl") == []
+    # Two rows written by an older parser (as a deploy would leave them).
+    old_ids = [stored[0].game_id, stored[1].game_id]
+    for game_id in old_ids:
+        diary.mark_football_game_version("nfl", game_id, 1)
+    assert diary.football_games_stale("nfl") == old_ids
+
+    feed.calls.clear()
+    summary = log.refresh("nfl", NOW + timedelta(minutes=15), budget=1)
+    assert summary.games_stored == 0 and summary.reread == 1 and summary.stale == 1
+    assert summary.summaries_fetched == 1
+    assert [c for c in feed.calls if c[0] == "summary"] == [("summary", "nfl", old_ids[0])]
+    assert diary.football_games_stale("nfl") == [old_ids[1]]
+    assert diary.football_games("nfl")[0].book is not None
+
+    # A summary that fails leaves the row stale; one that no longer parses is marked
+    # current so it is not read on every pass.
+    feed.fail_summaries = True
+    summary = log.refresh("nfl", NOW + timedelta(minutes=30), budget=40)
+    assert (
+        summary.reread == 0 and summary.stale == 1 and any("re-read" in e for e in summary.errors)
+    )
+    feed.fail_summaries = False
+    feed.broken.add(old_ids[1])
+    summary = log.refresh("nfl", NOW + timedelta(minutes=45), budget=40)
+    assert summary.reread == 1 and summary.stale == 0
+    assert diary.football_games_stale("nfl") == [] and diary.football_game_counts() == {"nfl": 3}
+    feed.calls.clear()
+    summary = log.refresh("nfl", NOW + timedelta(minutes=60), budget=40)
+    assert summary.reread == 0 and [c for c in feed.calls if c[0] == "summary"] == []
+
+
+def test_new_games_come_before_re_reads():
+    log, diary, feed = build()
+    log.refresh("nfl", NOW, budget=1)  # one stored, two still new
+    diary.mark_football_game_version("nfl", diary.football_games("nfl")[0].game_id, 1)
+    summary = log.refresh("nfl", NOW + timedelta(minutes=15), budget=2)
+    assert summary.games_stored == 2 and summary.reread == 0 and summary.stale == 1
 
 
 def test_past_weeks_are_backfilled_and_failures_do_not_stop_the_pass():

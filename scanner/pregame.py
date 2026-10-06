@@ -579,13 +579,17 @@ class PregameScanner:
             "upcoming": {s.sport: s.upcoming for s in summaries},
             "backlog": sum(s.backlog for s in summaries),
             "fetched": sum(s.summaries_fetched for s in summaries),
+            "reread": sum(s.reread for s in summaries),
+            "stale": sum(s.stale for s in summaries),
             "error": "; ".join(short_error(e) for e in errors[:2]) or None,
         }
         log.info(
-            "game log: %s games, %d fetched, %d still to fetch",
+            "game log: %s games, %d fetched, %d still to fetch, %d re-read, %d to re-read",
             self.status.gamelog["games"],
             self.status.gamelog["fetched"],
             self.status.gamelog["backlog"],
+            self.status.gamelog["reread"],
+            self.status.gamelog["stale"],
         )
 
     def start_thread(self) -> threading.Thread:

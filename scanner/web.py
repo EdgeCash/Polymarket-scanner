@@ -322,6 +322,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
     text = f"last {_local(gl.get('last_refresh'), settings.TZ)}: {games} games"
     if gl.get("backlog"):
         text += f", {gl['backlog']} still to fetch"
+    if gl.get("stale"):
+        text += f", {gl['stale']} to re-read"
     if gl.get("error"):
         text += f"; error: {gl['error']}"
     return text
