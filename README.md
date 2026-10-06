@@ -258,7 +258,9 @@ on the iPad.
 3. Service → **Settings** → **Volumes** → add a volume with mount path `/data`.
 4. Service → **Settings** → **Networking** → **Generate Domain**. Open
    `https://<domain>/health?token=<STATUS_TOKEN>` on the iPad. It should say
-   "sleeping" with the next wake time, or "awake" during a game window.
+   "sleeping" with the next wake time, or "awake" during a game window. The
+   "Build" row shows the short git commit Railway deployed, so you can check
+   that a merge has gone live without opening Railway.
 5. Phone check (milestone 7): set `SEND_TEST_MESSAGE_ON_START=true`, let
    Railway redeploy, confirm the message on the phone, then set it back to
    `false`. Do this on a weekday, never during a game window.

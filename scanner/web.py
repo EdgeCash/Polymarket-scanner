@@ -154,6 +154,7 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
     feeds_ok = not d["score_feed_failing_since"] and not d["price_feed_failing_since"]
     rows = [
         ("Version", d["version"]),
+        ("Build", settings.short_commit),
         ("Started", _local(d["started_at"], settings.TZ)),
         ("Game window", ("awake" if d["awake"] else "sleeping") + f": {d['window_note']}"),
         ("Leagues", ", ".join(f"{k.upper()} ({v})" for k, v in d["leagues"].items()) or "none yet"),
@@ -223,7 +224,7 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         if not authorised(token, x_status_token):
             return denied()
         if "application/json" in request.headers.get("accept", ""):
-            return JSONResponse(status.as_dict())
+            return JSONResponse({**status.as_dict(), "commit": settings.short_commit})
         return HTMLResponse(render_health(status, settings))
 
     @app.get("/scorecard", response_class=HTMLResponse)
