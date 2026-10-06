@@ -560,3 +560,113 @@ def test_projections_update_until_graded_from_the_log_and_feed_the_scorecard():
     assert recent["final"] == {"home": 27, "away": 24} and recent["ou"]["side"] == "over"
     assert diary.projection_summary(since=kickoff + timedelta(days=1))["graded"] == 0
     assert diary.scorecard()["projections"]["graded"] == 1
+
+
+def stake_row(**changes):
+    base = {
+        "market": "moneyline",
+        "side": "home",
+        "side_label": "CLE",
+        "line": None,
+        "buy_price": 0.5,
+        "fee": 0.017375,
+        "model_prob": 0.62,
+        "edge": 0.102625,
+        "kelly": 0.2126,
+        "share": 0.05,
+        "stake": 50.0,
+        "contracts": 96.64,
+    }
+    base.update(changes)
+    return base
+
+
+def test_stakes_follow_the_suggestions_until_kickoff_then_lock_and_grade():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    gid = record.game_id
+    kickoff = datetime(2026, 10, 11, 17, 0, tzinfo=UTC)
+    t0 = kickoff - timedelta(hours=30)
+    total = stake_row(
+        market="total",
+        side="over",
+        side_label="over 45.5",
+        line=45.5,
+        edge=0.07,
+        stake=39.7,
+        contracts=76.7,
+    )
+    seen = (t0 - timedelta(minutes=5)).isoformat()
+    assert (
+        diary.sync_stakes(
+            "nfl", gid, kickoff, "CLE", "PIT", [stake_row(), total], False, 1000, seen, t0
+        )
+        == 2
+    )
+    rows = diary.stakes_for("nfl", gid)
+    assert [r["market"] for r in rows] == ["moneyline", "total"]  # biggest edge first
+    assert rows[0]["gate_open"] == 0 and rows[0]["bankroll"] == 1000 and rows[0]["price_at"] == seen
+    assert rows[0]["created_at"] == t0.isoformat() and rows[0]["outcome"] is None
+
+    # Next pass: the total's edge is gone and the moneyline side has flipped.
+    flipped = stake_row(side="away", side_label="PIT", buy_price=0.48, model_prob=0.56)
+    later = t0 + timedelta(hours=1)
+    assert (
+        diary.sync_stakes("nfl", gid, kickoff, "CLE", "PIT", [flipped], True, 1000, seen, later)
+        == 1
+    )
+    rows = diary.stakes_for("nfl", gid)
+    assert len(rows) == 1 and rows[0]["side"] == "away" and rows[0]["gate_open"] == 1
+    assert rows[0]["created_at"] == t0.isoformat() and rows[0]["updated_at"] == later.isoformat()
+    # From kickoff on, nothing changes.
+    assert diary.sync_stakes("nfl", gid, kickoff, "CLE", "PIT", [], True, 1000, seen, kickoff) == 0
+    assert len(diary.stakes_for("nfl", gid)) == 1
+
+    assert diary.grade_stakes("nfl", kickoff + timedelta(hours=1)) == 0  # grace period
+    assert diary.grade_stakes("nfl", kickoff + timedelta(hours=6)) == 0  # game not in the log
+    diary.store_football_game(record, kickoff + timedelta(hours=4))  # CLE 27, PIT 24
+    assert diary.grade_stakes("nfl", kickoff + timedelta(hours=6)) == 1
+    row = diary.stakes_for("nfl", gid)[0]
+    assert row["outcome"] == "loss" and row["settlement"] == 0.0
+    assert row["profit"] == pytest.approx(96.64 * (0 - 0.48) - 96.64 * 0.017375)
+    assert (row["final_home"], row["final_away"]) == (27, 24)
+    # A graded row is fixed: a new pass cannot rewrite it.
+    diary.sync_stakes("nfl", gid, kickoff, "CLE", "PIT", [stake_row()], True, 1000, seen, t0)
+    assert diary.stakes_for("nfl", gid)[0]["side"] == "away"
+
+    # A game that never lands is given up on after ten days.
+    ghost = kickoff - timedelta(days=12)
+    diary.sync_stakes(
+        "nfl",
+        "ghost",
+        ghost,
+        "AAA",
+        "BBB",
+        [stake_row()],
+        False,
+        1000,
+        None,
+        ghost - timedelta(days=1),
+    )
+    assert diary.grade_stakes("nfl", kickoff) == 0
+    assert diary.stakes_for("nfl", "ghost")[0]["outcome"] == OUTCOME_NOT_GRADED
+
+    summary = diary.stake_summary()
+    assert summary["suggested"] == 2 and summary["open"] == 0 and summary["shown"] == 1
+    assert summary["graded"] == 1 and summary["not_graded"] == 1 and summary["losses"] == 1
+    assert summary["staked"] == 50.0 and summary["profit"] == pytest.approx(row["profit"])
+    assert summary["roi"] == pytest.approx(row["profit"] / 50.0)
+    assert summary["by_market"]["moneyline"] == {
+        "suggested": 2,
+        "wins": 0,
+        "losses": 1,
+        "pushes": 0,
+        "profit": pytest.approx(row["profit"]),
+    }
+    assert summary["recent"][0]["side_label"] == "PIT" and summary["recent"][0]["gate_open"]
+    assert diary.stake_summary(since=kickoff + timedelta(days=1))["suggested"] == 0
+    assert diary.scorecard()["stakes"]["graded"] == 1

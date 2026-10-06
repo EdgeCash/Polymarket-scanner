@@ -940,6 +940,7 @@ class RefreshSummary:
     stale: int = 0  # stored games still waiting for that re-read
     projected: int = 0  # upcoming games given a projection this pass
     graded: int = 0  # projections graded this pass
+    staked: int = 0  # stake suggestions open after this pass
     errors: list[str] = field(default_factory=list)
 
 
@@ -1010,8 +1011,13 @@ class FootballLog:
         is graded once the game's own record lands in the log.
         """
         from scanner.projection import fit, project
+        from scanner.stakes import gate, suggest
 
         ratings = fit(self.diary.football_games(sport, season), sport)
+        stakes_on = self.settings.STAKE_ENABLED
+        gate_open = (
+            stakes_on and gate(self.diary.projection_summary(sport=sport), self.settings)["open"]
+        )
         for row in self.diary.football_upcoming(sport):
             kickoff = datetime.fromisoformat(row["date"])
             if kickoff <= now:
@@ -1037,7 +1043,31 @@ class FootballLog:
                 now,
             )
             summary.projected += 1
+            if stakes_on:
+                line = self.diary.last_pregame_line(sport, row["game_id"])
+                suggestions = suggest(
+                    projection,
+                    line["polymarket"] if line else None,
+                    sport,
+                    slate["home"]["abbreviation"],
+                    slate["away"]["abbreviation"],
+                    self.settings,
+                )
+                summary.staked += self.diary.sync_stakes(
+                    sport,
+                    row["game_id"],
+                    kickoff,
+                    slate["home"]["abbreviation"],
+                    slate["away"]["abbreviation"],
+                    suggestions,
+                    gate_open,
+                    self.settings.BANKROLL,
+                    line["scanned_at"] if line else None,
+                    now,
+                )
         summary.graded = self.diary.grade_projections(sport, now)
+        if stakes_on:
+            self.diary.grade_stakes(sport, now)
 
     def _reread_stale(self, sport, now, budget, summary) -> None:
         """Re-read games stored by an older parser, with whatever budget is left.
@@ -1140,4 +1170,6 @@ def sheet_from_diary(diary: Diary, sport: str, game_id: str) -> dict | None:
     sheet = build_sheet(upcoming, records, upcoming.get("extra") or {}, polymarket)
     stored = diary.projection(sport, game_id)
     sheet["projection"] = stored["projection"] if stored else None
+    sheet["stakes"] = diary.stakes_for(sport, game_id)
+    sheet["model_record"] = diary.projection_summary(sport=sport)
     return sheet

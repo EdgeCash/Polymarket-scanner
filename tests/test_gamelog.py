@@ -608,6 +608,66 @@ def test_refresh_projects_upcoming_games_and_grades_them_once_the_game_lands():
     assert diary.projection("nfl", "upcoming-1")["outcome"] == "graded"
 
 
+def test_refresh_records_what_the_model_would_stake_at_the_last_polymarket_prices():
+    from scanner.models import PregameLineRecord
+
+    log, diary, feed = build()
+    add_upcoming(feed)
+    prices = {"home": 0.4, "away": 0.62, "total": [40.5, 0.45, 0.57], "spread": [-2.5, 0.4, 0.62]}
+    diary.record_pregame_line(
+        PregameLineRecord(NOW, "nfl", "upcoming-1", "nfl-x", NOW, "CLE", "PIT", {}, prices)
+    )
+    summary = log.refresh("nfl", NOW, budget=40)
+    rows = diary.stakes_for("nfl", "upcoming-1")
+    assert summary.staked == len(rows) == 3
+    assert {(r["market"], r["side"]) for r in rows} == {
+        ("moneyline", "home"),
+        ("total", "over"),
+        ("spread", "home"),
+    }
+    assert all(r["gate_open"] == 0 and r["bankroll"] == 1000 for r in rows)
+    assert rows[0]["price_at"] == NOW.isoformat() and rows[0]["outcome"] is None
+    sheet = sheet_from_diary(diary, "nfl", "upcoming-1")
+    assert sheet["stakes"] == rows and sheet["model_record"]["graded"] == 0
+
+    played = replace(diary.football_games("nfl")[0], game_id="upcoming-1")  # CLE 27-24
+    diary.store_football_game(played, NOW + timedelta(hours=24))
+    log.refresh("nfl", NOW + timedelta(hours=30), budget=40)
+    graded = diary.stakes_for("nfl", "upcoming-1")
+    assert all(r["outcome"] == "win" and r["profit"] > 0 for r in graded)
+    assert diary.stake_summary()["wins"] == 3
+
+    # With the gate forced open the rows say the sheet showed them.
+    open_settings = load_settings(DATABASE_PATH=":memory:", STAKE_GATE_GAMES=0)
+    open_diary = Diary(":memory:")
+    open_diary.record_pregame_line(
+        PregameLineRecord(NOW, "nfl", "upcoming-1", "nfl-x", NOW, "CLE", "PIT", {}, prices)
+    )
+    FootballLog(open_settings, open_diary, feed=feed, now=lambda: NOW).refresh(
+        "nfl", NOW, budget=40
+    )
+    assert all(r["gate_open"] == 1 for r in open_diary.stakes_for("nfl", "upcoming-1"))
+
+
+def test_stakes_can_be_switched_off():
+    from scanner.models import PregameLineRecord
+
+    settings = load_settings(DATABASE_PATH=":memory:", STAKE_ENABLED=False)
+    diary = Diary(":memory:")
+    feed = FakeFeed()
+    add_upcoming(feed)
+    diary.record_pregame_line(
+        PregameLineRecord(
+            NOW, "nfl", "upcoming-1", "nfl-x", NOW, "CLE", "PIT", {}, {"home": 0.4, "away": 0.62}
+        )
+    )
+    summary = FootballLog(settings, diary, feed=feed, now=lambda: NOW).refresh(
+        "nfl", NOW, budget=40
+    )
+    assert summary.projected == 1 and summary.staked == 0
+    assert diary.stakes_for("nfl", "upcoming-1") == []
+
+
 def test_projections_can_be_switched_off():
     settings = load_settings(DATABASE_PATH=":memory:", PROJECTION_ENABLED=False)
     diary = Diary(":memory:")
