@@ -81,6 +81,11 @@ All settings are environment variables. Defaults are from the build brief.
 | `PERIOD_MARKETS_ENABLED` | `true` | Evaluate and record decided quarter and half markets |
 | `PERIOD_ALERTS_ENABLED` | `false` | Also send them to the phone (needs `ALERTS_ENABLED` too) |
 | `OBSERVATION_MINUTES_LEFT` | `15` | Record winner checks between `MAX_MINUTES_LEFT` and this; never sends; `0` turns it off |
+| `PREGAME_ENABLED` | `true` | The pre-game scan across every sport (records, never sends) |
+| `PREGAME_SPORTS` | all 14 | Comma list of `mlb,nba,wnba,cbb,nhl,nfl,cfb,epl,mls,ucl,laliga,bundesliga,seriea,ligue1` |
+| `PREGAME_SCAN_MINUTES` | `15` | How often the pre-game scan runs |
+| `PREGAME_MIN_EDGE` | `0.03` | Recording threshold: edge after fee against the book's vig-free number |
+| `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -244,6 +249,7 @@ python -m scanner --once               # one pass (or "asleep") and exit
 python -m scanner --dry-run            # settings only
 python -m scanner --send-test-message  # the owner's phone check (ignores ALERTS_ENABLED)
 python -m scanner --shadow-report      # print the shadow weekend report; add --send to send it
+python -m scanner --pregame-once       # one pre-game scan across every sport, printed
 ```
 
 ### Hosting: Railway
@@ -316,6 +322,44 @@ at the final like a winner alert, so the scorecard's "Observation window"
 section shows the win rate needed, the actual win rate and the paper result the
 8-minute rule is leaving on the table (or saving). Changing the rule itself is
 still the owner's decision.
+
+## Pre-game gaps across every sport (shadow)
+
+The owner's question after the first live night: can the scanner watch every
+matchup in every sport and tell when Polymarket is on the wrong side of the
+books? ESPN's scoreboard for each sport carries one book's line (DraftKings in
+October 2026): a moneyline for each side, a total with over and under prices, a
+spread with a price for each side, and a draw price for soccer. A book's two
+prices on one market add up to more than 100%; dividing each implied probability
+by their sum removes the margin and leaves the book's own estimate
+(`scanner/books.py`). Polymarket's event list carries every side's buy price, so
+no order-book reads are needed to compare.
+
+`scanner/pregame.py` runs in its own thread every `PREGAME_SCAN_MINUTES`, with
+its own, slower request ceiling so the live football scanner never waits for
+it. It reads each sport's scoreboard for yesterday, today and tomorrow (ESPN
+counts days in US Eastern time, one request per day), lists the matching
+Polymarket league, pairs the games (nicknames are allowed here, since the NBA
+and NHL listings use "Nets" and "Predators" as whole names), and for every game
+still to start compares the buy prices with the book's vig-free numbers:
+moneylines only where a draw is impossible, totals and spreads only at the
+book's own line, since a different number is a different bet. A side whose edge
+after the fee clears `PREGAME_MIN_EDGE` is a gap: what the scan would have told
+the owner to buy. The diary keeps the gap at the first price seen (later scans
+only refresh how it looks now), stores each game's lines whenever they change,
+gives every gap the book's last line before the start once the game begins, and
+grades it from the final score: win, loss or push.
+
+Two numbers judge it on the scorecard's "Pre-game gaps" section. The paper
+result needs hundreds of near-coin-flip bets to mean much. The edge at the close
+does not: if what the scan buys at 50 cents keeps closing at 54 at the book, the
+edge is real before the results come in, and if it keeps closing at 49 the scan
+is being picked off. Nothing here sends anything; turning any of it into an
+alert is a separate decision for the owner.
+
+`python -m scanner --pregame-once` runs one scan by hand and prints what it
+found. Milestone check on 6 October 2026: 14 sports, 31 games matched, 26 with
+a book line, no gaps at 3 cents on a quiet Tuesday morning.
 
 ## Milestones
 

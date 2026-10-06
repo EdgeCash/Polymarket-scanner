@@ -1,0 +1,3006 @@
+{
+ "events": [
+  {
+   "id": "137737",
+   "chatChannel": {
+    "id": "nhl-nas-tor-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 228
+   },
+   "ticker": "nhl-nas-tor-2026-10-06",
+   "slug": "nhl-nas-tor-2026-10-06",
+   "title": "NAS Predators vs. TOR Maple Leafs",
+   "startDate": "2026-10-06T23:00:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-02T04:00:27Z",
+   "updatedAt": "2026-10-06T13:55:32Z",
+   "startTime": "2026-10-06T23:00:00Z",
+   "seriesSlug": "nhl-2025",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1163911",
+     "question": "Will the total in NSH vs TOR be more than 2.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:35Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:35Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2327304",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-2pt5",
+       "createdAt": "2026-10-02T04:00:35Z",
+       "updatedAt": "2026-10-02T04:00:35Z",
+       "description": "Over",
+       "price": "0.9600",
+       "marketId": 1163911,
+       "long": true,
+       "quote": {
+        "value": "0.9700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327305",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-2pt5",
+       "createdAt": "2026-10-02T04:00:35Z",
+       "updatedAt": "2026-10-02T04:00:35Z",
+       "description": "Under",
+       "price": "0.9700",
+       "marketId": 1163911,
+       "long": false,
+       "quote": {
+        "value": "0.04",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.9600\",\"0.9700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163909",
+     "question": "Will the NSH Predators cover 3.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-pos-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:34Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:34Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2327300",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-3pt5",
+       "createdAt": "2026-10-02T04:00:34Z",
+       "updatedAt": "2026-10-02T04:00:34Z",
+       "description": "+3.50",
+       "price": "0.8800",
+       "marketId": 1163909,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.9200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327301",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-3pt5",
+       "createdAt": "2026-10-02T04:00:34Z",
+       "updatedAt": "2026-10-02T04:00:34Z",
+       "description": "-3.50",
+       "price": "0.9200",
+       "marketId": 1163909,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.12",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.8800\",\"0.9200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Maple Leafs wins by over 3.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.8800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "titleShort": "TOR -3.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163913",
+     "question": "Will the total in NSH vs TOR be more than 3.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:36Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:36Z",
+     "updatedAt": "2026-10-06T02:10:14Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2327308",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-3pt5",
+       "createdAt": "2026-10-02T04:00:36Z",
+       "updatedAt": "2026-10-02T04:00:36Z",
+       "description": "Over",
+       "price": "0.8500",
+       "marketId": 1163913,
+       "long": true,
+       "quote": {
+        "value": "0.8600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327309",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-3pt5",
+       "createdAt": "2026-10-02T04:00:36Z",
+       "updatedAt": "2026-10-02T04:00:36Z",
+       "description": "Under",
+       "price": "0.8600",
+       "marketId": 1163913,
+       "long": false,
+       "quote": {
+        "value": "0.15",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.8500\",\"0.8600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 3.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.8500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8600",
+      "currency": "USD"
+     },
+     "titleShort": "Over 3.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163915",
+     "question": "Will the total in NSH vs TOR be more than 4.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-4pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:37Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:37Z",
+     "updatedAt": "2026-10-06T13:55:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2327312",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-4pt5",
+       "createdAt": "2026-10-02T04:00:37Z",
+       "updatedAt": "2026-10-02T04:00:37Z",
+       "description": "Over",
+       "price": "0.7700",
+       "marketId": 1163915,
+       "long": true,
+       "quote": {
+        "value": "0.7800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327313",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-4pt5",
+       "createdAt": "2026-10-02T04:00:37Z",
+       "updatedAt": "2026-10-02T04:00:37Z",
+       "description": "Under",
+       "price": "0.7800",
+       "marketId": 1163915,
+       "long": false,
+       "quote": {
+        "value": "0.23",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7700\",\"0.7800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 4.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.7700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 4.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163907",
+     "question": "Will the NSH Predators cover 2.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-pos-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:33Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:33Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2327296",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-02T04:00:33Z",
+       "updatedAt": "2026-10-02T04:00:33Z",
+       "description": "+2.50",
+       "price": "0.7600",
+       "marketId": 1163907,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.7700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327297",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-02T04:00:33Z",
+       "updatedAt": "2026-10-02T04:00:33Z",
+       "description": "-2.50",
+       "price": "0.7700",
+       "marketId": 1163907,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.24",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7600\",\"0.7700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Maple Leafs wins by over 2.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.7600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7700",
+      "currency": "USD"
+     },
+     "titleShort": "TOR -2.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163905",
+     "question": "Will the NSH Predators cover 1.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-pos-1pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:32Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:32Z",
+     "updatedAt": "2026-10-06T13:24:17Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2327292",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-02T04:00:32Z",
+       "updatedAt": "2026-10-02T04:00:32Z",
+       "description": "+1.50",
+       "price": "0.6300",
+       "marketId": 1163905,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.6400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327293",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-02T04:00:32Z",
+       "updatedAt": "2026-10-02T04:00:32Z",
+       "description": "-1.50",
+       "price": "0.6400",
+       "marketId": 1163905,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.37",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6300\",\"0.6400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Maple Leafs wins by over 1.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.6300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6400",
+      "currency": "USD"
+     },
+     "titleShort": "TOR -1.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163917",
+     "question": "Will the total in NSH vs TOR be more than 5.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-5pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:38Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:38Z",
+     "updatedAt": "2026-10-06T08:54:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2327316",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-5pt5",
+       "createdAt": "2026-10-02T04:00:38Z",
+       "updatedAt": "2026-10-02T04:00:38Z",
+       "description": "Over",
+       "price": "0.5400",
+       "marketId": 1163917,
+       "long": true,
+       "quote": {
+        "value": "0.5500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327317",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-5pt5",
+       "createdAt": "2026-10-02T04:00:38Z",
+       "updatedAt": "2026-10-02T04:00:38Z",
+       "description": "Under",
+       "price": "0.5500",
+       "marketId": 1163917,
+       "long": false,
+       "quote": {
+        "value": "0.46",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5400\",\"0.5500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 5.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.5400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 5.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163919",
+     "question": "Will the total in NSH vs TOR be more than 6.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-6pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:39Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:39Z",
+     "updatedAt": "2026-10-06T13:25:29Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2327320",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-6pt5",
+       "createdAt": "2026-10-02T04:00:39Z",
+       "updatedAt": "2026-10-02T04:00:39Z",
+       "description": "Over",
+       "price": "0.4300",
+       "marketId": 1163919,
+       "long": true,
+       "quote": {
+        "value": "0.4400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327321",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-6pt5",
+       "createdAt": "2026-10-02T04:00:39Z",
+       "updatedAt": "2026-10-02T04:00:39Z",
+       "description": "Under",
+       "price": "0.4400",
+       "marketId": 1163919,
+       "long": false,
+       "quote": {
+        "value": "0.57",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4300\",\"0.4400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 6.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.4300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4400",
+      "currency": "USD"
+     },
+     "titleShort": "Over 6.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163893",
+     "question": "Who will win in the upcoming hockey event NSH Predators vs TOR Maple Leafs scheduled for October 6, 2026 at 11:00 PM UTC?",
+     "slug": "aec-nhl-nas-tor-2026-10-06",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:27Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:27Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2327268",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nhl-nas-tor-2026-10-06",
+       "createdAt": "2026-10-02T04:00:27Z",
+       "updatedAt": "2026-10-02T04:00:27Z",
+       "description": "Predators",
+       "price": "0.4000",
+       "marketId": 1163893,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.4100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327269",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nhl-nas-tor-2026-10-06",
+       "createdAt": "2026-10-02T04:00:27Z",
+       "updatedAt": "2026-10-02T04:00:27Z",
+       "description": "Maple Leafs",
+       "price": "0.4100",
+       "marketId": 1163893,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.6",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4000\",\"0.4100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Predators vs Maple Leafs",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "titleShort": "NSH vs TOR",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163921",
+     "question": "Will the total in NSH vs TOR be more than 7.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-7pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:40Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:40Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2327324",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-7pt5",
+       "createdAt": "2026-10-02T04:00:40Z",
+       "updatedAt": "2026-10-02T04:00:40Z",
+       "description": "Over",
+       "price": "0.2300",
+       "marketId": 1163921,
+       "long": true,
+       "quote": {
+        "value": "0.2500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327325",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-7pt5",
+       "createdAt": "2026-10-02T04:00:40Z",
+       "updatedAt": "2026-10-02T04:00:40Z",
+       "description": "Under",
+       "price": "0.2500",
+       "marketId": 1163921,
+       "long": false,
+       "quote": {
+        "value": "0.77",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2300\",\"0.2500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.2300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163902",
+     "question": "Will the NSH Predators cover -1.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-neg-1pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:30Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:31Z",
+     "updatedAt": "2026-10-06T02:09:03Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2327286",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-02T04:00:31Z",
+       "updatedAt": "2026-10-02T04:00:31Z",
+       "description": "-1.50",
+       "price": "0.2100",
+       "marketId": 1163902,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.2200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327287",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-02T04:00:31Z",
+       "updatedAt": "2026-10-02T04:00:31Z",
+       "description": "+1.50",
+       "price": "0.2200",
+       "marketId": 1163902,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.79",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2100\",\"0.2200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Predators wins by over 1.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.2100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2200",
+      "currency": "USD"
+     },
+     "titleShort": "NSH -1.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163923",
+     "question": "Will the total in NSH vs TOR be more than 8.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-8pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:41Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:41Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 8.5,
+     "marketSides": [
+      {
+       "id": "2327328",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-8pt5",
+       "createdAt": "2026-10-02T04:00:41Z",
+       "updatedAt": "2026-10-02T04:00:41Z",
+       "description": "Over",
+       "price": "0.1600",
+       "marketId": 1163923,
+       "long": true,
+       "quote": {
+        "value": "0.1700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327329",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-8pt5",
+       "createdAt": "2026-10-02T04:00:41Z",
+       "updatedAt": "2026-10-02T04:00:41Z",
+       "description": "Under",
+       "price": "0.1700",
+       "marketId": 1163923,
+       "long": false,
+       "quote": {
+        "value": "0.84",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1600\",\"0.1700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 8.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.1600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 8.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163899",
+     "question": "Will the NSH Predators cover -2.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-neg-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:29Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:29Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2327280",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-02T04:00:29Z",
+       "updatedAt": "2026-10-02T04:00:29Z",
+       "description": "-2.50",
+       "price": "0.1300",
+       "marketId": 1163899,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.1400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327281",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-02T04:00:29Z",
+       "updatedAt": "2026-10-02T04:00:29Z",
+       "description": "+2.50",
+       "price": "0.1400",
+       "marketId": 1163899,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.87",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1300\",\"0.1400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Predators wins by over 2.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.1300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1400",
+      "currency": "USD"
+     },
+     "titleShort": "NSH -2.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163925",
+     "question": "Will the total in NSH vs TOR be more than 9.5?",
+     "slug": "tsc-nhl-nas-tor-2026-10-06-9pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:43Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:43Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 9.5,
+     "marketSides": [
+      {
+       "id": "2327332",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-9pt5",
+       "createdAt": "2026-10-02T04:00:43Z",
+       "updatedAt": "2026-10-02T04:00:43Z",
+       "description": "Over",
+       "price": "0.0600",
+       "marketId": 1163925,
+       "long": true,
+       "quote": {
+        "value": "0.0800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327333",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-nas-tor-2026-10-06-9pt5",
+       "createdAt": "2026-10-02T04:00:43Z",
+       "updatedAt": "2026-10-02T04:00:43Z",
+       "description": "Under",
+       "price": "0.0800",
+       "marketId": 1163925,
+       "long": false,
+       "quote": {
+        "value": "0.94",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.0600\",\"0.0800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 9.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.0600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 9.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1163896",
+     "question": "Will the NSH Predators cover -3.5 vs the TOR Maple Leafs in NSH vs TOR?",
+     "slug": "asc-nhl-nas-tor-2026-10-06-neg-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:00:28Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:00:28Z",
+     "updatedAt": "2026-10-05T17:39:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -3.5,
+     "marketSides": [
+      {
+       "id": "2327274",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-3pt5",
+       "createdAt": "2026-10-02T04:00:28Z",
+       "updatedAt": "2026-10-02T04:00:28Z",
+       "description": "-3.50",
+       "price": "0.0300",
+       "marketId": 1163896,
+       "long": true,
+       "teamId": 1504,
+       "team": {
+        "id": 1504,
+        "name": "Predators",
+        "abbreviation": "nas",
+        "alias": "Predators",
+        "league": "nhl",
+        "safeName": "Nashville Predators",
+        "record": "38-34-10",
+        "ordering": "away",
+        "providerId": 21
+       },
+       "quote": {
+        "value": "0.0700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327275",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-nas-tor-2026-10-06-neg-3pt5",
+       "createdAt": "2026-10-02T04:00:28Z",
+       "updatedAt": "2026-10-02T04:00:28Z",
+       "description": "+3.50",
+       "price": "0.0700",
+       "marketId": 1163896,
+       "long": false,
+       "teamId": 1490,
+       "team": {
+        "id": 1490,
+        "name": "Maple Leafs",
+        "abbreviation": "tor",
+        "alias": "Maple Leafs",
+        "league": "nhl",
+        "safeName": "Toronto Maple Leafs",
+        "record": "32-36-14",
+        "ordering": "home",
+        "providerId": 7
+       },
+       "quote": {
+        "value": "0.97",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.0300\",\"0.0700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Predators wins by over 3.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.0300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0700",
+      "currency": "USD"
+     },
+     "titleShort": "NSH -3.5",
+     "ep3SyncedAt": "2026-10-05T17:39:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "sportradarGameId": "50f0610c-72bd-4bdf-be2e-264aa3dd7ffe",
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "7",
+     "label": "NHL",
+     "slug": "nhl",
+     "createdAt": "2025-12-02T21:54:38Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 3,
+      "name": "NHL",
+      "sportId": 4,
+      "tagId": 7,
+      "resolution": "https://www.nhl.com/",
+      "ordering": "away",
+      "activeSeriesId": 6,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "nhl",
+      "abbreviation": "NHL"
+     },
+     "parentId": 14,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "14",
+     "label": "Hockey",
+     "slug": "ice-hockey",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 4,
+      "name": "Hockey",
+      "tagId": 14,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "ice-hockey"
+     },
+     "subtags": [
+      {
+       "id": "7",
+       "label": "NHL",
+       "slug": "nhl",
+       "createdAt": "2025-12-02T21:54:38Z",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 3,
+        "name": "NHL",
+        "sportId": 4,
+        "tagId": 7,
+        "resolution": "https://www.nhl.com/",
+        "ordering": "away",
+        "activeSeriesId": 6,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-05T18:30:42Z",
+        "slug": "nhl",
+        "abbreviation": "NHL"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1551",
+       "label": "Liiga",
+       "slug": "liiga",
+       "updatedAt": "2026-10-03T17:23:50Z",
+       "tradable": false,
+       "league": {
+        "id": 334,
+        "name": "Liiga",
+        "sportId": 4,
+        "tagId": 1551,
+        "ordering": "home",
+        "activeSeriesId": 453,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-29T00:39:42Z",
+        "slug": "liiga"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1357",
+       "label": "KHL",
+       "slug": "khl",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 258,
+        "name": "KHL",
+        "sportId": 4,
+        "tagId": 1357,
+        "ordering": "home",
+        "activeSeriesId": 338,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-17T23:32:56Z",
+        "slug": "khl"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1463",
+       "label": "SHL",
+       "slug": "shl",
+       "updatedAt": "2026-10-03T18:38:51Z",
+       "tradable": false,
+       "league": {
+        "id": 288,
+        "name": "SHL",
+        "sportId": 4,
+        "tagId": 1463,
+        "ordering": "home",
+        "activeSeriesId": 390,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-23T16:42:23Z",
+        "slug": "shl"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1465",
+       "label": "National League",
+       "slug": "snhl",
+       "updatedAt": "2026-10-05T23:10:18Z",
+       "tradable": false,
+       "league": {
+        "id": 289,
+        "name": "National League",
+        "sportId": 4,
+        "tagId": 1465,
+        "ordering": "home",
+        "activeSeriesId": 391,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-23T19:07:16Z",
+        "slug": "snhl"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1468",
+       "label": "Czech Extraliga",
+       "slug": "cehl",
+       "updatedAt": "2026-10-05T18:56:15Z",
+       "tradable": false,
+       "league": {
+        "id": 290,
+        "name": "Czech Extraliga",
+        "sportId": 4,
+        "tagId": 1468,
+        "ordering": "home",
+        "activeSeriesId": 392,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-23T20:55:53Z",
+        "slug": "cehl"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1456",
+       "label": "DEL",
+       "slug": "del",
+       "updatedAt": "2026-10-04T19:41:23Z",
+       "tradable": false,
+       "league": {
+        "id": 286,
+        "name": "DEL",
+        "sportId": 4,
+        "tagId": 1456,
+        "ordering": "home",
+        "activeSeriesId": 386,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-23T02:26:55Z",
+        "slug": "del"
+       },
+       "parentId": 14,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      }
+     ],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 1504,
+     "name": "Predators",
+     "abbreviation": "nas",
+     "alias": "Predators",
+     "league": "nhl",
+     "safeName": "Nashville Predators",
+     "record": "38-34-10",
+     "providerId": 21
+    },
+    {
+     "id": 1490,
+     "name": "Maple Leafs",
+     "abbreviation": "tor",
+     "alias": "Maple Leafs",
+     "league": "nhl",
+     "safeName": "Toronto Maple Leafs",
+     "record": "32-36-14",
+     "providerId": 7
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 175,
+    "numSpreadsAndTotalsMarkets": 38
+   },
+   "marketCounts": {
+    "numMarkets": 175,
+    "numSpreadsAndTotalsMarkets": 38
+   }
+  },
+  {
+   "id": "137738",
+   "chatChannel": {
+    "id": "nhl-uta-nj-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 132
+   },
+   "ticker": "nhl-uta-nj-2026-10-06",
+   "slug": "nhl-uta-nj-2026-10-06",
+   "title": "UTA Mammoth vs. NJ Devils",
+   "startDate": "2026-10-06T23:00:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-02T04:01:37Z",
+   "updatedAt": "2026-10-06T13:55:32Z",
+   "startTime": "2026-10-06T23:00:00Z",
+   "seriesSlug": "nhl-2025",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1164030",
+     "question": "Will the total in UTA vs NJD be more than 2.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:45Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:45Z",
+     "updatedAt": "2026-10-06T11:09:52Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2327542",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-2pt5",
+       "createdAt": "2026-10-02T04:01:45Z",
+       "updatedAt": "2026-10-02T04:01:45Z",
+       "description": "Over",
+       "price": "0.9600",
+       "marketId": 1164030,
+       "long": true,
+       "quote": {
+        "value": "0.9700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327543",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-2pt5",
+       "createdAt": "2026-10-02T04:01:45Z",
+       "updatedAt": "2026-10-02T04:01:45Z",
+       "description": "Under",
+       "price": "0.9700",
+       "marketId": 1164030,
+       "long": false,
+       "quote": {
+        "value": "0.04",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.9600\",\"0.9700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164029",
+     "question": "Will the UTA Mammoth cover 3.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-pos-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:44Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:44Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2327540",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-3pt5",
+       "createdAt": "2026-10-02T04:01:44Z",
+       "updatedAt": "2026-10-02T04:01:44Z",
+       "description": "+3.50",
+       "price": "0.9000",
+       "marketId": 1164029,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.9300",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327541",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-3pt5",
+       "createdAt": "2026-10-02T04:01:44Z",
+       "updatedAt": "2026-10-02T04:01:44Z",
+       "description": "-3.50",
+       "price": "0.9300",
+       "marketId": 1164029,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.1",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.9000\",\"0.9300\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Devils wins by over 3.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.9000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "titleShort": "NJD -3.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164031",
+     "question": "Will the total in UTA vs NJD be more than 3.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:46Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:46Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2327544",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-3pt5",
+       "createdAt": "2026-10-02T04:01:46Z",
+       "updatedAt": "2026-10-02T04:01:46Z",
+       "description": "Over",
+       "price": "0.8500",
+       "marketId": 1164031,
+       "long": true,
+       "quote": {
+        "value": "0.8700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327545",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-3pt5",
+       "createdAt": "2026-10-02T04:01:46Z",
+       "updatedAt": "2026-10-02T04:01:46Z",
+       "description": "Under",
+       "price": "0.8700",
+       "marketId": 1164031,
+       "long": false,
+       "quote": {
+        "value": "0.15",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.8500\",\"0.8700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 3.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.8500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 3.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164028",
+     "question": "Will the UTA Mammoth cover 2.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-pos-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:43Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:43Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2327538",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-02T04:01:43Z",
+       "updatedAt": "2026-10-02T04:01:43Z",
+       "description": "+2.50",
+       "price": "0.7900",
+       "marketId": 1164028,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.8000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327539",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-02T04:01:43Z",
+       "updatedAt": "2026-10-02T04:01:43Z",
+       "description": "-2.50",
+       "price": "0.8000",
+       "marketId": 1164028,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.21",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7900\",\"0.8000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Devils wins by over 2.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.7900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "titleShort": "NJD -2.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164032",
+     "question": "Will the total in UTA vs NJD be more than 4.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-4pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:47Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:47Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2327546",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-4pt5",
+       "createdAt": "2026-10-02T04:01:47Z",
+       "updatedAt": "2026-10-02T04:01:47Z",
+       "description": "Over",
+       "price": "0.7700",
+       "marketId": 1164032,
+       "long": true,
+       "quote": {
+        "value": "0.7900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327547",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-4pt5",
+       "createdAt": "2026-10-02T04:01:47Z",
+       "updatedAt": "2026-10-02T04:01:47Z",
+       "description": "Under",
+       "price": "0.7900",
+       "marketId": 1164032,
+       "long": false,
+       "quote": {
+        "value": "0.23",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7700\",\"0.7900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 4.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.7700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 4.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164027",
+     "question": "Will the UTA Mammoth cover 1.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-pos-1pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:42Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:42Z",
+     "updatedAt": "2026-10-06T05:23:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2327536",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-02T04:01:42Z",
+       "updatedAt": "2026-10-02T04:01:42Z",
+       "description": "+1.50",
+       "price": "0.6800",
+       "marketId": 1164027,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.6900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327537",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-02T04:01:42Z",
+       "updatedAt": "2026-10-02T04:01:42Z",
+       "description": "-1.50",
+       "price": "0.6900",
+       "marketId": 1164027,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.32",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6800\",\"0.6900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Devils wins by over 1.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.6800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6900",
+      "currency": "USD"
+     },
+     "titleShort": "NJD -1.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164033",
+     "question": "Will the total in UTA vs NJD be more than 5.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-5pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:48Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:48Z",
+     "updatedAt": "2026-10-06T13:55:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2327548",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-5pt5",
+       "createdAt": "2026-10-02T04:01:48Z",
+       "updatedAt": "2026-10-02T04:01:48Z",
+       "description": "Over",
+       "price": "0.5600",
+       "marketId": 1164033,
+       "long": true,
+       "quote": {
+        "value": "0.5700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327549",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-5pt5",
+       "createdAt": "2026-10-02T04:01:48Z",
+       "updatedAt": "2026-10-02T04:01:48Z",
+       "description": "Under",
+       "price": "0.5700",
+       "marketId": 1164033,
+       "long": false,
+       "quote": {
+        "value": "0.44",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5600\",\"0.5700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 5.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.5600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 5.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164021",
+     "question": "Who will win in the upcoming hockey event UTA Mammoth vs NJD Devils scheduled for October 6, 2026 at 11:00 PM UTC?",
+     "slug": "aec-nhl-uta-nj-2026-10-06",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:37Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:37Z",
+     "updatedAt": "2026-10-06T13:38:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2327524",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nhl-uta-nj-2026-10-06",
+       "createdAt": "2026-10-02T04:01:37Z",
+       "updatedAt": "2026-10-02T04:01:37Z",
+       "description": "Mammoth",
+       "price": "0.4700",
+       "marketId": 1164021,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.4800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327525",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nhl-uta-nj-2026-10-06",
+       "createdAt": "2026-10-02T04:01:37Z",
+       "updatedAt": "2026-10-02T04:01:37Z",
+       "description": "Devils",
+       "price": "0.4800",
+       "marketId": 1164021,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.53",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4700\",\"0.4800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Mammoth vs Devils",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "titleShort": "UTA vs NJD",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164034",
+     "question": "Will the total in UTA vs NJD be more than 6.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-6pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:49Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:49Z",
+     "updatedAt": "2026-10-06T13:55:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2327550",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-6pt5",
+       "createdAt": "2026-10-02T04:01:49Z",
+       "updatedAt": "2026-10-02T04:01:49Z",
+       "description": "Over",
+       "price": "0.4400",
+       "marketId": 1164034,
+       "long": true,
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327551",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-6pt5",
+       "createdAt": "2026-10-02T04:01:49Z",
+       "updatedAt": "2026-10-02T04:01:49Z",
+       "description": "Under",
+       "price": "0.4500",
+       "marketId": 1164034,
+       "long": false,
+       "quote": {
+        "value": "0.56",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4400\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 6.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.4400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 6.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164026",
+     "question": "Will the UTA Mammoth cover -1.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-neg-1pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:40Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:41Z",
+     "updatedAt": "2026-10-06T06:39:28Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2327534",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-02T04:01:41Z",
+       "updatedAt": "2026-10-02T04:01:41Z",
+       "description": "-1.50",
+       "price": "0.2500",
+       "marketId": 1164026,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.2600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327535",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-02T04:01:41Z",
+       "updatedAt": "2026-10-02T04:01:41Z",
+       "description": "+1.50",
+       "price": "0.2600",
+       "marketId": 1164026,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.75",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2500\",\"0.2600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Mammoth wins by over 1.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.2500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2600",
+      "currency": "USD"
+     },
+     "titleShort": "UTA -1.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164035",
+     "question": "Will the total in UTA vs NJD be more than 7.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-7pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:50Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:50Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2327552",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-7pt5",
+       "createdAt": "2026-10-02T04:01:50Z",
+       "updatedAt": "2026-10-02T04:01:50Z",
+       "description": "Over",
+       "price": "0.2400",
+       "marketId": 1164035,
+       "long": true,
+       "quote": {
+        "value": "0.2500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327553",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-7pt5",
+       "createdAt": "2026-10-02T04:01:50Z",
+       "updatedAt": "2026-10-02T04:01:50Z",
+       "description": "Under",
+       "price": "0.2500",
+       "marketId": 1164035,
+       "long": false,
+       "quote": {
+        "value": "0.76",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2400\",\"0.2500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.2400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164036",
+     "question": "Will the total in UTA vs NJD be more than 8.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-8pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:51Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:51Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 8.5,
+     "marketSides": [
+      {
+       "id": "2327554",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-8pt5",
+       "createdAt": "2026-10-02T04:01:51Z",
+       "updatedAt": "2026-10-02T04:01:51Z",
+       "description": "Over",
+       "price": "0.1600",
+       "marketId": 1164036,
+       "long": true,
+       "quote": {
+        "value": "0.1800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327555",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-8pt5",
+       "createdAt": "2026-10-02T04:01:51Z",
+       "updatedAt": "2026-10-02T04:01:51Z",
+       "description": "Under",
+       "price": "0.1800",
+       "marketId": 1164036,
+       "long": false,
+       "quote": {
+        "value": "0.84",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1600\",\"0.1800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 8.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.1600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 8.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164025",
+     "question": "Will the UTA Mammoth cover -2.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-neg-2pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:39Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:39Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2327532",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-02T04:01:39Z",
+       "updatedAt": "2026-10-02T04:01:39Z",
+       "description": "-2.50",
+       "price": "0.1500",
+       "marketId": 1164025,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.1600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327533",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-02T04:01:39Z",
+       "updatedAt": "2026-10-02T04:01:39Z",
+       "description": "+2.50",
+       "price": "0.1600",
+       "marketId": 1164025,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.85",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1500\",\"0.1600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Mammoth wins by over 2.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.1500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1600",
+      "currency": "USD"
+     },
+     "titleShort": "UTA -2.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164023",
+     "question": "Will the UTA Mammoth cover -3.5 vs the NJD Devils in UTA vs NJD?",
+     "slug": "asc-nhl-uta-nj-2026-10-06-neg-3pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:38Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:38Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_spread",
+     "line": -3.5,
+     "marketSides": [
+      {
+       "id": "2327528",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-3pt5",
+       "createdAt": "2026-10-02T04:01:38Z",
+       "updatedAt": "2026-10-02T04:01:38Z",
+       "description": "-3.50",
+       "price": "0.0400",
+       "marketId": 1164023,
+       "long": true,
+       "teamId": 1515,
+       "team": {
+        "id": 1515,
+        "name": "Mammoth",
+        "abbreviation": "uta",
+        "alias": "Mammoth",
+        "league": "nhl",
+        "safeName": "Utah Mammoth",
+        "record": "43-33-6",
+        "ordering": "away",
+        "providerId": 41
+       },
+       "quote": {
+        "value": "0.0800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327529",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nhl-uta-nj-2026-10-06-neg-3pt5",
+       "createdAt": "2026-10-02T04:01:38Z",
+       "updatedAt": "2026-10-02T04:01:38Z",
+       "description": "+3.50",
+       "price": "0.0800",
+       "marketId": 1164023,
+       "long": false,
+       "teamId": 1493,
+       "team": {
+        "id": 1493,
+        "name": "Devils",
+        "abbreviation": "nj",
+        "alias": "Devils",
+        "league": "nhl",
+        "safeName": "New Jersey Devils",
+        "record": "42-37-3",
+        "ordering": "home",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.96",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.0400\",\"0.0800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Mammoth wins by over 3.5 goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.0400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0800",
+      "currency": "USD"
+     },
+     "titleShort": "UTA -3.5",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1164037",
+     "question": "Will the total in UTA vs NJD be more than 9.5?",
+     "slug": "tsc-nhl-uta-nj-2026-10-06-9pt5",
+     "endDate": "2026-10-21T03:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-02T04:01:52Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-02T04:01:53Z",
+     "updatedAt": "2026-10-05T17:39:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "hockey_team_full_game_total",
+     "line": 9.5,
+     "marketSides": [
+      {
+       "id": "2327556",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-9pt5",
+       "createdAt": "2026-10-02T04:01:53Z",
+       "updatedAt": "2026-10-02T04:01:53Z",
+       "description": "Over",
+       "price": "0.0700",
+       "marketId": 1164037,
+       "long": true,
+       "quote": {
+        "value": "0.0800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2327557",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nhl-uta-nj-2026-10-06-9pt5",
+       "createdAt": "2026-10-02T04:01:53Z",
+       "updatedAt": "2026-10-02T04:01:53Z",
+       "description": "Under",
+       "price": "0.0800",
+       "marketId": 1164037,
+       "long": false,
+       "quote": {
+        "value": "0.93",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.0700\",\"0.0800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 9.5 total goals",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "goals",
+     "bestBidQuote": {
+      "value": "0.0700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 9.5 goals",
+     "ep3SyncedAt": "2026-10-05T17:39:56Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "sportradarGameId": "93e5b7a9-af8c-40b0-be9b-4fb8f92c22fe",
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "7",
+     "label": "NHL",
+     "slug": "nhl",
+     "createdAt": "2025-12-02T21:54:38Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 3,
+      "name": "NHL",
+      "sportId": 4,
+      "tagId": 7,
+      "resolution": "https://www.nhl.com/",
+      "ordering": "away",
+      "activeSeriesId": 6,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "nhl",
+      "abbreviation": "NHL"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "14",
+     "label": "Hockey",
+     "slug": "ice-hockey",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 4,
+      "name": "Hockey",
+      "tagId": 14,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "ice-hockey"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 1515,
+     "name": "Mammoth",
+     "abbreviation": "uta",
+     "alias": "Mammoth",
+     "league": "nhl",
+     "safeName": "Utah Mammoth",
+     "record": "43-33-6",
+     "providerId": 41
+    },
+    {
+     "id": 1493,
+     "name": "Devils",
+     "abbreviation": "nj",
+     "alias": "Devils",
+     "league": "nhl",
+     "safeName": "New Jersey Devils",
+     "record": "42-37-3",
+     "providerId": 10
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 182,
+    "numSpreadsAndTotalsMarkets": 38
+   },
+   "marketCounts": {
+    "numMarkets": 182,
+    "numSpreadsAndTotalsMarkets": 38
+   }
+  }
+ ]
+}

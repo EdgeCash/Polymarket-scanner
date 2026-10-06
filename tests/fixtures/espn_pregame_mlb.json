@@ -1,0 +1,3555 @@
+{
+ "events": [
+  {
+   "id": "401907991",
+   "uid": "s:1~l:10~e:401907991",
+   "date": "2026-10-05T21:00Z",
+   "name": "Chicago White Sox at Cleveland Guardians",
+   "shortName": "CHW @ CLE",
+   "competitions": [
+    {
+     "id": "401907991",
+     "uid": "s:1~l:10~e:401907991~c:401907991",
+     "date": "2026-10-05T21:00Z",
+     "attendance": 32050,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "5",
+       "uid": "s:1~l:10~t:5",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": false,
+       "team": {
+        "id": "5",
+        "uid": "s:1~l:10~t:5",
+        "location": "Cleveland",
+        "name": "Guardians",
+        "abbreviation": "CLE",
+        "displayName": "Cleveland Guardians",
+        "shortDisplayName": "Guardians",
+        "color": "002b5c",
+        "alternateColor": "e31937",
+        "isActive": true
+       },
+       "score": "3",
+       "linescores": [
+        {
+         "value": 2.0,
+         "displayValue": "2",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 9
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "4"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "3"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".125"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "0"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "1"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "0"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "4.00"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "1"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 4345076,
+         "athlete": {
+          "id": "4345076",
+          "fullName": "Gavin Williams",
+          "displayName": "Gavin Williams",
+          "shortName": "G. Williams",
+          "jersey": "32",
+          "position": "SP",
+          "team": {
+           "id": "5"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-17th"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "3.60",
+           "rankDisplayValue": "32nd"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(0-0, 3.60)"
+        }
+       ],
+       "hits": 4,
+       "errors": 1,
+       "record": "0-2",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "85-77"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "41-40"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "44-37"
+        }
+       ]
+      },
+      {
+       "id": "4",
+       "uid": "s:1~l:10~t:4",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": true,
+       "team": {
+        "id": "4",
+        "uid": "s:1~l:10~t:4",
+        "location": "Chicago",
+        "name": "White Sox",
+        "abbreviation": "CHW",
+        "displayName": "Chicago White Sox",
+        "shortDisplayName": "White Sox",
+        "color": "000000",
+        "alternateColor": "c4ced4",
+        "isActive": true
+       },
+       "score": "4",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 3.0,
+         "displayValue": "3",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 9
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "6"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "4"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".188"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "1"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "0"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "1"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "2.00"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "1"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 40947,
+         "athlete": {
+          "id": "40947",
+          "fullName": "Anthony Kay",
+          "displayName": "Anthony Kay",
+          "shortName": "A. Kay",
+          "jersey": "18",
+          "position": "SP",
+          "team": {
+           "id": "4"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "1",
+           "rankDisplayValue": "Tied-2nd"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "3.86"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(1-0, 3.86)"
+        }
+       ],
+       "hits": 6,
+       "errors": 1,
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "84-78"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "48-33"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "36-45"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "featuredAthletes": [
+       {
+        "name": "winningPitcher",
+        "displayName": "Winning Pitcher",
+        "shortDisplayName": "Win",
+        "abbreviation": "WP",
+        "playerId": 4867679,
+        "athlete": {
+         "id": "4867679",
+         "fullName": "Sean Burke",
+         "displayName": "Sean Burke",
+         "shortName": "S. Burke",
+         "jersey": "59",
+         "position": "SP",
+         "team": {
+          "id": "4"
+         }
+        },
+        "team": {
+         "id": "4"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "1"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "3.86"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907991/competitions/401907991/competitors/4/roster/4867679/projections?lang=en&region=us"
+        }
+       },
+       {
+        "name": "losingPitcher",
+        "displayName": "Losing Pitcher",
+        "shortDisplayName": "Loss",
+        "abbreviation": "LP",
+        "playerId": 5194333,
+        "athlete": {
+         "id": "5194333",
+         "fullName": "Erik Sabrowski",
+         "displayName": "Erik Sabrowski",
+         "shortName": "E. Sabrowski",
+         "jersey": "62",
+         "position": "RP",
+         "team": {
+          "id": "5"
+         }
+        },
+        "team": {
+         "id": "5"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "0"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "11.57"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907991/competitions/401907991/competitors/5/roster/5194333/projections?lang=en&region=us"
+        }
+       },
+       {
+        "name": "savingPitcher",
+        "displayName": "Saving Pitcher",
+        "shortDisplayName": "Save",
+        "abbreviation": "S",
+        "playerId": 4927630,
+        "athlete": {
+         "id": "4927630",
+         "fullName": "Grant Taylor",
+         "displayName": "Grant Taylor",
+         "shortName": "G. Taylor",
+         "jersey": "31",
+         "position": "RP",
+         "team": {
+          "id": "4"
+         }
+        },
+        "team": {
+         "id": "4"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "2"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "0"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "0.00"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907991/competitions/401907991/competitors/4/roster/4927630/projections?lang=en&region=us"
+        }
+       }
+      ]
+     },
+     "startDate": "2026-10-05T21:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "CHW lead series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "5",
+        "uid": "s:1~l:10~t:5",
+        "wins": 0,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/5?lang=en&region=us"
+       },
+       {
+        "id": "4",
+        "uid": "s:1~l:10~t:4",
+        "wins": 2,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/4?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "TBS/truTV",
+     "headlines": [
+      {
+       "type": "Recap",
+       "description": "\u2014 The White Sox are returning to Chicago one win from advancing to the American League Championship Series for the first time in 21 years.",
+       "shortLinkText": "White Sox surge past Guardians 4-3 to take 2-0 lead in ALDS and move within 1 win of ALCS",
+       "video": [
+        {
+         "id": 50113263,
+         "source": "espn",
+         "headline": "White Sox hold on to take 2-0 series lead",
+         "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1006/0caf2987-ab1e-4293-9383-671862e5a2a7/0caf2987-ab1e-4293-9383-671862e5a2a7.jpg",
+         "duration": 70,
+         "tracking": {
+          "coverageType": "Final Game Highlight",
+          "leagueName": "MLB",
+          "program": "TBS",
+          "sportName": "baseball",
+          "trackingId": "dm_20261005_MLB_white_sox_hold_on_to_take_20_series_lead",
+          "trackingName": "COM_MLB Highlight (White Sox hold on to take 2-0 series lead) 2026/10/05 ESHEET"
+         },
+         "deviceRestrictions": {
+          "devices": [
+           "settop",
+           "tablet",
+           "handset",
+           "ipad",
+           "desktop"
+          ],
+          "type": "whitelist"
+         },
+         "geoRestrictions": {
+          "countries": [
+           "PR",
+           "HN",
+           "PY",
+           "HT",
+           "AG",
+           "ZA",
+           "AI",
+           "AO",
+           "AR",
+           "AS",
+           "RE",
+           "ZM",
+           "AU",
+           "AW",
+           "BB",
+           "JM",
+           "BF",
+           "RW",
+           "BI",
+           "BJ",
+           "BL",
+           "BM",
+           "BO",
+           "BQ",
+           "SC",
+           "BS",
+           "SD",
+           "BW",
+           "BZ",
+           "SL",
+           "KE",
+           "SN",
+           "SO",
+           "SS",
+           "CD",
+           "ST",
+           "KM",
+           "KN",
+           "CF",
+           "SV",
+           "CG",
+           "SX",
+           "CI",
+           "SZ",
+           "CL",
+           "CM",
+           "CO",
+           "KY",
+           "TC",
+           "CR",
+           "TD",
+           "CU",
+           "TG",
+           "CV",
+           "LC",
+           "TT",
+           "LR",
+           "DJ",
+           "TZ",
+           "LS",
+           "DO",
+           "UG",
+           "UK",
+           "UM",
+           "MF",
+           "MG",
+           "US",
+           "EC",
+           "ML",
+           "MP",
+           "UY",
+           "MQ",
+           "MR",
+           "MS",
+           "MU",
+           "MV",
+           "MW",
+           "MX",
+           "VC",
+           "ER",
+           "MZ",
+           "VE",
+           "VG",
+           "NA",
+           "VI",
+           "NE",
+           "NG",
+           "NI",
+           "NL",
+           "FK",
+           "NZ",
+           "GA",
+           "GB",
+           "GD",
+           "GH",
+           "GM",
+           "GN",
+           "GP",
+           "GQ",
+           "GT",
+           "GU",
+           "GW",
+           "PA",
+           "GY",
+           "PE"
+          ],
+          "type": "whitelist"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   }
+  },
+  {
+   "id": "401907986",
+   "uid": "s:1~l:10~e:401907986",
+   "date": "2026-10-06T00:00Z",
+   "name": "New York Yankees at Tampa Bay Rays",
+   "shortName": "NYY @ TB",
+   "competitions": [
+    {
+     "id": "401907986",
+     "uid": "s:1~l:10~e:401907986~c:401907986",
+     "date": "2026-10-06T00:00Z",
+     "attendance": 40226,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "30",
+       "uid": "s:1~l:10~t:30",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "30",
+        "uid": "s:1~l:10~t:30",
+        "location": "Tampa Bay",
+        "name": "Rays",
+        "abbreviation": "TB",
+        "displayName": "Tampa Bay Rays",
+        "shortDisplayName": "Rays",
+        "color": "092c5c",
+        "alternateColor": "8fbce6",
+        "isActive": true
+       },
+       "score": "5",
+       "linescores": [
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 4
+        },
+        {
+         "value": 4.0,
+         "displayValue": "4",
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 8
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "8"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "5"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".229"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "1"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "0"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "1"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "2.00"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "0"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 39825,
+         "athlete": {
+          "id": "39825",
+          "fullName": "Freddy Peralta",
+          "displayName": "Freddy Peralta",
+          "shortName": "F. Peralta",
+          "jersey": "51",
+          "position": "SP",
+          "team": {
+           "id": "30"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-17th"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "1.93",
+           "rankDisplayValue": "Tied-23rd"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(0-0, 1.93)"
+        }
+       ],
+       "hits": 8,
+       "errors": 0,
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "98-64"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "43-38"
+        }
+       ]
+      },
+      {
+       "id": "10",
+       "uid": "s:1~l:10~t:10",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "10",
+        "uid": "s:1~l:10~t:10",
+        "location": "New York",
+        "name": "Yankees",
+        "abbreviation": "NYY",
+        "displayName": "New York Yankees",
+        "shortDisplayName": "Yankees",
+        "color": "132448",
+        "alternateColor": "c4ced4",
+        "isActive": true
+       },
+       "score": "2",
+       "linescores": [
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 1
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 2
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 3
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 4
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 5
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 6
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 7
+        },
+        {
+         "value": 1.0,
+         "displayValue": "1",
+         "period": 8
+        },
+        {
+         "value": 0.0,
+         "displayValue": "0",
+         "period": 9
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "4"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "2"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".129"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "0"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "1"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "0"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "2.25"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "4"
+        }
+       ],
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 5134581,
+         "athlete": {
+          "id": "5134581",
+          "fullName": "Cam Schlittler",
+          "displayName": "Cam Schlittler",
+          "shortName": "C. Schlittler",
+          "jersey": "31",
+          "position": "SP",
+          "team": {
+           "id": "10"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "1",
+           "rankDisplayValue": "Tied-1st"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "1",
+           "rankDisplayValue": "Tied-2nd"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "1.69",
+           "rankDisplayValue": "19th"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(1-1, 1.69)"
+        }
+       ],
+       "hits": 4,
+       "errors": 4,
+       "record": "0-2",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "93-68"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "46-34"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "47-34"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 9,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      },
+      "featuredAthletes": [
+       {
+        "name": "winningPitcher",
+        "displayName": "Winning Pitcher",
+        "shortDisplayName": "Win",
+        "abbreviation": "WP",
+        "playerId": 2560565,
+        "athlete": {
+         "id": "2560565",
+         "fullName": "Cam Booser",
+         "displayName": "Cam Booser",
+         "shortName": "C. Booser",
+         "jersey": "62",
+         "position": "RP",
+         "team": {
+          "id": "30"
+         }
+        },
+        "team": {
+         "id": "30"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "1"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "0.00"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907986/competitions/401907986/competitors/30/roster/2560565/projections?lang=en&region=us"
+        }
+       },
+       {
+        "name": "losingPitcher",
+        "displayName": "Losing Pitcher",
+        "shortDisplayName": "Loss",
+        "abbreviation": "LP",
+        "playerId": 5134581,
+        "athlete": {
+         "id": "5134581",
+         "fullName": "Cam Schlittler",
+         "displayName": "Cam Schlittler",
+         "shortName": "C. Schlittler",
+         "jersey": "31",
+         "position": "SP",
+         "team": {
+          "id": "10"
+         }
+        },
+        "team": {
+         "id": "10"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "0"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "1"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "1"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "1.69"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907986/competitions/401907986/competitors/10/roster/5134581/projections?lang=en&region=us"
+        }
+       },
+       {
+        "name": "savingPitcher",
+        "displayName": "Saving Pitcher",
+        "shortDisplayName": "Save",
+        "abbreviation": "S",
+        "playerId": 40884,
+        "athlete": {
+         "id": "40884",
+         "fullName": "Bryan Baker",
+         "displayName": "Bryan Baker",
+         "shortName": "B. Baker",
+         "jersey": "47",
+         "position": "RP",
+         "team": {
+          "id": "30"
+         }
+        },
+        "team": {
+         "id": "30"
+        },
+        "statistics": [
+         {
+          "name": "saves",
+          "abbreviation": "SV",
+          "displayValue": "2"
+         },
+         {
+          "name": "losses",
+          "abbreviation": "L",
+          "displayValue": "0"
+         },
+         {
+          "name": "wins",
+          "abbreviation": "W",
+          "displayValue": "0"
+         },
+         {
+          "name": "ERA",
+          "abbreviation": "ERA",
+          "displayValue": "0.00"
+         },
+         {
+          "name": "errors",
+          "abbreviation": "E",
+          "displayValue": "0"
+         }
+        ],
+        "projections": {
+         "$ref": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/events/401907986/competitions/401907986/competitors/30/roster/40884/projections?lang=en&region=us"
+        }
+       }
+      ]
+     },
+     "startDate": "2026-10-06T00:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "TB leads series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "30",
+        "uid": "s:1~l:10~t:30",
+        "wins": 2,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/30?lang=en&region=us"
+       },
+       {
+        "id": "10",
+        "uid": "s:1~l:10~t:10",
+        "wins": 0,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/10?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "TBS/truTV",
+     "headlines": [
+      {
+       "type": "Recap",
+       "description": "\u2014 The pesky Rays put all the pressure on the big, bad New York Yankees.",
+       "shortLinkText": "Small-ball Rays beat the sloppy Yankees 5-2 for a 2-0 lead in AL Division Series",
+       "video": [
+        {
+         "id": 50114679,
+         "source": "espn",
+         "headline": "Rays top Yankees to take 2-0 series lead",
+         "thumbnail": "https://espnmedia-cdn.akamaized.net/espn/media/common/wsc/2026/1006/82e44ab3-9e3f-49b6-b0ef-355c6549f2b9/82e44ab3-9e3f-49b6-b0ef-355c6549f2b9.jpg",
+         "duration": 89,
+         "tracking": {
+          "coverageType": "Final Game Highlight",
+          "leagueName": "MLB",
+          "program": "TBS",
+          "sportName": "baseball",
+          "trackingId": "dm_20261006_MLB_rays_top_yankees_to_take_20_series_lead",
+          "trackingName": "MLB_One-Play (Rays top Yankees to take 2-0 series lead) 2026/10/06 ESHEET"
+         },
+         "deviceRestrictions": {
+          "devices": [
+           "settop",
+           "tablet",
+           "handset",
+           "ipad",
+           "desktop"
+          ],
+          "type": "whitelist"
+         },
+         "geoRestrictions": {
+          "countries": [
+           "PR",
+           "HN",
+           "PY",
+           "HT",
+           "AG",
+           "ZA",
+           "AI",
+           "AO",
+           "AR",
+           "AS",
+           "RE",
+           "ZM",
+           "AU",
+           "AW",
+           "BB",
+           "JM",
+           "BF",
+           "RW",
+           "BI",
+           "BJ",
+           "BL",
+           "BM",
+           "BO",
+           "BQ",
+           "SC",
+           "BS",
+           "SD",
+           "BW",
+           "BZ",
+           "SL",
+           "KE",
+           "SN",
+           "SO",
+           "SS",
+           "CD",
+           "ST",
+           "KM",
+           "KN",
+           "CF",
+           "SV",
+           "CG",
+           "SX",
+           "CI",
+           "SZ",
+           "CL",
+           "CM",
+           "CO",
+           "KY",
+           "TC",
+           "CR",
+           "TD",
+           "CU",
+           "TG",
+           "CV",
+           "LC",
+           "TT",
+           "LR",
+           "DJ",
+           "TZ",
+           "LS",
+           "DO",
+           "UG",
+           "UK",
+           "UM",
+           "MF",
+           "MG",
+           "US",
+           "EC",
+           "ML",
+           "MP",
+           "UY",
+           "MQ",
+           "MR",
+           "MS",
+           "MU",
+           "MV",
+           "MW",
+           "MX",
+           "VC",
+           "ER",
+           "MZ",
+           "VE",
+           "VG",
+           "NA",
+           "VI",
+           "NE",
+           "NG",
+           "NI",
+           "NL",
+           "FK",
+           "NZ",
+           "GA",
+           "GB",
+           "GD",
+           "GH",
+           "GM",
+           "GN",
+           "GP",
+           "GQ",
+           "GT",
+           "GU",
+           "GW",
+           "PA",
+           "GY",
+           "PE"
+          ],
+          "type": "whitelist"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 9,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "tuneInPrompt": {
+    "id": "640837ebc5af9",
+    "isAutomated": false,
+    "title": "Chasing A Third",
+    "description": "Tune-in Prompt 401907986",
+    "caption": "Ben Rice has homered twice and is back at the plate.",
+    "rating": "Unrated",
+    "shortText": "Ben Rice has homered twice and is back at the plate.",
+    "images": [
+     {
+      "href": "https://a.espncdn.com/i/headshots/mlb/players/full/5016968.png",
+      "alt": "Ben Rice"
+     }
+    ],
+    "imageType": "playerHeadshot",
+    "backgroundImages": [
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/mlb/500/nyy.png",
+      "width": 500,
+      "height": 500,
+      "rel": [
+       "full",
+       "default"
+      ]
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/mlb/500-dark/nyy.png",
+      "width": 500,
+      "height": 500,
+      "rel": [
+       "full",
+       "dark"
+      ]
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/mlb/500/scoreboard/nyy.png",
+      "width": 500,
+      "height": 500,
+      "rel": [
+       "full",
+       "scoreboard"
+      ]
+     },
+     {
+      "href": "https://a.espncdn.com/i/teamlogos/mlb/500-dark/scoreboard/nyy.png",
+      "width": 500,
+      "height": 500,
+      "rel": [
+       "full",
+       "scoreboard",
+       "dark"
+      ]
+     }
+    ],
+    "color": "132448",
+    "alternateColor": "c4ced4"
+   }
+  },
+  {
+   "id": "401908015",
+   "uid": "s:1~l:10~e:401908015",
+   "date": "2026-10-06T22:00Z",
+   "name": "Los Angeles Dodgers at Atlanta Braves",
+   "shortName": "LAD @ ATL",
+   "competitions": [
+    {
+     "id": "401908015",
+     "uid": "s:1~l:10~e:401908015~c:401908015",
+     "date": "2026-10-06T22:00Z",
+     "attendance": 0,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "15",
+       "uid": "s:1~l:10~t:15",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "team": {
+        "id": "15",
+        "uid": "s:1~l:10~t:15",
+        "location": "Atlanta",
+        "name": "Braves",
+        "abbreviation": "ATL",
+        "displayName": "Atlanta Braves",
+        "shortDisplayName": "Braves",
+        "color": "0c2340",
+        "alternateColor": "ba0c2f",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 30948,
+         "athlete": {
+          "id": "30948",
+          "fullName": "Chris Sale",
+          "displayName": "Chris Sale",
+          "shortName": "C. Sale",
+          "jersey": "51",
+          "position": "SP",
+          "team": {
+           "id": "15"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-17th"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "3.52",
+           "rankDisplayValue": "31st"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(0-0, 3.52)"
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1348",
+         "rankDisplayValue": "8th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "742",
+         "rankDisplayValue": "8th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".246",
+         "rankDisplayValue": "10th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "49",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "68",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "94",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.63",
+         "rankDisplayValue": "5th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "65",
+         "rankDisplayValue": "5th"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "1-1",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "94-68"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "52-29"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "42-39"
+        }
+       ]
+      },
+      {
+       "id": "19",
+       "uid": "s:1~l:10~t:19",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "team": {
+        "id": "19",
+        "uid": "s:1~l:10~t:19",
+        "location": "Los Angeles",
+        "name": "Dodgers",
+        "abbreviation": "LAD",
+        "displayName": "Los Angeles Dodgers",
+        "shortDisplayName": "Dodgers",
+        "color": "005a9c",
+        "alternateColor": "ffffff",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 4872587,
+         "athlete": {
+          "id": "4872587",
+          "fullName": "Yoshinobu Yamamoto",
+          "displayName": "Yoshinobu Yamamoto",
+          "shortName": "Y. Yamamoto",
+          "jersey": "18",
+          "position": "SP",
+          "team": {
+           "id": "19"
+          }
+         },
+         "statistics": [],
+         "record": ""
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1399",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "801",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".257",
+         "rankDisplayValue": "3rd"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "46",
+         "rankDisplayValue": "Tied-7th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "62",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "100",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.55",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "64",
+         "rankDisplayValue": "Tied-2nd"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "1-1",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "100-62"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "51-30"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "49-32"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 1,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Scheduled",
+       "shortDetail": "10/6 - 6:00 PM EDT"
+      }
+     },
+     "startDate": "2026-10-06T22:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "Series tied 1-1",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "15",
+        "uid": "s:1~l:10~t:15",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/15?lang=en&region=us"
+       },
+       {
+        "id": "19",
+        "uid": "s:1~l:10~t:19",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/19?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "FS1",
+     "odds": [
+      {
+       "provider": {
+        "id": "100",
+        "name": "DraftKings",
+        "priority": 1,
+        "displayName": "DraftKings"
+       },
+       "details": "LAD -110",
+       "overUnder": 6.0,
+       "spread": 1.5,
+       "awayTeamOdds": {
+        "favorite": false,
+        "underdog": false,
+        "team": {
+         "id": "19",
+         "uid": "s:1~l:10~t:19",
+         "abbreviation": "LAD",
+         "name": "Dodgers",
+         "displayName": "Los Angeles Dodgers"
+        },
+        "favoriteAtOpen": true
+       },
+       "homeTeamOdds": {
+        "favorite": true,
+        "underdog": true,
+        "team": {
+         "id": "15",
+         "uid": "s:1~l:10~t:15",
+         "abbreviation": "ATL",
+         "name": "Braves",
+         "displayName": "Atlanta Braves"
+        },
+        "favoriteAtOpen": false
+       },
+       "moneyline": {
+        "displayName": "Moneyline",
+        "shortDisplayName": "ML",
+        "home": {
+         "close": {
+          "odds": "-109"
+         },
+         "open": {
+          "odds": "-118"
+         }
+        },
+        "away": {
+         "close": {
+          "odds": "-110"
+         },
+         "open": {
+          "odds": "-102"
+         }
+        }
+       },
+       "pointSpread": {
+        "displayName": "Runline",
+        "shortDisplayName": "RL",
+        "home": {
+         "close": {
+          "line": "+1.5",
+          "odds": "-195"
+         },
+         "open": {
+          "line": "+1.5",
+          "odds": "-214"
+         }
+        },
+        "away": {
+         "close": {
+          "line": "-1.5",
+          "odds": "+160"
+         },
+         "open": {
+          "line": "-1.5",
+          "odds": "+175"
+         }
+        }
+       },
+       "total": {
+        "displayName": "Total Runs",
+        "shortDisplayName": "Total",
+        "over": {
+         "close": {
+          "line": "o6",
+          "odds": "-115"
+         },
+         "open": {
+          "line": "o6.5",
+          "odds": "-119"
+         }
+        },
+        "under": {
+         "close": {
+          "line": "u6",
+          "odds": "-105"
+         },
+         "open": {
+          "line": "u6.5",
+          "odds": "-101"
+         }
+        }
+       },
+       "header": {
+        "text": "Game Odds"
+       },
+       "footer": {
+        "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+       }
+      }
+     ],
+     "headlines": [
+      {
+       "type": "Preview",
+       "description": "Los Angeles Dodgers (100-62, first in the NL West during the regular season) vs. Atlanta Braves (94-68, first in the NL East during the regular season)",
+       "shortLinkText": "Braves and Dodgers tied 1-1 heading into NLDS Game 3"
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 1,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Scheduled",
+     "shortDetail": "10/6 - 6:00 PM EDT"
+    }
+   }
+  },
+  {
+   "id": "401908004",
+   "uid": "s:1~l:10~e:401908004",
+   "date": "2026-10-07T01:30Z",
+   "name": "Milwaukee Brewers at San Diego Padres",
+   "shortName": "MIL @ SD",
+   "competitions": [
+    {
+     "id": "401908004",
+     "uid": "s:1~l:10~e:401908004~c:401908004",
+     "date": "2026-10-07T01:30Z",
+     "attendance": 0,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "25",
+       "uid": "s:1~l:10~t:25",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "team": {
+        "id": "25",
+        "uid": "s:1~l:10~t:25",
+        "location": "San Diego",
+        "name": "Padres",
+        "abbreviation": "SD",
+        "displayName": "San Diego Padres",
+        "shortDisplayName": "Padres",
+        "color": "2f241d",
+        "alternateColor": "ffc425",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 36071,
+         "athlete": {
+          "id": "36071",
+          "fullName": "Nick Pivetta",
+          "displayName": "Nick Pivetta",
+          "shortName": "N. Pivetta",
+          "jersey": "27",
+          "position": "SP",
+          "team": {
+           "id": "25"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-17th"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "2.70"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(0-0, 2.70)"
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1314",
+         "rankDisplayValue": "19th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "722",
+         "rankDisplayValue": "15th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".244",
+         "rankDisplayValue": "17th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "48",
+         "rankDisplayValue": "6th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "71",
+         "rankDisplayValue": "6th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "91",
+         "rankDisplayValue": "6th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.99",
+         "rankDisplayValue": "10th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "64",
+         "rankDisplayValue": "Tied-2nd"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "0-2",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "91-71"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "51-30"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "40-41"
+        }
+       ]
+      },
+      {
+       "id": "8",
+       "uid": "s:1~l:10~t:8",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "team": {
+        "id": "8",
+        "uid": "s:1~l:10~t:8",
+        "location": "Milwaukee",
+        "name": "Brewers",
+        "abbreviation": "MIL",
+        "displayName": "Milwaukee Brewers",
+        "shortDisplayName": "Brewers",
+        "color": "13294b",
+        "alternateColor": "ffc72c",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 40937,
+         "athlete": {
+          "id": "40937",
+          "fullName": "Dustin May",
+          "displayName": "Dustin May",
+          "shortName": "D. May",
+          "jersey": "21",
+          "position": "SP",
+          "team": {
+           "id": "8"
+          }
+         },
+         "statistics": [],
+         "record": ""
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1422",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "832",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".258",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "55",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "59",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "103",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.51",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "72",
+         "rankDisplayValue": "7th"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "103-59"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "48-33"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 1,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Scheduled",
+       "shortDetail": "10/6 - 9:30 PM EDT"
+      }
+     },
+     "startDate": "2026-10-07T01:30Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "MIL leads series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "25",
+        "uid": "s:1~l:10~t:25",
+        "wins": 0,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/25?lang=en&region=us"
+       },
+       {
+        "id": "8",
+        "uid": "s:1~l:10~t:8",
+        "wins": 2,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/8?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "FS1",
+     "odds": [
+      {
+       "provider": {
+        "id": "100",
+        "name": "DraftKings",
+        "priority": 1
+       },
+       "details": "SD -137",
+       "overUnder": 7.5,
+       "spread": -1.5,
+       "awayTeamOdds": {
+        "favorite": false,
+        "underdog": true,
+        "team": {
+         "id": "8",
+         "uid": "s:1~l:10~t:8",
+         "abbreviation": "MIL",
+         "name": "Brewers",
+         "displayName": "Milwaukee Brewers"
+        },
+        "favoriteAtOpen": false
+       },
+       "homeTeamOdds": {
+        "favorite": true,
+        "underdog": false,
+        "team": {
+         "id": "25",
+         "uid": "s:1~l:10~t:25",
+         "abbreviation": "SD",
+         "name": "Padres",
+         "displayName": "San Diego Padres"
+        },
+        "favoriteAtOpen": true
+       },
+       "moneyline": {
+        "displayName": "Moneyline",
+        "shortDisplayName": "ML",
+        "home": {
+         "close": {
+          "odds": "-137"
+         },
+         "open": {
+          "odds": "-121"
+         }
+        },
+        "away": {
+         "close": {
+          "odds": "+113"
+         },
+         "open": {
+          "odds": "+101"
+         }
+        }
+       },
+       "pointSpread": {
+        "displayName": "Runline",
+        "shortDisplayName": "RL",
+        "home": {
+         "close": {
+          "line": "-1.5",
+          "odds": "+163"
+         },
+         "open": {
+          "line": "-1.5",
+          "odds": "+172"
+         }
+        },
+        "away": {
+         "close": {
+          "line": "+1.5",
+          "odds": "-199"
+         },
+         "open": {
+          "line": "+1.5",
+          "odds": "-210"
+         }
+        }
+       },
+       "total": {
+        "displayName": "Total Runs",
+        "shortDisplayName": "Total",
+        "over": {
+         "close": {
+          "line": "o7.5",
+          "odds": "-108"
+         },
+         "open": {
+          "line": "o7",
+          "odds": "-113"
+         }
+        },
+        "under": {
+         "close": {
+          "line": "u7.5",
+          "odds": "-111"
+         },
+         "open": {
+          "line": "u7",
+          "odds": "-106"
+         }
+        }
+       },
+       "header": {
+        "text": "Game Odds"
+       },
+       "footer": {
+        "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+       }
+      }
+     ],
+     "headlines": [
+      {
+       "type": "Preview",
+       "description": "Milwaukee Brewers (103-59, first in the NL Central during the regular season) vs. San Diego Padres (91-71, second in the NL West during the regular season)",
+       "shortLinkText": "Brewers aim to clinch NLDS in Game 3 against Padres"
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 1,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Scheduled",
+     "shortDetail": "10/6 - 9:30 PM EDT"
+    }
+   }
+  },
+  {
+   "id": "401907992",
+   "uid": "s:1~l:10~e:401907992",
+   "date": "2026-10-07T20:00Z",
+   "name": "Cleveland Guardians at Chicago White Sox",
+   "shortName": "CLE @ CHW",
+   "competitions": [
+    {
+     "id": "401907992",
+     "uid": "s:1~l:10~e:401907992~c:401907992",
+     "date": "2026-10-07T20:00Z",
+     "attendance": 0,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "4",
+       "uid": "s:1~l:10~t:4",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "team": {
+        "id": "4",
+        "uid": "s:1~l:10~t:4",
+        "location": "Chicago",
+        "name": "White Sox",
+        "abbreviation": "CHW",
+        "displayName": "Chicago White Sox",
+        "shortDisplayName": "White Sox",
+        "color": "000000",
+        "alternateColor": "c4ced4",
+        "isActive": true
+       },
+       "score": "0",
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1282",
+         "rankDisplayValue": "25th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "776",
+         "rankDisplayValue": "5th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".236",
+         "rankDisplayValue": "25th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "41",
+         "rankDisplayValue": "Tied-18th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "78",
+         "rankDisplayValue": "12th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "84",
+         "rankDisplayValue": "12th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "4.12",
+         "rankDisplayValue": "15th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "82",
+         "rankDisplayValue": "Tied-15th"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "84-78"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "48-33"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "36-45"
+        }
+       ]
+      },
+      {
+       "id": "5",
+       "uid": "s:1~l:10~t:5",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "team": {
+        "id": "5",
+        "uid": "s:1~l:10~t:5",
+        "location": "Cleveland",
+        "name": "Guardians",
+        "abbreviation": "CLE",
+        "displayName": "Cleveland Guardians",
+        "shortDisplayName": "Guardians",
+        "color": "002b5c",
+        "alternateColor": "e31937",
+        "isActive": true
+       },
+       "score": "0",
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1291",
+         "rankDisplayValue": "24th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "678",
+         "rankDisplayValue": "24th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".239",
+         "rankDisplayValue": "24th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "46",
+         "rankDisplayValue": "Tied-7th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "77",
+         "rankDisplayValue": "11th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "85",
+         "rankDisplayValue": "11th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.77",
+         "rankDisplayValue": "8th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "86",
+         "rankDisplayValue": "17th"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "0-2",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "85-77"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "41-40"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "44-37"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 1,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Scheduled",
+       "shortDetail": "10/7 - 4:00 PM EDT"
+      }
+     },
+     "startDate": "2026-10-07T20:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "CHW lead series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "4",
+        "uid": "s:1~l:10~t:4",
+        "wins": 2,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/4?lang=en&region=us"
+       },
+       {
+        "id": "5",
+        "uid": "s:1~l:10~t:5",
+        "wins": 0,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/5?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "TBS/truTV",
+     "odds": [
+      {
+       "provider": {
+        "id": "100",
+        "name": "DraftKings",
+        "priority": 1,
+        "displayName": "DraftKings"
+       },
+       "details": "CHW -121",
+       "overUnder": 7.5,
+       "spread": -1.5,
+       "awayTeamOdds": {
+        "favorite": false,
+        "underdog": true,
+        "team": {
+         "id": "5",
+         "uid": "s:1~l:10~t:5",
+         "abbreviation": "CLE",
+         "name": "Guardians",
+         "displayName": "Cleveland Guardians"
+        },
+        "favoriteAtOpen": true
+       },
+       "homeTeamOdds": {
+        "favorite": true,
+        "underdog": false,
+        "team": {
+         "id": "4",
+         "uid": "s:1~l:10~t:4",
+         "abbreviation": "CHW",
+         "name": "White Sox",
+         "displayName": "Chicago White Sox"
+        },
+        "favoriteAtOpen": false
+       },
+       "moneyline": {
+        "displayName": "Moneyline",
+        "shortDisplayName": "ML",
+        "home": {
+         "close": {
+          "odds": "-121"
+         },
+         "open": {
+          "odds": "-120"
+         }
+        },
+        "away": {
+         "close": {
+          "odds": "+101"
+         },
+         "open": {
+          "odds": "-101"
+         }
+        }
+       },
+       "pointSpread": {
+        "displayName": "Runline",
+        "shortDisplayName": "RL",
+        "home": {
+         "close": {
+          "line": "-1.5",
+          "odds": "+169"
+         },
+         "open": {
+          "line": "+1.5",
+          "odds": "-198"
+         }
+        },
+        "away": {
+         "close": {
+          "line": "+1.5",
+          "odds": "-207"
+         },
+         "open": {
+          "line": "-1.5",
+          "odds": "+162"
+         }
+        }
+       },
+       "total": {
+        "displayName": "Total Runs",
+        "shortDisplayName": "Total",
+        "over": {
+         "close": {
+          "line": "o7.5",
+          "odds": "-118"
+         },
+         "open": {
+          "line": "o8",
+          "odds": "-110"
+         }
+        },
+        "under": {
+         "close": {
+          "line": "u7.5",
+          "odds": "-102"
+         },
+         "open": {
+          "line": "u8",
+          "odds": "-110"
+         }
+        }
+       },
+       "header": {
+        "text": "Game Odds"
+       },
+       "footer": {
+        "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 1,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Scheduled",
+     "shortDetail": "10/7 - 4:00 PM EDT"
+    }
+   }
+  },
+  {
+   "id": "401908016",
+   "uid": "s:1~l:10~e:401908016",
+   "date": "2026-10-07T22:00Z",
+   "name": "Los Angeles Dodgers at Atlanta Braves",
+   "shortName": "LAD @ ATL",
+   "competitions": [
+    {
+     "id": "401908016",
+     "uid": "s:1~l:10~e:401908016~c:401908016",
+     "date": "2026-10-07T22:00Z",
+     "attendance": 0,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "15",
+       "uid": "s:1~l:10~t:15",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "team": {
+        "id": "15",
+        "uid": "s:1~l:10~t:15",
+        "location": "Atlanta",
+        "name": "Braves",
+        "abbreviation": "ATL",
+        "displayName": "Atlanta Braves",
+        "shortDisplayName": "Braves",
+        "color": "0c2340",
+        "alternateColor": "ba0c2f",
+        "isActive": true
+       },
+       "score": "0",
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1348",
+         "rankDisplayValue": "8th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "742",
+         "rankDisplayValue": "8th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".246",
+         "rankDisplayValue": "10th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "49",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "68",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "94",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.63",
+         "rankDisplayValue": "5th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "65",
+         "rankDisplayValue": "5th"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "1-1",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "94-68"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "52-29"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "42-39"
+        }
+       ]
+      },
+      {
+       "id": "19",
+       "uid": "s:1~l:10~t:19",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "team": {
+        "id": "19",
+        "uid": "s:1~l:10~t:19",
+        "location": "Los Angeles",
+        "name": "Dodgers",
+        "abbreviation": "LAD",
+        "displayName": "Los Angeles Dodgers",
+        "shortDisplayName": "Dodgers",
+        "color": "005a9c",
+        "alternateColor": "ffffff",
+        "isActive": true
+       },
+       "score": "0",
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1399",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "801",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".257",
+         "rankDisplayValue": "3rd"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "46",
+         "rankDisplayValue": "Tied-7th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "62",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "100",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.55",
+         "rankDisplayValue": "4th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "64",
+         "rankDisplayValue": "Tied-2nd"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "1-1",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "100-62"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "51-30"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "49-32"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 1,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Scheduled",
+       "shortDetail": "10/7 - 6:00 PM EDT"
+      }
+     },
+     "startDate": "2026-10-07T22:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "Series tied 1-1",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "15",
+        "uid": "s:1~l:10~t:15",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/15?lang=en&region=us"
+       },
+       {
+        "id": "19",
+        "uid": "s:1~l:10~t:19",
+        "wins": 1,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/19?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "FS1"
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 1,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Scheduled",
+     "shortDetail": "10/7 - 6:00 PM EDT"
+    }
+   }
+  },
+  {
+   "id": "401907987",
+   "uid": "s:1~l:10~e:401907987",
+   "date": "2026-10-08T00:00Z",
+   "name": "Tampa Bay Rays at New York Yankees",
+   "shortName": "TB @ NYY",
+   "competitions": [
+    {
+     "id": "401907987",
+     "uid": "s:1~l:10~e:401907987~c:401907987",
+     "date": "2026-10-08T00:00Z",
+     "attendance": 0,
+     "type": {
+      "id": "15",
+      "abbreviation": "QTR"
+     },
+     "timeValid": true,
+     "neutralSite": false,
+     "conferenceCompetition": true,
+     "recent": false,
+     "wasSuspended": false,
+     "competitors": [
+      {
+       "id": "10",
+       "uid": "s:1~l:10~t:10",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "team": {
+        "id": "10",
+        "uid": "s:1~l:10~t:10",
+        "location": "New York",
+        "name": "Yankees",
+        "abbreviation": "NYY",
+        "displayName": "New York Yankees",
+        "shortDisplayName": "Yankees",
+        "color": "132448",
+        "alternateColor": "c4ced4",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 32685,
+         "athlete": {
+          "id": "32685",
+          "fullName": "Max Fried",
+          "displayName": "Max Fried",
+          "shortName": "M. Fried",
+          "jersey": "54",
+          "position": "SP",
+          "team": {
+           "id": "10"
+          }
+         },
+         "statistics": [
+          {
+           "name": "saves",
+           "abbreviation": "SV",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-7th"
+          },
+          {
+           "name": "losses",
+           "abbreviation": "L",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-18th"
+          },
+          {
+           "name": "wins",
+           "abbreviation": "W",
+           "displayValue": "1",
+           "rankDisplayValue": "Tied-2nd"
+          },
+          {
+           "name": "ERA",
+           "abbreviation": "ERA",
+           "displayValue": "1.50",
+           "rankDisplayValue": "Tied-17th"
+          },
+          {
+           "name": "errors",
+           "abbreviation": "E",
+           "displayValue": "0",
+           "rankDisplayValue": "Tied-19th"
+          }
+         ],
+         "record": "(1-0, 1.50)"
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1250",
+         "rankDisplayValue": "29th"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "739",
+         "rankDisplayValue": "Tied-9th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".235",
+         "rankDisplayValue": "26th"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "45",
+         "rankDisplayValue": "Tied-12th"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "68",
+         "rankDisplayValue": "Tied-4th"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "93",
+         "rankDisplayValue": "5th"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.24",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "96",
+         "rankDisplayValue": "Tied-23rd"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "record": "0-2",
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "93-68"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "46-34"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "47-34"
+        }
+       ]
+      },
+      {
+       "id": "30",
+       "uid": "s:1~l:10~t:30",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "team": {
+        "id": "30",
+        "uid": "s:1~l:10~t:30",
+        "location": "Tampa Bay",
+        "name": "Rays",
+        "abbreviation": "TB",
+        "displayName": "Tampa Bay Rays",
+        "shortDisplayName": "Rays",
+        "color": "092c5c",
+        "alternateColor": "8fbce6",
+        "isActive": true
+       },
+       "score": "0",
+       "probables": [
+        {
+         "name": "probableStartingPitcher",
+         "displayName": "Probable Starting Pitcher",
+         "shortDisplayName": "Starter",
+         "abbreviation": "SP",
+         "playerId": 33372,
+         "athlete": {
+          "id": "33372",
+          "fullName": "Nick Martinez",
+          "displayName": "Nick Martinez",
+          "shortName": "N. Martinez",
+          "jersey": "28",
+          "position": "SP",
+          "team": {
+           "id": "30"
+          }
+         },
+         "statistics": [],
+         "record": ""
+        }
+       ],
+       "statistics": [
+        {
+         "name": "hits",
+         "abbreviation": "H",
+         "displayValue": "1405",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "runs",
+         "abbreviation": "R",
+         "displayValue": "736",
+         "rankDisplayValue": "12th"
+        },
+        {
+         "name": "avg",
+         "abbreviation": "AVG",
+         "displayValue": ".258",
+         "rankDisplayValue": "2nd"
+        },
+        {
+         "name": "saves",
+         "abbreviation": "SV",
+         "displayValue": "58",
+         "rankDisplayValue": "1st"
+        },
+        {
+         "name": "losses",
+         "abbreviation": "L",
+         "displayValue": "64",
+         "rankDisplayValue": "3rd"
+        },
+        {
+         "name": "wins",
+         "abbreviation": "W",
+         "displayValue": "98",
+         "rankDisplayValue": "3rd"
+        },
+        {
+         "name": "ERA",
+         "abbreviation": "ERA",
+         "displayValue": "3.70",
+         "rankDisplayValue": "7th"
+        },
+        {
+         "name": "errors",
+         "abbreviation": "E",
+         "displayValue": "92",
+         "rankDisplayValue": "21st"
+        }
+       ],
+       "hits": 0,
+       "errors": 0,
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Total",
+         "type": "total",
+         "summary": "98-64"
+        },
+        {
+         "name": "Home",
+         "abbreviation": "Home",
+         "type": "home",
+         "summary": "55-26"
+        },
+        {
+         "name": "Road",
+         "abbreviation": "AWAY",
+         "type": "road",
+         "summary": "43-38"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 1,
+      "type": {
+       "id": "1",
+       "name": "STATUS_SCHEDULED",
+       "state": "pre",
+       "completed": false,
+       "description": "Scheduled",
+       "detail": "Scheduled",
+       "shortDetail": "10/7 - 8:00 PM EDT"
+      }
+     },
+     "startDate": "2026-10-08T00:00Z",
+     "series": {
+      "type": "playoff",
+      "title": "Playoff Series",
+      "summary": "TB leads series 2-0",
+      "completed": false,
+      "totalCompetitions": 5,
+      "competitors": [
+       {
+        "id": "10",
+        "uid": "s:1~l:10~t:10",
+        "wins": 0,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/10?lang=en&region=us"
+       },
+       {
+        "id": "30",
+        "uid": "s:1~l:10~t:30",
+        "wins": 2,
+        "ties": 0,
+        "href": "http://sports.core.api.espn.pvt/v2/sports/baseball/leagues/mlb/seasons/2026/teams/30?lang=en&region=us"
+       }
+      ]
+     },
+     "broadcast": "TBS/truTV",
+     "odds": [
+      {
+       "provider": {
+        "id": "100",
+        "name": "DraftKings",
+        "priority": 1
+       },
+       "details": "NYY -162",
+       "overUnder": 7.0,
+       "spread": -1.5,
+       "awayTeamOdds": {
+        "favorite": false,
+        "underdog": true,
+        "team": {
+         "id": "30",
+         "uid": "s:1~l:10~t:30",
+         "abbreviation": "TB",
+         "name": "Rays",
+         "displayName": "Tampa Bay Rays"
+        },
+        "favoriteAtOpen": false
+       },
+       "homeTeamOdds": {
+        "favorite": true,
+        "underdog": false,
+        "team": {
+         "id": "10",
+         "uid": "s:1~l:10~t:10",
+         "abbreviation": "NYY",
+         "name": "Yankees",
+         "displayName": "New York Yankees"
+        },
+        "favoriteAtOpen": true
+       },
+       "moneyline": {
+        "displayName": "Moneyline",
+        "shortDisplayName": "ML",
+        "home": {
+         "close": {
+          "odds": "-162"
+         },
+         "open": {
+          "odds": "-147"
+         }
+        },
+        "away": {
+         "close": {
+          "odds": "+134"
+         },
+         "open": {
+          "odds": "+122"
+         }
+        }
+       },
+       "pointSpread": {
+        "displayName": "Runline",
+        "shortDisplayName": "RL",
+        "home": {
+         "close": {
+          "line": "-1.5",
+          "odds": "+144"
+         },
+         "open": {
+          "line": "-1.5",
+          "odds": "+162"
+         }
+        },
+        "away": {
+         "close": {
+          "line": "+1.5",
+          "odds": "-174"
+         },
+         "open": {
+          "line": "+1.5",
+          "odds": "-197"
+         }
+        }
+       },
+       "total": {
+        "displayName": "Total Runs",
+        "shortDisplayName": "Total",
+        "over": {
+         "close": {
+          "line": "o7",
+          "odds": "-120"
+         },
+         "open": {
+          "line": "o7",
+          "odds": "-119"
+         }
+        },
+        "under": {
+         "close": {
+          "line": "u7",
+          "odds": "+100"
+         },
+         "open": {
+          "line": "u7",
+          "odds": "-101"
+         }
+        }
+       },
+       "header": {
+        "text": "Game Odds"
+       },
+       "footer": {
+        "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+       }
+      }
+     ]
+    }
+   ],
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 1,
+    "type": {
+     "id": "1",
+     "name": "STATUS_SCHEDULED",
+     "state": "pre",
+     "completed": false,
+     "description": "Scheduled",
+     "detail": "Scheduled",
+     "shortDetail": "10/7 - 8:00 PM EDT"
+    }
+   }
+  }
+ ]
+}

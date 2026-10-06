@@ -1,0 +1,4460 @@
+{
+ "events": [
+  {
+   "id": "139490",
+   "chatChannel": {
+    "id": "mlb-lad-atl-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 6218
+   },
+   "ticker": "mlb-lad-atl-2026-10-06",
+   "slug": "mlb-lad-atl-2026-10-06",
+   "title": "Game 3: LA Dodgers vs. ATL Braves",
+   "startDate": "2026-10-06T22:00:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-03T04:00:15Z",
+   "updatedAt": "2026-10-06T13:55:27Z",
+   "startTime": "2026-10-06T22:00:00Z",
+   "seriesSlug": "mlb-2026",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1181281",
+     "question": "Will the Los Angeles Dodgers cover 2.5 vs the Atlanta Braves in Game 3: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-06-pos-2pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:20Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:20Z",
+     "updatedAt": "2026-10-06T12:24:01Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2362044",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-03T04:00:20Z",
+       "updatedAt": "2026-10-03T04:00:20Z",
+       "description": "+2.50",
+       "price": "0.8000",
+       "marketId": 1181281,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.8050",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362045",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-03T04:00:20Z",
+       "updatedAt": "2026-10-03T04:00:20Z",
+       "description": "-2.50",
+       "price": "0.8050",
+       "marketId": 1181281,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.2",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.8000\",\"0.8050\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Atlanta Braves wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8050",
+      "currency": "USD"
+     },
+     "titleShort": "ATL -2.5",
+     "ep3SyncedAt": "2026-10-03T04:00:20Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181277",
+     "question": "Will the Los Angeles Dodgers cover 1.5 vs the Atlanta Braves in Game 3: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-06-pos-1pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:19Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:19Z",
+     "updatedAt": "2026-10-06T13:54:22Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2362036",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-03T04:00:19Z",
+       "updatedAt": "2026-10-03T04:00:19Z",
+       "description": "+1.50",
+       "price": "0.7000",
+       "marketId": 1181277,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.7050",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362037",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-03T04:00:19Z",
+       "updatedAt": "2026-10-03T04:00:19Z",
+       "description": "-1.50",
+       "price": "0.7050",
+       "marketId": 1181277,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.3",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7000\",\"0.7050\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Atlanta Braves wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.7000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7050",
+      "currency": "USD"
+     },
+     "titleShort": "ATL -1.5",
+     "ep3SyncedAt": "2026-10-03T04:00:19Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219647",
+     "question": "Will the total in Game 3: LA Dodgers vs. ATL Braves be more than 5.5?",
+     "slug": "tsc-mlb-lad-atl-2026-10-06-5pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:30:17Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T03:30:17Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2438776",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-5pt5",
+       "createdAt": "2026-10-05T03:30:17Z",
+       "updatedAt": "2026-10-05T03:30:17Z",
+       "description": "Over",
+       "price": "0.5700",
+       "marketId": 1219647,
+       "long": true,
+       "quote": {
+        "value": "0.5750",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438777",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-5pt5",
+       "createdAt": "2026-10-05T03:30:17Z",
+       "updatedAt": "2026-10-05T03:30:17Z",
+       "description": "Under",
+       "price": "0.5750",
+       "marketId": 1219647,
+       "long": false,
+       "quote": {
+        "value": "0.43",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5700\",\"0.5750\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 5.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.5700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5750",
+      "currency": "USD"
+     },
+     "titleShort": "Over 5.5 runs",
+     "ep3SyncedAt": "2026-10-05T03:30:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181266",
+     "question": "Who will win in the upcoming baseball event Los Angeles Dodgers vs Atlanta Braves scheduled for October 6, 2026 at 10:00 PM UTC?",
+     "slug": "aec-mlb-lad-atl-2026-10-06",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:14Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:15Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2362014",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-lad-atl-2026-10-06",
+       "createdAt": "2026-10-03T04:00:15Z",
+       "updatedAt": "2026-10-03T04:00:15Z",
+       "description": "Los Angeles Dodgers",
+       "price": "0.5000",
+       "marketId": 1181266,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.5050",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362015",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-lad-atl-2026-10-06",
+       "createdAt": "2026-10-03T04:00:15Z",
+       "updatedAt": "2026-10-03T04:00:15Z",
+       "description": "Atlanta Braves",
+       "price": "0.5050",
+       "marketId": 1181266,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.5",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5000\",\"0.5050\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers vs Atlanta Braves",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5050",
+      "currency": "USD"
+     },
+     "titleShort": "LAD vs ATL",
+     "ep3SyncedAt": "2026-10-03T04:00:15Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219648",
+     "question": "Will the total in Game 3: LA Dodgers vs. ATL Braves be more than 6.5?",
+     "slug": "tsc-mlb-lad-atl-2026-10-06-6pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:30:18Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T03:30:18Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2438778",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-6pt5",
+       "createdAt": "2026-10-05T03:30:18Z",
+       "updatedAt": "2026-10-05T03:30:18Z",
+       "description": "Over",
+       "price": "0.4700",
+       "marketId": 1219648,
+       "long": true,
+       "quote": {
+        "value": "0.4750",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438779",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-6pt5",
+       "createdAt": "2026-10-05T03:30:18Z",
+       "updatedAt": "2026-10-05T03:30:18Z",
+       "description": "Under",
+       "price": "0.4750",
+       "marketId": 1219648,
+       "long": false,
+       "quote": {
+        "value": "0.53",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4700\",\"0.4750\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 6.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.4700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4750",
+      "currency": "USD"
+     },
+     "titleShort": "Over 6.5 runs",
+     "ep3SyncedAt": "2026-10-05T03:30:18Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181275",
+     "question": "Will the Los Angeles Dodgers cover -1.5 vs the Atlanta Braves in Game 3: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-06-neg-1pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:18Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:18Z",
+     "updatedAt": "2026-10-06T13:54:22Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2362032",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-03T04:00:18Z",
+       "updatedAt": "2026-10-03T04:00:18Z",
+       "description": "-1.50",
+       "price": "0.3550",
+       "marketId": 1181275,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.3600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362033",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-03T04:00:18Z",
+       "updatedAt": "2026-10-03T04:00:18Z",
+       "description": "+1.50",
+       "price": "0.3600",
+       "marketId": 1181275,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.645",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3550\",\"0.3600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3550",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3600",
+      "currency": "USD"
+     },
+     "titleShort": "LAD -1.5",
+     "ep3SyncedAt": "2026-10-03T04:00:18Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219649",
+     "question": "Will the total in Game 3: LA Dodgers vs. ATL Braves be more than 7.5?",
+     "slug": "tsc-mlb-lad-atl-2026-10-06-7pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:30:19Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T03:30:19Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2438780",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-7pt5",
+       "createdAt": "2026-10-05T03:30:19Z",
+       "updatedAt": "2026-10-05T03:30:19Z",
+       "description": "Over",
+       "price": "0.3450",
+       "marketId": 1219649,
+       "long": true,
+       "quote": {
+        "value": "0.3500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438781",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-lad-atl-2026-10-06-7pt5",
+       "createdAt": "2026-10-05T03:30:19Z",
+       "updatedAt": "2026-10-05T03:30:19Z",
+       "description": "Under",
+       "price": "0.3500",
+       "marketId": 1219649,
+       "long": false,
+       "quote": {
+        "value": "0.655",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3450\",\"0.3500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3450",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 runs",
+     "ep3SyncedAt": "2026-10-05T03:30:19Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181270",
+     "question": "Will the Los Angeles Dodgers cover -2.5 vs the Atlanta Braves in Game 3: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-06-neg-2pt5",
+     "endDate": "2026-10-21T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:16Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:16Z",
+     "updatedAt": "2026-10-06T12:54:37Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-06T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2362022",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-03T04:00:16Z",
+       "updatedAt": "2026-10-03T04:00:16Z",
+       "description": "-2.50",
+       "price": "0.2500",
+       "marketId": 1181270,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.2550",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362023",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-03T04:00:16Z",
+       "updatedAt": "2026-10-03T04:00:16Z",
+       "description": "+2.50",
+       "price": "0.2550",
+       "marketId": 1181270,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.75",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2500\",\"0.2550\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.2500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2550",
+      "currency": "USD"
+     },
+     "titleShort": "LAD -2.5",
+     "ep3SyncedAt": "2026-10-03T04:00:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 10079778,
+   "sportradarGameId": "836a89f8-d584-47e9-85c8-a81e651184cd",
+   "eventState": {
+    "id": 136860242,
+    "gameId": 10079778,
+    "sportradarGameId": "836a89f8-d584-47e9-85c8-a81e651184cd",
+    "type": "baseball",
+    "createdAt": "2026-10-05T03:27:35.830130Z",
+    "updatedAt": "2026-10-06T10:52:37.952731Z",
+    "mainSpreadLine": -1.5,
+    "mainTotalLine": 6,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 6
+     },
+     {
+      "marketGroupId": "game-lines/spread/first-5-innings",
+      "line": 0.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/first-5-innings",
+      "line": 3.5
+     },
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": -1.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 139490
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "4",
+     "label": "MLB",
+     "slug": "mlb",
+     "createdAt": "2025-09-25T16:13:36Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 5,
+      "name": "MLB",
+      "sportId": 5,
+      "tagId": 4,
+      "resolution": "https://www.mlb.com/",
+      "ordering": "away",
+      "activeSeriesId": 15,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "mlb",
+      "abbreviation": "MLB"
+     },
+     "parentId": 15,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "15",
+     "label": "Baseball",
+     "slug": "baseball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 5,
+      "name": "Baseball",
+      "tagId": 15,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "baseball"
+     },
+     "subtags": [
+      {
+       "id": "4",
+       "label": "MLB",
+       "slug": "mlb",
+       "createdAt": "2025-09-25T16:13:36Z",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 5,
+        "name": "MLB",
+        "sportId": 5,
+        "tagId": 4,
+        "resolution": "https://www.mlb.com/",
+        "ordering": "away",
+        "activeSeriesId": 15,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-05T18:30:42Z",
+        "slug": "mlb",
+        "abbreviation": "MLB"
+       },
+       "parentId": 15,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "547",
+       "label": "NBP",
+       "slug": "nbp",
+       "tradable": false,
+       "parentId": 15,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "543",
+       "label": "KBO",
+       "slug": "kbo",
+       "updatedAt": "2026-10-06T13:40:03Z",
+       "tradable": false,
+       "league": {
+        "id": 60,
+        "name": "KBO",
+        "sportId": 5,
+        "tagId": 543,
+        "ordering": "home",
+        "activeSeriesId": 81,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-06-22T18:51:07Z",
+        "slug": "kbo"
+       },
+       "parentId": 15,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      }
+     ],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1524",
+     "label": "MLB Playoffs",
+     "slug": "mlb-playoffs",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1534",
+     "label": "National League",
+     "slug": "mlb-nl",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1622",
+     "label": "Game 3",
+     "slug": "mlb-game-3",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1623",
+     "label": "Round 2",
+     "slug": "mlb-round-2",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1628",
+     "label": "NL Division Series",
+     "slug": "mlb-nlds",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1639",
+     "label": "Braves vs Dodgers",
+     "slug": "mlb-2026-atl-lad-series",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 3014,
+     "name": "Los Angeles Dodgers",
+     "abbreviation": "lad",
+     "alias": "Los Angeles Dodgers",
+     "league": "mlb",
+     "safeName": "Dodgers",
+     "record": "",
+     "providerId": 1
+    },
+    {
+     "id": 3001,
+     "name": "Atlanta Braves",
+     "abbreviation": "atl",
+     "alias": "Atlanta Braves",
+     "league": "mlb",
+     "safeName": "Braves",
+     "record": "",
+     "providerId": 26
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 328,
+    "numSpreadsAndTotalsMarkets": 14
+   },
+   "marketCounts": {
+    "numMarkets": 345,
+    "numSpreadsAndTotalsMarkets": 31
+   }
+  },
+  {
+   "id": "139496",
+   "chatChannel": {
+    "id": "mlb-mil-sd-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 2998
+   },
+   "ticker": "mlb-mil-sd-2026-10-06",
+   "slug": "mlb-mil-sd-2026-10-06",
+   "title": "Game 3: MIL Brewers vs. SD Padres",
+   "startDate": "2026-10-07T01:30:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-03T04:00:21Z",
+   "updatedAt": "2026-10-06T13:55:27Z",
+   "startTime": "2026-10-07T01:30:00Z",
+   "seriesSlug": "mlb-2026",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1181304",
+     "question": "Will the Milwaukee Brewers cover 2.5 vs the San Diego Padres in Game 3: MIL Brewers vs. SD Padres?",
+     "slug": "asc-mlb-mil-sd-2026-10-06-pos-2pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:25Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:25Z",
+     "updatedAt": "2026-10-06T13:24:14Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2362090",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-03T04:00:25Z",
+       "updatedAt": "2026-10-03T04:00:25Z",
+       "description": "+2.50",
+       "price": "0.7400",
+       "marketId": 1181304,
+       "long": true,
+       "teamId": 3016,
+       "team": {
+        "id": 3016,
+        "name": "Milwaukee Brewers",
+        "abbreviation": "mil",
+        "alias": "Milwaukee Brewers",
+        "league": "mlb",
+        "safeName": "Brewers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 32
+       },
+       "quote": {
+        "value": "0.7450",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362091",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-pos-2pt5",
+       "createdAt": "2026-10-03T04:00:25Z",
+       "updatedAt": "2026-10-03T04:00:25Z",
+       "description": "-2.50",
+       "price": "0.7450",
+       "marketId": 1181304,
+       "long": false,
+       "teamId": 3022,
+       "team": {
+        "id": 3022,
+        "name": "San Diego Padres",
+        "abbreviation": "sd",
+        "alias": "San Diego Padres",
+        "league": "mlb",
+        "safeName": "Padres",
+        "record": "",
+        "ordering": "home",
+        "providerId": 33
+       },
+       "quote": {
+        "value": "0.26",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7400\",\"0.7450\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "San Diego Padres wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7450",
+      "currency": "USD"
+     },
+     "titleShort": "SD -2.5",
+     "ep3SyncedAt": "2026-10-03T04:00:25Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181299",
+     "question": "Will the Milwaukee Brewers cover 1.5 vs the San Diego Padres in Game 3: MIL Brewers vs. SD Padres?",
+     "slug": "asc-mlb-mil-sd-2026-10-06-pos-1pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:24Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:24Z",
+     "updatedAt": "2026-10-06T13:54:22Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2362080",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-03T04:00:24Z",
+       "updatedAt": "2026-10-03T04:00:24Z",
+       "description": "+1.50",
+       "price": "0.6350",
+       "marketId": 1181299,
+       "long": true,
+       "teamId": 3016,
+       "team": {
+        "id": 3016,
+        "name": "Milwaukee Brewers",
+        "abbreviation": "mil",
+        "alias": "Milwaukee Brewers",
+        "league": "mlb",
+        "safeName": "Brewers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 32
+       },
+       "quote": {
+        "value": "0.6400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362081",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-03T04:00:24Z",
+       "updatedAt": "2026-10-03T04:00:24Z",
+       "description": "-1.50",
+       "price": "0.6400",
+       "marketId": 1181299,
+       "long": false,
+       "teamId": 3022,
+       "team": {
+        "id": 3022,
+        "name": "San Diego Padres",
+        "abbreviation": "sd",
+        "alias": "San Diego Padres",
+        "league": "mlb",
+        "safeName": "Padres",
+        "record": "",
+        "ordering": "home",
+        "providerId": 33
+       },
+       "quote": {
+        "value": "0.365",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6350\",\"0.6400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "San Diego Padres wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.6350",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6400",
+      "currency": "USD"
+     },
+     "titleShort": "SD -1.5",
+     "ep3SyncedAt": "2026-10-03T04:00:24Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1217992",
+     "question": "Will the total in Game 3: MIL Brewers vs. SD Padres be more than 6.5?",
+     "slug": "tsc-mlb-mil-sd-2026-10-06-6pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T23:30:16Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-04T23:30:16Z",
+     "updatedAt": "2026-10-06T13:39:52Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2435466",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-6pt5",
+       "createdAt": "2026-10-04T23:30:16Z",
+       "updatedAt": "2026-10-04T23:30:16Z",
+       "description": "Over",
+       "price": "0.6200",
+       "marketId": 1217992,
+       "long": true,
+       "quote": {
+        "value": "0.6250",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2435467",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-6pt5",
+       "createdAt": "2026-10-04T23:30:16Z",
+       "updatedAt": "2026-10-04T23:30:16Z",
+       "description": "Under",
+       "price": "0.6250",
+       "marketId": 1217992,
+       "long": false,
+       "quote": {
+        "value": "0.38",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6200\",\"0.6250\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 6.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.6200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6250",
+      "currency": "USD"
+     },
+     "titleShort": "Over 6.5 runs",
+     "ep3SyncedAt": "2026-10-04T23:30:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1217993",
+     "question": "Will the total in Game 3: MIL Brewers vs. SD Padres be more than 7.5?",
+     "slug": "tsc-mlb-mil-sd-2026-10-06-7pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T23:30:17Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-04T23:30:17Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2435468",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-7pt5",
+       "createdAt": "2026-10-04T23:30:17Z",
+       "updatedAt": "2026-10-04T23:30:17Z",
+       "description": "Over",
+       "price": "0.5000",
+       "marketId": 1217993,
+       "long": true,
+       "quote": {
+        "value": "0.5050",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2435469",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-7pt5",
+       "createdAt": "2026-10-04T23:30:17Z",
+       "updatedAt": "2026-10-04T23:30:17Z",
+       "description": "Under",
+       "price": "0.5050",
+       "marketId": 1217993,
+       "long": false,
+       "quote": {
+        "value": "0.5",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5000\",\"0.5050\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.5000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5050",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 runs",
+     "ep3SyncedAt": "2026-10-04T23:30:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181287",
+     "question": "Who will win in the upcoming baseball event Milwaukee Brewers vs San Diego Padres scheduled for October 7, 2026 at 1:30 AM UTC?",
+     "slug": "aec-mlb-mil-sd-2026-10-06",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:21Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:21Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2362056",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-mil-sd-2026-10-06",
+       "createdAt": "2026-10-03T04:00:21Z",
+       "updatedAt": "2026-10-03T04:00:21Z",
+       "description": "Milwaukee Brewers",
+       "price": "0.4450",
+       "marketId": 1181287,
+       "long": true,
+       "teamId": 3016,
+       "team": {
+        "id": 3016,
+        "name": "Milwaukee Brewers",
+        "abbreviation": "mil",
+        "alias": "Milwaukee Brewers",
+        "league": "mlb",
+        "safeName": "Brewers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 32
+       },
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362057",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-mil-sd-2026-10-06",
+       "createdAt": "2026-10-03T04:00:21Z",
+       "updatedAt": "2026-10-03T04:00:21Z",
+       "description": "San Diego Padres",
+       "price": "0.4500",
+       "marketId": 1181287,
+       "long": false,
+       "teamId": 3022,
+       "team": {
+        "id": 3022,
+        "name": "San Diego Padres",
+        "abbreviation": "sd",
+        "alias": "San Diego Padres",
+        "league": "mlb",
+        "safeName": "Padres",
+        "record": "",
+        "ordering": "home",
+        "providerId": 33
+       },
+       "quote": {
+        "value": "0.555",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4450\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Milwaukee Brewers vs San Diego Padres",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4450",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "MIL vs SD",
+     "ep3SyncedAt": "2026-10-03T04:00:21Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1217995",
+     "question": "Will the total in Game 3: MIL Brewers vs. SD Padres be more than 8.5?",
+     "slug": "tsc-mlb-mil-sd-2026-10-06-8pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T23:30:18Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-04T23:30:18Z",
+     "updatedAt": "2026-10-06T13:25:25Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 8.5,
+     "marketSides": [
+      {
+       "id": "2435472",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-8pt5",
+       "createdAt": "2026-10-04T23:30:18Z",
+       "updatedAt": "2026-10-04T23:30:18Z",
+       "description": "Over",
+       "price": "0.4100",
+       "marketId": 1217995,
+       "long": true,
+       "quote": {
+        "value": "0.4150",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2435473",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-mil-sd-2026-10-06-8pt5",
+       "createdAt": "2026-10-04T23:30:18Z",
+       "updatedAt": "2026-10-04T23:30:18Z",
+       "description": "Under",
+       "price": "0.4150",
+       "marketId": 1217995,
+       "long": false,
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4100\",\"0.4150\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 8.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4150",
+      "currency": "USD"
+     },
+     "titleShort": "Over 8.5 runs",
+     "ep3SyncedAt": "2026-10-04T23:30:18Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181294",
+     "question": "Will the Milwaukee Brewers cover -1.5 vs the San Diego Padres in Game 3: MIL Brewers vs. SD Padres?",
+     "slug": "asc-mlb-mil-sd-2026-10-06-neg-1pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:23Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:23Z",
+     "updatedAt": "2026-10-06T11:38:36Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2362070",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-03T04:00:23Z",
+       "updatedAt": "2026-10-03T04:00:23Z",
+       "description": "-1.50",
+       "price": "0.3200",
+       "marketId": 1181294,
+       "long": true,
+       "teamId": 3016,
+       "team": {
+        "id": 3016,
+        "name": "Milwaukee Brewers",
+        "abbreviation": "mil",
+        "alias": "Milwaukee Brewers",
+        "league": "mlb",
+        "safeName": "Brewers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 32
+       },
+       "quote": {
+        "value": "0.3250",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362071",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-neg-1pt5",
+       "createdAt": "2026-10-03T04:00:23Z",
+       "updatedAt": "2026-10-03T04:00:23Z",
+       "description": "+1.50",
+       "price": "0.3250",
+       "marketId": 1181294,
+       "long": false,
+       "teamId": 3022,
+       "team": {
+        "id": 3022,
+        "name": "San Diego Padres",
+        "abbreviation": "sd",
+        "alias": "San Diego Padres",
+        "league": "mlb",
+        "safeName": "Padres",
+        "record": "",
+        "ordering": "home",
+        "providerId": 33
+       },
+       "quote": {
+        "value": "0.68",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3200\",\"0.3250\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Milwaukee Brewers wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3250",
+      "currency": "USD"
+     },
+     "titleShort": "MIL -1.5",
+     "ep3SyncedAt": "2026-10-03T04:00:23Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1181292",
+     "question": "Will the Milwaukee Brewers cover -2.5 vs the San Diego Padres in Game 3: MIL Brewers vs. SD Padres?",
+     "slug": "asc-mlb-mil-sd-2026-10-06-neg-2pt5",
+     "endDate": "2026-10-21T05:30:00Z",
+     "category": "sports",
+     "startDate": "2026-10-03T04:00:22Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-03T04:00:22Z",
+     "updatedAt": "2026-10-06T03:53:54Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T01:30:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2362066",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-03T04:00:22Z",
+       "updatedAt": "2026-10-03T04:00:22Z",
+       "description": "-2.50",
+       "price": "0.2150",
+       "marketId": 1181292,
+       "long": true,
+       "teamId": 3016,
+       "team": {
+        "id": 3016,
+        "name": "Milwaukee Brewers",
+        "abbreviation": "mil",
+        "alias": "Milwaukee Brewers",
+        "league": "mlb",
+        "safeName": "Brewers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 32
+       },
+       "quote": {
+        "value": "0.2200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2362067",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-mil-sd-2026-10-06-neg-2pt5",
+       "createdAt": "2026-10-03T04:00:22Z",
+       "updatedAt": "2026-10-03T04:00:22Z",
+       "description": "+2.50",
+       "price": "0.2200",
+       "marketId": 1181292,
+       "long": false,
+       "teamId": 3022,
+       "team": {
+        "id": 3022,
+        "name": "San Diego Padres",
+        "abbreviation": "sd",
+        "alias": "San Diego Padres",
+        "league": "mlb",
+        "safeName": "Padres",
+        "record": "",
+        "ordering": "home",
+        "providerId": 33
+       },
+       "quote": {
+        "value": "0.785",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2150\",\"0.2200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Milwaukee Brewers wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.2150",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2200",
+      "currency": "USD"
+     },
+     "titleShort": "MIL -2.5",
+     "ep3SyncedAt": "2026-10-03T04:00:22Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 10079773,
+   "sportradarGameId": "93a19f87-b4f0-4ac5-93f0-8ba2326df266",
+   "eventState": {
+    "id": 136839794,
+    "gameId": 10079773,
+    "sportradarGameId": "93a19f87-b4f0-4ac5-93f0-8ba2326df266",
+    "type": "baseball",
+    "createdAt": "2026-10-04T23:32:20.321410Z",
+    "updatedAt": "2026-10-06T13:20:38.690643Z",
+    "mainSpreadLine": 1.5,
+    "mainTotalLine": 7.5,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": 1.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 7.5
+     },
+     {
+      "marketGroupId": "game-lines/spread/first-5-innings",
+      "line": 0.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/first-5-innings",
+      "line": 3.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 139496
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "4",
+     "label": "MLB",
+     "slug": "mlb",
+     "createdAt": "2025-09-25T16:13:36Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 5,
+      "name": "MLB",
+      "sportId": 5,
+      "tagId": 4,
+      "resolution": "https://www.mlb.com/",
+      "ordering": "away",
+      "activeSeriesId": 15,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "mlb",
+      "abbreviation": "MLB"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "15",
+     "label": "Baseball",
+     "slug": "baseball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 5,
+      "name": "Baseball",
+      "tagId": 15,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "baseball"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1524",
+     "label": "MLB Playoffs",
+     "slug": "mlb-playoffs",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1534",
+     "label": "National League",
+     "slug": "mlb-nl",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1622",
+     "label": "Game 3",
+     "slug": "mlb-game-3",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1623",
+     "label": "Round 2",
+     "slug": "mlb-round-2",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1628",
+     "label": "NL Division Series",
+     "slug": "mlb-nlds",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1629",
+     "label": "Brewers vs Padres",
+     "slug": "mlb-2026-mil-sd-series",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 3016,
+     "name": "Milwaukee Brewers",
+     "abbreviation": "mil",
+     "alias": "Milwaukee Brewers",
+     "league": "mlb",
+     "safeName": "Brewers",
+     "record": "",
+     "providerId": 32
+    },
+    {
+     "id": 3022,
+     "name": "San Diego Padres",
+     "abbreviation": "sd",
+     "alias": "San Diego Padres",
+     "league": "mlb",
+     "safeName": "Padres",
+     "record": "",
+     "providerId": 33
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 331,
+    "numSpreadsAndTotalsMarkets": 14
+   },
+   "marketCounts": {
+    "numMarkets": 348,
+    "numSpreadsAndTotalsMarkets": 31
+   }
+  },
+  {
+   "id": "141439",
+   "chatChannel": {
+    "id": "mlb-cle-cws-2026-10-07",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 453
+   },
+   "ticker": "mlb-cle-cws-2026-10-07",
+   "slug": "mlb-cle-cws-2026-10-07",
+   "title": "Game 3: CLE Guardians vs. CHI White Sox",
+   "startDate": "2026-10-07T20:00:00Z",
+   "endDate": "2026-10-07T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-04T04:00:18Z",
+   "updatedAt": "2026-10-06T13:54:12Z",
+   "startTime": "2026-10-07T20:00:00Z",
+   "seriesSlug": "mlb-2026",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1196629",
+     "question": "Will the Cleveland Guardians cover 2.5 vs the Chicago White Sox in Game 3: CLE Guardians vs. CHI White Sox?",
+     "slug": "asc-mlb-cle-cws-2026-10-07-pos-2pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:22Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:23Z",
+     "updatedAt": "2026-10-04T04:22:37Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2392740",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-04T04:00:23Z",
+       "updatedAt": "2026-10-04T04:00:23Z",
+       "description": "+2.50",
+       "price": "0.7500",
+       "marketId": 1196629,
+       "long": true,
+       "teamId": 3007,
+       "team": {
+        "id": 3007,
+        "name": "Cleveland Guardians",
+        "abbreviation": "cle",
+        "alias": "Cleveland Guardians",
+        "league": "mlb",
+        "safeName": "Guardians",
+        "record": "",
+        "ordering": "away",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.7600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392741",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-04T04:00:23Z",
+       "updatedAt": "2026-10-04T04:00:23Z",
+       "description": "-2.50",
+       "price": "0.7600",
+       "marketId": 1196629,
+       "long": false,
+       "teamId": 3009,
+       "team": {
+        "id": 3009,
+        "name": "Chicago White Sox",
+        "abbreviation": "cws",
+        "alias": "Chicago White Sox",
+        "league": "mlb",
+        "safeName": "White Sox",
+        "record": "",
+        "ordering": "home",
+        "providerId": 16
+       },
+       "quote": {
+        "value": "0.25",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7500\",\"0.7600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Chicago White Sox wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.7500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7600",
+      "currency": "USD"
+     },
+     "titleShort": "CWS -2.5",
+     "ep3SyncedAt": "2026-10-04T04:00:23Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196626",
+     "question": "Will the Cleveland Guardians cover 1.5 vs the Chicago White Sox in Game 3: CLE Guardians vs. CHI White Sox?",
+     "slug": "asc-mlb-cle-cws-2026-10-07-pos-1pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:21Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:21Z",
+     "updatedAt": "2026-10-06T02:54:20Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2392734",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-04T04:00:21Z",
+       "updatedAt": "2026-10-04T04:00:21Z",
+       "description": "+1.50",
+       "price": "0.6500",
+       "marketId": 1196626,
+       "long": true,
+       "teamId": 3007,
+       "team": {
+        "id": 3007,
+        "name": "Cleveland Guardians",
+        "abbreviation": "cle",
+        "alias": "Cleveland Guardians",
+        "league": "mlb",
+        "safeName": "Guardians",
+        "record": "",
+        "ordering": "away",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.6600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392735",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-04T04:00:21Z",
+       "updatedAt": "2026-10-04T04:00:21Z",
+       "description": "-1.50",
+       "price": "0.6600",
+       "marketId": 1196626,
+       "long": false,
+       "teamId": 3009,
+       "team": {
+        "id": 3009,
+        "name": "Chicago White Sox",
+        "abbreviation": "cws",
+        "alias": "Chicago White Sox",
+        "league": "mlb",
+        "safeName": "White Sox",
+        "record": "",
+        "ordering": "home",
+        "providerId": 16
+       },
+       "quote": {
+        "value": "0.35",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6500\",\"0.6600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Chicago White Sox wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.6500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6600",
+      "currency": "USD"
+     },
+     "titleShort": "CWS -1.5",
+     "ep3SyncedAt": "2026-10-04T04:00:21Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1238116",
+     "question": "Will the total in Game 3: CLE Guardians vs. CHI White Sox be more than 7.5?",
+     "slug": "tsc-mlb-cle-cws-2026-10-07-7pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T00:15:16Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T00:15:16Z",
+     "updatedAt": "2026-10-06T08:24:05Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2475714",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-7pt5",
+       "createdAt": "2026-10-06T00:15:16Z",
+       "updatedAt": "2026-10-06T00:15:16Z",
+       "description": "Over",
+       "price": "0.5150",
+       "marketId": 1238116,
+       "long": true,
+       "quote": {
+        "value": "0.5200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2475715",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-7pt5",
+       "createdAt": "2026-10-06T00:15:16Z",
+       "updatedAt": "2026-10-06T00:15:16Z",
+       "description": "Under",
+       "price": "0.5200",
+       "marketId": 1238116,
+       "long": false,
+       "quote": {
+        "value": "0.485",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5150\",\"0.5200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.5150",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5200",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 runs",
+     "ep3SyncedAt": "2026-10-06T00:15:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196615",
+     "question": "Who will win in the upcoming baseball event Cleveland Guardians vs Chicago White Sox scheduled for October 7, 2026 at 8:00 PM UTC?",
+     "slug": "aec-mlb-cle-cws-2026-10-07",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:18Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:18Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2392712",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-cle-cws-2026-10-07",
+       "createdAt": "2026-10-04T04:00:18Z",
+       "updatedAt": "2026-10-04T04:00:18Z",
+       "description": "Cleveland Guardians",
+       "price": "0.4750",
+       "marketId": 1196615,
+       "long": true,
+       "teamId": 3007,
+       "team": {
+        "id": 3007,
+        "name": "Cleveland Guardians",
+        "abbreviation": "cle",
+        "alias": "Cleveland Guardians",
+        "league": "mlb",
+        "safeName": "Guardians",
+        "record": "",
+        "ordering": "away",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.4800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392713",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-cle-cws-2026-10-07",
+       "createdAt": "2026-10-04T04:00:18Z",
+       "updatedAt": "2026-10-04T04:00:18Z",
+       "description": "Chicago White Sox",
+       "price": "0.4800",
+       "marketId": 1196615,
+       "long": false,
+       "teamId": 3009,
+       "team": {
+        "id": 3009,
+        "name": "Chicago White Sox",
+        "abbreviation": "cws",
+        "alias": "Chicago White Sox",
+        "league": "mlb",
+        "safeName": "White Sox",
+        "record": "",
+        "ordering": "home",
+        "providerId": 16
+       },
+       "quote": {
+        "value": "0.525",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4750\",\"0.4800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Cleveland Guardians vs Chicago White Sox",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4750",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "titleShort": "CLE vs CWS",
+     "ep3SyncedAt": "2026-10-04T04:00:18Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1238117",
+     "question": "Will the total in Game 3: CLE Guardians vs. CHI White Sox be more than 8.5?",
+     "slug": "tsc-mlb-cle-cws-2026-10-07-8pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T00:15:17Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T00:15:17Z",
+     "updatedAt": "2026-10-06T00:40:08Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 8.5,
+     "marketSides": [
+      {
+       "id": "2475716",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-8pt5",
+       "createdAt": "2026-10-06T00:15:17Z",
+       "updatedAt": "2026-10-06T00:15:17Z",
+       "description": "Over",
+       "price": "0.4350",
+       "marketId": 1238117,
+       "long": true,
+       "quote": {
+        "value": "0.4450",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2475717",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-8pt5",
+       "createdAt": "2026-10-06T00:15:17Z",
+       "updatedAt": "2026-10-06T00:15:17Z",
+       "description": "Under",
+       "price": "0.4450",
+       "marketId": 1238117,
+       "long": false,
+       "quote": {
+        "value": "0.565",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4350\",\"0.4450\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 8.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.4350",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4450",
+      "currency": "USD"
+     },
+     "titleShort": "Over 8.5 runs",
+     "ep3SyncedAt": "2026-10-06T00:15:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1238118",
+     "question": "Will the total in Game 3: CLE Guardians vs. CHI White Sox be more than 9.5?",
+     "slug": "tsc-mlb-cle-cws-2026-10-07-9pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T00:15:18Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T00:15:19Z",
+     "updatedAt": "2026-10-06T00:40:08Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 9.5,
+     "marketSides": [
+      {
+       "id": "2475718",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-9pt5",
+       "createdAt": "2026-10-06T00:15:19Z",
+       "updatedAt": "2026-10-06T00:15:19Z",
+       "description": "Over",
+       "price": "0.3250",
+       "marketId": 1238118,
+       "long": true,
+       "quote": {
+        "value": "0.3600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2475719",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-cle-cws-2026-10-07-9pt5",
+       "createdAt": "2026-10-06T00:15:19Z",
+       "updatedAt": "2026-10-06T00:15:19Z",
+       "description": "Under",
+       "price": "0.3600",
+       "marketId": 1238118,
+       "long": false,
+       "quote": {
+        "value": "0.675",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3250\",\"0.3600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 9.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3250",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3600",
+      "currency": "USD"
+     },
+     "titleShort": "Over 9.5 runs",
+     "ep3SyncedAt": "2026-10-06T00:15:19Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196623",
+     "question": "Will the Cleveland Guardians cover -1.5 vs the Chicago White Sox in Game 3: CLE Guardians vs. CHI White Sox?",
+     "slug": "asc-mlb-cle-cws-2026-10-07-neg-1pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:20Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:20Z",
+     "updatedAt": "2026-10-06T05:39:13Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2392728",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-04T04:00:20Z",
+       "updatedAt": "2026-10-04T04:00:20Z",
+       "description": "-1.50",
+       "price": "0.3400",
+       "marketId": 1196623,
+       "long": true,
+       "teamId": 3007,
+       "team": {
+        "id": 3007,
+        "name": "Cleveland Guardians",
+        "abbreviation": "cle",
+        "alias": "Cleveland Guardians",
+        "league": "mlb",
+        "safeName": "Guardians",
+        "record": "",
+        "ordering": "away",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.3450",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392729",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-04T04:00:20Z",
+       "updatedAt": "2026-10-04T04:00:20Z",
+       "description": "+1.50",
+       "price": "0.3450",
+       "marketId": 1196623,
+       "long": false,
+       "teamId": 3009,
+       "team": {
+        "id": 3009,
+        "name": "Chicago White Sox",
+        "abbreviation": "cws",
+        "alias": "Chicago White Sox",
+        "league": "mlb",
+        "safeName": "White Sox",
+        "record": "",
+        "ordering": "home",
+        "providerId": 16
+       },
+       "quote": {
+        "value": "0.66",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3400\",\"0.3450\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Cleveland Guardians wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3450",
+      "currency": "USD"
+     },
+     "titleShort": "CLE -1.5",
+     "ep3SyncedAt": "2026-10-04T04:00:20Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196619",
+     "question": "Will the Cleveland Guardians cover -2.5 vs the Chicago White Sox in Game 3: CLE Guardians vs. CHI White Sox?",
+     "slug": "asc-mlb-cle-cws-2026-10-07-neg-2pt5",
+     "endDate": "2026-10-22T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:19Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:19Z",
+     "updatedAt": "2026-10-04T04:22:37Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T20:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2392720",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-04T04:00:19Z",
+       "updatedAt": "2026-10-04T04:00:19Z",
+       "description": "-2.50",
+       "price": "0.2500",
+       "marketId": 1196619,
+       "long": true,
+       "teamId": 3007,
+       "team": {
+        "id": 3007,
+        "name": "Cleveland Guardians",
+        "abbreviation": "cle",
+        "alias": "Cleveland Guardians",
+        "league": "mlb",
+        "safeName": "Guardians",
+        "record": "",
+        "ordering": "away",
+        "providerId": 10
+       },
+       "quote": {
+        "value": "0.2550",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392721",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-cle-cws-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-04T04:00:19Z",
+       "updatedAt": "2026-10-04T04:00:19Z",
+       "description": "+2.50",
+       "price": "0.2550",
+       "marketId": 1196619,
+       "long": false,
+       "teamId": 3009,
+       "team": {
+        "id": 3009,
+        "name": "Chicago White Sox",
+        "abbreviation": "cws",
+        "alias": "Chicago White Sox",
+        "league": "mlb",
+        "safeName": "White Sox",
+        "record": "",
+        "ordering": "home",
+        "providerId": 16
+       },
+       "quote": {
+        "value": "0.75",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2500\",\"0.2550\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Cleveland Guardians wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.2500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2550",
+      "currency": "USD"
+     },
+     "titleShort": "CLE -2.5",
+     "ep3SyncedAt": "2026-10-04T04:00:19Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 10079763,
+   "sportradarGameId": "5de141e8-048f-4336-8ad5-38ccbb8b7003",
+   "eventState": {
+    "id": 136984897,
+    "gameId": 10079763,
+    "sportradarGameId": "5de141e8-048f-4336-8ad5-38ccbb8b7003",
+    "type": "baseball",
+    "createdAt": "2026-10-06T00:20:55.109861Z",
+    "updatedAt": "2026-10-06T12:56:09.412283Z",
+    "mainSpreadLine": 1.5,
+    "mainTotalLine": 8,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": 1.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 8
+     },
+     {
+      "marketGroupId": "game-lines/spread/first-5-innings",
+      "line": 0.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/first-5-innings",
+      "line": 4.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 141439
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "4",
+     "label": "MLB",
+     "slug": "mlb",
+     "createdAt": "2025-09-25T16:13:36Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 5,
+      "name": "MLB",
+      "sportId": 5,
+      "tagId": 4,
+      "resolution": "https://www.mlb.com/",
+      "ordering": "away",
+      "activeSeriesId": 15,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "mlb",
+      "abbreviation": "MLB"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "15",
+     "label": "Baseball",
+     "slug": "baseball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 5,
+      "name": "Baseball",
+      "tagId": 15,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "baseball"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1524",
+     "label": "MLB Playoffs",
+     "slug": "mlb-playoffs",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1529",
+     "label": "American League",
+     "slug": "mlb-al",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1622",
+     "label": "Game 3",
+     "slug": "mlb-game-3",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1623",
+     "label": "Round 2",
+     "slug": "mlb-round-2",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1624",
+     "label": "AL Division Series",
+     "slug": "mlb-alds",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1625",
+     "label": "Guardians vs White Sox",
+     "slug": "mlb-2026-cle-cws-series",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 3007,
+     "name": "Cleveland Guardians",
+     "abbreviation": "cle",
+     "alias": "Cleveland Guardians",
+     "league": "mlb",
+     "safeName": "Guardians",
+     "record": "",
+     "providerId": 10
+    },
+    {
+     "id": 3009,
+     "name": "Chicago White Sox",
+     "abbreviation": "cws",
+     "alias": "Chicago White Sox",
+     "league": "mlb",
+     "safeName": "White Sox",
+     "record": "",
+     "providerId": 16
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 247,
+    "numSpreadsAndTotalsMarkets": 14
+   },
+   "marketCounts": {
+    "numMarkets": 264,
+    "numSpreadsAndTotalsMarkets": 31
+   }
+  },
+  {
+   "id": "143144",
+   "chatChannel": {
+    "id": "mlb-lad-atl-2026-10-07",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 155
+   },
+   "ticker": "mlb-lad-atl-2026-10-07",
+   "slug": "mlb-lad-atl-2026-10-07",
+   "title": "Game 4: LA Dodgers vs. ATL Braves",
+   "startDate": "2026-10-07T22:00:00Z",
+   "endDate": "2026-10-07T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-05T03:45:12Z",
+   "updatedAt": "2026-10-06T13:54:12Z",
+   "startTime": "2026-10-07T22:00:00Z",
+   "seriesSlug": "mlb-2026",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1219757",
+     "question": "Will the Los Angeles Dodgers cover 2.5 vs the Atlanta Braves in Game 4: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-07-pos-2pt5",
+     "endDate": "2026-10-22T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:45:17Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T03:45:17Z",
+     "updatedAt": "2026-10-06T10:08:39Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2438996",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-05T03:45:17Z",
+       "updatedAt": "2026-10-05T03:45:17Z",
+       "description": "+2.50",
+       "price": "0.6500",
+       "marketId": 1219757,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.8500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438997",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-05T03:45:17Z",
+       "updatedAt": "2026-10-05T03:45:17Z",
+       "description": "-2.50",
+       "price": "0.8500",
+       "marketId": 1219757,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.35",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6500\",\"0.8500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Atlanta Braves wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.6500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8500",
+      "currency": "USD"
+     },
+     "titleShort": "ATL -2.5",
+     "ep3SyncedAt": "2026-10-05T03:45:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219756",
+     "question": "Will the Los Angeles Dodgers cover 1.5 vs the Atlanta Braves in Game 4: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-07-pos-1pt5",
+     "endDate": "2026-10-22T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:45:16Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T03:45:16Z",
+     "updatedAt": "2026-10-06T10:08:39Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2438994",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-05T03:45:16Z",
+       "updatedAt": "2026-10-05T03:45:16Z",
+       "description": "+1.50",
+       "price": "0.5800",
+       "marketId": 1219756,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.8000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438995",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-05T03:45:16Z",
+       "updatedAt": "2026-10-05T03:45:16Z",
+       "description": "-1.50",
+       "price": "0.8000",
+       "marketId": 1219756,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.42",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5800\",\"0.8000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Atlanta Braves wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.5800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "titleShort": "ATL -1.5",
+     "ep3SyncedAt": "2026-10-05T03:45:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219753",
+     "question": "Who will win in the upcoming baseball event Los Angeles Dodgers vs Atlanta Braves scheduled for October 7, 2026 at 10:00 PM UTC?",
+     "slug": "aec-mlb-lad-atl-2026-10-07",
+     "endDate": "2026-10-22T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:45:12Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-05T03:45:12Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2438988",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-lad-atl-2026-10-07",
+       "createdAt": "2026-10-05T03:45:12Z",
+       "updatedAt": "2026-10-05T03:45:12Z",
+       "description": "Los Angeles Dodgers",
+       "price": "0.5600",
+       "marketId": 1219753,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.5650",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438989",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-lad-atl-2026-10-07",
+       "createdAt": "2026-10-05T03:45:12Z",
+       "updatedAt": "2026-10-05T03:45:12Z",
+       "description": "Atlanta Braves",
+       "price": "0.5650",
+       "marketId": 1219753,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.44",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5600\",\"0.5650\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers vs Atlanta Braves",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.5600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5650",
+      "currency": "USD"
+     },
+     "titleShort": "LAD vs ATL",
+     "ep3SyncedAt": "2026-10-05T03:45:12Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219755",
+     "question": "Will the Los Angeles Dodgers cover -1.5 vs the Atlanta Braves in Game 4: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-07-neg-1pt5",
+     "endDate": "2026-10-22T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:45:15Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T03:45:15Z",
+     "updatedAt": "2026-10-06T10:08:39Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2438992",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-05T03:45:15Z",
+       "updatedAt": "2026-10-05T03:45:15Z",
+       "description": "-1.50",
+       "price": "0.2900",
+       "marketId": 1219755,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.5500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438993",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-05T03:45:15Z",
+       "updatedAt": "2026-10-05T03:45:15Z",
+       "description": "+1.50",
+       "price": "0.5500",
+       "marketId": 1219755,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.71",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2900\",\"0.5500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.2900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5500",
+      "currency": "USD"
+     },
+     "titleShort": "LAD -1.5",
+     "ep3SyncedAt": "2026-10-05T03:45:15Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219754",
+     "question": "Will the Los Angeles Dodgers cover -2.5 vs the Atlanta Braves in Game 4: LA Dodgers vs. ATL Braves?",
+     "slug": "asc-mlb-lad-atl-2026-10-07-neg-2pt5",
+     "endDate": "2026-10-22T02:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T03:45:14Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T03:45:14Z",
+     "updatedAt": "2026-10-05T04:08:20Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-07T22:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2438990",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-05T03:45:14Z",
+       "updatedAt": "2026-10-05T03:45:14Z",
+       "description": "-2.50",
+       "price": "0.1900",
+       "marketId": 1219754,
+       "long": true,
+       "teamId": 3014,
+       "team": {
+        "id": 3014,
+        "name": "Los Angeles Dodgers",
+        "abbreviation": "lad",
+        "alias": "Los Angeles Dodgers",
+        "league": "mlb",
+        "safeName": "Dodgers",
+        "record": "",
+        "ordering": "away",
+        "providerId": 1
+       },
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438991",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-lad-atl-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-05T03:45:14Z",
+       "updatedAt": "2026-10-05T03:45:14Z",
+       "description": "+2.50",
+       "price": "0.4500",
+       "marketId": 1219754,
+       "long": false,
+       "teamId": 3001,
+       "team": {
+        "id": 3001,
+        "name": "Atlanta Braves",
+        "abbreviation": "atl",
+        "alias": "Atlanta Braves",
+        "league": "mlb",
+        "safeName": "Braves",
+        "record": "",
+        "ordering": "home",
+        "providerId": 26
+       },
+       "quote": {
+        "value": "0.81",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1900\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Los Angeles Dodgers wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.1900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "LAD -2.5",
+     "ep3SyncedAt": "2026-10-05T03:45:14Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 10079779,
+   "sportradarGameId": "578b0dcb-6f7b-4b56-a7e7-fcab633ea591",
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "4",
+     "label": "MLB",
+     "slug": "mlb",
+     "createdAt": "2025-09-25T16:13:36Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 5,
+      "name": "MLB",
+      "sportId": 5,
+      "tagId": 4,
+      "resolution": "https://www.mlb.com/",
+      "ordering": "away",
+      "activeSeriesId": 15,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "mlb",
+      "abbreviation": "MLB"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "15",
+     "label": "Baseball",
+     "slug": "baseball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 5,
+      "name": "Baseball",
+      "tagId": 15,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "baseball"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1524",
+     "label": "MLB Playoffs",
+     "slug": "mlb-playoffs",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1534",
+     "label": "National League",
+     "slug": "mlb-nl",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1623",
+     "label": "Round 2",
+     "slug": "mlb-round-2",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1628",
+     "label": "NL Division Series",
+     "slug": "mlb-nlds",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1639",
+     "label": "Braves vs Dodgers",
+     "slug": "mlb-2026-atl-lad-series",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1647",
+     "label": "Game 4",
+     "slug": "mlb-game-4",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 3014,
+     "name": "Los Angeles Dodgers",
+     "abbreviation": "lad",
+     "alias": "Los Angeles Dodgers",
+     "league": "mlb",
+     "safeName": "Dodgers",
+     "record": "",
+     "providerId": 1
+    },
+    {
+     "id": 3001,
+     "name": "Atlanta Braves",
+     "abbreviation": "atl",
+     "alias": "Atlanta Braves",
+     "league": "mlb",
+     "safeName": "Braves",
+     "record": "",
+     "providerId": 26
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 44,
+    "numSpreadsAndTotalsMarkets": 11
+   },
+   "marketCounts": {
+    "numMarkets": 61,
+    "numSpreadsAndTotalsMarkets": 28
+   }
+  },
+  {
+   "id": "141437",
+   "chatChannel": {
+    "id": "mlb-tb-nyy-2026-10-07",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 454
+   },
+   "ticker": "mlb-tb-nyy-2026-10-07",
+   "slug": "mlb-tb-nyy-2026-10-07",
+   "title": "Game 3: TB Rays vs. NY Yankees",
+   "startDate": "2026-10-08T00:00:00Z",
+   "endDate": "2026-10-07T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-10-04T04:00:12Z",
+   "updatedAt": "2026-10-06T13:55:27Z",
+   "startTime": "2026-10-08T00:00:00Z",
+   "seriesSlug": "mlb-2026",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1196612",
+     "question": "Will the Tampa Bay Rays cover 2.5 vs the New York Yankees in Game 3: TB Rays vs. NY Yankees?",
+     "slug": "asc-mlb-tb-nyy-2026-10-07-pos-2pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:17Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:17Z",
+     "updatedAt": "2026-10-06T01:53:49Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2392706",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-04T04:00:17Z",
+       "updatedAt": "2026-10-04T04:00:17Z",
+       "description": "+2.50",
+       "price": "0.7150",
+       "marketId": 1196612,
+       "long": true,
+       "teamId": 3026,
+       "team": {
+        "id": 3026,
+        "name": "Tampa Bay Rays",
+        "abbreviation": "tb",
+        "alias": "Tampa Bay Rays",
+        "league": "mlb",
+        "safeName": "Rays",
+        "record": "",
+        "ordering": "away",
+        "providerId": 11
+       },
+       "quote": {
+        "value": "0.7250",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392707",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-pos-2pt5",
+       "createdAt": "2026-10-04T04:00:17Z",
+       "updatedAt": "2026-10-04T04:00:17Z",
+       "description": "-2.50",
+       "price": "0.7250",
+       "marketId": 1196612,
+       "long": false,
+       "teamId": 3019,
+       "team": {
+        "id": 3019,
+        "name": "New York Yankees",
+        "abbreviation": "nyy",
+        "alias": "New York Yankees",
+        "league": "mlb",
+        "safeName": "Yankees",
+        "record": "",
+        "ordering": "home",
+        "providerId": 29
+       },
+       "quote": {
+        "value": "0.285",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.7150\",\"0.7250\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "New York Yankees wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.7150",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7250",
+      "currency": "USD"
+     },
+     "titleShort": "NYY -2.5",
+     "ep3SyncedAt": "2026-10-04T04:00:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196609",
+     "question": "Will the Tampa Bay Rays cover 1.5 vs the New York Yankees in Game 3: TB Rays vs. NY Yankees?",
+     "slug": "asc-mlb-tb-nyy-2026-10-07-pos-1pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:16Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:16Z",
+     "updatedAt": "2026-10-06T11:23:57Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2392700",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-04T04:00:16Z",
+       "updatedAt": "2026-10-04T04:00:16Z",
+       "description": "+1.50",
+       "price": "0.6050",
+       "marketId": 1196609,
+       "long": true,
+       "teamId": 3026,
+       "team": {
+        "id": 3026,
+        "name": "Tampa Bay Rays",
+        "abbreviation": "tb",
+        "alias": "Tampa Bay Rays",
+        "league": "mlb",
+        "safeName": "Rays",
+        "record": "",
+        "ordering": "away",
+        "providerId": 11
+       },
+       "quote": {
+        "value": "0.6100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392701",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-pos-1pt5",
+       "createdAt": "2026-10-04T04:00:16Z",
+       "updatedAt": "2026-10-04T04:00:16Z",
+       "description": "-1.50",
+       "price": "0.6100",
+       "marketId": 1196609,
+       "long": false,
+       "teamId": 3019,
+       "team": {
+        "id": 3019,
+        "name": "New York Yankees",
+        "abbreviation": "nyy",
+        "alias": "New York Yankees",
+        "league": "mlb",
+        "safeName": "Yankees",
+        "record": "",
+        "ordering": "home",
+        "providerId": 29
+       },
+       "quote": {
+        "value": "0.395",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6050\",\"0.6100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "New York Yankees wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.6050",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6100",
+      "currency": "USD"
+     },
+     "titleShort": "NYY -1.5",
+     "ep3SyncedAt": "2026-10-04T04:00:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1240464",
+     "question": "Will the total in Game 3: TB Rays vs. NY Yankees be more than 6.5?",
+     "slug": "tsc-mlb-tb-nyy-2026-10-07-6pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T03:15:14Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T03:15:14Z",
+     "updatedAt": "2026-10-06T09:56:21Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2480410",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-6pt5",
+       "createdAt": "2026-10-06T03:15:14Z",
+       "updatedAt": "2026-10-06T03:15:14Z",
+       "description": "Over",
+       "price": "0.5850",
+       "marketId": 1240464,
+       "long": true,
+       "quote": {
+        "value": "0.5950",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2480411",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-6pt5",
+       "createdAt": "2026-10-06T03:15:14Z",
+       "updatedAt": "2026-10-06T03:15:14Z",
+       "description": "Under",
+       "price": "0.5950",
+       "marketId": 1240464,
+       "long": false,
+       "quote": {
+        "value": "0.415",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5850\",\"0.5950\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 6.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.5850",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5950",
+      "currency": "USD"
+     },
+     "titleShort": "Over 6.5 runs",
+     "ep3SyncedAt": "2026-10-06T03:15:14Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1240465",
+     "question": "Will the total in Game 3: TB Rays vs. NY Yankees be more than 7.5?",
+     "slug": "tsc-mlb-tb-nyy-2026-10-07-7pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T03:15:15Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T03:15:16Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2480412",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-7pt5",
+       "createdAt": "2026-10-06T03:15:16Z",
+       "updatedAt": "2026-10-06T03:15:16Z",
+       "description": "Over",
+       "price": "0.4600",
+       "marketId": 1240465,
+       "long": true,
+       "quote": {
+        "value": "0.4650",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2480413",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-7pt5",
+       "createdAt": "2026-10-06T03:15:16Z",
+       "updatedAt": "2026-10-06T03:15:16Z",
+       "description": "Under",
+       "price": "0.4650",
+       "marketId": 1240465,
+       "long": false,
+       "quote": {
+        "value": "0.54",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4600\",\"0.4650\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 7.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.4600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4650",
+      "currency": "USD"
+     },
+     "titleShort": "Over 7.5 runs",
+     "ep3SyncedAt": "2026-10-06T03:15:16Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196604",
+     "question": "Who will win in the upcoming baseball event Tampa Bay Rays vs New York Yankees scheduled for October 8, 2026 at 12:00 AM UTC?",
+     "slug": "aec-mlb-tb-nyy-2026-10-07",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:12Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:12Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2392690",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-tb-nyy-2026-10-07",
+       "createdAt": "2026-10-04T04:00:12Z",
+       "updatedAt": "2026-10-04T04:00:12Z",
+       "description": "Tampa Bay Rays",
+       "price": "0.4050",
+       "marketId": 1196604,
+       "long": true,
+       "teamId": 3026,
+       "team": {
+        "id": 3026,
+        "name": "Tampa Bay Rays",
+        "abbreviation": "tb",
+        "alias": "Tampa Bay Rays",
+        "league": "mlb",
+        "safeName": "Rays",
+        "record": "",
+        "ordering": "away",
+        "providerId": 11
+       },
+       "quote": {
+        "value": "0.4100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392691",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-mlb-tb-nyy-2026-10-07",
+       "createdAt": "2026-10-04T04:00:12Z",
+       "updatedAt": "2026-10-04T04:00:12Z",
+       "description": "New York Yankees",
+       "price": "0.4100",
+       "marketId": 1196604,
+       "long": false,
+       "teamId": 3019,
+       "team": {
+        "id": 3019,
+        "name": "New York Yankees",
+        "abbreviation": "nyy",
+        "alias": "New York Yankees",
+        "league": "mlb",
+        "safeName": "Yankees",
+        "record": "",
+        "ordering": "home",
+        "providerId": 29
+       },
+       "quote": {
+        "value": "0.595",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4050\",\"0.4100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Rays vs New York Yankees",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4050",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "titleShort": "TB vs NYY",
+     "ep3SyncedAt": "2026-10-04T04:00:12Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1240466",
+     "question": "Will the total in Game 3: TB Rays vs. NY Yankees be more than 8.5?",
+     "slug": "tsc-mlb-tb-nyy-2026-10-07-8pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-06T03:15:17Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-06T03:15:17Z",
+     "updatedAt": "2026-10-06T13:25:25Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_total",
+     "line": 8.5,
+     "marketSides": [
+      {
+       "id": "2480414",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-8pt5",
+       "createdAt": "2026-10-06T03:15:17Z",
+       "updatedAt": "2026-10-06T03:15:17Z",
+       "description": "Over",
+       "price": "0.3800",
+       "marketId": 1240466,
+       "long": true,
+       "quote": {
+        "value": "0.3900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2480415",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-mlb-tb-nyy-2026-10-07-8pt5",
+       "createdAt": "2026-10-06T03:15:17Z",
+       "updatedAt": "2026-10-06T03:15:17Z",
+       "description": "Under",
+       "price": "0.3900",
+       "marketId": 1240466,
+       "long": false,
+       "quote": {
+        "value": "0.62",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3800\",\"0.3900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 8.5 total runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.3800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 8.5 runs",
+     "ep3SyncedAt": "2026-10-06T03:15:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196607",
+     "question": "Will the Tampa Bay Rays cover -1.5 vs the New York Yankees in Game 3: TB Rays vs. NY Yankees?",
+     "slug": "asc-mlb-tb-nyy-2026-10-07-neg-1pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:15Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:15Z",
+     "updatedAt": "2026-10-06T05:09:00Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -1.5,
+     "marketSides": [
+      {
+       "id": "2392696",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-04T04:00:15Z",
+       "updatedAt": "2026-10-04T04:00:15Z",
+       "description": "-1.50",
+       "price": "0.2800",
+       "marketId": 1196607,
+       "long": true,
+       "teamId": 3026,
+       "team": {
+        "id": 3026,
+        "name": "Tampa Bay Rays",
+        "abbreviation": "tb",
+        "alias": "Tampa Bay Rays",
+        "league": "mlb",
+        "safeName": "Rays",
+        "record": "",
+        "ordering": "away",
+        "providerId": 11
+       },
+       "quote": {
+        "value": "0.2850",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392697",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-neg-1pt5",
+       "createdAt": "2026-10-04T04:00:15Z",
+       "updatedAt": "2026-10-04T04:00:15Z",
+       "description": "+1.50",
+       "price": "0.2850",
+       "marketId": 1196607,
+       "long": false,
+       "teamId": 3019,
+       "team": {
+        "id": 3019,
+        "name": "New York Yankees",
+        "abbreviation": "nyy",
+        "alias": "New York Yankees",
+        "league": "mlb",
+        "safeName": "Yankees",
+        "record": "",
+        "ordering": "home",
+        "providerId": 29
+       },
+       "quote": {
+        "value": "0.72",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.2800\",\"0.2850\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Rays wins by over 1.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.2800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.2850",
+      "currency": "USD"
+     },
+     "titleShort": "TB -1.5",
+     "ep3SyncedAt": "2026-10-04T04:00:15Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1196605",
+     "question": "Will the Tampa Bay Rays cover -2.5 vs the New York Yankees in Game 3: TB Rays vs. NY Yankees?",
+     "slug": "asc-mlb-tb-nyy-2026-10-07-neg-2pt5",
+     "endDate": "2026-10-22T04:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-04T04:00:13Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-04T04:00:13Z",
+     "updatedAt": "2026-10-04T04:08:09Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-08T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "baseball_team_full_game_spread",
+     "line": -2.5,
+     "marketSides": [
+      {
+       "id": "2392692",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-04T04:00:13Z",
+       "updatedAt": "2026-10-04T04:00:13Z",
+       "description": "-2.50",
+       "price": "0.1900",
+       "marketId": 1196605,
+       "long": true,
+       "teamId": 3026,
+       "team": {
+        "id": 3026,
+        "name": "Tampa Bay Rays",
+        "abbreviation": "tb",
+        "alias": "Tampa Bay Rays",
+        "league": "mlb",
+        "safeName": "Rays",
+        "record": "",
+        "ordering": "away",
+        "providerId": 11
+       },
+       "quote": {
+        "value": "0.1950",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2392693",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-mlb-tb-nyy-2026-10-07-neg-2pt5",
+       "createdAt": "2026-10-04T04:00:13Z",
+       "updatedAt": "2026-10-04T04:00:13Z",
+       "description": "+2.50",
+       "price": "0.1950",
+       "marketId": 1196605,
+       "long": false,
+       "teamId": 3019,
+       "team": {
+        "id": 3019,
+        "name": "New York Yankees",
+        "abbreviation": "nyy",
+        "alias": "New York Yankees",
+        "league": "mlb",
+        "safeName": "Yankees",
+        "record": "",
+        "ordering": "home",
+        "providerId": 29
+       },
+       "quote": {
+        "value": "0.81",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.1900\",\"0.1950\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Rays wins by over 2.5 runs",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "runs",
+     "bestBidQuote": {
+      "value": "0.1900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1950",
+      "currency": "USD"
+     },
+     "titleShort": "TB -2.5",
+     "ep3SyncedAt": "2026-10-04T04:00:13Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 10079768,
+   "sportradarGameId": "0b7bf883-138b-4209-8396-67d5a0c23039",
+   "eventState": {
+    "id": 136994410,
+    "gameId": 10079768,
+    "sportradarGameId": "0b7bf883-138b-4209-8396-67d5a0c23039",
+    "type": "baseball",
+    "createdAt": "2026-10-06T03:25:09.205549Z",
+    "updatedAt": "2026-10-06T10:43:52.427658Z",
+    "mainSpreadLine": 1.5,
+    "mainTotalLine": 7,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 7
+     },
+     {
+      "marketGroupId": "game-lines/spread/first-5-innings",
+      "line": 0.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/first-5-innings",
+      "line": 3.5
+     },
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": 1.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 141437
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "4",
+     "label": "MLB",
+     "slug": "mlb",
+     "createdAt": "2025-09-25T16:13:36Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 5,
+      "name": "MLB",
+      "sportId": 5,
+      "tagId": 4,
+      "resolution": "https://www.mlb.com/",
+      "ordering": "away",
+      "activeSeriesId": 15,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "mlb",
+      "abbreviation": "MLB"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "15",
+     "label": "Baseball",
+     "slug": "baseball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 5,
+      "name": "Baseball",
+      "tagId": 15,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "baseball"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1524",
+     "label": "MLB Playoffs",
+     "slug": "mlb-playoffs",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1529",
+     "label": "American League",
+     "slug": "mlb-al",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1622",
+     "label": "Game 3",
+     "slug": "mlb-game-3",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1623",
+     "label": "Round 2",
+     "slug": "mlb-round-2",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1624",
+     "label": "AL Division Series",
+     "slug": "mlb-alds",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1627",
+     "label": "Yankees vs Rays",
+     "slug": "mlb-2026-nyy-tb-series",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 3026,
+     "name": "Tampa Bay Rays",
+     "abbreviation": "tb",
+     "alias": "Tampa Bay Rays",
+     "league": "mlb",
+     "safeName": "Rays",
+     "record": "",
+     "providerId": 11
+    },
+    {
+     "id": 3019,
+     "name": "New York Yankees",
+     "abbreviation": "nyy",
+     "alias": "New York Yankees",
+     "league": "mlb",
+     "safeName": "Yankees",
+     "record": "",
+     "providerId": 29
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 287,
+    "numSpreadsAndTotalsMarkets": 14
+   },
+   "marketCounts": {
+    "numMarkets": 304,
+    "numSpreadsAndTotalsMarkets": 31
+   }
+  }
+ ]
+}

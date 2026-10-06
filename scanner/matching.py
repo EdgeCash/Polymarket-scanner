@@ -14,6 +14,7 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 from datetime import timedelta
+from typing import Any
 
 from scanner.models import GameState, MarketTeam, PolymarketGame, Side, Team
 
@@ -70,13 +71,15 @@ def _abbr(text: str | None) -> str:
     return re.sub(r"[^A-Z0-9]", "", (text or "").upper())
 
 
-def team_matches(market_team: MarketTeam, team: Team) -> bool:
+def team_matches(market_team: MarketTeam, team: Team, nicknames: bool = False) -> bool:
     """Whether a Polymarket team and an ESPN team are the same team.
 
     Matches on equal abbreviations, or on the Polymarket name equalling ESPN's
     location ("Louisiana") or display name ("Washington Commanders"), or on
     Polymarket's name plus nickname equalling ESPN's display name. Never on a
-    prefix, so "Miami" cannot pass for "Miami (OH)".
+    prefix, so "Miami" cannot pass for "Miami (OH)". With ``nicknames`` the
+    Polymarket name may also equal ESPN's nickname ("Predators"), which the
+    NBA and NHL listings use as the whole name; football never needs it.
     """
     pm_abbr = _abbr(market_team.abbreviation)
     if pm_abbr and pm_abbr == _abbr(team.abbreviation):
@@ -85,6 +88,8 @@ def team_matches(market_team: MarketTeam, team: Team) -> bool:
     if not pm_name:
         return False
     espn_names = {normalize(team.name), normalize(team.location)} - {""}
+    if nicknames and team.nickname:
+        espn_names.add(normalize(team.nickname))
     if pm_name in espn_names:
         return True
     pm_full = normalize(f"{market_team.name} {market_team.nickname}".strip())
@@ -94,7 +99,7 @@ def team_matches(market_team: MarketTeam, team: Team) -> bool:
 @dataclass(frozen=True, slots=True)
 class Match:
     polymarket: PolymarketGame
-    espn: GameState
+    espn: Any  # a GameState, or a PregameEvent for the pre-game scan
     home_team: MarketTeam  # the Polymarket team that is ESPN's home team
     away_team: MarketTeam
 
@@ -110,35 +115,45 @@ class MatchResult:
     ambiguous: list[str] = field(default_factory=list)
 
 
-def _orientation(game: PolymarketGame, state: GameState) -> tuple[MarketTeam, MarketTeam] | None:
+def _orientation(
+    game: PolymarketGame, state: Any, nicknames: bool = False
+) -> tuple[MarketTeam, MarketTeam] | None:
     """(home, away) Polymarket teams if both teams match this ESPN game, else None."""
     if len(game.teams) != 2:
         return None
     first, second = game.teams
-    if team_matches(first, state.home) and team_matches(second, state.away):
-        if team_matches(first, state.away) or team_matches(second, state.home):
+    if team_matches(first, state.home, nicknames) and team_matches(second, state.away, nicknames):
+        if team_matches(first, state.away, nicknames) or team_matches(
+            second, state.home, nicknames
+        ):
             return None  # both orderings fit: cannot tell who is home
         return first, second
-    if team_matches(second, state.home) and team_matches(first, state.away):
+    if team_matches(second, state.home, nicknames) and team_matches(first, state.away, nicknames):
         return second, first
     return None
 
 
-def _kickoff_ok(game: PolymarketGame, state: GameState) -> bool:
+def _kickoff_ok(game: PolymarketGame, state: Any) -> bool:
     if game.start_time is None or state.kickoff is None:
         return False
     return abs(game.start_time - state.kickoff) <= MAX_KICKOFF_GAP
 
 
-def match_games(games: list[PolymarketGame], states: list[GameState]) -> MatchResult:
-    """Pair Polymarket games with ESPN games for one league."""
+def match_games(
+    games: list[PolymarketGame], states: list[GameState] | list[Any], nicknames: bool = False
+) -> MatchResult:
+    """Pair Polymarket games with ESPN games for one league.
+
+    ``states`` are GameState objects, or anything with ``league``, ``feed_id``,
+    ``home``, ``away`` and ``kickoff`` (the pre-game scan passes its own events).
+    """
     result = MatchResult()
-    candidates: dict[str, list[tuple[GameState, MarketTeam, MarketTeam]]] = {}
+    candidates: dict[str, list[tuple[Any, MarketTeam, MarketTeam]]] = {}
     for game in games:
         for state in states:
             if state.league != game.league or not _kickoff_ok(game, state):
                 continue
-            orientation = _orientation(game, state)
+            orientation = _orientation(game, state, nicknames)
             if orientation is not None:
                 candidates.setdefault(game.event_slug, []).append((state, *orientation))
 

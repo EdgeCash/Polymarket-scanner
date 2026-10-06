@@ -1,0 +1,1774 @@
+{
+ "events": [
+  {
+   "id": "135197",
+   "chatChannel": {
+    "id": "nba-bkn-cha-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 225
+   },
+   "ticker": "nba-bkn-cha-2026-10-06",
+   "slug": "nba-bkn-cha-2026-10-06",
+   "title": "BKN Nets vs. CHA Hornets",
+   "startDate": "2026-10-06T23:00:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-09-30T17:23:44Z",
+   "updatedAt": "2026-10-06T13:55:27Z",
+   "startTime": "2026-10-06T23:00:00Z",
+   "seriesSlug": "nba-2025",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1224410",
+     "question": "Will the total in BKN Nets vs. CHA Hornets be more than 209.5?",
+     "slug": "tsc-nba-bkn-cha-2026-10-06-209pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:52Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:52Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 209.5,
+     "marketSides": [
+      {
+       "id": "2448302",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-209pt5",
+       "createdAt": "2026-10-05T15:59:52Z",
+       "updatedAt": "2026-10-05T15:59:52Z",
+       "description": "Over",
+       "price": "0.5500",
+       "marketId": 1224410,
+       "long": true,
+       "quote": {
+        "value": "0.5800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448303",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-209pt5",
+       "createdAt": "2026-10-05T15:59:52Z",
+       "updatedAt": "2026-10-05T15:59:52Z",
+       "description": "Under",
+       "price": "0.5800",
+       "marketId": 1224410,
+       "long": false,
+       "quote": {
+        "value": "0.45",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5500\",\"0.5800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 209.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.5500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 209.5 points",
+     "ep3SyncedAt": "2026-10-05T15:59:52Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224408",
+     "question": "Will the BKN Nets cover 7.5 vs the CHA Hornets in BKN Nets vs. CHA Hornets?",
+     "slug": "asc-nba-bkn-cha-2026-10-06-pos-7pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:50Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:50Z",
+     "updatedAt": "2026-10-06T13:39:03Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2448298",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-7pt5",
+       "createdAt": "2026-10-05T15:59:50Z",
+       "updatedAt": "2026-10-05T15:59:50Z",
+       "description": "+7.50",
+       "price": "0.5200",
+       "marketId": 1224408,
+       "long": true,
+       "teamId": 22,
+       "team": {
+        "id": 22,
+        "name": "Nets",
+        "abbreviation": "bkn",
+        "alias": "Nets",
+        "league": "nba",
+        "safeName": "Brooklyn",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 8
+       },
+       "quote": {
+        "value": "0.5300",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448299",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-7pt5",
+       "createdAt": "2026-10-05T15:59:50Z",
+       "updatedAt": "2026-10-05T15:59:50Z",
+       "description": "-7.50",
+       "price": "0.5300",
+       "marketId": 1224408,
+       "long": false,
+       "teamId": 16,
+       "team": {
+        "id": 16,
+        "name": "Hornets",
+        "abbreviation": "cha",
+        "alias": "Hornets",
+        "league": "nba",
+        "safeName": "Charlotte",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 2
+       },
+       "quote": {
+        "value": "0.48",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5200\",\"0.5300\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Hornets wins by over 7.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.5200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5300",
+      "currency": "USD"
+     },
+     "titleShort": "CHA -7.5",
+     "ep3SyncedAt": "2026-10-05T15:59:50Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224409",
+     "question": "Will the total in BKN Nets vs. CHA Hornets be more than 212.5?",
+     "slug": "tsc-nba-bkn-cha-2026-10-06-212pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:51Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:51Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 212.5,
+     "marketSides": [
+      {
+       "id": "2448300",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-212pt5",
+       "createdAt": "2026-10-05T15:59:51Z",
+       "updatedAt": "2026-10-05T15:59:51Z",
+       "description": "Over",
+       "price": "0.4800",
+       "marketId": 1224409,
+       "long": true,
+       "quote": {
+        "value": "0.4900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448301",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-212pt5",
+       "createdAt": "2026-10-05T15:59:51Z",
+       "updatedAt": "2026-10-05T15:59:51Z",
+       "description": "Under",
+       "price": "0.4900",
+       "marketId": 1224409,
+       "long": false,
+       "quote": {
+        "value": "0.52",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4800\",\"0.4900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 212.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 212.5 points",
+     "ep3SyncedAt": "2026-10-05T15:59:51Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224406",
+     "question": "Will the BKN Nets cover 4.5 vs the CHA Hornets in BKN Nets vs. CHA Hornets?",
+     "slug": "asc-nba-bkn-cha-2026-10-06-pos-4pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:48Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:48Z",
+     "updatedAt": "2026-10-06T05:54:11Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2448294",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-4pt5",
+       "createdAt": "2026-10-05T15:59:48Z",
+       "updatedAt": "2026-10-05T15:59:48Z",
+       "description": "+4.50",
+       "price": "0.4100",
+       "marketId": 1224406,
+       "long": true,
+       "teamId": 22,
+       "team": {
+        "id": 22,
+        "name": "Nets",
+        "abbreviation": "bkn",
+        "alias": "Nets",
+        "league": "nba",
+        "safeName": "Brooklyn",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 8
+       },
+       "quote": {
+        "value": "0.4700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448295",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-4pt5",
+       "createdAt": "2026-10-05T15:59:48Z",
+       "updatedAt": "2026-10-05T15:59:48Z",
+       "description": "-4.50",
+       "price": "0.4700",
+       "marketId": 1224406,
+       "long": false,
+       "teamId": 16,
+       "team": {
+        "id": 16,
+        "name": "Hornets",
+        "abbreviation": "cha",
+        "alias": "Hornets",
+        "league": "nba",
+        "safeName": "Charlotte",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 2
+       },
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4100\",\"0.4700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Hornets wins by over 4.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4700",
+      "currency": "USD"
+     },
+     "titleShort": "CHA -4.5",
+     "ep3SyncedAt": "2026-10-05T15:59:48Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224411",
+     "question": "Will the total in BKN Nets vs. CHA Hornets be more than 215.5?",
+     "slug": "tsc-nba-bkn-cha-2026-10-06-215pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:53Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:54Z",
+     "updatedAt": "2026-10-06T12:10:09Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 215.5,
+     "marketSides": [
+      {
+       "id": "2448304",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-215pt5",
+       "createdAt": "2026-10-05T15:59:54Z",
+       "updatedAt": "2026-10-05T15:59:54Z",
+       "description": "Over",
+       "price": "0.4300",
+       "marketId": 1224411,
+       "long": true,
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448305",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-bkn-cha-2026-10-06-215pt5",
+       "createdAt": "2026-10-05T15:59:54Z",
+       "updatedAt": "2026-10-05T15:59:54Z",
+       "description": "Under",
+       "price": "0.4500",
+       "marketId": 1224411,
+       "long": false,
+       "quote": {
+        "value": "0.57",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4300\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 215.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "Over 215.5 points",
+     "ep3SyncedAt": "2026-10-05T15:59:54Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224407",
+     "question": "Will the BKN Nets cover 1.5 vs the CHA Hornets in BKN Nets vs. CHA Hornets?",
+     "slug": "asc-nba-bkn-cha-2026-10-06-pos-1pt5",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:49Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:49Z",
+     "updatedAt": "2026-10-05T16:00:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2448296",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-05T15:59:49Z",
+       "updatedAt": "2026-10-05T15:59:49Z",
+       "description": "+1.50",
+       "price": "0.3200",
+       "marketId": 1224407,
+       "long": true,
+       "teamId": 22,
+       "team": {
+        "id": 22,
+        "name": "Nets",
+        "abbreviation": "bkn",
+        "alias": "Nets",
+        "league": "nba",
+        "safeName": "Brooklyn",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 8
+       },
+       "quote": {
+        "value": "0.4000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448297",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-bkn-cha-2026-10-06-pos-1pt5",
+       "createdAt": "2026-10-05T15:59:49Z",
+       "updatedAt": "2026-10-05T15:59:49Z",
+       "description": "-1.50",
+       "price": "0.4000",
+       "marketId": 1224407,
+       "long": false,
+       "teamId": 16,
+       "team": {
+        "id": 16,
+        "name": "Hornets",
+        "abbreviation": "cha",
+        "alias": "Hornets",
+        "league": "nba",
+        "safeName": "Charlotte",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 2
+       },
+       "quote": {
+        "value": "0.68",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3200\",\"0.4000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Hornets wins by over 1.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.3200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4000",
+      "currency": "USD"
+     },
+     "titleShort": "CHA -1.5",
+     "ep3SyncedAt": "2026-10-05T15:59:49Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1146250",
+     "question": "Who will win in the upcoming basketball event BKN Nets vs CHA Hornets scheduled for October 6, 2026 at 11:00 PM UTC?",
+     "slug": "aec-nba-bkn-cha-2026-10-06",
+     "endDate": "2026-10-20T23:00:00Z",
+     "category": "sports",
+     "startDate": "2026-09-30T17:23:44Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-09-30T17:23:44Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-06T23:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2291982",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nba-bkn-cha-2026-10-06",
+       "createdAt": "2026-09-30T17:23:44Z",
+       "updatedAt": "2026-09-30T17:23:44Z",
+       "description": "Nets",
+       "price": "0.3400",
+       "marketId": 1146250,
+       "long": true,
+       "teamId": 22,
+       "team": {
+        "id": 22,
+        "name": "Nets",
+        "abbreviation": "bkn",
+        "alias": "Nets",
+        "league": "nba",
+        "safeName": "Brooklyn",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 8
+       },
+       "quote": {
+        "value": "0.3500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2291983",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nba-bkn-cha-2026-10-06",
+       "createdAt": "2026-09-30T17:23:44Z",
+       "updatedAt": "2026-09-30T17:23:44Z",
+       "description": "Hornets",
+       "price": "0.3500",
+       "marketId": 1146250,
+       "long": false,
+       "teamId": 16,
+       "team": {
+        "id": 16,
+        "name": "Hornets",
+        "abbreviation": "cha",
+        "alias": "Hornets",
+        "league": "nba",
+        "safeName": "Charlotte",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 2
+       },
+       "quote": {
+        "value": "0.66",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3400\",\"0.3500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Nets vs Hornets",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.3400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.3500",
+      "currency": "USD"
+     },
+     "titleShort": "BKN vs CHA",
+     "ep3SyncedAt": "2026-10-01T11:43:58Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 20023855,
+   "sportradarGameId": "a560afaf-af83-4d5f-ad76-7c1cb5bc4823",
+   "eventState": {
+    "id": 136906114,
+    "gameId": 20023855,
+    "sportradarGameId": "a560afaf-af83-4d5f-ad76-7c1cb5bc4823",
+    "type": "basketball",
+    "createdAt": "2026-10-05T10:16:18.773665Z",
+    "updatedAt": "2026-10-06T12:15:06.472586Z",
+    "mainSpreadLine": 4.5,
+    "mainTotalLine": 212.5,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": 4.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 212.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 135197
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "5",
+     "label": "NBA",
+     "slug": "nba",
+     "createdAt": "2025-10-21T18:23:05Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 2,
+      "name": "NBA",
+      "sportId": 1,
+      "tagId": 5,
+      "resolution": "https://www.nba.com/",
+      "ordering": "away",
+      "activeSeriesId": 4,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "nba",
+      "abbreviation": "NBA"
+     },
+     "parentId": 11,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "11",
+     "label": "Basketball",
+     "slug": "basketball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 1,
+      "name": "Basketball",
+      "tagId": 11,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "basketball"
+     },
+     "subtags": [
+      {
+       "id": "94",
+       "label": "WNBA",
+       "slug": "wnba",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 28,
+        "name": "WNBA",
+        "sportId": 1,
+        "tagId": 94,
+        "ordering": "away",
+        "activeSeriesId": 49,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-05-06T12:55:52Z",
+        "slug": "wnba"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "5",
+       "label": "NBA",
+       "slug": "nba",
+       "createdAt": "2025-10-21T18:23:05Z",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 2,
+        "name": "NBA",
+        "sportId": 1,
+        "tagId": 5,
+        "resolution": "https://www.nba.com/",
+        "ordering": "away",
+        "activeSeriesId": 4,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-05T18:30:42Z",
+        "slug": "nba",
+        "abbreviation": "NBA"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1347",
+       "label": "Germany BBL",
+       "slug": "bbl",
+       "updatedAt": "2026-10-05T20:25:24Z",
+       "tradable": false,
+       "league": {
+        "id": 252,
+        "name": "Basketball Bundesliga",
+        "sportId": 1,
+        "tagId": 1347,
+        "ordering": "home",
+        "activeSeriesId": 331,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-16T18:05:39Z",
+        "slug": "bbl"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1341",
+       "label": "NBL",
+       "slug": "nbl",
+       "updatedAt": "2026-10-06T12:24:45Z",
+       "tradable": false,
+       "league": {
+        "id": 250,
+        "name": "Australia NBL",
+        "sportId": 1,
+        "tagId": 1341,
+        "ordering": "home",
+        "activeSeriesId": 329,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-16T06:30:14Z",
+        "slug": "nbl"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1359",
+       "label": "EuroLeague",
+       "slug": "eurolg",
+       "updatedAt": "2026-10-06T11:55:27Z",
+       "tradable": false,
+       "league": {
+        "id": 255,
+        "name": "EuroLeague",
+        "sportId": 1,
+        "tagId": 1359,
+        "ordering": "home",
+        "activeSeriesId": 340,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-17T19:46:10Z",
+        "slug": "eurolg"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1353",
+       "label": "LNBP",
+       "slug": "lnbp",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 253,
+        "name": "LNBP",
+        "sportId": 1,
+        "tagId": 1353,
+        "ordering": "home",
+        "activeSeriesId": 336,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-17T15:25:58Z",
+        "slug": "lnbp"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "8",
+       "label": "CBB",
+       "slug": "cbb",
+       "createdAt": "2025-12-02T21:55:00Z",
+       "updatedAt": "2026-10-06T13:55:43Z",
+       "tradable": false,
+       "league": {
+        "id": 4,
+        "name": "CBB",
+        "sportId": 1,
+        "tagId": 8,
+        "resolution": "https://www.ncaa.com/",
+        "ordering": "away",
+        "activeSeriesId": 7,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-05T18:30:42Z",
+        "slug": "cbb",
+        "abbreviation": "CBB"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "28",
+       "label": "WCBB",
+       "slug": "wcbb",
+       "league": {
+        "id": 17,
+        "name": "WCBB",
+        "sportId": 1,
+        "tagId": 28,
+        "ordering": "away",
+        "activeSeriesId": 21,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-27T14:52:26Z",
+        "slug": "wcbb"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      },
+      {
+       "id": "1294",
+       "label": "FIBA Women's World Cup",
+       "slug": "fibawwc",
+       "updatedAt": "2026-09-13T21:04:36Z",
+       "league": {
+        "id": 233,
+        "name": "FIBA Women's World Cup",
+        "sportId": 1,
+        "tagId": 1294,
+        "ordering": "home",
+        "activeSeriesId": 307,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-09-11T22:28:26Z",
+        "slug": "fibawwc"
+       },
+       "parentId": 11,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      }
+     ],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1597",
+     "label": "NBA Preseason",
+     "slug": "nba-preseason",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 22,
+     "name": "Nets",
+     "abbreviation": "bkn",
+     "alias": "Nets",
+     "league": "nba",
+     "safeName": "Brooklyn",
+     "record": "0-0",
+     "providerId": 8
+    },
+    {
+     "id": 16,
+     "name": "Hornets",
+     "abbreviation": "cha",
+     "alias": "Hornets",
+     "league": "nba",
+     "safeName": "Charlotte",
+     "record": "0-0",
+     "providerId": 2
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 7,
+    "numSpreadsAndTotalsMarkets": 6
+   },
+   "marketCounts": {
+    "numMarkets": 7,
+    "numSpreadsAndTotalsMarkets": 6
+   }
+  },
+  {
+   "id": "135198",
+   "chatChannel": {
+    "id": "nba-no-okc-2026-10-06",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 193
+   },
+   "ticker": "nba-no-okc-2026-10-06",
+   "slug": "nba-no-okc-2026-10-06",
+   "title": "NO Pelicans vs. OKC Thunder",
+   "startDate": "2026-10-07T00:00:00Z",
+   "endDate": "2026-10-06T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-09-30T17:23:45Z",
+   "updatedAt": "2026-10-06T13:55:27Z",
+   "startTime": "2026-10-07T00:00:00Z",
+   "seriesSlug": "nba-2025",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1224414",
+     "question": "Will the NO Pelicans cover 10.5 vs the OKC Thunder in NO Pelicans vs. OKC Thunder?",
+     "slug": "asc-nba-no-okc-2026-10-06-pos-10pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:59Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:59Z",
+     "updatedAt": "2026-10-05T16:04:56Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 10.5,
+     "marketSides": [
+      {
+       "id": "2448310",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-10pt5",
+       "createdAt": "2026-10-05T15:59:59Z",
+       "updatedAt": "2026-10-05T15:59:59Z",
+       "description": "+10.50",
+       "price": "0.6900",
+       "marketId": 1224414,
+       "long": true,
+       "teamId": 42,
+       "team": {
+        "id": 42,
+        "name": "Pelicans",
+        "abbreviation": "no",
+        "alias": "Pelicans",
+        "league": "nba",
+        "safeName": "New Orleans",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 23
+       },
+       "quote": {
+        "value": "0.7500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448311",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-10pt5",
+       "createdAt": "2026-10-05T15:59:59Z",
+       "updatedAt": "2026-10-05T15:59:59Z",
+       "description": "-10.50",
+       "price": "0.7500",
+       "marketId": 1224414,
+       "long": false,
+       "teamId": 27,
+       "team": {
+        "id": 27,
+        "name": "Thunder",
+        "abbreviation": "okc",
+        "alias": "Thunder",
+        "league": "nba",
+        "safeName": "Oklahoma City",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 18
+       },
+       "quote": {
+        "value": "0.31",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6900\",\"0.7500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Thunder wins by over 10.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.6900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7500",
+      "currency": "USD"
+     },
+     "titleShort": "OKC -10.5",
+     "ep3SyncedAt": "2026-10-05T15:59:59Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224412",
+     "question": "Will the NO Pelicans cover 7.5 vs the OKC Thunder in NO Pelicans vs. OKC Thunder?",
+     "slug": "asc-nba-no-okc-2026-10-06-pos-7pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:56Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:57Z",
+     "updatedAt": "2026-10-06T13:24:14Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2448306",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-7pt5",
+       "createdAt": "2026-10-05T15:59:57Z",
+       "updatedAt": "2026-10-05T15:59:57Z",
+       "description": "+7.50",
+       "price": "0.6200",
+       "marketId": 1224412,
+       "long": true,
+       "teamId": 42,
+       "team": {
+        "id": 42,
+        "name": "Pelicans",
+        "abbreviation": "no",
+        "alias": "Pelicans",
+        "league": "nba",
+        "safeName": "New Orleans",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 23
+       },
+       "quote": {
+        "value": "0.6500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448307",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-7pt5",
+       "createdAt": "2026-10-05T15:59:57Z",
+       "updatedAt": "2026-10-05T15:59:57Z",
+       "description": "-7.50",
+       "price": "0.6500",
+       "marketId": 1224412,
+       "long": false,
+       "teamId": 27,
+       "team": {
+        "id": 27,
+        "name": "Thunder",
+        "abbreviation": "okc",
+        "alias": "Thunder",
+        "league": "nba",
+        "safeName": "Oklahoma City",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 18
+       },
+       "quote": {
+        "value": "0.38",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.6200\",\"0.6500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Thunder wins by over 7.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.6200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.6500",
+      "currency": "USD"
+     },
+     "titleShort": "OKC -7.5",
+     "ep3SyncedAt": "2026-10-05T15:59:57Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224413",
+     "question": "Will the NO Pelicans cover 4.5 vs the OKC Thunder in NO Pelicans vs. OKC Thunder?",
+     "slug": "asc-nba-no-okc-2026-10-06-pos-4pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T15:59:58Z",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-10-05T15:59:58Z",
+     "updatedAt": "2026-10-06T13:54:22Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_spread",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2448308",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-4pt5",
+       "createdAt": "2026-10-05T15:59:58Z",
+       "updatedAt": "2026-10-05T15:59:58Z",
+       "description": "+4.50",
+       "price": "0.5400",
+       "marketId": 1224413,
+       "long": true,
+       "teamId": 42,
+       "team": {
+        "id": 42,
+        "name": "Pelicans",
+        "abbreviation": "no",
+        "alias": "Pelicans",
+        "league": "nba",
+        "safeName": "New Orleans",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 23
+       },
+       "quote": {
+        "value": "0.5500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448309",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nba-no-okc-2026-10-06-pos-4pt5",
+       "createdAt": "2026-10-05T15:59:58Z",
+       "updatedAt": "2026-10-05T15:59:58Z",
+       "description": "-4.50",
+       "price": "0.5500",
+       "marketId": 1224413,
+       "long": false,
+       "teamId": 27,
+       "team": {
+        "id": 27,
+        "name": "Thunder",
+        "abbreviation": "okc",
+        "alias": "Thunder",
+        "league": "nba",
+        "safeName": "Oklahoma City",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 18
+       },
+       "quote": {
+        "value": "0.46",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5400\",\"0.5500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Thunder wins by over 4.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.5400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5500",
+      "currency": "USD"
+     },
+     "titleShort": "OKC -4.5",
+     "ep3SyncedAt": "2026-10-05T15:59:58Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224416",
+     "question": "Will the total in NO Pelicans vs. OKC Thunder be more than 222.5?",
+     "slug": "tsc-nba-no-okc-2026-10-06-222pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T16:00:02Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T16:00:02Z",
+     "updatedAt": "2026-10-06T13:55:27Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 222.5,
+     "marketSides": [
+      {
+       "id": "2448314",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-222pt5",
+       "createdAt": "2026-10-05T16:00:02Z",
+       "updatedAt": "2026-10-05T16:00:02Z",
+       "description": "Over",
+       "price": "0.5000",
+       "marketId": 1224416,
+       "long": true,
+       "quote": {
+        "value": "0.5100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448315",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-222pt5",
+       "createdAt": "2026-10-05T16:00:02Z",
+       "updatedAt": "2026-10-05T16:00:02Z",
+       "description": "Under",
+       "price": "0.5100",
+       "marketId": 1224416,
+       "long": false,
+       "quote": {
+        "value": "0.5",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.5000\",\"0.5100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 222.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.5000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5100",
+      "currency": "USD"
+     },
+     "titleShort": "Over 222.5 points",
+     "ep3SyncedAt": "2026-10-05T16:00:02Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224415",
+     "question": "Will the total in NO Pelicans vs. OKC Thunder be more than 225.5?",
+     "slug": "tsc-nba-no-okc-2026-10-06-225pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T16:00:01Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T16:00:01Z",
+     "updatedAt": "2026-10-06T12:24:37Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 225.5,
+     "marketSides": [
+      {
+       "id": "2448312",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-225pt5",
+       "createdAt": "2026-10-05T16:00:01Z",
+       "updatedAt": "2026-10-05T16:00:01Z",
+       "description": "Over",
+       "price": "0.4300",
+       "marketId": 1224415,
+       "long": true,
+       "quote": {
+        "value": "0.4600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448313",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-225pt5",
+       "createdAt": "2026-10-05T16:00:01Z",
+       "updatedAt": "2026-10-05T16:00:01Z",
+       "description": "Under",
+       "price": "0.4600",
+       "marketId": 1224415,
+       "long": false,
+       "quote": {
+        "value": "0.57",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4300\",\"0.4600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 225.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4600",
+      "currency": "USD"
+     },
+     "titleShort": "Over 225.5 points",
+     "ep3SyncedAt": "2026-10-05T16:00:01Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1146252",
+     "question": "Who will win in the upcoming basketball event NO Pelicans vs OKC Thunder scheduled for October 7, 2026 at 12:00 AM UTC?",
+     "slug": "aec-nba-no-okc-2026-10-06",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-09-30T17:23:45Z",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-09-30T17:23:45Z",
+     "updatedAt": "2026-10-06T13:54:12Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2291986",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nba-no-okc-2026-10-06",
+       "createdAt": "2026-09-30T17:23:45Z",
+       "updatedAt": "2026-09-30T17:23:45Z",
+       "description": "Pelicans",
+       "price": "0.4100",
+       "marketId": 1146252,
+       "long": true,
+       "teamId": 42,
+       "team": {
+        "id": 42,
+        "name": "Pelicans",
+        "abbreviation": "no",
+        "alias": "Pelicans",
+        "league": "nba",
+        "safeName": "New Orleans",
+        "record": "0-0",
+        "ordering": "away",
+        "providerId": 23
+       },
+       "quote": {
+        "value": "0.4200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2291987",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nba-no-okc-2026-10-06",
+       "createdAt": "2026-09-30T17:23:45Z",
+       "updatedAt": "2026-09-30T17:23:45Z",
+       "description": "Thunder",
+       "price": "0.4200",
+       "marketId": 1146252,
+       "long": false,
+       "teamId": 27,
+       "team": {
+        "id": 27,
+        "name": "Thunder",
+        "abbreviation": "okc",
+        "alias": "Thunder",
+        "league": "nba",
+        "safeName": "Oklahoma City",
+        "record": "0-0",
+        "ordering": "home",
+        "providerId": 18
+       },
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.4100\",\"0.4200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "Pelicans vs Thunder",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4200",
+      "currency": "USD"
+     },
+     "titleShort": "NO vs OKC",
+     "ep3SyncedAt": "2026-10-01T11:43:52Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1224417",
+     "question": "Will the total in NO Pelicans vs. OKC Thunder be more than 228.5?",
+     "slug": "tsc-nba-no-okc-2026-10-06-228pt5",
+     "endDate": "2026-10-21T00:00:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T16:00:03Z",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T16:00:03Z",
+     "updatedAt": "2026-10-06T05:25:00Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-07T00:00:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "basketball_team_full_game_total",
+     "line": 228.5,
+     "marketSides": [
+      {
+       "id": "2448316",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-228pt5",
+       "createdAt": "2026-10-05T16:00:03Z",
+       "updatedAt": "2026-10-05T16:00:03Z",
+       "description": "Over",
+       "price": "0.3500",
+       "marketId": 1224417,
+       "long": true,
+       "quote": {
+        "value": "0.4000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2448317",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nba-no-okc-2026-10-06-228pt5",
+       "createdAt": "2026-10-05T16:00:03Z",
+       "updatedAt": "2026-10-05T16:00:03Z",
+       "description": "Under",
+       "price": "0.4000",
+       "marketId": 1224417,
+       "long": false,
+       "quote": {
+        "value": "0.65",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomePrices": "[\"0.3500\",\"0.4000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 228.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.3500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4000",
+      "currency": "USD"
+     },
+     "titleShort": "Over 228.5 points",
+     "ep3SyncedAt": "2026-10-05T16:00:03Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 20023826,
+   "sportradarGameId": "78dfe16a-8fa3-4538-95e8-b5f412b2a2f7",
+   "eventState": {
+    "id": 136907680,
+    "gameId": 20023826,
+    "sportradarGameId": "78dfe16a-8fa3-4538-95e8-b5f412b2a2f7",
+    "type": "basketball",
+    "createdAt": "2026-10-05T10:22:18.218656Z",
+    "updatedAt": "2026-10-06T13:37:36.436870Z",
+    "mainSpreadLine": 2.5,
+    "mainTotalLine": 225.5,
+    "marketGroupStats": [
+     {
+      "marketGroupId": "game-lines/spread/full-game",
+      "line": 2.5
+     },
+     {
+      "marketGroupId": "game-lines/totals/full-game",
+      "line": 225.5
+     }
+    ],
+    "periodScores": [],
+    "eventId": 135198
+   },
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "5",
+     "label": "NBA",
+     "slug": "nba",
+     "createdAt": "2025-10-21T18:23:05Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "league": {
+      "id": 2,
+      "name": "NBA",
+      "sportId": 1,
+      "tagId": 5,
+      "resolution": "https://www.nba.com/",
+      "ordering": "away",
+      "activeSeriesId": 4,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "nba",
+      "abbreviation": "NBA"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "11",
+     "label": "Basketball",
+     "slug": "basketball",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "sport": {
+      "id": 1,
+      "name": "Basketball",
+      "tagId": 11,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "basketball"
+     },
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1597",
+     "label": "NBA Preseason",
+     "slug": "nba-preseason",
+     "updatedAt": "2026-10-06T13:55:43Z",
+     "tradable": false,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 42,
+     "name": "Pelicans",
+     "abbreviation": "no",
+     "alias": "Pelicans",
+     "league": "nba",
+     "safeName": "New Orleans",
+     "record": "0-0",
+     "providerId": 23
+    },
+    {
+     "id": 27,
+     "name": "Thunder",
+     "abbreviation": "okc",
+     "alias": "Thunder",
+     "league": "nba",
+     "safeName": "Oklahoma City",
+     "record": "0-0",
+     "providerId": 18
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "combos": {
+    "enabled": true,
+    "numMarkets": 7,
+    "numSpreadsAndTotalsMarkets": 6
+   },
+   "marketCounts": {
+    "numMarkets": 7,
+    "numSpreadsAndTotalsMarkets": 6
+   }
+  }
+ ]
+}

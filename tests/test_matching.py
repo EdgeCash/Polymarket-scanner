@@ -110,3 +110,21 @@ def test_normalize():
     assert normalize("Appalachian State") == "app state"
     assert normalize("Miami (OH)") == "miami oh"
     assert normalize(None) == ""
+
+
+def test_nicknames_match_only_when_asked():
+    from scanner.matching import team_matches
+    from scanner.models import MarketTeam, Team
+
+    predators = MarketTeam(1504, "Predators", "NAS", True, "Predators")
+    espn = Team("Nashville Predators", "NSH", "18", "Nashville", "Predators")
+    assert team_matches(predators, espn) is False
+    assert team_matches(predators, espn, nicknames=True) is True
+    assert (
+        team_matches(
+            MarketTeam(1, "Troy", "TROY", True, ""),
+            replace(espn, nickname="Trojans", abbreviation="TRY"),
+            nicknames=True,
+        )
+        is False
+    )
