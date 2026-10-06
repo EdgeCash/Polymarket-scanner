@@ -44,6 +44,11 @@ def main(argv: list[str] | None = None) -> int:
         help="print the shadow report from the diary (and send it when --send is given)",
     )
     parser.add_argument("--send", action="store_true", help="with --shadow-report: also send it")
+    parser.add_argument(
+        "--pregame-once",
+        action="store_true",
+        help="run one pre-game scan across every configured sport, print what it found, exit",
+    )
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -78,6 +83,23 @@ def main(argv: list[str] | None = None) -> int:
                 return 1
             return 0 if sender.send(text) else 1
         return 0
+
+    if args.pregame_once:
+        from scanner.diary import Diary
+        from scanner.pregame import PregameScanner
+        from scanner.web import RuntimeStatus
+
+        diary = Diary(settings.DATABASE_PATH)
+        summary = PregameScanner(settings, diary, RuntimeStatus()).scan_once()
+        print(summary.describe())
+        for gap in diary.pregame_gaps(limit=20):
+            print(
+                f"- {gap['created_at']} {gap['sport'].upper()} {gap['away']} at {gap['home']}: "
+                f"{gap['pick']} buy {gap['buy_price'] * 100:.1f}c, book "
+                f"{gap['book_fair'] * 100:.1f}% ({gap['book_odds']}), edge "
+                f"{gap['edge'] * 100:+.1f}c -> {gap['outcome'] or 'open'}"
+            )
+        return 0 if not summary.errors else 1
 
     from scanner.loop import run
 

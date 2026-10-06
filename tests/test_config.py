@@ -96,3 +96,13 @@ def test_period_market_and_observation_defaults():
     assert s.PERIOD_MARKETS_ENABLED is True and s.PERIOD_ALERTS_ENABLED is False
     assert s.OBSERVATION_MINUTES_LEFT == 15
     assert Settings(OBSERVATION_MINUTES_LEFT=0).OBSERVATION_MINUTES_LEFT == 0
+
+
+def test_pregame_defaults_and_sport_validation():
+    s = Settings()
+    assert s.PREGAME_ENABLED is True and s.PREGAME_SCAN_MINUTES == 15
+    assert s.PREGAME_MIN_EDGE == 0.03 and s.PREGAME_HORIZON_HOURS == 36
+    assert s.pregame_sports[:3] == ("mlb", "nba", "wnba") and "cfb" in s.pregame_sports
+    assert Settings(PREGAME_SPORTS="NHL, mlb").pregame_sports == ("nhl", "mlb")
+    with pytest.raises(ValueError):
+        Settings(PREGAME_SPORTS="mlb,curling")

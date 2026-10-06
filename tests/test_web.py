@@ -151,3 +151,67 @@ def test_health_shows_the_period_and_observation_switches():
     assert "<th>Observation window</th><td>off</td>" in page
     client, _ = make_client(PERIOD_MARKETS_ENABLED=False)
     assert "<th>Period markets</th><td>off</td>" in client.get("/health?token=phone-secret").text
+
+
+def test_scorecard_and_health_show_the_pregame_scan():
+    from datetime import datetime
+
+    from scanner.models import PregameGap
+
+    client, _ = make_client()
+    page = client.get("/scorecard?token=phone-secret").text
+    assert (
+        "Pre-game gaps (every sport, 3c edge, nothing sent)" in page
+        and "no gaps recorded yet" in page
+    )
+    health = client.get("/health?token=phone-secret").text
+    assert "<th>Pre-game scan</th><td>not run yet</td>" in health
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    diary.upsert_pregame_gap(
+        PregameGap(
+            created_at=datetime.fromisoformat("2026-10-06T14:00:00+00:00"),
+            sport="mlb",
+            feed_id="1",
+            event_slug="mlb-lad-atl",
+            start=None,
+            home="ATL",
+            away="LAD",
+            market="moneyline",
+            pick="ATL",
+            pick_side="home",
+            line=None,
+            market_slug="aec",
+            side_label="short",
+            buy_price=0.5,
+            fee=0.0174,
+            book_fair=0.6429,
+            book_odds=-200,
+            edge=0.1255,
+            provider="DraftKings",
+        ),
+        datetime.fromisoformat("2026-10-06T14:00:00+00:00"),
+    )
+    status = RuntimeStatus()
+    status.pregame = {
+        "last_scan": "2026-10-06T14:00:00+00:00",
+        "matched": 12,
+        "unmatched": 3,
+        "open_gaps": 1,
+        "error": None,
+    }
+    client = TestClient(create_app(settings, diary, status))
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "<th>Gaps</th><td class='num'>1 (MLB 1)</td>" in page
+    assert "<td>ATL</td><td class='num'>50.0c<br>book 64.3%</td>" in page
+    assert "Beat the closing line" in page
+    health = client.get("/health?token=phone-secret").text
+    assert "12 games matched, 3 unmatched, 1 open gaps" in health
+    data = client.get("/health?token=phone-secret", headers={"accept": "application/json"}).json()
+    assert data["pregame"]["matched"] == 12
+    client, _ = make_client(PREGAME_ENABLED=False)
+    assert (
+        "<h2>Pre-game gaps</h2><p class='note'>off</p>"
+        in client.get("/scorecard?token=phone-secret").text
+    )

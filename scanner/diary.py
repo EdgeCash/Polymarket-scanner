@@ -25,6 +25,8 @@ from scanner.models import (
     League,
     NearMiss,
     Observation,
+    PregameGap,
+    PregameLineRecord,
     Side,
 )
 from scanner.periods import decide, from_json, is_period_pick
@@ -115,9 +117,60 @@ CREATE TABLE IF NOT EXISTS observations (
     result_per_contract REAL,
     graded_at TEXT
 );
+CREATE TABLE IF NOT EXISTS pregame_lines (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    scanned_at TEXT NOT NULL,
+    sport TEXT NOT NULL,
+    feed_id TEXT NOT NULL,
+    event_slug TEXT NOT NULL,
+    start_time TEXT,
+    home TEXT NOT NULL,
+    away TEXT NOT NULL,
+    book TEXT NOT NULL,
+    polymarket TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS pregame_gaps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT NOT NULL,
+    sport TEXT NOT NULL,
+    feed_id TEXT NOT NULL,
+    event_slug TEXT NOT NULL,
+    start_time TEXT,
+    home TEXT NOT NULL,
+    away TEXT NOT NULL,
+    market TEXT NOT NULL,
+    pick TEXT NOT NULL,
+    pick_side TEXT NOT NULL,
+    line REAL,
+    market_slug TEXT NOT NULL,
+    side_label TEXT NOT NULL,
+    buy_price REAL NOT NULL,
+    fee REAL NOT NULL,
+    book_fair REAL NOT NULL,
+    book_odds INTEGER,
+    edge REAL NOT NULL,
+    provider TEXT,
+    last_seen_at TEXT NOT NULL,
+    seen_count INTEGER NOT NULL DEFAULT 1,
+    latest_buy REAL,
+    latest_edge REAL,
+    max_edge REAL,
+    closing_fair REAL,
+    closing_odds INTEGER,
+    clv REAL,
+    closed_at TEXT,
+    outcome TEXT,
+    settlement REAL,
+    result_per_contract REAL,
+    final_home INTEGER,
+    final_away INTEGER,
+    graded_at TEXT
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
 CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
+CREATE INDEX IF NOT EXISTS pregame_lines_game ON pregame_lines (sport, feed_id, id);
+CREATE INDEX IF NOT EXISTS pregame_gaps_game ON pregame_gaps (sport, feed_id);
 """
 
 ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
@@ -125,6 +178,7 @@ ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.
 OUTCOME_WIN = "win"
 OUTCOME_LOSS = "loss"
 OUTCOME_TIE = "tie"
+OUTCOME_PUSH = "push"
 OUTCOME_NOT_GRADED = "not_graded"
 
 
@@ -373,6 +427,243 @@ class Diary:
             "reasons": dict(reasons.most_common(8)),
         }
 
+    # -- the pre-game scan ----------------------------------------------------
+
+    def record_pregame_line(self, record: PregameLineRecord) -> bool:
+        """Store a game's lines unless they equal the last stored reading. True if stored."""
+        book = json.dumps(record.book, sort_keys=True, default=str)
+        polymarket = json.dumps(record.polymarket, sort_keys=True, default=str)
+        with self._lock:
+            last = self._conn.execute(
+                "SELECT book, polymarket FROM pregame_lines WHERE sport = ? AND feed_id = ? "
+                "ORDER BY id DESC LIMIT 1",
+                (record.sport, record.feed_id),
+            ).fetchone()
+            if last is not None and last["book"] == book and last["polymarket"] == polymarket:
+                return False
+            self._conn.execute(
+                """INSERT INTO pregame_lines (scanned_at, sport, feed_id, event_slug, start_time,
+                   home, away, book, polymarket) VALUES (?,?,?,?,?,?,?,?,?)""",
+                (
+                    _iso(record.scanned_at),
+                    record.sport,
+                    record.feed_id,
+                    record.event_slug,
+                    _iso(record.start) if record.start else None,
+                    record.home,
+                    record.away,
+                    book,
+                    polymarket,
+                ),
+            )
+            return True
+
+    def last_pregame_line(
+        self, sport: str, feed_id: str, before: datetime | None = None
+    ) -> dict | None:
+        """The last stored reading of a game's lines, optionally at or before a moment."""
+        with self._lock:
+            if before is None:
+                row = self._conn.execute(
+                    "SELECT * FROM pregame_lines WHERE sport = ? AND feed_id = ? "
+                    "ORDER BY id DESC LIMIT 1",
+                    (sport, feed_id),
+                ).fetchone()
+            else:
+                row = self._conn.execute(
+                    "SELECT * FROM pregame_lines WHERE sport = ? AND feed_id = ? "
+                    "AND scanned_at <= ? ORDER BY id DESC LIMIT 1",
+                    (sport, feed_id, _iso(before)),
+                ).fetchone()
+        if row is None:
+            return None
+        out = dict(row)
+        out["book"] = json.loads(out["book"])
+        out["polymarket"] = json.loads(out["polymarket"])
+        return out
+
+    def upsert_pregame_gap(self, gap: PregameGap, now: datetime) -> str:
+        """Insert a gap, or refresh the open one for the same game, market and pick.
+
+        The first price seen is the would-be wager and never changes; later scans
+        only update what the gap looks like now. Returns "new" or "updated".
+        """
+        with self._lock:
+            row = self._conn.execute(
+                """SELECT id, max_edge FROM pregame_gaps WHERE sport = ? AND feed_id = ?
+                   AND market = ? AND pick = ? AND outcome IS NULL ORDER BY id DESC LIMIT 1""",
+                (gap.sport, gap.feed_id, gap.market, gap.pick),
+            ).fetchone()
+            if row is not None:
+                max_edge = max(float(row["max_edge"] or 0.0), gap.edge)
+                self._conn.execute(
+                    """UPDATE pregame_gaps SET last_seen_at = ?, seen_count = seen_count + 1,
+                       latest_buy = ?, latest_edge = ?, max_edge = ? WHERE id = ?""",
+                    (_iso(now), gap.buy_price, gap.edge, max_edge, row["id"]),
+                )
+                return "updated"
+            self._conn.execute(
+                """INSERT INTO pregame_gaps (created_at, sport, feed_id, event_slug, start_time,
+                   home, away, market, pick, pick_side, line, market_slug, side_label, buy_price,
+                   fee, book_fair, book_odds, edge, provider, last_seen_at, seen_count,
+                   latest_buy, latest_edge, max_edge)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,?,?,?)""",
+                (
+                    _iso(gap.created_at),
+                    gap.sport,
+                    gap.feed_id,
+                    gap.event_slug,
+                    _iso(gap.start) if gap.start else None,
+                    gap.home,
+                    gap.away,
+                    gap.market,
+                    gap.pick,
+                    gap.pick_side,
+                    gap.line,
+                    gap.market_slug,
+                    gap.side_label,
+                    gap.buy_price,
+                    gap.fee,
+                    gap.book_fair,
+                    gap.book_odds,
+                    gap.edge,
+                    gap.provider,
+                    _iso(now),
+                    gap.buy_price,
+                    gap.edge,
+                    gap.edge,
+                ),
+            )
+            return "new"
+
+    def pregame_gaps(self, since: datetime | None = None, limit: int = 1000) -> list[dict]:
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute(
+                    "SELECT * FROM pregame_gaps ORDER BY id DESC LIMIT ?", (limit,)
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM pregame_gaps WHERE created_at >= ? ORDER BY id DESC LIMIT ?",
+                    (_iso(since), limit),
+                ).fetchall()
+        return [dict(r) for r in rows]
+
+    def pregame_gaps_unclosed(self, now: datetime) -> list[dict]:
+        """Gaps whose game has started and whose closing line is not yet recorded."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM pregame_gaps WHERE closed_at IS NULL AND start_time IS NOT NULL "
+                "AND start_time <= ? ORDER BY id",
+                (_iso(now),),
+            ).fetchall()
+        return [dict(r) for r in rows]
+
+    def set_pregame_closing(
+        self,
+        gap_id: int,
+        closing_fair: float | None,
+        closing_odds: int | None,
+        clv: float | None,
+        at: datetime,
+    ) -> None:
+        with self._lock:
+            self._conn.execute(
+                "UPDATE pregame_gaps SET closing_fair = ?, closing_odds = ?, clv = ?, "
+                "closed_at = ? WHERE id = ?",
+                (closing_fair, closing_odds, clv, _iso(at), gap_id),
+            )
+
+    def pregame_gaps_ungraded(self, started_before: datetime) -> list[dict]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM pregame_gaps WHERE outcome IS NULL AND start_time IS NOT NULL "
+                "AND start_time <= ? ORDER BY id",
+                (_iso(started_before),),
+            ).fetchall()
+        return [dict(r) for r in rows]
+
+    def grade_pregame_gap(
+        self,
+        gap_id: int,
+        outcome: str,
+        settlement: float | None,
+        final_home: int | None,
+        final_away: int | None,
+        at: datetime,
+    ) -> None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT buy_price, fee FROM pregame_gaps WHERE id = ?", (gap_id,)
+            ).fetchone()
+            result = None
+            if row is not None and settlement is not None:
+                result = settlement - row["buy_price"] - row["fee"]
+            self._conn.execute(
+                """UPDATE pregame_gaps SET outcome = ?, settlement = ?, result_per_contract = ?,
+                   final_home = ?, final_away = ?, graded_at = ? WHERE id = ?""",
+                (outcome, settlement, result, final_home, final_away, _iso(at), gap_id),
+            )
+
+    def open_pregame_gap_count(self) -> int:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT COUNT(*) AS n FROM pregame_gaps WHERE outcome IS NULL"
+            ).fetchone()
+        return int(row["n"]) if row else 0
+
+    def pregame_summary(self, since: datetime | None = None) -> dict:
+        """What the pre-game scan would have bought, and how it did."""
+        rows = self.pregame_gaps(since, limit=100000)
+        graded = [r for r in rows if r["outcome"] in (OUTCOME_WIN, OUTCOME_LOSS, OUTCOME_PUSH)]
+        wins = sum(1 for r in graded if r["outcome"] == OUTCOME_WIN)
+        losses = sum(1 for r in graded if r["outcome"] == OUTCOME_LOSS)
+        pushes = sum(1 for r in graded if r["outcome"] == OUTCOME_PUSH)
+        needed = sum(r["buy_price"] + r["fee"] for r in rows) / len(rows) if rows else None
+        actual = (wins + 0.5 * pushes) / len(graded) if graded else None
+        profit = sum(
+            100 * r["result_per_contract"] for r in graded if r["result_per_contract"] is not None
+        )
+        closed = [r for r in rows if r["clv"] is not None]
+        avg_edge = sum(r["edge"] for r in rows) / len(rows) if rows else None
+        avg_clv = sum(r["clv"] for r in closed) / len(closed) if closed else None
+        positive = sum(1 for r in closed if r["clv"] > 0)
+        recent = [
+            {
+                "created_at": r["created_at"],
+                "sport": r["sport"],
+                "home": r["home"],
+                "away": r["away"],
+                "pick": r["pick"],
+                "market": r["market"],
+                "buy_price": r["buy_price"],
+                "book_fair": r["book_fair"],
+                "book_odds": r["book_odds"],
+                "edge": r["edge"],
+                "clv": r["clv"],
+                "outcome": r["outcome"],
+            }
+            for r in rows[:10]
+        ]
+        return {
+            "gaps": len(rows),
+            "by_sport": dict(Counter(r["sport"] for r in rows)),
+            "by_market": dict(Counter(r["market"] for r in rows)),
+            "graded": len(graded),
+            "wins": wins,
+            "losses": losses,
+            "pushes": pushes,
+            "not_graded": sum(1 for r in rows if r["outcome"] == OUTCOME_NOT_GRADED),
+            "win_rate_needed": needed,
+            "actual_win_rate": actual,
+            "profit_per_100": profit,
+            "avg_edge": avg_edge,
+            "closed": len(closed),
+            "avg_clv": avg_clv,
+            "positive_clv_share": (positive / len(closed)) if closed else None,
+            "recent": recent,
+        }
+
     # -- events (heartbeats, failures, paused messages) ----------------------
 
     def log_event(self, kind: str, detail: str, at: datetime) -> None:
@@ -561,6 +852,7 @@ class Diary:
             "near_misses": self.near_misses_by_reason(since),
             "near_misses_by_type": self.near_misses_by_type(since),
             "observations": self.observation_summary(since),
+            "pregame": self.pregame_summary(since),
         }
 
     @staticmethod

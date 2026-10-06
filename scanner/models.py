@@ -12,8 +12,22 @@ from enum import StrEnum
 
 
 class League(StrEnum):
+    """Leagues the scanner knows. Live alerts cover NFL and CFB; the pre-game scan the rest."""
+
     NFL = "nfl"
     CFB = "cfb"
+    MLB = "mlb"
+    NBA = "nba"
+    WNBA = "wnba"
+    CBB = "cbb"
+    NHL = "nhl"
+    EPL = "epl"
+    MLS = "mls"
+    UCL = "ucl"
+    LALIGA = "laliga"
+    BUNDESLIGA = "bundesliga"
+    SERIEA = "seriea"
+    LIGUE1 = "ligue1"
 
 
 class GameStatus(StrEnum):
@@ -50,6 +64,7 @@ class Team:
     abbreviation: str  # "PHI"
     feed_id: str | None = None  # the feed's own id, kept for matching
     location: str | None = None  # ESPN's "Philadelphia", used for matching
+    nickname: str | None = None  # ESPN's "Eagles"; matched only where names are nicknames
 
 
 @dataclass(frozen=True, slots=True)
@@ -198,6 +213,7 @@ class MarketTeam:
     abbreviation: str
     is_long: bool
     nickname: str = ""  # "Eagles"
+    quote: float | None = None  # this side's buy price as the event list reported it
 
 
 @dataclass(frozen=True, slots=True)
@@ -209,6 +225,25 @@ class TotalMarket:
     active: bool
     closed: bool
     over_tradable: bool
+    over_quote: float | None = None  # buy prices as the event list reported them
+    under_quote: float | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class SpreadMarket:
+    """A full-game spread: the long side's team with its signed handicap."""
+
+    market_slug: str
+    long_team_id: int
+    short_team_id: int
+    long_line: float  # +2.5: the long side is the underdog getting 2.5
+    theta: float
+    active: bool
+    closed: bool
+    long_tradable: bool
+    short_tradable: bool
+    long_quote: float | None = None
+    short_quote: float | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -252,6 +287,7 @@ class PolymarketGame:
     display_period: str | None
     display_elapsed: str | None
     period_markets: tuple[PeriodMarket, ...] = ()
+    spreads: tuple[SpreadMarket, ...] = ()
 
     def team_on(self, is_long: bool) -> MarketTeam | None:
         for team in self.teams:
@@ -354,3 +390,47 @@ class Observation:
     dollars_available: float | None
     would_alert: bool
     reason: str
+
+
+@dataclass(frozen=True, slots=True)
+class PregameGap:
+    """A pre-game price Polymarket shows below the book's vig-free probability.
+
+    What the pre-game scan would have told the owner to buy. Recorded, graded by
+    the book's closing line and by the result, never sent.
+    """
+
+    created_at: datetime
+    sport: str
+    feed_id: str
+    event_slug: str
+    start: datetime | None
+    home: str
+    away: str
+    market: str  # "moneyline", "total" or "spread"
+    pick: str  # "LAD", "OVER 6.5", "ATL +1.5"
+    pick_side: str  # "home"/"away", or "over"/"under"
+    line: float | None  # the total, or the pick's own handicap
+    market_slug: str
+    side_label: str  # "long" or "short"
+    buy_price: float
+    fee: float
+    book_fair: float  # the book's vig-free probability for the pick
+    book_odds: int | None  # the book's US price for the pick
+    edge: float  # book_fair - buy_price - fee
+    provider: str
+
+
+@dataclass(frozen=True, slots=True)
+class PregameLineRecord:
+    """One reading of a game's lines, kept only when something changed."""
+
+    scanned_at: datetime
+    sport: str
+    feed_id: str
+    event_slug: str
+    start: datetime | None
+    home: str
+    away: str
+    book: dict
+    polymarket: dict

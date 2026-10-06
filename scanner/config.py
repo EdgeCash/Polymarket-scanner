@@ -39,6 +39,25 @@ WAKE_BEFORE_KICKOFF_SECONDS = 30 * 60  # the loop wakes 30 minutes before kickof
 FOLLOW_UP_SECONDS = (30, 120)  # re-read the buy price this long after an alert
 
 LEAGUE_NAMES = ("nfl", "cfb")
+# Sports the pre-game scan can cover: every ESPN scoreboard that carries a book's line.
+PREGAME_SPORT_KEYS = (
+    "mlb",
+    "nba",
+    "wnba",
+    "cbb",
+    "nhl",
+    "nfl",
+    "cfb",
+    "epl",
+    "mls",
+    "ucl",
+    "laliga",
+    "bundesliga",
+    "seriea",
+    "ligue1",
+)
+PREGAME_MAX_RPS = 1.0  # the pre-game thread's own, slower request ceiling
+PREGAME_GRADE_DELAY_HOURS = 3.0  # a gap is graded once the game should be over
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -89,6 +108,15 @@ class Settings(BaseSettings):
     # filter can be judged on data. 0 turns it off. Not an alert threshold.
     OBSERVATION_MINUTES_LEFT: float = Field(15, ge=0)
 
+    # Pre-game scan: every sport ESPN posts a book's line for, compared with
+    # Polymarket's buy prices, recorded and graded, never sent. PREGAME_MIN_EDGE is
+    # the recording threshold (edge after fee), not an alert threshold.
+    PREGAME_ENABLED: bool = True
+    PREGAME_SPORTS: str = ",".join(PREGAME_SPORT_KEYS)
+    PREGAME_SCAN_MINUTES: float = Field(15, gt=0)
+    PREGAME_MIN_EDGE: float = Field(0.03, ge=0, le=1)
+    PREGAME_HORIZON_HOURS: float = Field(36, gt=0)
+
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"
     TZ: str = "America/Chicago"
@@ -115,6 +143,21 @@ class Settings(BaseSettings):
         if not names:
             raise ValueError("LEAGUES must name at least one league")
         return ",".join(names)
+
+    @field_validator("PREGAME_SPORTS")
+    @classmethod
+    def _check_pregame_sports(cls, value: str) -> str:
+        names = [part.strip().lower() for part in value.split(",") if part.strip()]
+        unknown = [n for n in names if n not in PREGAME_SPORT_KEYS]
+        if unknown:
+            raise ValueError(
+                f"unknown pre-game sport(s) {unknown}; choose from {PREGAME_SPORT_KEYS}"
+            )
+        return ",".join(names)
+
+    @property
+    def pregame_sports(self) -> tuple[str, ...]:
+        return tuple(n for n in self.PREGAME_SPORTS.split(",") if n)
 
     @property
     def short_commit(self) -> str:

@@ -69,6 +69,15 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
             f"{obs['picks']} would have alerted; graded {obs['graded']}: {obs['wins']}W "
             f"{obs['losses']}L {obs['ties']}T, ${obs['profit_per_100']:,.2f} per 100 contracts"
         )
+    pg = diary.pregame_summary(since)
+    if pg["gaps"]:
+        sports = ", ".join(f"{k.upper()} {v}" for k, v in sorted(pg["by_sport"].items()))
+        clv = "n/a" if pg["avg_clv"] is None else f"{pg['avg_clv'] * 100:+.1f}c"
+        lines.append(
+            f"Pre-game gaps (nothing sent): {pg['gaps']} ({sports}); graded {pg['graded']}: "
+            f"{pg['wins']}W {pg['losses']}L {pg['pushes']}P, ${pg['profit_per_100']:,.2f} per "
+            f"100 contracts; edge at the close {clv} over {pg['closed']} closed"
+        )
     lines.append(
         f"Feed failures: score {kinds.get('score_feed_failure', 0)}, "
         f"price {kinds.get('price_feed_failure', 0)}; "

@@ -126,11 +126,13 @@ def _team(competitor: dict[str, Any]) -> Team | None:
     if not isinstance(name, str) or not name.strip():
         return None
     location = team.get("location")
+    nickname = team.get("name")
     return Team(
         name=name.strip(),
         abbreviation=abbreviation.strip().upper(),
         feed_id=str(feed_id),
         location=location.strip() if isinstance(location, str) and location.strip() else None,
+        nickname=nickname.strip() if isinstance(nickname, str) and nickname.strip() else None,
     )
 
 

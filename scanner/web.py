@@ -56,6 +56,7 @@ class RuntimeStatus:
     last_error: str | None = None
     leagues: dict[str, str] = field(default_factory=dict)
     unmatched_polymarket: int = 0
+    pregame: dict = field(default_factory=dict)  # the pre-game thread's last scan
 
     def as_dict(self) -> dict:
         return {
@@ -75,6 +76,7 @@ class RuntimeStatus:
             "last_error": self.last_error,
             "leagues": self.leagues,
             "unmatched_polymarket": self.unmatched_polymarket,
+            "pregame": self.pregame,
         }
 
 
@@ -155,6 +157,7 @@ worse prices, and a few weeks is a small sample.</p>
 {section("Clinched-over alerts", card["by_type"]["clinched_over"])}
 {period_section}
 {_observation_section(card.get("observations") or {}, settings)}
+{_pregame_section(card.get("pregame") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
@@ -188,6 +191,77 @@ def _observation_section(obs: dict, settings: Settings) -> str:
     if reasons:
         reasons = f"<table><tr><th>Why not</th><th></th></tr>{reasons}</table>"
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{reasons}"
+
+
+def _signed_cents(value: float | None) -> str:
+    return "n/a" if value is None else f"{value * 100:+.1f}c"
+
+
+def _pregame_section(pg: dict, settings: Settings) -> str:
+    """Every sport's pre-game gaps against the book: recorded, graded, never sent."""
+    if not settings.PREGAME_ENABLED:
+        return "<h2>Pre-game gaps</h2><p class='note'>off</p>"
+    title = f"Pre-game gaps (every sport, {settings.PREGAME_MIN_EDGE * 100:g}c edge, nothing sent)"
+    if not pg or not pg.get("gaps"):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>no gaps recorded yet</p>"
+    sports = ", ".join(f"{k.upper()} {v}" for k, v in sorted(pg["by_sport"].items())) or "none"
+    markets = ", ".join(f"{k} {v}" for k, v in sorted(pg["by_market"].items())) or "none"
+    rows = [
+        ("Gaps", f"{pg['gaps']} ({sports})"),
+        ("By market", markets),
+        ("Graded", f"{pg['graded']} ({pg['not_graded']} not graded)"),
+        ("Wins / losses / pushes", f"{pg['wins']} / {pg['losses']} / {pg['pushes']}"),
+        ("Win rate needed", _pct(pg["win_rate_needed"])),
+        ("Actual win rate", _pct(pg["actual_win_rate"])),
+        ("Profit per 100 contracts", _money(pg["profit_per_100"])),
+        ("Avg edge when seen", _signed_cents(pg["avg_edge"])),
+        ("Avg edge at the close", f"{_signed_cents(pg['avg_clv'])} ({pg['closed']} closed)"),
+        ("Beat the closing line", _pct(pg["positive_clv_share"])),
+    ]
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    recent = "".join(
+        "<tr><td>{when}<br>{game}</td><td>{pick}</td><td class='num'>{buy}<br>{book}</td>"
+        "<td class='num'>{edge}<br>{clv}</td><td>{result}</td></tr>".format(
+            when=html.escape(_local(r["created_at"], settings.TZ)),
+            game=html.escape(f"{r['sport'].upper()} {r['away']} at {r['home']}"),
+            pick=html.escape(r["pick"]),
+            buy=html.escape(f"{r['buy_price'] * 100:.1f}c"),
+            book=html.escape(f"book {r['book_fair'] * 100:.1f}%"),
+            edge=html.escape(_signed_cents(r["edge"])),
+            clv=html.escape("close " + _signed_cents(r["clv"])),
+            result=html.escape(r["outcome"] or "open"),
+        )
+        for r in pg.get("recent") or []
+    )
+    table = (
+        "<table><tr><th>Game</th><th>Pick</th><th>Buy / book</th><th>Edge / close</th>"
+        f"<th>Result</th></tr>{recent}</table>"
+        if recent
+        else ""
+    )
+    note = (
+        "<p class='note'>Edge is the book's vig-free probability minus the Polymarket buy "
+        "price and fee. Close is the same edge against the book's last line before the "
+        "start: positive means the market moved our way.</p>"
+    )
+    return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
+
+
+def _pregame_health(status: RuntimeStatus, settings: Settings) -> str:
+    if not settings.PREGAME_ENABLED:
+        return "off"
+    pg = status.pregame or {}
+    if not pg.get("last_scan"):
+        return "not run yet"
+    text = (
+        f"last {_local(pg.get('last_scan'), settings.TZ)}: {pg.get('matched', 0)} games matched, "
+        f"{pg.get('unmatched', 0)} unmatched, {pg.get('open_gaps', 0)} open gaps"
+    )
+    if pg.get("error"):
+        text += f"; error: {pg['error']}"
+    return text
 
 
 def render_health(status: RuntimeStatus, settings: Settings) -> str:
@@ -228,6 +302,7 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
             if settings.OBSERVATION_MINUTES_LEFT > settings.MAX_MINUTES_LEFT
             else "off",
         ),
+        ("Pre-game scan", _pregame_health(status, settings)),
         (
             "Feeds",
             "ok"

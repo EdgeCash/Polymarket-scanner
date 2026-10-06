@@ -735,6 +735,10 @@ def run(settings: Settings, once: bool = False) -> int:
     status = RuntimeStatus()
     if not once:
         serve_web(settings, diary, status)
+        if settings.PREGAME_ENABLED:
+            from scanner.pregame import PregameScanner
+
+            PregameScanner(settings, diary, status).start_thread()
     scanner = Scanner(settings, diary=diary, status=status)
     try:
         return scanner.run_forever(once=once)

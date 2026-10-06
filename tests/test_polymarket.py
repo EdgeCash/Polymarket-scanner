@@ -459,3 +459,47 @@ def test_side_quotes_price_both_sides_from_one_read():
     assert quotes["long"].buy_price == pytest.approx(quotes["long"].best_ask)
     assert quotes["short"].buy_price == pytest.approx(1 - quotes["short"].best_bid)
     assert len(transport.calls) == 1
+
+
+# -- other sports: quotes, spreads, generic totals ----------------------------------
+
+
+def test_nba_event_carries_quotes_totals_and_spreads():
+    game = parse_event(load_fixture("pm_pregame_nba.json")["events"][0], League.NBA)
+    assert game.event_slug == "nba-bkn-cha-2026-10-06" and game.moneyline_slug
+    quotes = {t.abbreviation: t.quote for t in game.teams}
+    assert quotes == {"BKN": pytest.approx(0.35), "CHA": pytest.approx(0.66)}
+    total = next(t for t in game.totals if t.line == 209.5)
+    assert total.over_quote == pytest.approx(0.58) and total.under_quote == pytest.approx(0.45)
+    assert len(game.spreads) == 3
+    dog = next(s for s in game.spreads if s.long_line == 7.5)
+    assert (dog.long_team_id, dog.short_team_id) == (22, 16)
+    assert dog.long_quote == pytest.approx(0.53) and dog.short_quote == pytest.approx(0.48)
+    assert dog.market_slug == "asc-nba-bkn-cha-2026-10-06-pos-7pt5" and dog.active
+
+
+def test_hockey_and_soccer_events_parse_with_the_generic_market_rules():
+    nhl = parse_event(load_fixture("pm_pregame_nhl.json")["events"][0], League.NHL)
+    assert nhl.moneyline_slug == "aec-nhl-nas-tor-2026-10-06"
+    assert [t.line for t in nhl.totals] == [2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5, 9.5]
+    assert {s.long_line for s in nhl.spreads} == {-3.5, -2.5, -1.5, 1.5, 2.5, 3.5}
+    assert nhl.period_markets == ()  # hockey periods are not football quarters
+    epl = parse_event(load_fixture("pm_pregame_epl.json")["events"][0], League.EPL)
+    assert epl.moneyline_slug is None  # a three-way market, not a moneyline
+    assert all(t.quote is None for t in epl.teams)
+    assert [t.line for t in epl.totals] == [0.5, 1.5, 2.5, 3.5]
+    assert {s.long_line for s in epl.spreads} == {-2.5, -1.5, 1.5, 2.5}
+
+
+def test_list_leagues_returns_every_page():
+    reader, transport, _ = make_reader()
+    leagues = reader.list_leagues()
+    assert len(leagues) == 100 and {lg["slug"] for lg in leagues} >= {
+        "nfl",
+        "cfb",
+        "mlb",
+        "nba",
+        "nhl",
+        "epl",
+    }
+    assert len([c for c in transport.calls if c[0] == "/v2/leagues"]) == 3

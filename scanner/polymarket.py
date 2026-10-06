@@ -39,6 +39,7 @@ from scanner.models import (
     PeriodMarket,
     PolymarketGame,
     Quote,
+    SpreadMarket,
     TotalMarket,
 )
 
@@ -64,6 +65,8 @@ PERIOD_MARKET_TYPES = {
     "football_team_second_half_spread": ("2h", "spread"),
 }
 MONEYLINE_TYPE_V2 = "SPORTS_MARKET_TYPE_MONEYLINE"
+TOTAL_TYPE_V2 = "SPORTS_MARKET_TYPE_TOTAL"
+SPREAD_TYPE_V2 = "SPORTS_MARKET_TYPE_SPREAD"
 OPEN_STATE = "MARKET_STATE_OPEN"
 EVENTS_PAGE_SIZE = 100
 LEAGUES_PAGE_SIZE = 50
@@ -191,7 +194,20 @@ def _is_moneyline(market: dict[str, Any]) -> bool:
 
 
 def _is_game_total(market: dict[str, Any]) -> bool:
-    return market.get("sportsMarketType") == GAME_TOTAL_TYPE
+    """A full-game total for the whole game, in any sport ("<sport>_team_full_game_total")."""
+    kind = market.get("sportsMarketType") or ""
+    if kind == GAME_TOTAL_TYPE:
+        return True
+    if market.get("sportsMarketTypeV2") != TOTAL_TYPE_V2 or not kind.endswith("_full_game_total"):
+        return False
+    if "_points_" in kind:
+        return False  # a team total
+    return all(side.get("teamId") is None for side in market.get("marketSides") or [])
+
+
+def _is_game_spread(market: dict[str, Any]) -> bool:
+    kind = market.get("sportsMarketType") or ""
+    return market.get("sportsMarketTypeV2") == SPREAD_TYPE_V2 and kind.endswith("_full_game_spread")
 
 
 def _parse_teams(raw_event: dict[str, Any]) -> dict[int, dict[str, Any]]:
@@ -244,6 +260,42 @@ def _parse_total(market: dict[str, Any]) -> TotalMarket | None:
         active=bool(market.get("active")),
         closed=bool(market.get("closed")),
         over_tradable=bool(over_side.get("tradable", True)),
+        over_quote=_amount(over_side.get("quote")),
+        under_quote=_amount(under_side.get("quote")),
+    )
+
+
+def _parse_spread(market: dict[str, Any]) -> SpreadMarket | None:
+    """A full-game spread with its two teams. None when a side is unclear."""
+    slug = market.get("slug")
+    if not slug:
+        return None
+    sides = [side for side in market.get("marketSides") or [] if isinstance(side, dict)]
+    long_sides = [side for side in sides if side.get("long") is True]
+    short_sides = [side for side in sides if side.get("long") is False]
+    if len(long_sides) != 1 or len(short_sides) != 1:
+        return None
+    long_side, short_side = long_sides[0], short_sides[0]
+    long_line = _signed(long_side.get("description"))
+    short_line = _signed(short_side.get("description"))
+    long_team = _side_team_id(long_side)
+    short_team = _side_team_id(short_side)
+    if long_line is None or short_line is None or long_team is None or short_team is None:
+        return None
+    if long_team == short_team or abs(long_line + short_line) > 1e-9:
+        return None
+    return SpreadMarket(
+        market_slug=str(slug),
+        long_team_id=long_team,
+        short_team_id=short_team,
+        long_line=long_line,
+        theta=_theta(market),
+        active=bool(market.get("active")),
+        closed=bool(market.get("closed")),
+        long_tradable=bool(long_side.get("tradable", True)),
+        short_tradable=bool(short_side.get("tradable", True)),
+        long_quote=_amount(long_side.get("quote")),
+        short_quote=_amount(short_side.get("quote")),
     )
 
 
@@ -358,6 +410,11 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
                 continue
         if set(long_ids) == set(teams_by_id) and len(set(long_ids.values())) == 2:
             moneyline_slug = str(moneyline["slug"])
+            quotes: dict[int, float | None] = {}
+            for side in moneyline.get("marketSides") or []:
+                team_id = _side_team_id(side)
+                if team_id is not None:
+                    quotes[team_id] = _amount(side.get("quote"))
             for team_id, team in teams_by_id.items():
                 market_teams.append(
                     MarketTeam(
@@ -366,6 +423,7 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
                         abbreviation=_team_abbreviation(team),
                         is_long=long_ids[team_id],
                         nickname=str(team.get("alias") or ""),
+                        quote=quotes.get(team_id),
                     )
                 )
         else:
@@ -391,11 +449,17 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
     totals.sort(key=lambda t: t.line)
 
     period_markets = []
+    spreads = []
     for market in raw_event.get("markets") or []:
         period_market = _parse_period_market(market)
         if period_market is not None:
             period_markets.append(period_market)
+        elif _is_game_spread(market):
+            spread = _parse_spread(market)
+            if spread is not None:
+                spreads.append(spread)
     period_markets.sort(key=lambda m: (m.period, m.kind, m.line, m.market_slug))
+    spreads.sort(key=lambda m: (m.long_line, m.market_slug))
 
     state = raw_event.get("eventState") or {}
     return PolymarketGame(
@@ -416,6 +480,7 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
         display_period=raw_event.get("period") or state.get("period"),
         display_elapsed=raw_event.get("elapsed") or state.get("elapsed"),
         period_markets=tuple(period_markets),
+        spreads=tuple(spreads),
     )
 
 
@@ -596,8 +661,8 @@ class PolymarketReader:
 
     # -- leagues ------------------------------------------------------------
 
-    def discover_leagues(self) -> dict[League, str]:
-        """Find the NFL and college football league slugs from the leagues list."""
+    def list_leagues(self) -> list[dict[str, Any]]:
+        """Every league Polymarket lists, raw."""
         leagues: list[dict[str, Any]] = []
         offset = 0
         for _ in range(20):  # a hard stop so a broken endpoint cannot loop forever
@@ -609,7 +674,11 @@ class PolymarketReader:
             if len(batch) < LEAGUES_PAGE_SIZE:
                 break
             offset += LEAGUES_PAGE_SIZE
+        return leagues
 
+    def discover_leagues(self) -> dict[League, str]:
+        """Find the NFL and college football league slugs from the leagues list."""
+        leagues = self.list_leagues()
         found: dict[League, str] = {}
         nfl = next((lg for lg in leagues if (lg.get("slug") or "").lower() == "nfl"), None)
         if nfl is None:
