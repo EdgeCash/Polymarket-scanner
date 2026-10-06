@@ -556,3 +556,51 @@ def test_score_feed_surprise_counts_as_a_feed_failure(model):
     feed.fetch = lambda league: (_ for _ in ()).throw(KeyError("competitors"))
     scanner.scan_once()
     assert scanner.score_fail_since is not None
+
+
+def test_clinched_lines_are_re_read_once_a_minute_not_every_pass(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model)
+    game = phi_jax_game()
+    for total in game.totals:
+        reader.bbo[total.market_slug] = {
+            "marketData": {
+                "bestBid": {"value": "0.9850", "currency": "USD"},
+                "bestAsk": {"value": "0.9900", "currency": "USD"},
+                "state": "MARKET_STATE_OPEN",
+            }
+        }
+    event = poll(340)["espn_event"]  # 31-21: both lines clinched
+    feed.states[League.NFL] = [event]
+    scanner.scan_once()  # first sight; inside the clinch cooldown, nothing read
+    clock.t = 65
+    scanner.scan_once()
+    reads = lambda: sum(1 for c in reader.calls if c.startswith("quote:tsc"))  # noqa: E731
+    assert reads() == 2  # one read per clinched line
+    for t in (70, 75, 80, 100, 120):
+        clock.t = t
+        scanner.scan_once()
+    assert reads() == 2  # not read again inside the minute
+    clock.t = 126
+    scanner.scan_once()
+    assert reads() == 4  # a minute later, both lines read once more
+    scored = copy.deepcopy(event)
+    scored["competitions"][0]["competitors"][1]["score"] = "38"  # PHI scores: 59 points
+    feed.states[League.NFL] = [scored]
+    clock.t = 130
+    scanner.scan_once()  # new score: clinch cooldown restarts, nothing read yet
+    assert reads() == 4
+    clock.t = 191
+    scanner.scan_once()
+    assert reads() == 6  # score changed and cooldown passed: read again at once
+
+
+def test_last_error_on_the_status_page_is_short(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model)
+    scanner._price_failed(
+        clock.now(), "rate limited: <!doctype html><html>Error 1015 rate limited</html>"
+    )
+    assert (
+        scanner.status.last_error == "Cloudflare rate-limit page (error 1015: temporarily banned)"
+    )

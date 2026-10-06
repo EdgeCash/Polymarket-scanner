@@ -19,6 +19,7 @@ from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
 
 from scanner.config import (
+    CLINCHED_REPOLL_SECONDS,
     FEED_FAILURE_ALERT_SECONDS,
     FEED_FAILURE_REPEAT_SECONDS,
     GAME_LIST_REFRESH_SECONDS,
@@ -44,7 +45,7 @@ from scanner.notify import (
     heartbeat_message,
     paused_message,
 )
-from scanner.polymarket import PolymarketError, PolymarketReader, RateLimited
+from scanner.polymarket import PolymarketError, PolymarketReader, RateLimited, short_error
 from scanner.rules import (
     AlertHistory,
     Decision,
@@ -110,6 +111,7 @@ class Scanner:
         self.feed_message_at: dict[str, datetime] = {}
         self.heartbeat_day = None
         self.finished: set[tuple[League, str]] = set()
+        self.clinch_reads: dict[str, tuple[datetime, int]] = {}  # slug -> (read at, points)
         self.stop_event = threading.Event()
 
     # -- startup ------------------------------------------------------------
@@ -176,8 +178,8 @@ class Scanner:
             self.price_fail_since = now
             self.diary.log_event("price_feed_failure", detail, now)
         self.status.price_feed_failing_since = self.price_fail_since.isoformat()
-        self.status.last_error = detail
-        log.warning("price feed: %s", detail)
+        self.status.last_error = short_error(detail)
+        log.warning("price feed: %s", short_error(detail))
 
     def _price_ok(self, now: datetime) -> None:
         if self.price_fail_since is not None:
@@ -193,12 +195,12 @@ class Scanner:
                 states = self.feed.fetch(league)
             except ScoreFeedError as exc:
                 failed = True
-                self.status.last_error = str(exc)
-                log.warning("score feed: %s", exc)
+                self.status.last_error = short_error(str(exc))
+                log.warning("score feed: %s", short_error(str(exc)))
                 continue
             except Exception as exc:  # malformed data the parser did not expect
                 failed = True
-                self.status.last_error = f"{type(exc).__name__}: {exc}"
+                self.status.last_error = short_error(f"{type(exc).__name__}: {exc}")
                 log.exception("score feed %s failed unexpectedly", league.value)
                 continue
             self.last_scores[league] = states
@@ -325,6 +327,18 @@ class Scanner:
         for total in match.polymarket.totals:
             if state.total_points <= total.line or total.closed or not total.active:
                 continue
+            # A clinched line is priced at 99 cents within seconds and stays there.
+            # Re-read it once a minute, or sooner only after the score changed; a
+            # 60-point game otherwise means two dozen reads every pass.
+            last = self.clinch_reads.get(total.market_slug)
+            if last is not None:
+                read_at, points = last
+                if (
+                    points == state.total_points
+                    and (now - read_at).total_seconds() < CLINCHED_REPOLL_SECONDS
+                ):
+                    continue
+            self.clinch_reads[total.market_slug] = (now, state.total_points)
             quote = self.reader.over_quote(total)
             common = dict(
                 match=match,
@@ -432,7 +446,7 @@ class Scanner:
             try:
                 self.start()
             except Exception as exc:  # keep retrying; the web pages stay up meanwhile
-                self.status.last_error = f"startup: {type(exc).__name__}: {exc}"
+                self.status.last_error = short_error(f"startup: {type(exc).__name__}: {exc}")
                 if once:
                     log.error("cannot start: %s", exc)
                     return 1
@@ -460,7 +474,7 @@ class Scanner:
                     summary = self.scan_once(now)
                 except Exception as exc:  # the loop must survive anything
                     log.exception("pass failed")
-                    self.status.last_error = f"{type(exc).__name__}: {exc}"
+                    self.status.last_error = short_error(f"{type(exc).__name__}: {exc}")
                     summary = PassSummary(errors=[str(exc)])
                 if once:
                     return 0 if not summary.errors else 1
