@@ -216,6 +216,25 @@ class Diary:
             ).fetchone()
         return dict(row) if row else None
 
+    def near_misses_by_type(self, since: datetime | None = None) -> dict[str, dict[str, int]]:
+        """Near-miss counts by alert type ("winner" or "clinched_over") and reason."""
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute(
+                    "SELECT pick, reason, COUNT(*) AS n FROM near_misses GROUP BY pick, reason"
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT pick, reason, COUNT(*) AS n FROM near_misses WHERE created_at >= ? "
+                    "GROUP BY pick, reason",
+                    (_iso(since),),
+                ).fetchall()
+        out: dict[str, dict[str, int]] = {"winner": {}, "clinched_over": {}}
+        for r in rows:
+            kind = "clinched_over" if str(r["pick"]).startswith("OVER ") else "winner"
+            out[kind][r["reason"]] = out[kind].get(r["reason"], 0) + int(r["n"])
+        return out
+
     def near_misses_by_reason(self, since: datetime | None = None) -> dict[str, int]:
         with self._lock:
             if since is None:
@@ -372,6 +391,7 @@ class Diary:
             "alerts_sent": sum(1 for r in rows if r["sent"]),
             "by_type": sections,
             "near_misses": self.near_misses_by_reason(since),
+            "near_misses_by_type": self.near_misses_by_type(since),
         }
 
     @staticmethod
