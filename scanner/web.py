@@ -51,6 +51,7 @@ STYLE = """
   table.sheet th.label:first-child, table.sheet td.label:first-child {
     position: sticky; left: 0; background: var(--bg); z-index: 1; }
   table.sheet td.l3 { font-weight: 700; }
+  table.sheet td.left { text-align: left; }
   table.sheet th.side { text-align: center; font-size: 13px; opacity: 1; }
   table.sheet tr:nth-child(even) td { background: #8881; }
   table.sheet tr:nth-child(even) td.label:first-child { background: var(--bg-alt); }
@@ -203,6 +204,7 @@ worse prices, and a few weeks is a small sample.</p>
 {period_section}
 {_observation_section(card.get("observations") or {}, settings)}
 {_pregame_section(card.get("pregame") or {}, settings)}
+{_projection_section(card.get("projections") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
@@ -295,6 +297,85 @@ def _pregame_section(pg: dict, settings: Settings) -> str:
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
 
 
+def _signed(value: float | None, decimals: int = 1) -> str:
+    if value is None:
+        return "–"
+    return f"{round(value, decimals) + 0.0:+.{decimals}f}"  # + 0.0 turns -0.0 into +0.0
+
+
+def _record(r: dict) -> str:
+    played = r["wins"] + r["losses"]
+    share = f" ({r['wins'] / played * 100:.0f}%)" if played else ""
+    return f"{r['wins']}-{r['losses']}-{r['pushes']}{share}"
+
+
+def _projection_section(pj: dict, settings: Settings) -> str:
+    """How the football model has done against the final scores and the book."""
+    title = "Projection model (football, graded against the book, nothing sent)"
+    if not settings.PROJECTION_ENABLED:
+        return "<h2>Projection model</h2><p class='note'>off</p>"
+    if not pj or not (pj.get("graded") or pj.get("open")):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>no projections yet</p>"
+
+    def trio(part: dict, decimals: int = 1) -> str:
+        return " / ".join(_fmt(part.get(k), decimals) for k in ("raw", "blend", "book"))
+
+    sports = ", ".join(f"{k.upper()} {v}" for k, v in sorted(pj.get("by_sport", {}).items()))
+    rows = [
+        ("Graded", f"{pj['graded']} ({sports or 'none'}), {pj['open']} open"),
+        ("Avg margin miss: model / blend / book", trio(pj["margin_error"])),
+        ("Avg total miss: model / blend / book", trio(pj["total_error"])),
+        ("Brier score: model / blend / book", trio(pj["brier"], 3)),
+    ]
+    for bucket in ("1", "2", "3", "5"):
+        rows.append(
+            (f"Spread record, model {bucket}+ pts off the book", _record(pj["ats"][bucket]))
+        )
+    for bucket in ("1", "2", "3", "5"):
+        rows.append((f"Total record, model {bucket}+ pts off the book", _record(pj["ou"][bucket])))
+    clv = pj["clv"]
+    moved = (
+        f"{_signed(clv['margin'])} pts avg, {_pct(clv['positive_share'])} of {clv['closed']} closed"
+    )
+    rows.append(("Line moved the model's way", moved))
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    recent = "".join(
+        "<tr><td>{when}<br>{game}</td><td class='num'>{model}<br>{book}</td>"
+        "<td class='num'>{final}</td><td>{ats}</td><td>{ou}</td></tr>".format(
+            when=html.escape(_local(r["kickoff"], settings.TZ)),
+            game=html.escape(f"{r['sport'].upper()} {r['away']} at {r['home']}"),
+            model=html.escape(f"{r['home']} {-r['raw_margin']:+.1f} / {r['raw_total']:.1f}"),
+            book=html.escape(
+                f"book {r['home']} {-r['book_margin']:+.1f} / {r['book_total']:.1f}"
+                if r["book_margin"] is not None and r["book_total"] is not None
+                else "no book line"
+            ),
+            final=html.escape(f"{r['final']['away']}-{r['final']['home']}"),
+            ats=html.escape(f"{r['ats']['side']} {r['ats']['result']}" if r["ats"] else "–"),
+            ou=html.escape(f"{r['ou']['side']} {r['ou']['result']}" if r["ou"] else "–"),
+        )
+        for r in pj.get("recent") or []
+    )
+    table = (
+        "<table><tr><th>Game</th><th>Model / book</th><th>Final</th><th>Spread</th>"
+        f"<th>Total</th></tr>{recent}</table>"
+        if recent
+        else ""
+    )
+    note = (
+        "<p class='note'>The model is half points, half yards-based points, each adjusted "
+        "for who was played and shrunk toward average, plus home field; the blend leans on "
+        "the book while games are few. Miss is the average distance from the final margin "
+        "or total, lower is better, and the book is the bar to beat. Brier scores the win "
+        "probability, lower is better. The spread and total records count the side the "
+        "model took against the book's line when it sat at least that far from it. "
+        "Nothing here is sent or placed.</p>"
+    )
+    return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
+
+
 def _pregame_health(status: RuntimeStatus, settings: Settings) -> str:
     if not settings.PREGAME_ENABLED:
         return "off"
@@ -324,6 +405,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['backlog']} still to fetch"
     if gl.get("stale"):
         text += f", {gl['stale']} to re-read"
+    if gl.get("projected"):
+        text += f", {gl['projected']} sheets projected"
     if gl.get("error"):
         text += f"; error: {gl['error']}"
     return text
@@ -493,6 +576,92 @@ def _strip(sheet: dict, settings: Settings) -> str:
     return f"<div class='strip'>{cells}</div>"
 
 
+def _projection_block(sheet: dict, settings: Settings) -> str:
+    """The model's numbers beside the book's and Polymarket's, and why they differ."""
+    if not settings.PROJECTION_ENABLED:
+        return ""
+    home, away = sheet["home"]["abbreviation"], sheet["away"]["abbreviation"]
+    proj = sheet.get("projection")
+    if not proj:
+        return (
+            "<h2>Projection</h2><p class='note'>no projection yet: the model needs both "
+            "teams in the game log.</p>"
+        )
+    raw, blend, book = proj["raw"], proj["blend"], proj.get("book") or {}
+    implied = sheet.get("implied") or {}
+    pm = sheet.get("polymarket") or {}
+
+    def pts(value: float | None) -> str:
+        return "–" if value is None else f"{value:.1f}"
+
+    def spread(margin: float | None) -> str:
+        return "–" if margin is None else f"{-margin:+.1f}"
+
+    def pct(value: float | None) -> str:
+        return "–" if value is None else f"{value * 100:.0f}%"
+
+    rows = [
+        (f"{away} (away)", pts(raw["away"]), pts(blend["away"]), pts(implied.get("away")), "–"),
+        (f"{home} (home)", pts(raw["home"]), pts(blend["home"]), pts(implied.get("home")), "–"),
+        (
+            f"Spread ({home})",
+            spread(raw["margin"]),
+            spread(blend["margin"]),
+            spread(book.get("margin")),
+            "–",
+        ),
+        ("Total", pts(raw["total"]), pts(blend["total"]), pts(book.get("total")), "–"),
+        (
+            f"{home} to win",
+            pct(raw["home_win"]),
+            pct(blend["home_win"]),
+            pct(book.get("home_win")),
+            _cents(pm.get("home")),
+        ),
+    ]
+    body = "".join(
+        f"<tr><td class='label'>{html.escape(label)}</td>"
+        + "".join(f"<td>{html.escape(cell)}</td>" for cell in cells)
+        + "</tr>"
+        for label, *cells in rows
+    )
+    half = raw.get("first_half") or {}
+    body += (
+        f"<tr><td class='label'>1st half</td><td colspan='4' class='left'>{html.escape(away)} "
+        f"{pts(half.get('away'))} – {html.escape(home)} {pts(half.get('home'))}</td></tr>"
+    )
+    head = (
+        "<tr><th class='label'></th><th>Model</th><th>Blend</th><th>Book</th>"
+        "<th>Polymarket</th></tr>"
+    )
+    gap = proj.get("gap") or {}
+    bits = []
+    if gap.get("margin") is not None:
+        side = home if gap["margin"] > 0 else away
+        bits.append(f"{side} by {abs(gap['margin']):.1f} points more than the book")
+    if gap.get("total") is not None:
+        bits.append(f"total {abs(gap['total']):.1f} {'higher' if gap['total'] > 0 else 'lower'}")
+    if gap.get("home_win") is not None:
+        side = home if gap["home_win"] > 0 else away
+        bits.append(f"{side} to win {abs(gap['home_win']) * 100:.0f} points likelier")
+    gap_text = f"Model vs book: {', '.join(bits)}." if bits else "No book line to compare."
+    r, lg, used = proj["ratings"], proj["league"], proj["games_used"]
+    site = " (neutral site, none applied)" if proj.get("neutral") else ""
+    inputs = (
+        f"Ratings in points against an average side (defence below zero allows fewer): "
+        f"{home} offence {_signed(r['home']['offense'])}, defence {_signed(r['home']['defense'])}; "
+        f"{away} offence {_signed(r['away']['offense'])}, defence {_signed(r['away']['defense'])}. "
+        f"League {lg['points']:.1f} a side, home field {lg['hfa']:g}{site}; "
+        f"{used['home']} and {used['away']} games used, blend {blend['weight'] * 100:.0f}% model."
+    )
+    thin = " <b>Thin: fewer than 3 games for a side.</b>" if proj.get("thin") else ""
+    return (
+        "<h2>Projection</h2><div class='wrap'>"
+        f"<table class='sheet'>{head}{body}</table></div>"
+        f"<p class='note'>{html.escape(gap_text)} {html.escape(inputs)}{thin}</p>"
+    )
+
+
 def _metric_cells(team: dict, metric, league_size: int, reverse: bool) -> str:
     key = metric.key
     season = _fmt(team["season"].get(key), metric.decimals, metric.percent)
@@ -563,8 +732,9 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
         "(points, points allowed, point margin). Green is the top third, red the bottom third. "
         '"Away" and "Home" are the team\'s own games at that venue type. First-half yards '
         "come from the play-by-play. Sacks and plays are not in college box scores. The market "
-        "implied score is the book's total split by its spread. Nothing on this page is a "
-        "recommendation."
+        "implied score is the book's total split by its spread. The projection is the "
+        "scanner's own model, graded on the scorecard; the blend leans on the book while "
+        "games are few. Nothing on this page is a recommendation."
     )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -577,12 +747,18 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 <div class="cards">{_team_card(away, "Away", n)}{_team_card(home, "Home", n)}</div>
 </div>
 {_strip(sheet, settings)}
+{_projection_block(sheet, settings)}
 {sections}
 <p class="note">{footnote}</p>
 </body></html>"""
 
 
-def render_matchups(by_sport: dict[str, list[dict]], settings: Settings, status) -> str:
+def render_matchups(
+    by_sport: dict[str, list[dict]],
+    settings: Settings,
+    status,
+    projections: dict[str, dict[str, dict]] | None = None,
+) -> str:
     zone = ZoneInfo(settings.TZ)
     blocks = []
     for sport in FOOTBALL:
@@ -601,6 +777,14 @@ def render_matchups(by_sport: dict[str, list[dict]], settings: Settings, status)
                     implied_away = (book.total + book.home_spread) / 2.0
                     implied = f"implied {implied_away:.1f} – {implied_home:.1f}"
                     line += f"<br><span class='note'>{implied}</span>"
+            stored = (projections or {}).get(sport, {}).get(row["game_id"])
+            if stored:
+                raw = stored["projection"]["raw"]
+                model = (
+                    f"model {html.escape(slate['home']['abbreviation'])} {-raw['margin']:+.1f}, "
+                    f"total {raw['total']:.1f}"
+                )
+                line += ("<br>" if line else "") + f"<span class='note'>{model}</span>"
             joiner = "vs" if slate.get("neutral") else "at"
             away_name = _logo(slate["away"], "logo-sm") + html.escape(slate["away"]["abbreviation"])
             home_name = _logo(slate["home"], "logo-sm") + html.escape(slate["home"]["abbreviation"])
@@ -781,7 +965,8 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         if not authorised(token, x_status_token, scanner_token):
             return denied()
         by_sport = {sport: diary.football_upcoming(sport) for sport in FOOTBALL}
-        page = HTMLResponse(render_matchups(by_sport, settings, status))
+        projections = {sport: diary.open_projections(sport) for sport in FOOTBALL}
+        page = HTMLResponse(render_matchups(by_sport, settings, status, projections))
         return remember(page, request, token)
 
     @app.get("/matchup/{sport}/{game_id}", response_class=HTMLResponse)

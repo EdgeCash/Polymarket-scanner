@@ -87,6 +87,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `PREGAME_MIN_EDGE` | `0.03` | Recording threshold: edge after fee against the book's vig-free number |
 | `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
 | `GAMELOG_ENABLED` | `true` | The football game log and matchup sheets |
+| `PROJECTION_ENABLED` | `true` | The football projection model on the sheets and scorecard |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -411,6 +412,42 @@ home = (total - home spread) / 2 and away = (total + home spread) / 2. Both
 pages need the status token (or the cookie). Nothing on a sheet is a
 recommendation, and the pages never place anything.
 `python -m scanner --gamelog-once` runs one refresh by hand.
+
+## Projection model (football)
+
+The owner wants each sheet to carry enough to decide on, and to know whether a
+model built from the log can hold its own against the book before any money
+follows it. `scanner/projection.py` is that model, kept plain enough to explain
+on the sheet: for every team, half of what it scored and half of what its yards
+say it should have scored (the league's points per yard times its yards), each
+adjusted for who it played, shrunk toward average while games are few (four
+pseudo-games of average), plus home field (1.8 points in the NFL, 2.8 in
+college). Two ratings per team come out, points above average on offence and
+points above average allowed on defence; a game's projection is the league
+average plus the two ratings that meet, with half the home edge on each side,
+and the win probability is the projected margin against the usual spread of
+results (13.5 points NFL, 16.5 college). A first-half score is the projection
+times the league's first-half share. Turnover luck is mostly washed out by the
+yards half; rest, weather and injuries are not in it.
+
+Beside the raw projection the sheet shows a blend with the book: the model's
+weight is games over games plus six, so with five games logged the blend is
+under half model and it drifts toward the model as the season goes. The gap
+between the raw model and the book is written out in points, and the inputs
+(both teams' ratings, the league average, home field, games used) sit under the
+table so the owner can see why.
+
+Every projection is written to the diary (`projections`) when a game comes into
+the 48-hour window, updated each pass until kickoff, then locked and graded once
+the game's record lands in the log: the miss against the final margin and total
+for the model, the blend and the book; a Brier score for each win probability;
+which side the model took against the book's spread and total and whether it
+covered, kept for every game and bucketed on the scorecard by how far the model
+sat from the book (1, 2, 3 and 5 points) so no threshold is chosen for the
+owner; and whether the closing line moved the model's way. The scorecard's
+"Projection model" section shows all of it, with the book as the bar to beat.
+`PROJECTION_ENABLED=false` switches the model off. Nothing in it sends or places
+anything; a stake suggestion is a separate, later decision.
 
 ## Milestones
 

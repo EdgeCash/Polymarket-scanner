@@ -938,6 +938,8 @@ class RefreshSummary:
     backlog: int = 0  # finished games still to fetch when the budget ran out
     reread: int = 0  # stored games read again because the parser has learned more
     stale: int = 0  # stored games still waiting for that re-read
+    projected: int = 0  # upcoming games given a projection this pass
+    graded: int = 0  # projections graded this pass
     errors: list[str] = field(default_factory=list)
 
 
@@ -997,7 +999,45 @@ class FootballLog:
                 )
         self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
+        if self.settings.PROJECTION_ENABLED:
+            self._project(sport, season, now, summary)
         return summary
+
+    def _project(self, sport, season, now, summary) -> None:
+        """Fit the model to the log and write a projection for every upcoming game.
+
+        A projection keeps updating as games come in until kickoff, then locks; it
+        is graded once the game's own record lands in the log.
+        """
+        from scanner.projection import fit, project
+
+        ratings = fit(self.diary.football_games(sport, season), sport)
+        for row in self.diary.football_upcoming(sport):
+            kickoff = datetime.fromisoformat(row["date"])
+            if kickoff <= now:
+                continue
+            slate = row["slate"]
+            book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
+            projection = project(
+                ratings,
+                slate["home"]["team_id"],
+                slate["away"]["team_id"],
+                bool(slate.get("neutral")),
+                book,
+            )
+            if projection is None:
+                continue
+            self.diary.upsert_projection(
+                sport,
+                row["game_id"],
+                kickoff,
+                slate["home"]["abbreviation"],
+                slate["away"]["abbreviation"],
+                projection,
+                now,
+            )
+            summary.projected += 1
+        summary.graded = self.diary.grade_projections(sport, now)
 
     def _reread_stale(self, sport, now, budget, summary) -> None:
         """Re-read games stored by an older parser, with whatever budget is left.
@@ -1097,4 +1137,7 @@ def sheet_from_diary(diary: Diary, sport: str, game_id: str) -> dict | None:
     line = diary.last_pregame_line(sport, game_id)
     if line is not None:
         polymarket = {"scanned_at": line["scanned_at"], **(line.get("polymarket") or {})}
-    return build_sheet(upcoming, records, upcoming.get("extra") or {}, polymarket)
+    sheet = build_sheet(upcoming, records, upcoming.get("extra") or {}, polymarket)
+    stored = diary.projection(sport, game_id)
+    sheet["projection"] = stored["projection"] if stored else None
+    return sheet

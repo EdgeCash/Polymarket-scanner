@@ -126,6 +126,9 @@ class Settings(BaseSettings):
     # Football game log and matchup sheets: every finished NFL and college game's box
     # score kept in the diary, and a sheet per upcoming game on the status site.
     GAMELOG_ENABLED: bool = True
+    # The football projection model: fitted from the game log each pass, written to
+    # every upcoming sheet beside the book's line, graded in the diary, never sent.
+    PROJECTION_ENABLED: bool = True
 
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"

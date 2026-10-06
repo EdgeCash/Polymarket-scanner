@@ -206,12 +206,29 @@ CREATE TABLE IF NOT EXISTS football_upcoming (
     summary_fetched_at TEXT,
     PRIMARY KEY (sport, game_id)
 );
+CREATE TABLE IF NOT EXISTS projections (
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    kickoff TEXT NOT NULL,
+    home TEXT NOT NULL,
+    away TEXT NOT NULL,
+    model TEXT NOT NULL,
+    made_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    projection TEXT NOT NULL,
+    first_projection TEXT NOT NULL,
+    outcome TEXT,
+    grades TEXT,
+    graded_at TEXT,
+    PRIMARY KEY (sport, game_id)
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
 CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
 CREATE INDEX IF NOT EXISTS pregame_lines_game ON pregame_lines (sport, feed_id, id);
 CREATE INDEX IF NOT EXISTS pregame_gaps_game ON pregame_gaps (sport, feed_id);
 CREATE INDEX IF NOT EXISTS football_games_season ON football_games (sport, season, date);
+CREATE INDEX IF NOT EXISTS projections_open ON projections (sport, outcome, kickoff);
 """
 
 ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
@@ -895,6 +912,149 @@ class Diary:
             ).fetchone()
         return self._upcoming_row(row) if row else None
 
+    # -- the projection model's record ------------------------------------------
+
+    def upsert_projection(
+        self,
+        sport: str,
+        game_id: str,
+        kickoff: datetime,
+        home: str,
+        away: str,
+        projection: dict,
+        at: datetime,
+    ) -> None:
+        """Write a game's projection; later passes update it until it is graded.
+
+        The first projection is kept beside the latest so a later look can tell
+        what the model said when the game first came into view.
+        """
+        body = json.dumps(projection)
+        with self._lock:
+            self._conn.execute(
+                """INSERT INTO projections (sport, game_id, kickoff, home, away, model,
+                   made_at, updated_at, projection, first_projection)
+                   VALUES (?,?,?,?,?,?,?,?,?,?)
+                   ON CONFLICT(sport, game_id) DO UPDATE SET kickoff = excluded.kickoff,
+                   home = excluded.home, away = excluded.away, model = excluded.model,
+                   updated_at = excluded.updated_at, projection = excluded.projection
+                   WHERE projections.outcome IS NULL""",
+                (
+                    sport,
+                    game_id,
+                    _iso(kickoff),
+                    home,
+                    away,
+                    str(projection.get("model") or ""),
+                    _iso(at),
+                    _iso(at),
+                    body,
+                    body,
+                ),
+            )
+
+    @staticmethod
+    def _projection_row(row) -> dict:
+        out = dict(row)
+        out["projection"] = json.loads(out["projection"])
+        out["first_projection"] = json.loads(out["first_projection"])
+        out["grades"] = json.loads(out["grades"]) if out.get("grades") else None
+        return out
+
+    def projection(self, sport: str, game_id: str) -> dict | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM projections WHERE sport = ? AND game_id = ?", (sport, game_id)
+            ).fetchone()
+        return self._projection_row(row) if row else None
+
+    def open_projections(self, sport: str) -> dict[str, dict]:
+        """Ungraded projections by game id: the ones the matchups list shows."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM projections WHERE sport = ? AND outcome IS NULL", (sport,)
+            ).fetchall()
+        return {str(r["game_id"]): self._projection_row(r) for r in rows}
+
+    def grade_projections(
+        self, sport: str, now: datetime, grace_hours: float = 4.0, give_up_days: float = 10.0
+    ) -> int:
+        """Grade projections whose game is in the log; give up on games that never land."""
+        from scanner.books import BookLine
+        from scanner.projection import grade
+
+        graded = 0
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM projections WHERE sport = ? AND outcome IS NULL AND kickoff < ?",
+                (sport, _iso(now - timedelta(hours=grace_hours))),
+            ).fetchall()
+            for row in rows:
+                game = self._conn.execute(
+                    "SELECT home_score, away_score, book FROM football_games "
+                    "WHERE sport = ? AND game_id = ?",
+                    (sport, row["game_id"]),
+                ).fetchone()
+                if game is None:
+                    if datetime.fromisoformat(row["kickoff"]) < now - timedelta(days=give_up_days):
+                        self._conn.execute(
+                            "UPDATE projections SET outcome = ?, graded_at = ? "
+                            "WHERE sport = ? AND game_id = ?",
+                            (OUTCOME_NOT_GRADED, _iso(now), sport, row["game_id"]),
+                        )
+                    continue
+                close = BookLine.from_dict(json.loads(game["book"])) if game["book"] else None
+                grades = grade(
+                    json.loads(row["projection"]), game["home_score"], game["away_score"], close
+                )
+                self._conn.execute(
+                    "UPDATE projections SET outcome = 'graded', grades = ?, graded_at = ? "
+                    "WHERE sport = ? AND game_id = ?",
+                    (json.dumps(grades), _iso(now), sport, row["game_id"]),
+                )
+                graded += 1
+        return graded
+
+    def projection_summary(self, since: datetime | None = None) -> dict:
+        """How the model has done against the final scores and the book."""
+        from scanner.projection import summarise
+
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute(
+                    "SELECT * FROM projections WHERE outcome = 'graded' ORDER BY kickoff DESC"
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM projections WHERE outcome = 'graded' AND kickoff >= ? "
+                    "ORDER BY kickoff DESC",
+                    (_iso(since),),
+                ).fetchall()
+            open_count = self._conn.execute(
+                "SELECT COUNT(*) AS n FROM projections WHERE outcome IS NULL"
+            ).fetchone()["n"]
+        rows = [self._projection_row(r) for r in rows]
+        out = summarise([r["grades"] for r in rows])
+        out["open"] = int(open_count)
+        out["by_sport"] = dict(Counter(r["sport"] for r in rows))
+        out["recent"] = [
+            {
+                "kickoff": r["kickoff"],
+                "sport": r["sport"],
+                "home": r["home"],
+                "away": r["away"],
+                "raw_margin": r["projection"]["raw"]["margin"],
+                "raw_total": r["projection"]["raw"]["total"],
+                "book_margin": (r["projection"].get("book") or {}).get("margin"),
+                "book_total": (r["projection"].get("book") or {}).get("total"),
+                "final": r["grades"]["final"],
+                "ats": r["grades"].get("ats"),
+                "ou": r["grades"].get("ou"),
+            }
+            for r in rows[:10]
+        ]
+        return out
+
     # -- events (heartbeats, failures, paused messages) ----------------------
 
     def log_event(self, kind: str, detail: str, at: datetime) -> None:
@@ -1084,6 +1244,7 @@ class Diary:
             "near_misses_by_type": self.near_misses_by_type(since),
             "observations": self.observation_summary(since),
             "pregame": self.pregame_summary(since),
+            "projections": self.projection_summary(since),
         }
 
     @staticmethod

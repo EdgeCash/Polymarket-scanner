@@ -581,6 +581,8 @@ class PregameScanner:
             "fetched": sum(s.summaries_fetched for s in summaries),
             "reread": sum(s.reread for s in summaries),
             "stale": sum(s.stale for s in summaries),
+            "projected": sum(s.projected for s in summaries),
+            "graded": sum(s.graded for s in summaries),
             "error": "; ".join(short_error(e) for e in errors[:2]) or None,
         }
         log.info(
