@@ -43,6 +43,11 @@ def _clean_env(monkeypatch):
             "MIN_EDGE",
             "MIN_FAIR",
             "MAX_ALERTS_PER_DAY",
+            "PERIOD_MARKETS_ENABLED",
+            "PERIOD_ALERTS_ENABLED",
+            "OBSERVATION_MINUTES_LEFT",
+            "GIT_COMMIT",
+            "RAILWAY_GIT_COMMIT_SHA",
         }:
             monkeypatch.delenv(key, raising=False)
     # Ignore any local .env file so tests are the same on every machine.

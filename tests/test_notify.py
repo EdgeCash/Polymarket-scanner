@@ -355,3 +355,98 @@ def test_shadow_report_splits_near_misses_by_type():
     text = shadow_report(diary, datetime(2026, 10, 12, 12, 0, tzinfo=UTC), "America/Chicago")
     assert "Near misses (winner): stale score 1" in text
     assert "Near misses (over): edge too small 1" in text
+
+
+# -- quarter and half markets -------------------------------------------------------
+
+
+def period_alert(**changes) -> Alert:
+    base = Alert(
+        alert_type=AlertType.PERIOD,
+        league=League.NFL,
+        created_at=CHECKED,
+        feed_id="1",
+        event_slug="nfl-dal-phi-2026-10-11",
+        market_slug="tsc-nfl-dal-phi-2026-10-11-1h-24pt5",
+        home="PHI",
+        away="DAL",
+        pick="1H OVER 24.5",
+        side_label="long",
+        fair_price=0.995,
+        model_price=None,
+        espn_price=None,
+        buy_price=0.96,
+        fee=0.0026688,
+        edge=0.0323,
+        dollars_available=192.0,
+        average_price=0.96,
+        worst_price=0.96,
+        situation={
+            "period_detail": "1st half ended with 27 points",
+            "decided_age_seconds": 75,
+            "period_by_end": True,
+            "home_score": 10,
+            "away_score": 17,
+        },
+        polymarket_score="17-10",
+        line=24.5,
+        combined_score=27,
+    )
+    return replace(base, **changes)
+
+
+def test_period_message_layout():
+    from scanner.notify import format_alert, format_period
+
+    text = format_period(period_alert(), "America/Chicago")
+    lines = text.split("\n")
+    assert lines[0] == "NFL - DAL at PHI"
+    assert lines[1] == "1H OVER 24.5 is decided: 1st half ended with 27 points"
+    assert lines[2] == "Fair 99.5c | Buy 96c | Edge 3.2c after fee"
+    assert lines[3] == "$192 for sale at 96c or better"
+    assert lines[4].startswith("Per 100 contracts: risk $96 to make $")
+    assert lines[5].startswith("Break-even: must win ")
+    assert lines[6] == "Period has been over for 75 seconds"
+    assert lines[7] == "Checked 2:41:07 PM CT"
+    assert format_alert(period_alert(), "America/Chicago") == text
+    by_points = format_period(
+        period_alert(situation={**period_alert().situation, "period_by_end": False}),
+        "America/Chicago",
+    )
+    assert "Score has stood for 75 seconds" in by_points
+    behind = format_period(
+        period_alert(polymarket_score="14-10", polymarket_score_differs=True), "America/Chicago"
+    )
+    assert "Polymarket scoreboard shows 14-10 (behind)" in behind
+
+
+def test_period_alerts_need_their_own_switch_as_well_as_the_master_switch():
+    sender = FakeSender()
+    notifier = Notifier(load_settings(ALERTS_ENABLED=True), sender)
+    alert = period_alert()
+    assert notifier.send_alert(alert) is False
+    assert sender.messages == [] and alert.message.startswith("NFL - DAL at PHI\n1H OVER 24.5")
+    assert notifier.send_system("still sending other things") is True
+    both = Notifier(load_settings(ALERTS_ENABLED=True, PERIOD_ALERTS_ENABLED=True), sender)
+    assert both.send_alert(period_alert()) is True
+    assert sender.messages[-1].startswith("NFL - DAL at PHI\n1H OVER 24.5 is decided")
+    shadow = Notifier(load_settings(ALERTS_ENABLED=False, PERIOD_ALERTS_ENABLED=True), sender)
+    assert shadow.send_alert(period_alert()) is False and len(sender.messages) == 2
+
+
+def test_weekly_summary_and_shadow_report_cover_period_markets_and_the_window():
+    from scanner.diary import Diary
+    from scanner.report import shadow_report
+    from tests.conftest import at
+    from tests.test_diary import observation
+    from tests.test_diary import period_alert as diary_period_alert
+
+    diary = Diary(":memory:")
+    diary.record_alert(diary_period_alert(created_at=at(10)), sent=False)
+    diary.record_observation(observation(created_at=at(20)))
+    text = weekly_summary(diary.scorecard())
+    assert "Period markets: 1 (NFL 1)" in text
+    assert "Observation window (nothing sent): 1 would-be alerts on 1 games" in text
+    report = shadow_report(diary, at(100), "America/Chicago")
+    assert "winner 0, clinched over 0, period 1" in report
+    assert "Observation window (nothing sent): 1 checks on 1 games, 1 would have alerted" in report

@@ -36,6 +36,10 @@ class Side(StrEnum):
 class AlertType(StrEnum):
     WINNER = "winner"
     CLINCHED_OVER = "clinched_over"
+    PERIOD = "period"  # a quarter or half market whose result is already known
+
+
+REGULATION_PERIODS = 4
 
 
 @dataclass(frozen=True, slots=True)
@@ -80,10 +84,43 @@ class GameState:
     fetched_at: datetime
     unknown_reason: str | None = None
     status_detail: str = ""
+    period_over: bool = False  # the feed says the current period has just ended
+    home_linescores: tuple[int, ...] = ()  # points by period, when the feed gives them
+    away_linescores: tuple[int, ...] = ()
 
     @property
     def is_overtime(self) -> bool:
-        return self.period is not None and self.period > 4
+        return self.period is not None and self.period > REGULATION_PERIODS
+
+    @property
+    def completed_periods(self) -> int:
+        """How many periods are over for certain. 0 when the feed cannot say."""
+        if self.period is None:
+            return 0
+        if self.status is GameStatus.FINAL:
+            return max(self.period, REGULATION_PERIODS)
+        if self.status is GameStatus.HALFTIME:
+            return 2
+        if self.status in (GameStatus.LIVE, GameStatus.DELAYED):
+            return self.period if self.period_over else self.period - 1
+        return 0
+
+    def linescores_for(self, side: Side) -> tuple[int, ...]:
+        return self.home_linescores if side is Side.HOME else self.away_linescores
+
+    def points_so_far(self, side: Side, first: int, last: int) -> int | None:
+        """Points scored in periods ``first``..``last`` so far. None without per-period scores."""
+        scores = self.linescores_for(side)
+        if not scores:
+            return None
+        return sum(scores[first - 1 : last])
+
+    def points_in_span(self, side: Side, first: int, last: int) -> int | None:
+        """Points in periods ``first``..``last``, only once the feed reports all of them."""
+        scores = self.linescores_for(side)
+        if len(scores) < last:
+            return None
+        return sum(scores[first - 1 : last])
 
     @property
     def total_points(self) -> int | None:
@@ -110,6 +147,9 @@ class GameState:
             self.yards_to_endzone,
             self.home_timeouts,
             self.away_timeouts,
+            self.period_over,
+            self.home_linescores,
+            self.away_linescores,
         )
 
 
@@ -172,6 +212,26 @@ class TotalMarket:
 
 
 @dataclass(frozen=True, slots=True)
+class PeriodMarket:
+    """A quarter or half market: a total, a team total or a spread for that span only."""
+
+    market_slug: str
+    period: str  # "1q", "2q", "3q", "4q", "1h" or "2h"
+    kind: str  # "total", "team_total" or "spread"
+    line: float
+    theta: float
+    active: bool
+    closed: bool
+    long_tradable: bool
+    short_tradable: bool
+    over_is_long: bool = True  # totals and team totals: which side is the Over
+    team_id: int | None = None  # team total: its team; spread: the long side's team
+    other_team_id: int | None = None  # spread: the short side's team
+    long_line: float | None = None  # spread: the long side's handicap, signed (+4.5)
+    title: str = ""
+
+
+@dataclass(frozen=True, slots=True)
 class PolymarketGame:
     """One Polymarket event with its moneyline and total markets."""
 
@@ -191,6 +251,7 @@ class PolymarketGame:
     display_score: str | None  # Polymarket's own scoreboard, recorded, never trusted
     display_period: str | None
     display_elapsed: str | None
+    period_markets: tuple[PeriodMarket, ...] = ()
 
     def team_on(self, is_long: bool) -> MarketTeam | None:
         for team in self.teams:
@@ -264,3 +325,32 @@ class NearMiss:
     fair_price: float | None
     buy_price: float | None
     edge: float | None
+
+
+@dataclass(frozen=True, slots=True)
+class Observation:
+    """A winner evaluation inside the observation window: recorded, never sent.
+
+    The window sits just outside the late-game filter, so the owner can see what
+    the rules would have done with a little more time left before deciding whether
+    to change the filter. Nothing here reaches the phone.
+    """
+
+    created_at: datetime
+    league: League
+    feed_id: str
+    event_slug: str
+    pick: str
+    pick_side: str
+    minutes_left: float
+    home_score: int | None
+    away_score: int | None
+    fair_price: float | None
+    model_price: float | None
+    espn_price: float | None
+    buy_price: float | None
+    fee: float | None
+    edge: float | None
+    dollars_available: float | None
+    would_alert: bool
+    reason: str

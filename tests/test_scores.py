@@ -151,3 +151,74 @@ def test_situation_key_changes_when_anything_that_matters_changes():
     other = states_by_id()["401873016"]
     assert base.situation_key() != other.situation_key()
     assert base.situation_key() == base.situation_key()
+
+
+# -- per-period scores ---------------------------------------------------------
+
+
+def raw_event(feed_id: str) -> dict:
+    raw = load_fixture("espn_states.json")
+    return next(e for e in raw["events"] if e["id"] == feed_id)
+
+
+def with_linescores(event: dict, home: list, away: list) -> dict:
+    import copy
+
+    event = copy.deepcopy(event)
+    for competitor in event["competitions"][0]["competitors"]:
+        values = home if competitor["homeAway"] == "home" else away
+        competitor["linescores"] = [
+            {"value": float(v), "displayValue": str(v), "period": i + 1}
+            for i, v in enumerate(values)
+        ]
+    return event
+
+
+def test_per_period_scores_are_kept_when_they_add_up():
+    s = parse_event(
+        with_linescores(raw_event("401873001"), [0, 7, 7, 0], [14, 3, 7, 0]), League.NFL, at(0)
+    )
+    assert s.home_linescores == (0, 7, 7, 0) and s.away_linescores == (14, 3, 7, 0)
+    assert s.period_over is False and s.completed_periods == 3  # live in Q4
+    assert s.points_so_far(Side.AWAY, 1, 2) == 17 and s.points_in_span(Side.AWAY, 1, 2) == 17
+    assert s.points_in_span(Side.AWAY, 1, 5) is None  # the fifth period is not there
+
+
+def test_per_period_scores_that_do_not_add_up_are_dropped():
+    s = parse_event(
+        with_linescores(raw_event("401873001"), [0, 7, 0, 0], [14, 3, 7, 0]), League.NFL, at(0)
+    )
+    assert s.home_linescores == () and s.away_linescores == ()
+    assert s.points_so_far(Side.HOME, 1, 1) is None
+    one_sided = with_linescores(raw_event("401873001"), [0, 7, 7, 0], [14, 3, 7, 0])
+    one_sided["competitions"][0]["competitors"][1]["linescores"] = []
+    s = parse_event(one_sided, League.NFL, at(0))
+    assert s.home_linescores == () and s.away_linescores == ()
+
+
+def test_malformed_per_period_scores_are_dropped():
+    gap = with_linescores(raw_event("401873001"), [0, 7, 7, 0], [14, 3, 7, 0])
+    gap["competitions"][0]["competitors"][0]["linescores"][1]["period"] = 3  # periods 1, 3, 3, 4
+    assert parse_event(gap, League.NFL, at(0)).home_linescores == ()
+    bad = with_linescores(raw_event("401873001"), [0, 7, 7, 0], [14, 3, 7, 0])
+    bad["competitions"][0]["competitors"][0]["linescores"][0]["value"] = "seven"
+    assert parse_event(bad, League.NFL, at(0)).home_linescores == ()
+
+
+def test_completed_periods_follow_the_status():
+    by_id = states_by_id()
+    assert (
+        by_id["401873002"].status is GameStatus.HALFTIME
+        and by_id["401873002"].completed_periods == 2
+    )
+    end_q3 = by_id["401873003"]
+    assert end_q3.period_over is True and end_q3.completed_periods == 3
+    assert (
+        by_id["401873004"].status is GameStatus.FINAL and by_id["401873004"].completed_periods == 5
+    )
+    assert (
+        by_id["401873006"].status is GameStatus.DELAYED
+        and by_id["401873006"].completed_periods == 1
+    )
+    assert by_id["401873014"].status is GameStatus.PRE and by_id["401873014"].completed_periods == 0
+    assert by_id["401873005"].completed_periods == 4  # overtime in progress

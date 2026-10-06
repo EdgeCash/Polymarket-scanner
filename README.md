@@ -78,6 +78,9 @@ All settings are environment variables. Defaults are from the build brief.
 | `MIN_DOLLARS_AVAILABLE` | `50` | Lowest size for sale |
 | `SCORE_COOLDOWN_SECONDS` | `20` | Quiet time after a score change, winner alerts |
 | `CLINCH_COOLDOWN_SECONDS` | `60` | How long a score must stand before a clinched-over alert |
+| `PERIOD_MARKETS_ENABLED` | `true` | Evaluate and record decided quarter and half markets |
+| `PERIOD_ALERTS_ENABLED` | `false` | Also send them to the phone (needs `ALERTS_ENABLED` too) |
+| `OBSERVATION_MINUTES_LEFT` | `15` | Record winner checks between `MAX_MINUTES_LEFT` and this; never sends; `0` turns it off |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -194,8 +197,9 @@ rules and fires at exactly the three polls it should.
 
 ## Diary and scorecard (milestone 6)
 
-`scanner/diary.py` writes every alert, near miss, follow-up price and outcome
-to SQLite at `DATABASE_PATH` (WAL mode, one file on the persistent volume).
+`scanner/diary.py` writes every alert, near miss, follow-up price, observation
+and outcome to SQLite at `DATABASE_PATH` (WAL mode, one file on the persistent
+volume).
 Grading settles a winner alert at $1, $0 or 50 cents for an NFL tie, a
 clinched-over alert at $1 when the final combined score is above the line,
 and marks alerts on postponed or cancelled games "not graded" so they stay out
@@ -271,6 +275,47 @@ downloaded from the volume page if you ever want the raw file.
 
 After the shadow weekend, run `python -m scanner --shadow-report --send` (or
 read the diary) and decide whether to set `ALERTS_ENABLED=true`.
+
+## Period markets and the observation window (shadow extras)
+
+Two additions after the first live night, both quiet by design.
+
+**Decided quarter and half markets.** Polymarket US lists, for every football
+game, a total for each quarter and half, team totals for each half and spreads
+for each quarter and half (`football_game_first_quarter_total`,
+`football_team_first_half_spread` and so on; there are no quarter or half
+moneylines). ESPN's scoreboard carries each team's points by quarter in
+`competitors[].linescores`, kept only when both teams have them and they add up
+to the score, and `STATUS_END_PERIOD` marks a quarter as over. Once a span has
+ended, or an Over's points have already passed the line, the market's result is
+known while it can still trade. `scanner/periods.py` says which side is decided
+(never on a push, never without per-period scores, never for a spread or Under
+before the span ends) and `evaluate_period` in `scanner/rules.py` applies the
+clinched-over rules to that side: 99.5c fair price, `MIN_EDGE_CLINCHED`, the
+`CLINCH_COOLDOWN_SECONDS` wait measured from the end of the span (or from the
+score, for an Over passed mid-span), the book walk and the repeat gap. A game
+can carry a hundred decided lines at halftime, so reads are rationed: three per
+pass across all games, never-read markets first and among those the narrowest
+margins first, each re-read at most every two minutes; a market seen closed or
+resolved is not read again. These alerts keep their own repeat gap and daily
+cap, so a period alert can never use up the winner alerts' cap, and the cap
+only applies once `PERIOD_ALERTS_ENABLED` is on: while they are only being
+recorded, every qualifying market is written down. They are sent only when
+`PERIOD_ALERTS_ENABLED` is on as well as `ALERTS_ENABLED`. The scorecard shows
+them as "Period markets" and grades them from the final per-period scores.
+
+**The observation window.** With `OBSERVATION_MINUTES_LEFT` above
+`MAX_MINUTES_LEFT` (15 and 8 by default), a winner candidate with between 8 and
+15 minutes left is run through the same winner rules with the time filter
+widened, at most once every 30 seconds per game, and the answer is written to
+the diary's `observations` table: fair, model and ESPN prices, the buy price,
+the edge, the dollars for sale and whether every rule would have passed. Nothing
+is sent, nothing counts against a cap, and the alert thresholds are untouched.
+Each game and pick counts once, at its first "would alert" check, and is graded
+at the final like a winner alert, so the scorecard's "Observation window"
+section shows the win rate needed, the actual win rate and the paper result the
+8-minute rule is leaving on the table (or saving). Changing the rule itself is
+still the owner's decision.
 
 ## Milestones
 

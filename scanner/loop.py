@@ -23,18 +23,25 @@ from scanner.config import (
     FEED_FAILURE_ALERT_SECONDS,
     FEED_FAILURE_REPEAT_SECONDS,
     GAME_LIST_REFRESH_SECONDS,
+    OBSERVATION_INTERVAL_SECONDS,
+    PERIOD_READS_PER_PASS,
+    PERIOD_REPOLL_SECONDS,
     WAKE_BEFORE_KICKOFF_SECONDS,
     Settings,
 )
 from scanner.diary import Diary
+from scanner.fees import fee_per_contract
 from scanner.matching import Match, match_games
 from scanner.models import (
     Alert,
+    AlertType,
     Book,
     GameState,
     GameStatus,
     League,
     NearMiss,
+    Observation,
+    PeriodMarket,
     PolymarketGame,
     Quote,
     Side,
@@ -45,11 +52,13 @@ from scanner.notify import (
     heartbeat_message,
     paused_message,
 )
+from scanner.periods import PeriodDecision, PeriodSides, decide, last_period, period_sides
 from scanner.polymarket import PolymarketError, PolymarketReader, RateLimited, short_error
 from scanner.rules import (
     AlertHistory,
     Decision,
     evaluate_clinched,
+    evaluate_period,
     evaluate_winner,
     pick_clinched,
 )
@@ -67,10 +76,26 @@ NEAR_MISS_REPEAT_SECONDS = 60.0  # the same near miss is written at most this of
 MAX_SLEEP_SECONDS = 60.0  # the loop never sleeps longer than this in one go
 
 
+# A market whose BBO state says one of these is settled; it is not read again.
+SETTLED_STATE_WORDS = ("CLOSED", "RESOLVED", "SETTLED")
+
+
+@dataclass(frozen=True, slots=True)
+class PeriodCandidate:
+    """A decided quarter or half market that is due for a price read."""
+
+    match: Match
+    market: PeriodMarket
+    sides: PeriodSides
+    decision: PeriodDecision
+    last_read: datetime | None
+
+
 @dataclass
 class PassSummary:
     alerts: list[Alert] = field(default_factory=list)
     near_misses: list[NearMiss] = field(default_factory=list)
+    observations: list[Observation] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
     candidates: int = 0
     live_games: int = 0
@@ -102,6 +127,17 @@ class Scanner:
         self._sleep = sleep
         self.tracker = GameTracker()
         self.history = AlertHistory(settings.TZ)
+        # Quarter and half alerts keep their own repeat gap and daily cap, so a
+        # shadow-only period alert can never use up the winner alerts' cap.
+        self.period_history = AlertHistory(settings.TZ)
+        # The observation window runs the winner rules with a wider time filter.
+        self.observe_settings = settings.model_copy(
+            update={
+                "MAX_MINUTES_LEFT": max(
+                    settings.OBSERVATION_MINUTES_LEFT, settings.MAX_MINUTES_LEFT
+                )
+            }
+        )
         self.leagues: dict[League, str] = {}
         self.games: dict[League, list[PolymarketGame]] = {}
         self.games_refreshed_at: datetime | None = None
@@ -112,6 +148,9 @@ class Scanner:
         self.heartbeat_day = None
         self.finished: set[tuple[League, str]] = set()
         self.clinch_reads: dict[str, tuple[datetime, int]] = {}  # slug -> (read at, points)
+        self.period_reads: dict[str, tuple[datetime, tuple]] = {}  # slug -> (read at, decision)
+        self.period_done: set[str] = set()  # period markets seen settled; not read again
+        self.observe_reads: dict[tuple[League, str], datetime] = {}  # game -> last observation
         self.stop_event = threading.Event()
 
     # -- startup ------------------------------------------------------------
@@ -123,7 +162,7 @@ class Scanner:
         missing = wanted - set(self.leagues)
         if missing:
             raise PolymarketError(f"leagues not available on Polymarket: {sorted(missing)}")
-        restored = self.diary.restore_history(self.history, self._now())
+        restored = self.diary.restore_history(self.history, self._now(), self.period_history)
         self.status.leagues = {lg.value: slug for lg, slug in self.leagues.items()}
         self.status.alerts_today = self.history.count_today(self._now())
         log.info("started: leagues %s, %d alerts restored from the diary", self.leagues, restored)
@@ -256,7 +295,8 @@ class Scanner:
             alert = decision.alert
             sent = self.notifier.send_alert(alert)
             self.diary.record_alert(alert, sent)
-            self.history.record(alert)
+            is_period = alert.alert_type is AlertType.PERIOD
+            (self.period_history if is_period else self.history).record(alert)
             summary.alerts.append(alert)
             self.status.alerts_today = self.history.count_today(now)
             self.status.last_alert_at = now.isoformat()
@@ -268,7 +308,9 @@ class Scanner:
                 alert.edge,
                 "" if sent else " (not sent)",
             )
-            if self.history.paused_message_due(now, self.settings.MAX_ALERTS_PER_DAY):
+            if not is_period and self.history.paused_message_due(
+                now, self.settings.MAX_ALERTS_PER_DAY
+            ):
                 self.diary.log_event(
                     "paused", paused_message(self.settings.MAX_ALERTS_PER_DAY), now
                 )
@@ -359,6 +401,166 @@ class Scanner:
             decisions.append(decision)
         return decisions
 
+    def _period_candidates(
+        self, match: Match, state: GameState, now: datetime
+    ) -> list[PeriodCandidate]:
+        """Quarter and half markets of one game whose result is settled and are due a read."""
+        if state.status not in (GameStatus.LIVE, GameStatus.HALFTIME):
+            return []
+        if not state.home_linescores or not state.away_linescores:
+            return []
+        out = []
+        for market in match.polymarket.period_markets:
+            if market.closed or not market.active or market.market_slug in self.period_done:
+                continue
+            sides = period_sides(match, market)
+            decided = decide(market, state, sides)
+            if decided is None:
+                continue
+            if decided.by_period_end:
+                age = self.tracker.seconds_since_period_completed(state, last_period(market), now)
+            else:
+                age = self.tracker.seconds_since_score_change(state, now)
+            if age is None or age < self.settings.CLINCH_COOLDOWN_SECONDS:
+                continue  # nothing to read yet; the rules would only say "cooldown"
+            # Decided markets are priced near a dollar within seconds and stay there:
+            # read each one at most every couple of minutes, or sooner only if the
+            # decision itself changed (a later period, more points).
+            token = (decided.side_label, decided.points, state.completed_periods)
+            last = self.period_reads.get(market.market_slug)
+            last_read = None
+            if last is not None:
+                read_at, last_token = last
+                if last_token == token:
+                    if (now - read_at).total_seconds() < PERIOD_REPOLL_SECONDS:
+                        continue
+                    last_read = read_at
+            out.append(PeriodCandidate(match, market, sides, decided, last_read))
+        return out
+
+    def _period_pass(self, live: list[Match], now: datetime, summary: PassSummary) -> None:
+        """Read a few decided period markets this pass, the closest calls first.
+
+        A game can carry a hundred decided lines at halftime, so they are rationed:
+        PERIOD_READS_PER_PASS per pass across all games, never-read markets before
+        re-reads, and among those the narrowest margins first, since a line the
+        result only just cleared is the one a slow market is most likely to misprice.
+        """
+        if not self.settings.PERIOD_MARKETS_ENABLED:
+            return
+        candidates: list[PeriodCandidate] = []
+        for match in live:
+            candidates.extend(self._period_candidates(match, match.espn, now))
+        candidates.sort(
+            key=lambda c: (c.last_read is not None, c.last_read or now, c.decision.margin)
+        )
+        for cand in candidates[:PERIOD_READS_PER_PASS]:
+            state = cand.match.espn
+            token = (cand.decision.side_label, cand.decision.points, state.completed_periods)
+            self.period_reads[cand.market.market_slug] = (now, token)
+            quote = self.reader.side_quotes(cand.market)[cand.decision.side_label]
+            if quote.state and any(word in quote.state for word in SETTLED_STATE_WORDS):
+                self.period_done.add(cand.market.market_slug)
+            common = dict(
+                match=cand.match,
+                state=state,
+                market=cand.market,
+                decision=cand.decision,
+                sides=cand.sides,
+                quote=quote,
+                settings=self.settings,
+                tracker=self.tracker,
+                history=self.period_history,
+                now=now,
+            )
+            decision = evaluate_period(book=None, **common)
+            if decision.reason == "rule 4: no book":
+                book = self._book(cand.market.market_slug)
+                common["now"] = self._now()
+                decision = evaluate_period(book=book, **common)
+            summary.candidates += 1
+            self._deliver(decision, now, summary)
+
+    def _observe_winners(
+        self, match: Match, state: GameState, now: datetime, summary: PassSummary
+    ) -> None:
+        """Run the winner rules just outside the late-game filter and only record the answer.
+
+        Nothing here is sent, counted against a cap or remembered as an alert; the
+        diary keeps what the rules would have done with more time left so the owner
+        can judge the filter on data.
+        """
+        low = self.settings.MAX_MINUTES_LEFT * 60
+        high = self.settings.OBSERVATION_MINUTES_LEFT * 60
+        if high <= low:
+            return
+        if state.status is not GameStatus.LIVE or state.is_overtime or state.period != 4:
+            return
+        if state.seconds_left is None or not (low < state.seconds_left <= high):
+            return
+        if not match.polymarket.moneyline_slug:
+            return
+        key = (state.league, state.feed_id)
+        last = self.observe_reads.get(key)
+        if last is not None and (now - last).total_seconds() < OBSERVATION_INTERVAL_SECONDS:
+            return
+        sides = []
+        for side in (Side.HOME, Side.AWAY):
+            fair = fair_price(state, side, self.settings, self.model)
+            best = fair.fair if fair.fair is not None else fair.model_price
+            if best is not None and best >= self.settings.MIN_FAIR:
+                sides.append((side, fair))
+        if not sides:
+            return
+        self.observe_reads[key] = now
+        quotes = self._quotes(match.polymarket)
+        for side, fair in sides:
+            team = match.market_team_for(side)
+            quote = quotes.get(team.abbreviation)
+            if quote is None:
+                continue
+            common = dict(
+                match=match,
+                state=state,
+                side=side,
+                fair=fair,
+                quote=quote,
+                settings=self.observe_settings,
+                tracker=self.tracker,
+                history=AlertHistory(self.settings.TZ),  # no cap, no repeat gap: pure rules
+                now=now,
+            )
+            decision = evaluate_winner(book=None, **common)
+            if decision.reason == "rule 4: no book":
+                book = self._book(match.polymarket.moneyline_slug or "")
+                common["now"] = self._now()
+                decision = evaluate_winner(book=book, **common)
+            alert, miss = decision.alert, decision.near_miss
+            edge = alert.edge if alert else (miss.edge if miss else None)
+            buy = quote.buy_price
+            observation = Observation(
+                created_at=now,
+                league=state.league,
+                feed_id=state.feed_id,
+                event_slug=match.polymarket.event_slug,
+                pick=team.abbreviation,
+                pick_side=side.value,
+                minutes_left=state.seconds_left / 60.0,
+                home_score=state.home_score,
+                away_score=state.away_score,
+                fair_price=fair.fair,
+                model_price=fair.model_price,
+                espn_price=fair.espn_price,
+                buy_price=buy,
+                fee=None if buy is None else fee_per_contract(buy, quote.theta),
+                edge=edge,
+                dollars_available=alert.dollars_available if alert else None,
+                would_alert=decision.fired,
+                reason=decision.reason,
+            )
+            self.diary.record_observation(observation)
+            summary.observations.append(observation)
+
     # -- one pass -----------------------------------------------------------
 
     def scan_once(self, now: datetime | None = None) -> PassSummary:
@@ -418,11 +620,21 @@ class Scanner:
                     for decision in decisions:
                         if decision is not best and decision.near_miss is not None:
                             self._deliver(decision, now, summary)
+                self._observe_winners(match, state, now, summary)
                 self._price_ok(now)
             except RateLimited as exc:
                 self._price_failed(now, f"rate limited: {exc}")
                 summary.errors.append(str(exc))
                 break
+            except PolymarketError as exc:
+                self._price_failed(now, str(exc))
+                summary.errors.append(str(exc))
+        if not summary.errors:
+            try:
+                self._period_pass(live, now, summary)
+            except RateLimited as exc:
+                self._price_failed(now, f"rate limited: {exc}")
+                summary.errors.append(str(exc))
             except PolymarketError as exc:
                 self._price_failed(now, str(exc))
                 summary.errors.append(str(exc))

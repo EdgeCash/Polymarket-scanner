@@ -270,7 +270,181 @@ def test_near_misses_are_also_split_by_alert_type():
     assert split == {
         "winner": {"stale score": 1, "rule 3: edge too small": 1},
         "clinched_over": {"stale score": 1, "edge too small": 1},
+        "period": {},
     }
     card = diary.scorecard()
     assert card["near_misses_by_type"] == split
     assert card["near_misses"]["stale score"] == 2
+
+
+# -- period markets and the observation window --------------------------------
+
+
+def final_state_with_lines(home_lines, away_lines, **changes):
+    state = live_state(
+        status=GameStatus.FINAL,
+        period=4,
+        clock_seconds=0.0,
+        seconds_left=0.0,
+        home_score=sum(home_lines),
+        away_score=sum(away_lines),
+        home_linescores=tuple(home_lines),
+        away_linescores=tuple(away_lines),
+    )
+    return replace(state, **changes)
+
+
+def period_alert(**changes) -> Alert:
+    from scanner.models import PeriodMarket
+    from scanner.periods import PeriodSides, to_json
+
+    market = PeriodMarket(
+        "tsc-nfl-phi-jax-2026-10-11-1h-24pt5", "1h", "total", 24.5, 0.0695, True, False, True, True
+    )
+    sides = PeriodSides(home_abbr="JAX", away_abbr="PHI")
+    base = replace(
+        winner_alert(),
+        alert_type=AlertType.PERIOD,
+        market_slug=market.market_slug,
+        pick="1H OVER 24.5",
+        side_label="long",
+        fair_price=0.995,
+        model_price=None,
+        espn_price=None,
+        buy_price=0.96,
+        fee=0.0026688,
+        edge=0.0323,
+        line=24.5,
+        combined_score=27,
+        pick_side=None,
+        situation={
+            "period_market": to_json(market, sides),
+            "period_detail": "1st half ended with 27 points",
+        },
+    )
+    return replace(base, **changes)
+
+
+def test_period_alerts_are_graded_from_the_final_per_period_scores():
+    diary = Diary(":memory:")
+    over_id = diary.record_alert(period_alert(), sent=False)
+    under_id = diary.record_alert(
+        period_alert(pick="1H UNDER 24.5", side_label="short"), sent=False
+    )
+    # JAX 3+7, PHI 14+3 in the first half: 27 points, the Over won and the Under lost.
+    graded = diary.grade_game(final_state_with_lines([3, 7, 7, 0], [14, 3, 0, 14]), at(100))
+    assert graded == 2
+    assert diary.alert(over_id)["outcome"] == OUTCOME_WIN
+    assert diary.alert(over_id)["result_per_contract"] == pytest.approx(1 - 0.96 - 0.0026688)
+    assert diary.alert(under_id)["outcome"] == OUTCOME_LOSS
+    card = diary.scorecard()
+    assert card["by_type"]["period"]["alerts"] == 2
+    assert card["by_type"]["period"]["wins"] == 1 and card["by_type"]["period"]["losses"] == 1
+
+
+def test_period_alert_without_per_period_scores_at_the_final_is_not_graded():
+    diary = Diary(":memory:")
+    alert_id = diary.record_alert(period_alert(), sent=False)
+    diary.grade_game(
+        final_state_with_lines(
+            [3, 7, 7, 0], [14, 3, 0, 14], home_linescores=(), away_linescores=()
+        ),
+        at(100),
+    )
+    assert diary.alert(alert_id)["outcome"] == OUTCOME_NOT_GRADED
+    diary = Diary(":memory:")
+    alert_id = diary.record_alert(period_alert(situation={}), sent=False)
+    diary.grade_game(final_state_with_lines([3, 7, 7, 0], [14, 3, 0, 14]), at(100))
+    assert diary.alert(alert_id)["outcome"] == OUTCOME_NOT_GRADED
+
+
+def test_near_misses_on_period_picks_land_in_their_own_bucket():
+    diary = Diary(":memory:")
+    diary.record_near_miss(
+        NearMiss(at(1), League.NFL, "g", "s", "1Q PHI +2.5", "market not open", 0.995, None, None)
+    )
+    diary.record_near_miss(
+        NearMiss(at(2), League.NFL, "g", "s", "1H OVER 24.5", "edge too small", 0.995, 0.99, 0.004)
+    )
+    assert diary.near_misses_by_type()["period"] == {"market not open": 1, "edge too small": 1}
+    assert diary.near_misses_by_type()["winner"] == {}
+
+
+def test_restore_history_keeps_period_alerts_out_of_the_winner_cap():
+    diary = Diary(":memory:")
+    diary.record_alert(winner_alert(), sent=True)
+    diary.record_alert(period_alert(), sent=False)
+    history, period_history = AlertHistory("America/Chicago"), AlertHistory("America/Chicago")
+    assert diary.restore_history(history, at(60), period_history) == 2
+    assert history.count_today(at(60)) == 1 and period_history.count_today(at(60)) == 1
+    only = AlertHistory("America/Chicago")
+    assert diary.restore_history(only, at(60)) == 1
+
+
+def observation(**changes):
+    from scanner.models import Observation
+
+    base = Observation(
+        created_at=at(0),
+        league=League.NFL,
+        feed_id="401873001",
+        event_slug="nfl-phi-jax-2026-10-11",
+        pick="PHI",
+        pick_side="away",
+        minutes_left=10.0,
+        home_score=14,
+        away_score=24,
+        fair_price=0.96,
+        model_price=0.97,
+        espn_price=0.96,
+        buy_price=0.90,
+        fee=0.0056,
+        edge=0.0544,
+        dollars_available=180.0,
+        would_alert=True,
+        reason="alert",
+    )
+    return replace(base, **changes)
+
+
+def test_observations_are_recorded_graded_and_counted_once_per_game_and_pick():
+    diary = Diary(":memory:")
+    diary.record_observation(
+        observation(
+            would_alert=False,
+            reason="rule 5: score changed recently",
+            edge=None,
+            dollars_available=None,
+        )
+    )
+    diary.record_observation(observation(created_at=at(30)))
+    diary.record_observation(observation(created_at=at(60), buy_price=0.91))
+    diary.record_observation(
+        observation(feed_id="other", event_slug="nfl-x-y", pick="JAX", pick_side="home")
+    )
+    assert diary.ungraded_games() == {("nfl", "401873001"), ("nfl", "other")}
+    summary = diary.observation_summary()
+    assert summary["rows"] == 4 and summary["games"] == 2
+    assert summary["would_alert_rows"] == 3 and summary["picks"] == 2
+    assert summary["graded"] == 0 and summary["reasons"] == {"rule 5: score changed recently": 1}
+    assert summary["win_rate_needed"] == pytest.approx(0.90 + 0.0056)  # the first check per pick
+    # PHI won the first game; the other game's home pick lost.
+    assert (
+        diary.grade_game(live_state(status=GameStatus.FINAL, home_score=21, away_score=31), at(500))
+        == 3
+    )
+    assert (
+        diary.grade_game(
+            live_state(feed_id="other", status=GameStatus.FINAL, home_score=10, away_score=20),
+            at(500),
+        )
+        == 1
+    )
+    summary = diary.observation_summary()
+    assert summary["graded"] == 2 and summary["wins"] == 1 and summary["losses"] == 1
+    assert summary["profit_per_100"] == pytest.approx(
+        100 * (1 - 0.90 - 0.0056) + 100 * (0 - 0.90 - 0.0056)
+    )
+    rows = diary.observations_since(at(0))
+    assert [r["outcome"] for r in rows] == [OUTCOME_WIN, OUTCOME_WIN, OUTCOME_WIN, OUTCOME_LOSS]
+    assert diary.scorecard()["observations"]["picks"] == 2

@@ -1,0 +1,3201 @@
+{
+ "events": [
+  {
+   "id": "124724",
+   "chatChannel": {
+    "id": "nfl-tb-dal-2026-10-08",
+    "type": "CHAT_CHANNEL_TYPE_MESSAGING",
+    "chatMemberCount": 11990
+   },
+   "ticker": "nfl-tb-dal-2026-10-08",
+   "slug": "nfl-tb-dal-2026-10-08",
+   "title": "TB Buccaneers vs. DAL Cowboys",
+   "description": "TB Buccaneers vs. DAL Cowboys",
+   "startDate": "2026-10-09T00:15:00Z",
+   "endDate": "2026-10-08T23:59:00Z",
+   "active": true,
+   "closed": false,
+   "archived": false,
+   "category": "sports",
+   "createdAt": "2026-09-24T06:00:10Z",
+   "updatedAt": "2026-10-06T13:08:57Z",
+   "startTime": "2026-10-09T00:15:00Z",
+   "seriesSlug": "nfl-2025",
+   "period": "NS",
+   "markets": [
+    {
+     "id": "1131855",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 15.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-1h-15pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:50Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 15.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the first half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:50Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_first_half_total",
+     "line": 15.5,
+     "marketSides": [
+      {
+       "id": "2263192",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1h-15pt5",
+       "createdAt": "2026-09-29T18:31:50Z",
+       "updatedAt": "2026-09-29T18:31:50Z",
+       "description": "Over",
+       "price": "0.8400",
+       "marketId": 1131855,
+       "long": true,
+       "quote": {
+        "value": "0.8900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263193",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1h-15pt5",
+       "createdAt": "2026-09-29T18:31:50Z",
+       "updatedAt": "2026-09-29T18:31:50Z",
+       "description": "Under",
+       "price": "0.8900",
+       "marketId": 1131855,
+       "long": false,
+       "quote": {
+        "value": "0.16",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8400\",\"0.8900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 15.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 15.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131856",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 17.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-1h-17pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:51Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 17.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the first half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:51Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_first_half_total",
+     "line": 17.5,
+     "marketSides": [
+      {
+       "id": "2263194",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1h-17pt5",
+       "createdAt": "2026-09-29T18:31:51Z",
+       "updatedAt": "2026-09-29T18:31:51Z",
+       "description": "Over",
+       "price": "0.7300",
+       "marketId": 1131856,
+       "long": true,
+       "quote": {
+        "value": "0.7800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263195",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1h-17pt5",
+       "createdAt": "2026-09-29T18:31:51Z",
+       "updatedAt": "2026-09-29T18:31:51Z",
+       "description": "Under",
+       "price": "0.7800",
+       "marketId": 1131856,
+       "long": false,
+       "quote": {
+        "value": "0.27",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7300\",\"0.7800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 17.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 17.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131878",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 2.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-1q-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:15Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 2.5 points in the first quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the first quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:15Z",
+     "updatedAt": "2026-10-01T11:45:29Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_first_quarter_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263238",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1q-2pt5",
+       "createdAt": "2026-09-29T18:32:15Z",
+       "updatedAt": "2026-09-29T18:32:15Z",
+       "description": "Over",
+       "price": "0.7400",
+       "marketId": 1131878,
+       "long": true,
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263239",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1q-2pt5",
+       "createdAt": "2026-09-29T18:32:15Z",
+       "updatedAt": "2026-09-29T18:32:15Z",
+       "description": "Under",
+       "price": "0.9900",
+       "marketId": 1131878,
+       "long": false,
+       "quote": {
+        "value": "0.26",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7400\",\"0.9900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total points in 1st quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 1Q",
+     "ep3SyncedAt": "2026-10-01T11:45:29Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1218539",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 3.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-1q-3pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T00:30:17Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 3.5 points in the first quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the first quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T00:30:17Z",
+     "updatedAt": "2026-10-05T00:55:31Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_first_quarter_total",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2436560",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1q-3pt5",
+       "createdAt": "2026-10-05T00:30:17Z",
+       "updatedAt": "2026-10-05T00:30:17Z",
+       "description": "Over",
+       "price": "0.7700",
+       "marketId": 1218539,
+       "long": true,
+       "quote": {
+        "value": "0.8200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2436561",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-1q-3pt5",
+       "createdAt": "2026-10-05T00:30:17Z",
+       "updatedAt": "2026-10-05T00:30:17Z",
+       "description": "Under",
+       "price": "0.8200",
+       "marketId": 1218539,
+       "long": false,
+       "quote": {
+        "value": "0.23",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7700\",\"0.8200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 3.5 total points in 1st quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "titleShort": "Over 3.5 1Q",
+     "ep3SyncedAt": "2026-10-05T00:30:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131918",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 2.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-4q-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:00Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 2.5 points in the fourth quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the fourth quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:00Z",
+     "updatedAt": "2026-10-01T11:45:28Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_fourth_quarter_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263318",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-4q-2pt5",
+       "createdAt": "2026-09-29T18:33:00Z",
+       "updatedAt": "2026-09-29T18:33:00Z",
+       "description": "Over",
+       "price": "0.8600",
+       "marketId": 1131918,
+       "long": true,
+       "quote": {
+        "value": "0.9800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263319",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-4q-2pt5",
+       "createdAt": "2026-09-29T18:33:00Z",
+       "updatedAt": "2026-09-29T18:33:00Z",
+       "description": "Under",
+       "price": "0.9800",
+       "marketId": 1131918,
+       "long": false,
+       "quote": {
+        "value": "0.14",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8600\",\"0.9800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total points in 4th quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9800",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 4Q",
+     "ep3SyncedAt": "2026-10-01T11:45:28Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131919",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 5.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-4q-5pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:01Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 5.5 points in the fourth quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the fourth quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:01Z",
+     "updatedAt": "2026-10-01T11:45:28Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_fourth_quarter_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2263320",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-4q-5pt5",
+       "createdAt": "2026-09-29T18:33:01Z",
+       "updatedAt": "2026-09-29T18:33:01Z",
+       "description": "Over",
+       "price": "0.8800",
+       "marketId": 1131919,
+       "long": true,
+       "quote": {
+        "value": "0.9300",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263321",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-4q-5pt5",
+       "createdAt": "2026-09-29T18:33:01Z",
+       "updatedAt": "2026-09-29T18:33:01Z",
+       "description": "Under",
+       "price": "0.9300",
+       "marketId": 1131919,
+       "long": false,
+       "quote": {
+        "value": "0.12",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8800\",\"0.9300\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 5.5 total points in 4th quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9300",
+      "currency": "USD"
+     },
+     "titleShort": "Over 5.5 4Q",
+     "ep3SyncedAt": "2026-10-01T11:45:28Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131867",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 15.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-2h-15pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:02Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 15.5 points in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before the second half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:02Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_second_half_total",
+     "line": 15.5,
+     "marketSides": [
+      {
+       "id": "2263216",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2h-15pt5",
+       "createdAt": "2026-09-29T18:32:02Z",
+       "updatedAt": "2026-09-29T18:32:02Z",
+       "description": "Over",
+       "price": "0.8000",
+       "marketId": 1131867,
+       "long": true,
+       "quote": {
+        "value": "0.8200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263217",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2h-15pt5",
+       "createdAt": "2026-09-29T18:32:02Z",
+       "updatedAt": "2026-09-29T18:32:02Z",
+       "description": "Under",
+       "price": "0.8200",
+       "marketId": 1131867,
+       "long": false,
+       "quote": {
+        "value": "0.2",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8000\",\"0.8200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 15.5 total points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "titleShort": "Over 15.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131868",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 17.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-2h-17pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:03Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 17.5 points in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before the second half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:04Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_second_half_total",
+     "line": 17.5,
+     "marketSides": [
+      {
+       "id": "2263218",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2h-17pt5",
+       "createdAt": "2026-09-29T18:32:04Z",
+       "updatedAt": "2026-09-29T18:32:04Z",
+       "description": "Over",
+       "price": "0.6700",
+       "marketId": 1131868,
+       "long": true,
+       "quote": {
+        "value": "0.7100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263219",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2h-17pt5",
+       "createdAt": "2026-09-29T18:32:04Z",
+       "updatedAt": "2026-09-29T18:32:04Z",
+       "description": "Under",
+       "price": "0.7100",
+       "marketId": 1131868,
+       "long": false,
+       "quote": {
+        "value": "0.33",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.6700\",\"0.7100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 17.5 total points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.6700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7100",
+      "currency": "USD"
+     },
+     "titleShort": "Over 17.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131892",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 2.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-2q-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:32Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 2.5 points in the second quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the second quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:32Z",
+     "updatedAt": "2026-10-01T11:45:29Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_second_quarter_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263266",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2q-2pt5",
+       "createdAt": "2026-09-29T18:32:32Z",
+       "updatedAt": "2026-09-29T18:32:32Z",
+       "description": "Over",
+       "price": "0.9200",
+       "marketId": 1131892,
+       "long": true,
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263267",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2q-2pt5",
+       "createdAt": "2026-09-29T18:32:32Z",
+       "updatedAt": "2026-09-29T18:32:32Z",
+       "description": "Under",
+       "price": "0.9900",
+       "marketId": 1131892,
+       "long": false,
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.9200\",\"0.9900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total points in 2nd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 2Q",
+     "ep3SyncedAt": "2026-10-01T11:45:29Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131893",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 5.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-2q-5pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:33Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 5.5 points in the second quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the second quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:33Z",
+     "updatedAt": "2026-10-01T11:45:29Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_second_quarter_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2263268",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2q-5pt5",
+       "createdAt": "2026-09-29T18:32:33Z",
+       "updatedAt": "2026-09-29T18:32:33Z",
+       "description": "Over",
+       "price": "0.9200",
+       "marketId": 1131893,
+       "long": true,
+       "quote": {
+        "value": "0.9700",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263269",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-2q-5pt5",
+       "createdAt": "2026-09-29T18:32:33Z",
+       "updatedAt": "2026-09-29T18:32:33Z",
+       "description": "Under",
+       "price": "0.9700",
+       "marketId": 1131893,
+       "long": false,
+       "quote": {
+        "value": "0.08",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.9200\",\"0.9700\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 5.5 total points in 2nd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9700",
+      "currency": "USD"
+     },
+     "titleShort": "Over 5.5 2Q",
+     "ep3SyncedAt": "2026-10-01T11:45:29Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131905",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 2.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-3q-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:32:46Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 2.5 points in the third quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the third quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:32:46Z",
+     "updatedAt": "2026-10-01T11:45:28Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_third_quarter_total",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263292",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-3q-2pt5",
+       "createdAt": "2026-09-29T18:32:46Z",
+       "updatedAt": "2026-09-29T18:32:46Z",
+       "description": "Over",
+       "price": "0.9100",
+       "marketId": 1131905,
+       "long": true,
+       "quote": {
+        "value": "0.9600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263293",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-3q-2pt5",
+       "createdAt": "2026-09-29T18:32:46Z",
+       "updatedAt": "2026-09-29T18:32:46Z",
+       "description": "Under",
+       "price": "0.9600",
+       "marketId": 1131905,
+       "long": false,
+       "quote": {
+        "value": "0.09",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.9100\",\"0.9600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 2.5 total points in 3rd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.9100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9600",
+      "currency": "USD"
+     },
+     "titleShort": "Over 2.5 3Q",
+     "ep3SyncedAt": "2026-10-01T11:45:28Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1219391",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 3.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-3q-3pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-10-05T02:30:17Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 3.5 points in the third quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before the third quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-10-05T02:30:17Z",
+     "updatedAt": "2026-10-05T02:55:01Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_game_third_quarter_total",
+     "line": 3.5,
+     "marketSides": [
+      {
+       "id": "2438264",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-3q-3pt5",
+       "createdAt": "2026-10-05T02:30:17Z",
+       "updatedAt": "2026-10-05T02:30:17Z",
+       "description": "Over",
+       "price": "0.8000",
+       "marketId": 1219391,
+       "long": true,
+       "quote": {
+        "value": "0.8400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2438265",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-3q-3pt5",
+       "createdAt": "2026-10-05T02:30:17Z",
+       "updatedAt": "2026-10-05T02:30:17Z",
+       "description": "Under",
+       "price": "0.8400",
+       "marketId": 1219391,
+       "long": false,
+       "quote": {
+        "value": "0.2",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8000\",\"0.8400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 3.5 total points in 3rd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8400",
+      "currency": "USD"
+     },
+     "titleShort": "Over 3.5 3Q",
+     "ep3SyncedAt": "2026-10-05T02:30:17Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131762",
+     "question": "Will the Tampa Bay Buccaneers cover -14.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:30:22Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a -14.5 point spread in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the first half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:30:22Z",
+     "updatedAt": "2026-10-01T11:45:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_spread",
+     "line": -14.5,
+     "marketSides": [
+      {
+       "id": "2263006",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5",
+       "createdAt": "2026-09-29T18:30:22Z",
+       "updatedAt": "2026-09-29T18:30:22Z",
+       "description": "-14.50",
+       "price": "0.0100",
+       "marketId": 1131762,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.0400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263007",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5",
+       "createdAt": "2026-09-29T18:30:22Z",
+       "updatedAt": "2026-09-29T18:30:22Z",
+       "description": "+14.50",
+       "price": "0.0400",
+       "marketId": 1131762,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.99",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"-14.50\",\"+14.50\"]",
+     "outcomePrices": "[\"0.0100\",\"0.0400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers wins by over 14.5 points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.0100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0400",
+      "currency": "USD"
+     },
+     "titleShort": "TB -14.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:32Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131763",
+     "question": "Will the Tampa Bay Buccaneers cover -13.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-1h-neg-13pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:30:23Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a -13.5 point spread in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the first half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:30:23Z",
+     "updatedAt": "2026-10-01T11:45:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_spread",
+     "line": -13.5,
+     "marketSides": [
+      {
+       "id": "2263008",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1h-neg-13pt5",
+       "createdAt": "2026-09-29T18:30:23Z",
+       "updatedAt": "2026-09-29T18:30:23Z",
+       "description": "-13.50",
+       "price": "0.0200",
+       "marketId": 1131763,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.0600",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263009",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1h-neg-13pt5",
+       "createdAt": "2026-09-29T18:30:23Z",
+       "updatedAt": "2026-09-29T18:30:23Z",
+       "description": "+13.50",
+       "price": "0.0600",
+       "marketId": 1131763,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.98",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"-13.50\",\"+13.50\"]",
+     "outcomePrices": "[\"0.0200\",\"0.0600\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers wins by over 13.5 points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.0200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0600",
+      "currency": "USD"
+     },
+     "titleShort": "TB -13.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:32Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131965",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 4.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:54Z",
+     "description": "Team 1st Half Point Total settles Over if Tampa Bay Buccaneers scores more than 4.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:54Z",
+     "updatedAt": "2026-10-01T11:45:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_total",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2263412",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5",
+       "createdAt": "2026-09-29T18:33:54Z",
+       "updatedAt": "2026-09-29T18:33:54Z",
+       "description": "Over",
+       "price": "0.7400",
+       "marketId": 1131965,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.8000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263413",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5",
+       "createdAt": "2026-09-29T18:33:54Z",
+       "updatedAt": "2026-09-29T18:33:54Z",
+       "description": "Under",
+       "price": "0.8000",
+       "marketId": 1131965,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.26",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7400\",\"0.8000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 4.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7400",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 4.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131966",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 5.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-5pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:55Z",
+     "description": "Team 1st Half Point Total settles Over if Tampa Bay Buccaneers scores more than 5.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:55Z",
+     "updatedAt": "2026-10-01T11:45:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2263414",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-5pt5",
+       "createdAt": "2026-09-29T18:33:55Z",
+       "updatedAt": "2026-09-29T18:33:55Z",
+       "description": "Over",
+       "price": "0.7300",
+       "marketId": 1131966,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.8000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263415",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-5pt5",
+       "createdAt": "2026-09-29T18:33:55Z",
+       "updatedAt": "2026-09-29T18:33:55Z",
+       "description": "Under",
+       "price": "0.8000",
+       "marketId": 1131966,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.27",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7300\",\"0.8000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 5.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8000",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 5.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131967",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 6.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-6pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:56Z",
+     "description": "Team 1st Half Point Total settles Over if Tampa Bay Buccaneers scores more than 6.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:56Z",
+     "updatedAt": "2026-10-01T11:45:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_total",
+     "line": 6.5,
+     "marketSides": [
+      {
+       "id": "2263416",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-6pt5",
+       "createdAt": "2026-09-29T18:33:56Z",
+       "updatedAt": "2026-09-29T18:33:56Z",
+       "description": "Over",
+       "price": "0.6200",
+       "marketId": 1131967,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.7200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263417",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-6pt5",
+       "createdAt": "2026-09-29T18:33:56Z",
+       "updatedAt": "2026-09-29T18:33:56Z",
+       "description": "Under",
+       "price": "0.7200",
+       "marketId": 1131967,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.38",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.6200\",\"0.7200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 6.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.6200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7200",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 6.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131968",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 7.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-7pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:57Z",
+     "description": "Team 1st Half Point Total settles Over if Tampa Bay Buccaneers scores more than 7.5 points in the first half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Only points and statistics recorded in regulation during that period count; overtime is not included. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:57Z",
+     "updatedAt": "2026-10-05T22:25:40Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_half_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2263418",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-7pt5",
+       "createdAt": "2026-09-29T18:33:57Z",
+       "updatedAt": "2026-09-29T18:33:57Z",
+       "description": "Over",
+       "price": "0.5100",
+       "marketId": 1131968,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.7100",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263419",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-7pt5",
+       "createdAt": "2026-09-29T18:33:57Z",
+       "updatedAt": "2026-09-29T18:33:57Z",
+       "description": "Under",
+       "price": "0.7100",
+       "marketId": 1131968,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.49",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.5100\",\"0.7100\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 7.5 total points in 1st half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.5100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.7100",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 7.5 1H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131835",
+     "question": "Will the Tampa Bay Buccaneers cover 1.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:29Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +1.5 point spread in the first quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the first quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:29Z",
+     "updatedAt": "2026-10-05T22:24:31Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_quarter_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2263152",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:29Z",
+       "updatedAt": "2026-09-29T18:31:29Z",
+       "description": "+1.50",
+       "price": "0.4700",
+       "marketId": 1131835,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.5000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263153",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:29Z",
+       "updatedAt": "2026-09-29T18:31:29Z",
+       "description": "-1.50",
+       "price": "0.5000",
+       "marketId": 1131835,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.53",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+1.50\",\"-1.50\"]",
+     "outcomePrices": "[\"0.4700\",\"0.5000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 1.5 points in 1st quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4700",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5000",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -1.5 1Q",
+     "ep3SyncedAt": "2026-10-01T11:45:31Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131836",
+     "question": "Will the Tampa Bay Buccaneers cover 2.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-1q-pos-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:30Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +2.5 point spread in the first quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the first quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:30Z",
+     "updatedAt": "2026-10-06T08:53:51Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_first_quarter_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263154",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:30Z",
+       "updatedAt": "2026-09-29T18:31:30Z",
+       "description": "+2.50",
+       "price": "0.4900",
+       "marketId": 1131836,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.5000",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263155",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-1q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:30Z",
+       "updatedAt": "2026-09-29T18:31:30Z",
+       "description": "-2.50",
+       "price": "0.5000",
+       "marketId": 1131836,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.51",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+2.50\",\"-2.50\"]",
+     "outcomePrices": "[\"0.4900\",\"0.5000\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 2.5 points in 1st quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5000",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -2.5 1Q",
+     "ep3SyncedAt": "2026-10-01T11:45:31Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131850",
+     "question": "Will the Tampa Bay Buccaneers cover 1.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-4q-pos-1pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:45Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +1.5 point spread in the fourth quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the fourth quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:45Z",
+     "updatedAt": "2026-10-05T23:08:54Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_fourth_quarter_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2263182",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-4q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:45Z",
+       "updatedAt": "2026-09-29T18:31:45Z",
+       "description": "+1.50",
+       "price": "0.4800",
+       "marketId": 1131850,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.5200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263183",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-4q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:45Z",
+       "updatedAt": "2026-09-29T18:31:45Z",
+       "description": "-1.50",
+       "price": "0.5200",
+       "marketId": 1131850,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.52",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+1.50\",\"-1.50\"]",
+     "outcomePrices": "[\"0.4800\",\"0.5200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 1.5 points in 4th quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5200",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -1.5 4Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131851",
+     "question": "Will the Tampa Bay Buccaneers cover 2.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-4q-pos-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:46Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +2.5 point spread in the fourth quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the fourth quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:46Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_fourth_quarter_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263184",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-4q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:46Z",
+       "updatedAt": "2026-09-29T18:31:46Z",
+       "description": "+2.50",
+       "price": "0.4900",
+       "marketId": 1131851,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.5300",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263185",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-4q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:46Z",
+       "updatedAt": "2026-09-29T18:31:46Z",
+       "description": "-2.50",
+       "price": "0.5300",
+       "marketId": 1131851,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.51",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+2.50\",\"-2.50\"]",
+     "outcomePrices": "[\"0.4900\",\"0.5300\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 2.5 points in 4th quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4900",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.5300",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -2.5 4Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1130601",
+     "question": "Will the Tampa Bay Buccaneers cover -14.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-neg-14pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:00:04Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a -14.5 point spread in the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:00:04Z",
+     "updatedAt": "2026-10-06T11:54:05Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_full_game_spread",
+     "line": -14.5,
+     "marketSides": [
+      {
+       "id": "2260684",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-neg-14pt5",
+       "createdAt": "2026-09-29T18:00:04Z",
+       "updatedAt": "2026-09-29T18:00:04Z",
+       "description": "-14.50",
+       "price": "0.0300",
+       "marketId": 1130601,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.0350",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2260685",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-neg-14pt5",
+       "createdAt": "2026-09-29T18:00:04Z",
+       "updatedAt": "2026-09-29T18:00:04Z",
+       "description": "+14.50",
+       "price": "0.0350",
+       "marketId": 1130601,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.97",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"-14.50\",\"+14.50\"]",
+     "outcomePrices": "[\"0.0300\",\"0.0350\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers wins by over 14.5 points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.0300",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0350",
+      "currency": "USD"
+     },
+     "titleShort": "TB -14.5",
+     "ep3SyncedAt": "2026-10-01T11:45:35Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131270",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 19.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-total-19pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:11:31Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 19.5 points in the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:11:31Z",
+     "updatedAt": "2026-10-06T05:25:03Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_full_game_total",
+     "line": 19.5,
+     "marketSides": [
+      {
+       "id": "2262022",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-total-19pt5",
+       "createdAt": "2026-09-29T18:11:31Z",
+       "updatedAt": "2026-09-29T18:11:31Z",
+       "description": "Over",
+       "price": "0.9750",
+       "marketId": 1131270,
+       "long": true,
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2262023",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-total-19pt5",
+       "createdAt": "2026-09-29T18:11:31Z",
+       "updatedAt": "2026-09-29T18:11:31Z",
+       "description": "Under",
+       "price": "0.9900",
+       "marketId": 1131270,
+       "long": false,
+       "quote": {
+        "value": "0.025",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.9750\",\"0.9900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 19.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.9750",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 19.5 points",
+     "ep3SyncedAt": "2026-10-01T11:45:33Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131271",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 22.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-total-22pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:11:32Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers and Dallas Cowboys combine for over 22.5 points in the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:11:32Z",
+     "updatedAt": "2026-10-06T05:25:03Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.005,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_full_game_total",
+     "line": 22.5,
+     "marketSides": [
+      {
+       "id": "2262024",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-total-22pt5",
+       "createdAt": "2026-09-29T18:11:32Z",
+       "updatedAt": "2026-09-29T18:11:32Z",
+       "description": "Over",
+       "price": "0.9750",
+       "marketId": 1131271,
+       "long": true,
+       "quote": {
+        "value": "0.9900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2262025",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-total-22pt5",
+       "createdAt": "2026-09-29T18:11:32Z",
+       "updatedAt": "2026-09-29T18:11:32Z",
+       "description": "Under",
+       "price": "0.9900",
+       "marketId": 1131271,
+       "long": false,
+       "quote": {
+        "value": "0.025",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.9750\",\"0.9900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Over 22.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.9750",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9900",
+      "currency": "USD"
+     },
+     "titleShort": "Over 22.5 points",
+     "ep3SyncedAt": "2026-10-01T11:45:33Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1030131",
+     "question": "Who will win in the upcoming football event Tampa Bay Buccaneers vs Dallas Cowboys scheduled for October 9, 2026 at 12:15 AM UTC?",
+     "slug": "aec-nfl-tb-dal-2026-10-08",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-24T06:00:10Z",
+     "description": "This market will settle to the winner of the Tampa Bay Buccaneers vs Dallas Cowboys NFL game scheduled for Oct 8, 2026. Overtime is included if played. If the game ends in a tie, the market will settle to $0.50. If the game is delayed, postponed, or suspended and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from NFL.",
+     "active": true,
+     "marketType": "moneyline",
+     "closed": false,
+     "createdAt": "2026-09-24T06:00:10Z",
+     "updatedAt": "2026-10-06T13:08:48Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.0025,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_full_game_winner",
+     "marketSides": [
+      {
+       "id": "2059746",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nfl-tb-dal-2026-10-08",
+       "createdAt": "2026-09-24T06:00:10Z",
+       "updatedAt": "2026-09-24T06:00:10Z",
+       "description": "Buccaneers",
+       "price": "0.1925",
+       "marketId": 1030131,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.1950",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2059747",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "aec-nfl-tb-dal-2026-10-08",
+       "createdAt": "2026-09-24T06:00:10Z",
+       "updatedAt": "2026-09-24T06:00:10Z",
+       "description": "Cowboys",
+       "price": "0.1950",
+       "marketId": 1030131,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.8075",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Buccaneers\",\"Cowboys\"]",
+     "outcomePrices": "[\"0.1925\",\"0.1950\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_MONEYLINE",
+     "hidden": false,
+     "tags": [],
+     "title": "TB Buccaneers vs DAL Cowboys",
+     "feeCoefficient": 0.0695,
+     "bestBidQuote": {
+      "value": "0.1925",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.1950",
+      "currency": "USD"
+     },
+     "titleShort": "TB vs DAL",
+     "ep3SyncedAt": "2026-10-01T11:43:48Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131931",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 7.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt-tb-7pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:33:14Z",
+     "description": "Team Point Total settles Over if Tampa Bay Buccaneers scores more than 7.5 points in the full game of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:33:14Z",
+     "updatedAt": "2026-10-01T11:45:28Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_points_full_game_total",
+     "line": 7.5,
+     "marketSides": [
+      {
+       "id": "2263344",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt-tb-7pt5",
+       "createdAt": "2026-09-29T18:33:14Z",
+       "updatedAt": "2026-09-29T18:33:14Z",
+       "description": "Over",
+       "price": "0.8800",
+       "marketId": 1131931,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.9200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263345",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt-tb-7pt5",
+       "createdAt": "2026-09-29T18:33:14Z",
+       "updatedAt": "2026-09-29T18:33:14Z",
+       "description": "Under",
+       "price": "0.9200",
+       "marketId": 1131931,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.12",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.8800\",\"0.9200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 7.5 total points",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.8800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.9200",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 7.5 points",
+     "ep3SyncedAt": "2026-10-01T11:45:28Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131804",
+     "question": "Will the Tampa Bay Buccaneers cover -14.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-2h-neg-14pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:30:55Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a -14.5 point spread in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before the second half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:30:55Z",
+     "updatedAt": "2026-10-01T11:45:32Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_half_spread",
+     "line": -14.5,
+     "marketSides": [
+      {
+       "id": "2263090",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2h-neg-14pt5",
+       "createdAt": "2026-09-29T18:30:55Z",
+       "updatedAt": "2026-09-29T18:30:55Z",
+       "description": "-14.50",
+       "price": "0.0200",
+       "marketId": 1131804,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.0400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263091",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2h-neg-14pt5",
+       "createdAt": "2026-09-29T18:30:55Z",
+       "updatedAt": "2026-09-29T18:30:55Z",
+       "description": "+14.50",
+       "price": "0.0400",
+       "marketId": 1131804,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.98",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"-14.50\",\"+14.50\"]",
+     "outcomePrices": "[\"0.0200\",\"0.0400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers wins by over 14.5 points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.0200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0400",
+      "currency": "USD"
+     },
+     "titleShort": "TB -14.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:32Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131805",
+     "question": "Will the Tampa Bay Buccaneers cover -13.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-2h-neg-13pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:30:56Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a -13.5 point spread in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before the second half is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:30:56Z",
+     "updatedAt": "2026-10-01T11:45:31Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_half_spread",
+     "line": -13.5,
+     "marketSides": [
+      {
+       "id": "2263092",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2h-neg-13pt5",
+       "createdAt": "2026-09-29T18:30:56Z",
+       "updatedAt": "2026-09-29T18:30:56Z",
+       "description": "-13.50",
+       "price": "0.0200",
+       "marketId": 1131805,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.0500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263093",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2h-neg-13pt5",
+       "createdAt": "2026-09-29T18:30:56Z",
+       "updatedAt": "2026-09-29T18:30:56Z",
+       "description": "+13.50",
+       "price": "0.0500",
+       "marketId": 1131805,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.98",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"-13.50\",\"+13.50\"]",
+     "outcomePrices": "[\"0.0200\",\"0.0500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers wins by over 13.5 points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.0200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.0500",
+      "currency": "USD"
+     },
+     "titleShort": "TB -13.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:31Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131981",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 4.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-4pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:34:11Z",
+     "description": "Team 2nd Half Point Total settles Over if Tampa Bay Buccaneers scores more than 4.5 points in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:34:11Z",
+     "updatedAt": "2026-10-01T11:45:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_half_total",
+     "line": 4.5,
+     "marketSides": [
+      {
+       "id": "2263444",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-4pt5",
+       "createdAt": "2026-09-29T18:34:11Z",
+       "updatedAt": "2026-09-29T18:34:11Z",
+       "description": "Over",
+       "price": "0.7800",
+       "marketId": 1131981,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.8200",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263445",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-4pt5",
+       "createdAt": "2026-09-29T18:34:11Z",
+       "updatedAt": "2026-09-29T18:34:11Z",
+       "description": "Under",
+       "price": "0.8200",
+       "marketId": 1131981,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.22",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7800\",\"0.8200\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 4.5 total points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7800",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8200",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 4.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131982",
+     "question": "Will the total in TB Buccaneers vs. DAL Cowboys be more than 5.5?",
+     "slug": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-5pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:34:12Z",
+     "description": "Team 2nd Half Point Total settles Over if Tampa Bay Buccaneers scores more than 5.5 points in the second half of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. Overtime is included if played. If the game is delayed, postponed, or suspended before this market is determined and is not resumed or rescheduled within two weeks of the originally scheduled date, it will be flagged for manual last-fair-market-price settlement. Outcome sourced from the NFL.",
+     "active": true,
+     "marketType": "totals",
+     "closed": false,
+     "createdAt": "2026-09-29T18:34:12Z",
+     "updatedAt": "2026-10-01T11:45:26Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_half_total",
+     "line": 5.5,
+     "marketSides": [
+      {
+       "id": "2263446",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-5pt5",
+       "createdAt": "2026-09-29T18:34:12Z",
+       "updatedAt": "2026-09-29T18:34:12Z",
+       "description": "Over",
+       "price": "0.7200",
+       "marketId": 1131982,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.8400",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263447",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "tsc-nfl-tb-dal-2026-10-08-tt2h-tb-5pt5",
+       "createdAt": "2026-09-29T18:34:12Z",
+       "updatedAt": "2026-09-29T18:34:12Z",
+       "description": "Under",
+       "price": "0.8400",
+       "marketId": 1131982,
+       "long": false,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.28",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"Over\",\"Under\"]",
+     "outcomePrices": "[\"0.7200\",\"0.8400\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_TOTAL",
+     "hidden": false,
+     "tags": [],
+     "title": "Tampa Bay Buccaneers over 5.5 total points in 2nd half",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.7200",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.8400",
+      "currency": "USD"
+     },
+     "metadata": {
+      "teamId": 77
+     },
+     "titleShort": "TB over 5.5 2H",
+     "ep3SyncedAt": "2026-10-01T11:45:26Z",
+     "minimumTradeQty": 0.01,
+     "rulesDisclaimer": "Starting with games scheduled Oct 4th overtime is included for 2H markets. 4Q markets will continue to exclude overtime.",
+     "rulesDisclaimerPopup": true,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131840",
+     "question": "Will the Tampa Bay Buccaneers cover 1.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-2q-pos-1pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:34Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +1.5 point spread in the second quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the second quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:34Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_quarter_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2263162",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:34Z",
+       "updatedAt": "2026-09-29T18:31:34Z",
+       "description": "+1.50",
+       "price": "0.4100",
+       "marketId": 1131840,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263163",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:34Z",
+       "updatedAt": "2026-09-29T18:31:34Z",
+       "description": "-1.50",
+       "price": "0.4500",
+       "marketId": 1131840,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+1.50\",\"-1.50\"]",
+     "outcomePrices": "[\"0.4100\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 1.5 points in 2nd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -1.5 2Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131841",
+     "question": "Will the Tampa Bay Buccaneers cover 2.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-2q-pos-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:35Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +2.5 point spread in the second quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the second quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:35Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_second_quarter_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263164",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:35Z",
+       "updatedAt": "2026-09-29T18:31:35Z",
+       "description": "+2.50",
+       "price": "0.4100",
+       "marketId": 1131841,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.4500",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263165",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-2q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:35Z",
+       "updatedAt": "2026-09-29T18:31:35Z",
+       "description": "-2.50",
+       "price": "0.4500",
+       "marketId": 1131841,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.59",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+2.50\",\"-2.50\"]",
+     "outcomePrices": "[\"0.4100\",\"0.4500\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 2.5 points in 2nd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4100",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -2.5 2Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131845",
+     "question": "Will the Tampa Bay Buccaneers cover 1.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-3q-pos-1pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:39Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +1.5 point spread in the third quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the third quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:39Z",
+     "updatedAt": "2026-10-05T23:08:54Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_third_quarter_spread",
+     "line": 1.5,
+     "marketSides": [
+      {
+       "id": "2263172",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-3q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:39Z",
+       "updatedAt": "2026-09-29T18:31:39Z",
+       "description": "+1.50",
+       "price": "0.4600",
+       "marketId": 1131845,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.4800",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263173",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-3q-pos-1pt5",
+       "createdAt": "2026-09-29T18:31:39Z",
+       "updatedAt": "2026-09-29T18:31:39Z",
+       "description": "-1.50",
+       "price": "0.4800",
+       "marketId": 1131845,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.54",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+1.50\",\"-1.50\"]",
+     "outcomePrices": "[\"0.4600\",\"0.4800\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 1.5 points in 3rd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4600",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4800",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -1.5 3Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    },
+    {
+     "id": "1131846",
+     "question": "Will the Tampa Bay Buccaneers cover 2.5 vs the Dallas Cowboys in TB Buccaneers vs. DAL Cowboys?",
+     "slug": "asc-nfl-tb-dal-2026-10-08-3q-pos-2pt5",
+     "endDate": "2026-10-23T04:15:00Z",
+     "category": "sports",
+     "startDate": "2026-09-29T18:31:40Z",
+     "description": "This market will settle to Yes if Tampa Bay Buccaneers covers a +2.5 point spread in the third quarter of the Tampa Bay Buccaneers vs Dallas Cowboys professional football game scheduled for Oct 8, 2026. If the game is delayed, postponed, or suspended before the third quarter is completed and not rescheduled to a date within two weeks of the originally scheduled date, the market will settle to the last fair market price. Outcome sourced from the relevant governing body.",
+     "active": true,
+     "marketType": "spreads",
+     "closed": false,
+     "createdAt": "2026-09-29T18:31:41Z",
+     "updatedAt": "2026-10-01T11:45:30Z",
+     "archived": false,
+     "orderPriceMinTickSize": 0.01,
+     "gameStartTime": "2026-10-09T00:15:00Z",
+     "manualActivation": false,
+     "sportsMarketType": "football_team_third_quarter_spread",
+     "line": 2.5,
+     "marketSides": [
+      {
+       "id": "2263174",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-3q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:41Z",
+       "updatedAt": "2026-09-29T18:31:41Z",
+       "description": "+2.50",
+       "price": "0.4500",
+       "marketId": 1131846,
+       "long": true,
+       "teamId": 77,
+       "team": {
+        "id": 77,
+        "name": "Tampa Bay Buccaneers",
+        "abbreviation": "tb",
+        "alias": "Buccaneers"
+       },
+       "quote": {
+        "value": "0.4900",
+        "currency": "USD"
+       },
+       "tradable": true
+      },
+      {
+       "id": "2263175",
+       "marketSideType": "MARKET_SIDE_TYPE_INSTRUMENT",
+       "identifier": "asc-nfl-tb-dal-2026-10-08-3q-pos-2pt5",
+       "createdAt": "2026-09-29T18:31:41Z",
+       "updatedAt": "2026-09-29T18:31:41Z",
+       "description": "-2.50",
+       "price": "0.4900",
+       "marketId": 1131846,
+       "long": false,
+       "teamId": 56,
+       "team": {
+        "id": 56,
+        "name": "Dallas Cowboys",
+        "abbreviation": "dal",
+        "alias": "Cowboys"
+       },
+       "quote": {
+        "value": "0.55",
+        "currency": "USD"
+       },
+       "tradable": true
+      }
+     ],
+     "outcomes": "[\"+2.50\",\"-2.50\"]",
+     "outcomePrices": "[\"0.4500\",\"0.4900\"]",
+     "ep3Status": "OPEN",
+     "status": "MARKET_STATUS_OPEN",
+     "assetPriceTerms": null,
+     "sportsMarketTypeV2": "SPORTS_MARKET_TYPE_SPREAD",
+     "hidden": false,
+     "tags": [],
+     "title": "Dallas Cowboys wins by over 2.5 points in 3rd quarter",
+     "feeCoefficient": 0.0695,
+     "spreadTotalSuffix": "points",
+     "bestBidQuote": {
+      "value": "0.4500",
+      "currency": "USD"
+     },
+     "bestAskQuote": {
+      "value": "0.4900",
+      "currency": "USD"
+     },
+     "titleShort": "DAL -2.5 3Q",
+     "ep3SyncedAt": "2026-10-01T11:45:30Z",
+     "minimumTradeQty": 0.01,
+     "comboEnabled": true
+    }
+   ],
+   "gameId": 19519,
+   "sportradarGameId": "2b3761cb-3c86-43de-89d9-85175f844221",
+   "participants": [],
+   "hidden": false,
+   "tags": [
+    {
+     "id": "1",
+     "label": "NFL",
+     "slug": "nfl",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T12:55:22Z",
+     "league": {
+      "id": 1,
+      "name": "NFL",
+      "sportId": 3,
+      "tagId": 1,
+      "resolution": "https://www.nfl.com/",
+      "ordering": "away",
+      "activeSeriesId": 2,
+      "isOperational": true,
+      "automaticResolution": false,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "nfl",
+      "abbreviation": "NFL"
+     },
+     "parentId": 13,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "2",
+     "label": "Sports",
+     "slug": "sports",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T12:55:22Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "3",
+     "label": "Games",
+     "slug": "games",
+     "createdAt": "2025-09-25T16:13:27Z",
+     "updatedAt": "2026-10-06T12:55:22Z",
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "13",
+     "label": "Football",
+     "slug": "football",
+     "createdAt": "2026-03-05T18:30:42Z",
+     "updatedAt": "2026-10-06T12:55:22Z",
+     "sport": {
+      "id": 3,
+      "name": "Football",
+      "tagId": 13,
+      "createdAt": "2026-03-05T18:30:42Z",
+      "slug": "football"
+     },
+     "subtags": [
+      {
+       "id": "1",
+       "label": "NFL",
+       "slug": "nfl",
+       "createdAt": "2025-09-25T16:13:27Z",
+       "updatedAt": "2026-10-06T12:55:22Z",
+       "league": {
+        "id": 1,
+        "name": "NFL",
+        "sportId": 3,
+        "tagId": 1,
+        "resolution": "https://www.nfl.com/",
+        "ordering": "away",
+        "activeSeriesId": 2,
+        "isOperational": true,
+        "automaticResolution": false,
+        "createdAt": "2026-03-05T18:30:42Z",
+        "slug": "nfl",
+        "abbreviation": "NFL"
+       },
+       "parentId": 13,
+       "subtags": [],
+       "hub": null,
+       "featuredEventIds": []
+      }
+     ],
+     "hub": null,
+     "featuredEventIds": []
+    },
+    {
+     "id": "1645",
+     "label": "Week 5",
+     "slug": "week5",
+     "updatedAt": "2026-10-06T12:55:22Z",
+     "tradable": false,
+     "subtags": [],
+     "hub": null,
+     "featuredEventIds": []
+    }
+   ],
+   "teams": [
+    {
+     "id": 77,
+     "name": "Tampa Bay Buccaneers",
+     "abbreviation": "tb",
+     "league": "nfl",
+     "record": "0-4",
+     "alias": "Buccaneers",
+     "safeName": "TB Buccaneers",
+     "providerId": 33
+    },
+    {
+     "id": 56,
+     "name": "Dallas Cowboys",
+     "abbreviation": "dal",
+     "league": "nfl",
+     "record": "2-2",
+     "alias": "Cowboys",
+     "safeName": "DAL Cowboys",
+     "providerId": 9
+    }
+   ],
+   "sortType": "price",
+   "marketGroups": [],
+   "streamProvider": "",
+   "streamRequiresAuth": false,
+   "featureAvailability": {
+    "lineups": true,
+    "timeline": false,
+    "stats": false
+   },
+   "combos": {
+    "enabled": true,
+    "numMarkets": 696,
+    "numSpreadsAndTotalsMarkets": 300
+   },
+   "marketCounts": {
+    "numMarkets": 716,
+    "numSpreadsAndTotalsMarkets": 300
+   }
+  }
+ ]
+}

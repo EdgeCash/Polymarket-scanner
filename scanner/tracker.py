@@ -34,6 +34,7 @@ class GameTracker:
         self._previous: dict[GameKey, GameState] = {}
         self._score_changed_at: dict[GameKey, datetime] = {}
         self._score: dict[GameKey, tuple[int | None, int | None]] = {}
+        self._period_done_at: dict[GameKey, dict[int, datetime]] = {}
 
     @staticmethod
     def key(state: GameState) -> GameKey:
@@ -48,6 +49,9 @@ class GameTracker:
         if key not in self._score or self._score[key] != score:
             self._score[key] = score
             self._score_changed_at[key] = state.fetched_at
+        done = self._period_done_at.setdefault(key, {})
+        for number in range(1, state.completed_periods + 1):
+            done.setdefault(number, state.fetched_at)
 
     def update_all(self, states: list[GameState]) -> None:
         for state in states:
@@ -77,6 +81,15 @@ class GameTracker:
             return None
         return max(0.0, (now - changed_at).total_seconds())
 
+    def seconds_since_period_completed(
+        self, state: GameState, period: int, now: datetime
+    ) -> float | None:
+        """How long period ``period`` has been over, as first seen here. None if it is not."""
+        done_at = self._period_done_at.get(self.key(state), {}).get(period)
+        if done_at is None:
+            return None
+        return max(0.0, (now - done_at).total_seconds())
+
     def forget_finished(self, keep: set[GameKey]) -> None:
         """Drop games no longer on the scoreboard so memory stays small."""
         for key in list(self._latest):
@@ -85,3 +98,4 @@ class GameTracker:
                 self._previous.pop(key, None)
                 self._score_changed_at.pop(key, None)
                 self._score.pop(key, None)
+                self._period_done_at.pop(key, None)
