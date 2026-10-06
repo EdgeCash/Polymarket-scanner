@@ -26,8 +26,15 @@ def test_price_freshness_window_is_five_seconds():
     assert not is_fresh(at(0), at(5.1), PRICE_STALE_SECONDS)
 
 
-def test_a_read_stamped_in_the_future_is_not_fresh():
+def test_a_read_stamped_moments_after_the_pass_started_is_fresh():
+    # A pass notes "now", then reads the feed; the read is stamped a little later.
+    assert is_fresh(at(0.8), at(0), SCORE_STALE_SECONDS)
+    assert is_fresh(at(2.9), at(0), PRICE_STALE_SECONDS)
+
+
+def test_a_read_stamped_well_into_the_future_is_not_fresh():
     assert not is_fresh(at(10), at(0), SCORE_STALE_SECONDS)
+    assert not is_fresh(at(3.1), at(0), SCORE_STALE_SECONDS)
 
 
 def test_first_poll_is_never_confirmed():

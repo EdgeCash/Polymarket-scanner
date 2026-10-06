@@ -351,7 +351,24 @@ def test_429_triggers_backoff_and_refuses_calls_until_it_passes():
     with pytest.raises(RateLimited):
         reader.quote("x", True, 0.0695)
     assert len(transport.calls) == first_calls  # no request made while backing off
-    clock.t += 1.5
+    clock.t += 59
     with pytest.raises(RateLimited):
         reader.quote("x", True, 0.0695)
-    assert len(transport.calls) == first_calls + 1  # retried after at least a second
+    assert len(transport.calls) == first_calls  # still paused: a minute, not a second
+    clock.t += 2
+    with pytest.raises(RateLimited):
+        reader.quote("x", True, 0.0695)
+    assert len(transport.calls) == first_calls + 1  # retried after the minute passed
+    assert reader.backoff_remaining() == pytest.approx(120)  # and the pause doubled
+
+
+def test_cloudflare_ban_page_becomes_a_short_message():
+    from scanner.polymarket import short_error
+
+    page = (
+        "<!doctype html><html><title>Access denied | Cloudflare</title>"
+        "Error 1015 You are being rate limited</html>"
+    )
+    assert short_error(page) == "Cloudflare rate-limit page (error 1015: temporarily banned)"
+    assert short_error("x" * 500).endswith("...") and len(short_error("x" * 500)) == 160
+    assert short_error("plain  text\n here") == "plain text here"

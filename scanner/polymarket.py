@@ -24,7 +24,12 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Any, Protocol
 
-from scanner.config import DEFAULT_THETA, POLYMARKET_MAX_RPS
+from scanner.config import (
+    DEFAULT_THETA,
+    POLYMARKET_MAX_RPS,
+    RATE_LIMIT_BACKOFF_MAX_SECONDS,
+    RATE_LIMIT_BACKOFF_SECONDS,
+)
 from scanner.models import (
     Availability,
     Book,
@@ -58,6 +63,16 @@ class RateLimited(PolymarketError):
     """The API returned 429. The reader is backing off; do not retry yet."""
 
 
+def short_error(text: str, limit: int = 160) -> str:
+    """One readable line from an error, even when it is a whole HTML page."""
+    if "<html" in text.lower() or "<!doctype" in text.lower():
+        if "1015" in text or "rate limited" in text.lower():
+            return "Cloudflare rate-limit page (error 1015: temporarily banned)"
+        return "HTML error page from the gateway"
+    flat = " ".join(text.split())
+    return flat if len(flat) <= limit else flat[: limit - 3] + "..."
+
+
 class Transport(Protocol):
     """The one call the reader needs: a GET that returns parsed JSON."""
 
@@ -79,9 +94,9 @@ class SdkTransport:
         try:
             return self._client.get(path, query=query)
         except RateLimitError as exc:
-            raise RateLimited(str(exc)) from exc
+            raise RateLimited(short_error(str(exc))) from exc
         except Exception as exc:  # any API, connection or decoding failure
-            raise PolymarketError(f"{type(exc).__name__}: {exc}") from exc
+            raise PolymarketError(f"{type(exc).__name__}: {short_error(str(exc))}") from exc
 
     def close(self) -> None:
         self._client.close()
@@ -442,7 +457,7 @@ class PolymarketReader:
         self._clock = clock
         self._now = now
         self._backoff_until = 0.0
-        self._backoff_seconds = 1.0
+        self._backoff_seconds = RATE_LIMIT_BACKOFF_SECONDS
         self.request_count = 0
 
     # -- plumbing ---------------------------------------------------------
@@ -450,22 +465,29 @@ class PolymarketReader:
     def _get(self, path: str, query: dict[str, Any] | None = None) -> Any:
         now = self._clock()
         if now < self._backoff_until:
-            raise RateLimited(f"backing off for {self._backoff_until - now:.1f}s more")
+            raise RateLimited(f"backing off for {self._backoff_until - now:.0f}s more")
         self._limiter.wait()
         self.request_count += 1
         try:
             result = self._transport.get(path, query)
-        except RateLimited:
-            # Stop immediately, wait at least one second, then grow the wait.
+        except RateLimited as exc:
+            # Stop immediately and stay away for minutes, doubling each time it
+            # happens again. A Cloudflare ban lasts minutes, not seconds.
             self._backoff_until = self._clock() + self._backoff_seconds
-            self._backoff_seconds = min(self._backoff_seconds * 2, 30.0)
+            log.warning(
+                "rate limited (%s); pausing Polymarket reads for %.0fs", exc, self._backoff_seconds
+            )
+            self._backoff_seconds = min(self._backoff_seconds * 2, RATE_LIMIT_BACKOFF_MAX_SECONDS)
             raise
         except PolymarketError:
             raise
         except Exception as exc:  # whatever the transport is, a failure is one kind
-            raise PolymarketError(f"{type(exc).__name__}: {exc}") from exc
-        self._backoff_seconds = 1.0
+            raise PolymarketError(f"{type(exc).__name__}: {short_error(str(exc))}") from exc
+        self._backoff_seconds = RATE_LIMIT_BACKOFF_SECONDS
         return result
+
+    def backoff_remaining(self) -> float:
+        return max(0.0, self._backoff_until - self._clock())
 
     # -- leagues ------------------------------------------------------------
 

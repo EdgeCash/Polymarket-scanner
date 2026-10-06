@@ -16,6 +16,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 # changes the safety rules, which the brief says needs the owner's say-so.
 SCORE_STALE_SECONDS = 15.0  # a score read older than this cannot trigger an alert
 PRICE_STALE_SECONDS = 5.0  # a price read older than this cannot trigger an alert
+FRESHNESS_SKEW_SECONDS = 3.0  # a read stamped this far "after now" is fine: same clock
 MODEL_ESPN_MAX_DISAGREEMENT = 0.05  # model and ESPN must agree within 5 cents
 ESPN_MISSING_MARGIN = 0.02  # fair = model - 2 cents when ESPN has no number
 DEFAULT_THETA = 0.0695  # taker fee coefficient from the fee schedule, 1 Oct 2026
@@ -25,7 +26,10 @@ MODEL_MAX_PRICE = 0.995  # the model alone never prices anything above 99.5 cent
 NFL_TWO_MINUTE_WARNING = 120.0  # the NFL clock stops once at 2:00, like an extra timeout
 KNEEL_SECONDS_PER_DOWN = 40.0  # a kneel burns a 40 second play clock
 GAME_LIST_REFRESH_SECONDS = 60.0  # how often the Polymarket game list is re-read
-POLYMARKET_MAX_RPS = 5.0  # stay well under the 25/s published limit
+POLYMARKET_MAX_RPS = 3.0  # the brief says under 5/s; the host's outbound IP is shared
+CLINCHED_REPOLL_SECONDS = 60.0  # a clinched line is re-read at most this often
+RATE_LIMIT_BACKOFF_SECONDS = 60.0  # first pause after a 429; doubles each time
+RATE_LIMIT_BACKOFF_MAX_SECONDS = 900.0  # never pause longer than 15 minutes
 FEED_FAILURE_ALERT_SECONDS = 120.0  # a source failing this long sends a message
 FEED_FAILURE_REPEAT_SECONDS = 900.0  # and repeats at most every 15 minutes
 WAKE_BEFORE_KICKOFF_SECONDS = 30 * 60  # the loop wakes 30 minutes before kickoff
