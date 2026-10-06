@@ -47,6 +47,7 @@ from scanner.models import (
     Side,
 )
 from scanner.notify import (
+    ZONE_LABELS,
     Notifier,
     feed_failure_message,
     heartbeat_message,
@@ -187,8 +188,16 @@ class Scanner:
                     upcoming.append(wake_at)
         if upcoming:
             next_wake = min(upcoming)
-            return False, f"next wake {next_wake.isoformat(timespec='minutes')}", next_wake
+            return False, f"next wake {self._local(next_wake)}", next_wake
         return False, "no games listed", None
+
+    def _local(self, moment: datetime) -> str:
+        """A moment in the owner's time zone, the way the status page shows times."""
+        from zoneinfo import ZoneInfo
+
+        local = moment.astimezone(ZoneInfo(self.settings.TZ))
+        label = ZONE_LABELS.get(self.settings.TZ) or local.tzname() or self.settings.TZ
+        return f"{local.strftime('%a %-I:%M %p')} {label}"
 
     # -- helpers ------------------------------------------------------------
 

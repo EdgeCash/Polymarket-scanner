@@ -173,8 +173,8 @@ def test_window_wakes_thirty_minutes_before_kickoff_and_sleeps_after(model):
     )
     scanner._refresh_games(clock.now(), force=True)
     awake, note, change = scanner.window(at(0))
-    assert awake is False and note.startswith("next wake")
-    assert change == T0 + timedelta(minutes=30)
+    assert note == "next wake Sun 3:30 PM CT"  # 20:30 UTC, in the owner's zone
+    assert awake is False and change == T0 + timedelta(minutes=30)
     awake, note, _ = scanner.window(T0 + timedelta(minutes=30))
     assert awake is True and "in window" in note
     awake, _, _ = scanner.window(T0 + timedelta(hours=6, minutes=1))
