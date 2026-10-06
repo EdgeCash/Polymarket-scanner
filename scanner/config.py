@@ -28,6 +28,9 @@ KNEEL_SECONDS_PER_DOWN = 40.0  # a kneel burns a 40 second play clock
 GAME_LIST_REFRESH_SECONDS = 60.0  # how often the Polymarket game list is re-read
 POLYMARKET_MAX_RPS = 3.0  # the brief says under 5/s; the host's outbound IP is shared
 CLINCHED_REPOLL_SECONDS = 60.0  # a clinched line is re-read at most this often
+PERIOD_REPOLL_SECONDS = 120.0  # a decided quarter or half market is re-read at most this often
+PERIOD_READS_PER_PASS = 3  # decided period markets read per pass, narrowest margin first
+OBSERVATION_INTERVAL_SECONDS = 30.0  # one observation per game at most this often
 RATE_LIMIT_BACKOFF_SECONDS = 60.0  # first pause after a 429; doubles each time
 RATE_LIMIT_BACKOFF_MAX_SECONDS = 900.0  # never pause longer than 15 minutes
 FEED_FAILURE_ALERT_SECONDS = 120.0  # a source failing this long sends a message
@@ -72,6 +75,19 @@ class Settings(BaseSettings):
     # Clinched-over rules
     MIN_EDGE_CLINCHED: float = Field(0.02, ge=0, le=1)
     CLINCH_COOLDOWN_SECONDS: float = Field(60, ge=0)
+
+    # Quarter and half markets whose result is already known (totals, team totals,
+    # spreads). Evaluated and written to the diary whenever PERIOD_MARKETS_ENABLED
+    # is on; sent to the phone only when PERIOD_ALERTS_ENABLED and ALERTS_ENABLED
+    # are both on. They use the clinched-over edge and cooldown and their own
+    # daily cap, so they never use up the winner alerts' cap.
+    PERIOD_MARKETS_ENABLED: bool = True
+    PERIOD_ALERTS_ENABLED: bool = False
+
+    # Observation window: winner candidates with between MAX_MINUTES_LEFT and this
+    # many minutes left are evaluated and recorded, never sent, so the late-game
+    # filter can be judged on data. 0 turns it off. Not an alert threshold.
+    OBSERVATION_MINUTES_LEFT: float = Field(15, ge=0)
 
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"

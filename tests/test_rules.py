@@ -596,3 +596,184 @@ def test_replay_of_a_recorded_late_game_sequence_produces_the_expected_alerts():
     assert reasons[80].startswith("rule 6")
     assert reasons[85].startswith("rule 4")
     assert reasons[345].startswith("rule 6")
+
+
+# -- quarter and half markets -------------------------------------------------------
+
+
+class PeriodScenario:
+    """A halftime state where the first-half Over 24.5 is decided and every rule passes."""
+
+    def __init__(self, **settings_overrides):
+        from scanner.models import PeriodMarket
+        from scanner.periods import decide, period_sides
+
+        self.settings = load_settings(**settings_overrides)
+        base = live_state(0)
+        self.state0 = replace(
+            base,
+            status=GameStatus.HALFTIME,
+            period=2,
+            clock_seconds=0.0,
+            seconds_left=1800.0,
+            home_score=10,
+            away_score=17,
+            home_linescores=(3, 7),
+            away_linescores=(14, 3),
+        )
+        self.state = replace(self.state0, fetched_at=at(68))
+        self.match = phi_jax_match(self.state)
+        self.tracker = GameTracker()
+        self.tracker.update(self.state0)
+        self.tracker.update(self.state)
+        self.history = AlertHistory("America/Chicago")
+        self.now = at(70)
+        self.market = PeriodMarket(
+            "tsc-nfl-phi-jax-2026-10-11-1h-24pt5",
+            "1h",
+            "total",
+            24.5,
+            0.0695,
+            True,
+            False,
+            True,
+            True,
+        )
+        self.sides = period_sides(self.match, self.market)
+        self.decision = decide(self.market, self.state, self.sides)
+        self.quote = parse_quote(
+            load_fixture("pm_bbo_late.json"), self.market.market_slug, True, 0.0695, True, at(68)
+        )
+        self.book = parse_book(load_fixture("pm_book_late.json"), self.market.market_slug, at(68))
+
+    def run(self, **overrides) -> Decision:
+        from scanner.rules import evaluate_period
+
+        args = dict(
+            match=self.match,
+            state=self.state,
+            market=self.market,
+            decision=self.decision,
+            sides=self.sides,
+            quote=self.quote,
+            book=self.book,
+            settings=self.settings,
+            tracker=self.tracker,
+            history=self.history,
+            now=self.now,
+        )
+        args.update(overrides)
+        return evaluate_period(**args)
+
+
+def test_decided_half_total_produces_a_period_alert_that_is_recorded_not_sent():
+    s = PeriodScenario()
+    assert s.decision is not None and s.decision.pick == "1H OVER 24.5"
+    d = s.run()
+    assert d.fired and d.near_miss is None
+    a = d.alert
+    assert a.alert_type is AlertType.PERIOD and a.pick == "1H OVER 24.5" and a.side_label == "long"
+    assert a.market_slug == s.market.market_slug and a.home == "JAX" and a.away == "PHI"
+    assert a.fair_price == CLINCHED_FAIR_PRICE and a.buy_price == pytest.approx(0.94)
+    assert a.edge == pytest.approx(0.995 - 0.94 - 0.0695 * 0.94 * 0.06)
+    assert a.line == 24.5 and a.combined_score == 27 and a.pick_side is None
+    # At a 99.5c fair price the 96c level still clears the 2c clinched edge; 99c does not.
+    assert a.dollars_available == pytest.approx(93 + 93.5 + 235 + 1920)
+    assert a.situation["period_by_end"] is True and a.situation["decided_age_seconds"] == 70
+    assert a.situation["period_detail"] == "1st half ended with 27 points"
+    assert a.situation["period_market"]["period"] == "1h"
+    assert a.enabled is False
+    assert PeriodScenario(ALERTS_ENABLED=True).run().alert.enabled is False
+    both = PeriodScenario(ALERTS_ENABLED=True, PERIOD_ALERTS_ENABLED=True)
+    assert both.run().alert.enabled is True
+
+
+def test_period_alert_waits_for_the_span_to_have_been_over_for_the_cooldown():
+    s = PeriodScenario()
+    d = s.run(now=at(30), quote=replace(s.quote, fetched_at=at(29)))
+    assert not d.fired and d.near_miss.reason == "clinch cooldown: period just ended"
+    s = PeriodScenario(CLINCH_COOLDOWN_SECONDS=100)
+    assert s.run().near_miss.reason == "clinch cooldown: period just ended"
+
+
+def test_over_passed_mid_half_waits_for_the_score_cooldown():
+    from scanner.periods import decide
+
+    s = PeriodScenario()
+    running = replace(s.state0, status=GameStatus.LIVE, period=2, clock_seconds=200.0)
+    s.tracker = GameTracker()
+    s.tracker.update(running)
+    later = replace(running, fetched_at=at(68))
+    s.tracker.update(later)
+    s.state = later
+    s.decision = decide(s.market, later, s.sides)
+    assert s.decision.by_period_end is False
+    d = s.run(now=at(30), quote=replace(s.quote, fetched_at=at(29)))
+    assert d.near_miss.reason == "clinch cooldown: score changed recently"
+    assert s.run().fired
+
+
+def test_period_rules_refuse_the_wrong_side_closed_markets_and_the_switch():
+    s = PeriodScenario()
+    wrong = parse_quote(
+        load_fixture("pm_bbo_late.json"), s.market.market_slug, False, 0.0695, True, at(68)
+    )
+    d = s.run(quote=wrong)
+    assert not d.fired and d.near_miss is None and "not the decided side" in d.reason
+    d = s.run(market=replace(s.market, closed=True))
+    assert d.near_miss.reason == "market not open"
+    d = s.run(market=replace(s.market, long_tradable=False))
+    assert d.near_miss.reason == "market not open"
+    d = PeriodScenario(PERIOD_MARKETS_ENABLED=False).run()
+    assert not d.fired and d.near_miss is None and d.reason == "period markets disabled"
+    d = s.run(state=replace(s.state, status=GameStatus.FINAL))
+    assert not d.fired and d.near_miss is None and d.reason == "game is final"
+
+
+def test_period_rules_edge_book_repeat_and_cap():
+    s = PeriodScenario()
+    dear = parse_quote(
+        {
+            "marketData": {
+                "bestBid": {"value": "0.98"},
+                "bestAsk": {"value": "0.985"},
+                "state": "MARKET_STATE_OPEN",
+            }
+        },
+        s.market.market_slug,
+        True,
+        0.0695,
+        True,
+        at(68),
+    )
+    assert s.run(quote=dear).near_miss.reason == "edge too small"
+    assert s.run(book=None).near_miss.reason == "rule 4: no book"
+    assert s.run(book=replace(s.book, fetched_at=at(50))).near_miss.reason == "rule 4: stale book"
+    thin = parse_book(
+        {
+            "marketData": {
+                "bids": [],
+                "offers": [
+                    {"px": {"value": "0.9400"}, "qty": "1.0000"},
+                    {"px": {"value": "0.9500"}, "qty": "20.0000"},
+                ],
+                "state": "MARKET_STATE_OPEN",
+            }
+        },
+        s.market.market_slug,
+        at(68),
+    )
+    assert s.run(book=thin).near_miss.reason == "rule 4: not enough for sale"
+    first = s.run()
+    s.history.record(first.alert)
+    again = s.run(
+        now=at(130),
+        state=replace(s.state, fetched_at=at(128)),
+        quote=replace(s.quote, fetched_at=at(128)),
+        book=replace(s.book, fetched_at=at(128)),
+    )
+    assert again.near_miss.reason == "rule 6: repeat too soon"
+    # The cap only applies once period alerts can reach the phone.
+    assert PeriodScenario(MAX_ALERTS_PER_DAY=0).run().fired
+    capped = PeriodScenario(MAX_ALERTS_PER_DAY=0, PERIOD_ALERTS_ENABLED=True)
+    assert capped.run().near_miss.reason == "rule 7: daily cap"

@@ -17,7 +17,17 @@ from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from scanner.config import FOLLOW_UP_SECONDS
-from scanner.models import Alert, AlertType, GameState, GameStatus, League, NearMiss, Side
+from scanner.models import (
+    Alert,
+    AlertType,
+    GameState,
+    GameStatus,
+    League,
+    NearMiss,
+    Observation,
+    Side,
+)
+from scanner.periods import decide, from_json, is_period_pick
 
 log = logging.getLogger(__name__)
 
@@ -80,9 +90,37 @@ CREATE TABLE IF NOT EXISTS events (
     kind TEXT NOT NULL,
     detail TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS observations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT NOT NULL,
+    league TEXT NOT NULL,
+    feed_id TEXT NOT NULL,
+    event_slug TEXT NOT NULL,
+    pick TEXT NOT NULL,
+    pick_side TEXT NOT NULL,
+    minutes_left REAL NOT NULL,
+    home_score INTEGER,
+    away_score INTEGER,
+    fair_price REAL,
+    model_price REAL,
+    espn_price REAL,
+    buy_price REAL,
+    fee REAL,
+    edge REAL,
+    dollars_available REAL,
+    would_alert INTEGER NOT NULL DEFAULT 0,
+    reason TEXT NOT NULL,
+    outcome TEXT,
+    settlement REAL,
+    result_per_contract REAL,
+    graded_at TEXT
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
+CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
 """
+
+ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
 
 OUTCOME_WIN = "win"
 OUTCOME_LOSS = "loss"
@@ -229,10 +267,11 @@ class Diary:
                     "GROUP BY pick, reason",
                     (_iso(since),),
                 ).fetchall()
-        out: dict[str, dict[str, int]] = {"winner": {}, "clinched_over": {}}
+        out: dict[str, dict[str, int]] = {kind: {} for kind in ALERT_TYPES}
         for r in rows:
-            kind = "clinched_over" if str(r["pick"]).startswith("OVER ") else "winner"
-            out[kind][r["reason"]] = out[kind].get(r["reason"], 0) + int(r["n"])
+            out[_kind_of_pick(str(r["pick"]))][r["reason"]] = out[
+                _kind_of_pick(str(r["pick"]))
+            ].get(r["reason"], 0) + int(r["n"])
         return out
 
     def near_misses_by_reason(self, since: datetime | None = None) -> dict[str, int]:
@@ -248,6 +287,91 @@ class Diary:
                     (_iso(since),),
                 ).fetchall()
         return {r["reason"]: int(r["n"]) for r in rows}
+
+    # -- observations (the window just outside the late-game filter) ----------
+
+    def record_observation(self, obs: Observation) -> int:
+        with self._lock:
+            cur = self._conn.execute(
+                """INSERT INTO observations (created_at, league, feed_id, event_slug, pick,
+                   pick_side, minutes_left, home_score, away_score, fair_price, model_price,
+                   espn_price, buy_price, fee, edge, dollars_available, would_alert, reason)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    _iso(obs.created_at),
+                    obs.league.value,
+                    obs.feed_id,
+                    obs.event_slug,
+                    obs.pick,
+                    obs.pick_side,
+                    obs.minutes_left,
+                    obs.home_score,
+                    obs.away_score,
+                    obs.fair_price,
+                    obs.model_price,
+                    obs.espn_price,
+                    obs.buy_price,
+                    obs.fee,
+                    obs.edge,
+                    obs.dollars_available,
+                    int(obs.would_alert),
+                    obs.reason,
+                ),
+            )
+            return int(cur.lastrowid)
+
+    def observations_since(self, since: datetime | None = None) -> list[dict]:
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute("SELECT * FROM observations ORDER BY id").fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM observations WHERE created_at >= ? ORDER BY id", (_iso(since),)
+                ).fetchall()
+        return [dict(r) for r in rows]
+
+    def observation_summary(self, since: datetime | None = None) -> dict:
+        """What the window outside the late-game filter would have done.
+
+        Each game and pick counts once, at its first "would alert" check, so a game
+        checked every 30 seconds for five minutes is one paper trade, not ten.
+        """
+        rows = self.observations_since(since)
+        games = {(r["league"], r["feed_id"]) for r in rows}
+        fired = [r for r in rows if r["would_alert"]]
+        first: dict[tuple[str, str, str], dict] = {}
+        for r in fired:
+            first.setdefault((r["league"], r["feed_id"], r["pick"]), r)
+        picks = list(first.values())
+        graded = [r for r in picks if r["outcome"] in (OUTCOME_WIN, OUTCOME_LOSS, OUTCOME_TIE)]
+        wins = sum(1 for r in graded if r["outcome"] == OUTCOME_WIN)
+        losses = sum(1 for r in graded if r["outcome"] == OUTCOME_LOSS)
+        ties = sum(1 for r in graded if r["outcome"] == OUTCOME_TIE)
+        priced = [r for r in picks if r["buy_price"] is not None]
+        needed = (
+            sum(r["buy_price"] + (r["fee"] or 0.0) for r in priced) / len(priced)
+            if priced
+            else None
+        )
+        actual = (wins + 0.5 * ties) / len(graded) if graded else None
+        profit = sum(
+            100 * r["result_per_contract"] for r in graded if r["result_per_contract"] is not None
+        )
+        reasons = Counter(r["reason"] for r in rows if not r["would_alert"])
+        return {
+            "rows": len(rows),
+            "games": len(games),
+            "would_alert_rows": len(fired),
+            "picks": len(picks),
+            "graded": len(graded),
+            "wins": wins,
+            "losses": losses,
+            "ties": ties,
+            "win_rate_needed": needed,
+            "actual_win_rate": actual,
+            "profit_per_100": profit,
+            "reasons": dict(reasons.most_common(8)),
+        }
 
     # -- events (heartbeats, failures, paused messages) ----------------------
 
@@ -311,12 +435,13 @@ class Diary:
     def ungraded_games(self) -> set[tuple[str, str]]:
         with self._lock:
             rows = self._conn.execute(
-                "SELECT DISTINCT league, feed_id FROM alerts WHERE outcome IS NULL"
+                "SELECT DISTINCT league, feed_id FROM alerts WHERE outcome IS NULL "
+                "UNION SELECT DISTINCT league, feed_id FROM observations WHERE outcome IS NULL"
             ).fetchall()
         return {(r["league"], r["feed_id"]) for r in rows}
 
     def grade_game(self, state: GameState, at: datetime) -> int:
-        """Grade every ungraded alert on this game. Returns how many were graded."""
+        """Grade every ungraded alert and observation on this game. Returns how many."""
         if state.status not in (GameStatus.FINAL, GameStatus.POSTPONED):
             return 0
         with self._lock:
@@ -342,6 +467,24 @@ class Diary:
                     ),
                 )
                 graded += 1
+            observations = self._conn.execute(
+                "SELECT * FROM observations WHERE league = ? AND feed_id = ? AND outcome IS NULL",
+                (state.league.value, state.feed_id),
+            ).fetchall()
+            for row in observations:
+                if state.status is GameStatus.POSTPONED or state.home_score is None:
+                    outcome, settlement = OUTCOME_NOT_GRADED, None
+                else:
+                    outcome, settlement = self._winner_outcome(row["pick_side"], state)
+                result = None
+                if settlement is not None and row["buy_price"] is not None:
+                    result = settlement - row["buy_price"] - (row["fee"] or 0.0)
+                self._conn.execute(
+                    """UPDATE observations SET outcome = ?, settlement = ?,
+                       result_per_contract = ?, graded_at = ? WHERE id = ?""",
+                    (outcome, settlement, result, _iso(at), row["id"]),
+                )
+                graded += 1
         return graded
 
     @staticmethod
@@ -357,14 +500,39 @@ class Diary:
                 return OUTCOME_NOT_GRADED, None
             won = state.home_score + state.away_score > row["line"]
             return (OUTCOME_WIN, 1.0) if won else (OUTCOME_LOSS, 0.0)
-        if row["pick_side"] not in (Side.HOME.value, Side.AWAY.value):
+        if row["alert_type"] == AlertType.PERIOD.value:
+            return Diary._period_outcome(row, state)
+        return Diary._winner_outcome(row["pick_side"], state)
+
+    @staticmethod
+    def _winner_outcome(pick_side: str | None, state: GameState) -> tuple[str, float | None]:
+        if state.home_score is None or state.away_score is None:
+            return OUTCOME_NOT_GRADED, None
+        if pick_side not in (Side.HOME.value, Side.AWAY.value):
             return OUTCOME_NOT_GRADED, None
         if state.home_score == state.away_score:
             if state.league is League.NFL:
                 return OUTCOME_TIE, 0.5
             return OUTCOME_NOT_GRADED, None  # college games do not end tied
         winner = Side.HOME.value if state.home_score > state.away_score else Side.AWAY.value
-        return (OUTCOME_WIN, 1.0) if row["pick_side"] == winner else (OUTCOME_LOSS, 0.0)
+        return (OUTCOME_WIN, 1.0) if pick_side == winner else (OUTCOME_LOSS, 0.0)
+
+    @staticmethod
+    def _period_outcome(row: dict, state: GameState) -> tuple[str, float | None]:
+        """Decide the market again from the final per-period scores."""
+        try:
+            situation = json.loads(row.get("situation") or "{}")
+        except ValueError:
+            return OUTCOME_NOT_GRADED, None
+        parsed = from_json(situation.get("period_market") if isinstance(situation, dict) else None)
+        if parsed is None:
+            return OUTCOME_NOT_GRADED, None
+        market, sides = parsed
+        decision = decide(market, state, sides)
+        if decision is None:
+            return OUTCOME_NOT_GRADED, None  # no per-period scores at the final, or a push
+        won = decision.side_label == row["side_label"]
+        return (OUTCOME_WIN, 1.0) if won else (OUTCOME_LOSS, 0.0)
 
     # -- scorecard ----------------------------------------------------------
 
@@ -381,7 +549,7 @@ class Diary:
                     ).fetchall()
                 ]
         sections = {}
-        for alert_type in (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value):
+        for alert_type in ALERT_TYPES:
             subset = [r for r in rows if r["alert_type"] == alert_type]
             sections[alert_type] = self._summarise(subset)
         return {
@@ -392,6 +560,7 @@ class Diary:
             "by_type": sections,
             "near_misses": self.near_misses_by_reason(since),
             "near_misses_by_type": self.near_misses_by_type(since),
+            "observations": self.observation_summary(since),
         }
 
     @staticmethod
@@ -430,8 +599,12 @@ class Diary:
 
     # -- restart ------------------------------------------------------------
 
-    def restore_history(self, history, now: datetime) -> int:
-        """Reload today's alerts into an AlertHistory after a restart."""
+    def restore_history(self, history, now: datetime, period_history=None) -> int:
+        """Reload today's alerts into the AlertHistory objects after a restart.
+
+        Quarter and half alerts go to ``period_history`` (their own repeat gap and
+        daily cap) and are skipped when none is given.
+        """
         since = now - timedelta(hours=36)
         rows = self.alerts_since(since)
         count = 0
@@ -439,9 +612,23 @@ class Diary:
             created = _parse(row["created_at"])
             if created is None:
                 continue
-            history.record(_alert_stub(row, created))
+            if row["alert_type"] == AlertType.PERIOD.value:
+                if period_history is None:
+                    continue
+                period_history.record(_alert_stub(row, created))
+            else:
+                history.record(_alert_stub(row, created))
             count += 1
         return count
+
+
+def _kind_of_pick(pick: str) -> str:
+    """Which alert type a pick string belongs to; near misses carry only the pick."""
+    if pick.startswith("OVER "):
+        return AlertType.CLINCHED_OVER.value
+    if is_period_pick(pick):
+        return AlertType.PERIOD.value
+    return AlertType.WINNER.value
 
 
 def _alert_stub(row: dict, created: datetime) -> Alert:

@@ -79,6 +79,17 @@ class FakeReader:
     def over_quote(self, total):
         return self.quote(total.market_slug, total.over_is_long, total.theta, total.over_tradable)
 
+    def side_quotes(self, market):
+        self.calls.append(f"side:{market.market_slug}")
+        if self.fail:
+            raise PolymarketError("down")
+        raw = self.bbo[market.market_slug]
+        now = self.clock.now()
+        return {
+            "long": parse_quote(raw, market.market_slug, True, market.theta, True, now),
+            "short": parse_quote(raw, market.market_slug, False, market.theta, True, now),
+        }
+
     def book(self, slug):
         self.calls.append(f"book:{slug}")
         if self.fail:
@@ -645,3 +656,304 @@ def test_reads_that_take_real_time_still_count_as_fresh(model):
     second = scanner.scan_once(at(20))
     assert [m.reason for m in second.near_misses] == []
     assert len(second.alerts) == 1
+
+
+# -- quarter and half markets -------------------------------------------------------
+
+
+def with_lines(event, home_lines, away_lines):
+    event = copy.deepcopy(event)
+    for competitor in event["competitions"][0]["competitors"]:
+        values = home_lines if competitor["homeAway"] == "home" else away_lines
+        competitor["score"] = str(sum(values))
+        competitor["linescores"] = [
+            {"value": float(v), "displayValue": str(v), "period": i + 1}
+            for i, v in enumerate(values)
+        ]
+    return event
+
+
+def halftime_event():
+    """JAX 3+7, PHI 14+3 at halftime: 27 points, PHI won the first quarter by 11."""
+    event = with_lines(poll(0)["espn_event"], [3, 7], [14, 3])
+    event["status"] = {
+        **event["status"],
+        "period": 2,
+        "clock": 0.0,
+        "type": {**event["status"]["type"], "name": "STATUS_HALFTIME", "shortDetail": "Halftime"},
+    }
+    return event
+
+
+def final_event():
+    event = with_lines(poll(340)["espn_event"], [3, 7, 7, 4], [14, 3, 0, 14])
+    event["status"] = {
+        **event["status"],
+        "period": 4,
+        "clock": 0.0,
+        "type": {
+            **event["status"]["type"],
+            "name": "STATUS_FINAL",
+            "state": "post",
+            "completed": True,
+        },
+    }
+    return event
+
+
+def game_with_period_markets():
+    from scanner.models import PeriodMarket
+
+    game = phi_jax_game()
+    ids = {t.abbreviation: t.team_id for t in game.teams}
+    total = PeriodMarket(
+        "tsc-nfl-phi-jax-2026-10-11-1h-24pt5", "1h", "total", 24.5, 0.0695, True, False, True, True
+    )
+    spread = PeriodMarket(
+        "asc-nfl-phi-jax-2026-10-11-1q-pos-2pt5",
+        "1q",
+        "spread",
+        2.5,
+        0.0695,
+        True,
+        False,
+        True,
+        True,
+        team_id=ids["PHI"],
+        other_team_id=ids["JAX"],
+        long_line=2.5,
+    )
+    return replace(game, period_markets=(total, spread))
+
+
+def price_period_markets(reader, game, ask="0.9600", state="MARKET_STATE_OPEN"):
+    for market in game.period_markets:
+        reader.bbo[market.market_slug] = {
+            "marketData": {
+                "bestBid": {"value": "0.9500", "currency": "USD"},
+                "bestAsk": {"value": ask, "currency": "USD"},
+                "state": state,
+            }
+        }
+        reader.books[market.market_slug] = {
+            "marketData": {
+                "bids": [],
+                "offers": [{"px": {"value": ask, "currency": "USD"}, "qty": "200.0000"}],
+                "state": state,
+            }
+        }
+
+
+def test_decided_period_markets_are_recorded_after_the_cooldown_and_never_sent(model):
+    clock = Clock()
+    game = game_with_period_markets()
+    scanner, reader, feed, sender = build(clock, model, games={League.NFL: [game]}, enabled=True)
+    price_period_markets(reader, game)
+    feed.states[League.NFL] = [halftime_event()]
+    for t in (0, 5):
+        clock.t = t
+        scanner.scan_once()
+    assert not any(c.startswith("side:") for c in reader.calls)  # inside the cooldown
+    clock.t = 65
+    summary = scanner.scan_once()
+    assert [c for c in reader.calls if c.startswith("side:")] == [
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-24pt5",
+        "side:asc-nfl-phi-jax-2026-10-11-1q-pos-2pt5",
+    ]
+    assert [a.pick for a in summary.alerts] == ["1H OVER 24.5", "1Q PHI +2.5"]
+    assert sender.messages == []  # PERIOD_ALERTS_ENABLED is off: recorded, not sent
+    rows = scanner.diary.alerts()
+    assert len(rows) == 2 and all(r["alert_type"] == "period" for r in rows)
+    assert all(r["sent"] == 0 and r["enabled"] == 0 for r in rows)
+    assert rows[0]["message"].startswith("NFL - PHI at JAX\n1Q PHI +2.5 is decided")
+    assert scanner.history.count_today(clock.now()) == 0  # the winner cap is untouched
+    assert scanner.period_history.count_today(clock.now()) == 2
+    assert scanner.status.alerts_today == 0
+    for t in (70, 90, 120, 180):
+        clock.t = t
+        scanner.scan_once()
+    assert sum(1 for c in reader.calls if c.startswith("side:")) == 2  # not re-read for 2 minutes
+    clock.t = 186
+    summary = scanner.scan_once()
+    assert sum(1 for c in reader.calls if c.startswith("side:")) == 4
+    assert {m.reason for m in summary.near_misses} == {"rule 6: repeat too soon"}
+    clock.t = 4000
+    feed.states[League.NFL] = [final_event()]
+    scanner.scan_once()
+    assert [r["outcome"] for r in scanner.diary.alerts()] == ["win", "win"]
+
+
+def test_period_alerts_are_sent_when_both_switches_are_on(model):
+    clock = Clock()
+    game = game_with_period_markets()
+    scanner, reader, feed, sender = build(
+        clock, model, games={League.NFL: [game]}, enabled=True, PERIOD_ALERTS_ENABLED=True
+    )
+    price_period_markets(reader, game)
+    feed.states[League.NFL] = [halftime_event()]
+    for t in (0, 5, 65):
+        clock.t = t
+        scanner.scan_once()
+    assert len(sender.messages) == 2
+    assert sender.messages[0].startswith(
+        "NFL - PHI at JAX\n1H OVER 24.5 is decided: 1st half ended with 27 points\n"
+        "Fair 99.5c | Buy 96c | Edge 3.2c after fee\n$192 for sale at 96c or better"
+    )
+    assert "Period has been over for 65 seconds" in sender.messages[0]
+    assert "1Q PHI +2.5 is decided: 1st quarter ended PHI 14, JAX 3" in sender.messages[1]
+    assert all(r["sent"] == 1 and r["enabled"] == 1 for r in scanner.diary.alerts())
+
+
+def test_period_markets_off_or_settled_are_not_read(model):
+    clock = Clock()
+    game = game_with_period_markets()
+    scanner, reader, feed, _ = build(
+        clock, model, games={League.NFL: [game]}, PERIOD_MARKETS_ENABLED=False
+    )
+    price_period_markets(reader, game)
+    feed.states[League.NFL] = [halftime_event()]
+    for t in (0, 5, 65):
+        clock.t = t
+        scanner.scan_once()
+    assert not any(c.startswith("side:") for c in reader.calls)
+
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model, games={League.NFL: [game]})
+    price_period_markets(reader, game, state="MARKET_STATE_CLOSED")
+    feed.states[League.NFL] = [halftime_event()]
+    for t in (0, 5, 65):
+        clock.t = t
+        summary = scanner.scan_once()
+    assert {m.reason for m in summary.near_misses} == {"market not open"}
+    assert scanner.period_done == {m.market_slug for m in game.period_markets}
+    clock.t = 400
+    scanner.scan_once()
+    assert sum(1 for c in reader.calls if c.startswith("side:")) == 2  # settled: never again
+
+
+def test_period_reads_are_rationed_per_pass_closest_calls_first(model):
+    from scanner.models import PeriodMarket
+
+    clock = Clock()
+    game = phi_jax_game()
+    lines = (2.5, 20.5, 26.5, 12.5, 25.5)  # at 27 points: margins 24.5, 6.5, 0.5, 14.5, 1.5
+    markets = tuple(
+        PeriodMarket(
+            f"tsc-nfl-phi-jax-2026-10-11-1h-{str(line).replace('.', 'pt')}",
+            "1h",
+            "total",
+            line,
+            0.0695,
+            True,
+            False,
+            True,
+            True,
+        )
+        for line in lines
+    )
+    game = replace(game, period_markets=markets)
+    scanner, reader, feed, _ = build(clock, model, games={League.NFL: [game]})
+    price_period_markets(reader, game)
+    feed.states[League.NFL] = [halftime_event()]
+    for t in (0, 5, 65):
+        clock.t = t
+        scanner.scan_once()
+    reads = [c for c in reader.calls if c.startswith("side:")]
+    assert reads == [
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-26pt5",
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-25pt5",
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-20pt5",
+    ]
+    clock.t = 70
+    scanner.scan_once()
+    reads = [c for c in reader.calls if c.startswith("side:")]
+    assert reads[3:] == [
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-12pt5",
+        "side:tsc-nfl-phi-jax-2026-10-11-1h-2pt5",
+    ]
+    clock.t = 75
+    scanner.scan_once()
+    assert len([c for c in reader.calls if c.startswith("side:")]) == 5  # all read; none due
+    clock.t = 190
+    scanner.scan_once()
+    assert len([c for c in reader.calls if c.startswith("side:")]) == 8  # re-reads, 3 per pass
+
+
+def test_nothing_is_decided_when_espn_sends_no_per_period_scores(model):
+    clock = Clock()
+    game = game_with_period_markets()
+    scanner, reader, feed, _ = build(clock, model, games={League.NFL: [game]})
+    price_period_markets(reader, game)
+    event = halftime_event()
+    for competitor in event["competitions"][0]["competitors"]:
+        competitor["linescores"] = []
+    feed.states[League.NFL] = [event]
+    for t in (0, 5, 65):
+        clock.t = t
+        scanner.scan_once()
+    assert not any(c.startswith("side:") for c in reader.calls)
+    assert scanner.diary.alerts() == []
+
+
+# -- the observation window ---------------------------------------------------------
+
+
+def q4_event(clock_seconds, home_score, away_score, home_win_probability=0.03):
+    event = copy.deepcopy(poll(0)["espn_event"])
+    event["status"] = {**event["status"], "period": 4, "clock": float(clock_seconds)}
+    for competitor in event["competitions"][0]["competitors"]:
+        competitor["score"] = str(home_score if competitor["homeAway"] == "home" else away_score)
+    situation = event["competitions"][0]["situation"]
+    situation["lastPlay"]["probability"]["homeWinPercentage"] = home_win_probability
+    return event
+
+
+def test_observation_window_records_what_the_rules_would_do_and_sends_nothing(model):
+    clock = Clock()
+    scanner, reader, feed, sender = build(clock, model, enabled=True)
+    feed.states[League.NFL] = [q4_event(600, 14, 31)]  # PHI up 17 with 10:00 left
+    first = scanner.scan_once()
+    assert first.candidates == 0 and len(first.observations) == 1  # outside the 8-minute rule
+    assert first.observations[0].would_alert is False
+    assert first.observations[0].reason == "not confirmed on two polls"
+    clock.t = 5
+    second = scanner.scan_once()
+    assert second.observations == []  # one observation per game per 30 seconds
+    clock.t = 30
+    third = scanner.scan_once()
+    assert len(third.observations) == 1
+    obs = third.observations[0]
+    assert obs.would_alert is True and obs.reason == "alert"
+    assert obs.pick == "PHI" and obs.pick_side == "away" and obs.minutes_left == 10.0
+    assert obs.buy_price == pytest.approx(0.8915) and obs.dollars_available > 0
+    assert obs.fair_price is not None and obs.fair_price >= 0.93
+    assert sender.messages == [] and scanner.diary.alerts() == []
+    assert scanner.history.count_today(clock.now()) == 0
+    assert reader.calls.count(f"bbo:{SLUG}") == 2
+    rows = scanner.diary.observations_since(at(0))
+    assert [r["would_alert"] for r in rows] == [0, 1]
+    clock.t = 4000
+    feed.states[League.NFL] = [final_event()]
+    scanner.scan_once()
+    rows = scanner.diary.observations_since(at(0))
+    assert [r["outcome"] for r in rows] == ["win", "win"]
+    assert scanner.diary.observation_summary()["picks"] == 1
+
+
+def test_observation_window_can_be_turned_off_and_stays_outside_the_alert_window(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model, OBSERVATION_MINUTES_LEFT=0)
+    feed.states[League.NFL] = [q4_event(600, 14, 31)]
+    summary = scanner.scan_once()
+    assert summary.observations == [] and f"bbo:{SLUG}" not in reader.calls
+    assert scanner.diary.observations_since(at(0)) == []
+
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model)
+    feed.states[League.NFL] = [q4_event(480, 14, 31)]  # exactly 8:00: the real rules own it
+    summary = scanner.scan_once()
+    assert summary.candidates == 1 and summary.observations == []
+    feed.states[League.NFL] = [q4_event(901, 14, 31)]  # just outside the window
+    clock.t = 40
+    summary = scanner.scan_once()
+    assert summary.candidates == 0 and summary.observations == []

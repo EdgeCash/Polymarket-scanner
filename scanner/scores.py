@@ -6,6 +6,10 @@ whose core fields are missing or malformed comes back with
 fields (possession, down, yard line, timeouts) are ``None`` when ESPN leaves
 them out, which blocks winner alerts but not clinched-over alerts.
 
+Per-period scores come from ``competitors[].linescores`` and are kept only when
+both teams have them and they add up to the score. ``STATUS_END_PERIOD`` marks the
+current period as over, which is what decides quarter and half markets.
+
 Yard lines: ESPN's ``situation.yardLine`` runs from the home team's goal line
 (0) to the away team's goal line (100). With the home team in possession the
 yards to the end zone are ``100 - yardLine``; with the away team, ``yardLine``.
@@ -207,6 +211,30 @@ def _yards_to_endzone(
     return from_text
 
 
+def _linescores(competitor: dict[str, Any]) -> tuple[int, ...] | None:
+    """Points by period, in order, or None if ESPN left them out or they are unclear."""
+    raw = competitor.get("linescores")
+    if not isinstance(raw, list) or not raw:
+        return None
+    by_period: dict[int, int] = {}
+    for index, entry in enumerate(raw):
+        if not isinstance(entry, dict):
+            return None
+        value = _int(entry.get("value"), 0, 150)
+        if value is None:
+            return None
+        period = _int(entry.get("period"), 1, 20)
+        if period is None:
+            period = index + 1
+        if period in by_period:
+            return None
+        by_period[period] = value
+    periods = sorted(by_period)
+    if periods != list(range(1, len(periods) + 1)):
+        return None  # a gap: cannot tell which quarter is which
+    return tuple(by_period[n] for n in periods)
+
+
 def _spread(competition: dict[str, Any], home: Team, away: Team) -> float | None:
     odds = competition.get("odds")
     if not isinstance(odds, list) or not odds:
@@ -282,6 +310,16 @@ def parse_event(raw: dict[str, Any], league: League, fetched_at: datetime) -> Ga
     if home_score is None or away_score is None:
         return _unknown(league, feed_id, home, away, kickoff, fetched_at, "score malformed")
 
+    # Per-period scores, kept only when both teams have them and they add up to the
+    # score. A mismatch means one of the two is behind; nothing may rest on it.
+    home_lines = _linescores(home_raw) or ()
+    away_lines = _linescores(away_raw) or ()
+    if not (home_lines and away_lines):
+        home_lines = away_lines = ()
+    elif sum(home_lines) != home_score or sum(away_lines) != away_score:
+        log.info("game %s: per-period scores do not add up to the score; ignored", feed_id)
+        home_lines = away_lines = ()
+
     period = _int(status_raw.get("period"), 0, 20)
     clock = _float(status_raw.get("clock"), 0, PERIOD_SECONDS)
     if period is None:
@@ -349,6 +387,9 @@ def parse_event(raw: dict[str, Any], league: League, fetched_at: datetime) -> Ga
         fetched_at=fetched_at,
         unknown_reason=None,
         status_detail=str(detail),
+        period_over=type_name == "STATUS_END_PERIOD",
+        home_linescores=home_lines,
+        away_linescores=away_lines,
     )
 
 

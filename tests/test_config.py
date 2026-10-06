@@ -89,3 +89,10 @@ def test_commit_comes_from_railways_variable_or_git_commit(monkeypatch):
     monkeypatch.delenv("GIT_COMMIT")
     monkeypatch.delenv("RAILWAY_GIT_COMMIT_SHA")
     assert Settings(GIT_COMMIT="  0123456789  ").short_commit == "0123456"
+
+
+def test_period_market_and_observation_defaults():
+    s = Settings()
+    assert s.PERIOD_MARKETS_ENABLED is True and s.PERIOD_ALERTS_ENABLED is False
+    assert s.OBSERVATION_MINUTES_LEFT == 15
+    assert Settings(OBSERVATION_MINUTES_LEFT=0).OBSERVATION_MINUTES_LEFT == 0

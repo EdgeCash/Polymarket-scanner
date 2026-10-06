@@ -1,7 +1,8 @@
 """The alert rules. Pure decisions: nothing here reads a feed or sends anything.
 
 Winner alerts follow the seven numbered rules and the always-on checks from
-the brief. Clinched-over alerts follow their shorter list. Every evaluation
+the brief. Clinched-over alerts follow their shorter list, and so do quarter and
+half markets whose result is already known (``evaluate_period``). Every evaluation
 returns a :class:`Decision` saying whether to alert, and if not, why; a game
 that passed rules 1 and 2 but failed later is a near miss for the diary.
 """
@@ -32,10 +33,12 @@ from scanner.models import (
     GameState,
     GameStatus,
     NearMiss,
+    PeriodMarket,
     Quote,
     Side,
     TotalMarket,
 )
+from scanner.periods import PeriodDecision, PeriodSides, last_period, to_json
 from scanner.polymarket import buy_levels
 from scanner.tracker import GameTracker, is_fresh
 
@@ -440,6 +443,136 @@ def evaluate_clinched(
         line=total.line,
         combined_score=combined,
         enabled=settings.ALERTS_ENABLED,
+    )
+    return Decision(alert, None, "alert")
+
+
+def evaluate_period(
+    *,
+    match: Match,
+    state: GameState,
+    market: PeriodMarket,
+    decision: PeriodDecision,
+    sides: PeriodSides,
+    quote: Quote,
+    book: Book | None,
+    settings: Settings,
+    tracker: GameTracker,
+    history: AlertHistory,
+    now: datetime,
+) -> Decision:
+    """Apply the clinched rules to the decided side of a quarter or half market.
+
+    ``decision`` comes from :func:`scanner.periods.decide` and names the side whose
+    result the per-period scores already settle. The fact it rests on must have
+    stood for the clinch cooldown: the end of the span as this tracker first saw
+    it, or the score when the points passed the line.
+    """
+    pick = decision.pick
+    game = match.polymarket
+    if not settings.PERIOD_MARKETS_ENABLED:
+        return Decision(None, None, "period markets disabled")
+    if quote.market_slug != market.market_slug or quote.side_label != decision.side_label:
+        return Decision(None, None, "quote is not the decided side of this market")
+    if state.status not in (GameStatus.LIVE, GameStatus.HALFTIME):
+        return Decision(None, None, f"game is {state.status.value}")
+
+    if decision.by_period_end:
+        age = tracker.seconds_since_period_completed(state, last_period(market), now)
+        cooldown_reason = "clinch cooldown: period just ended"
+    else:
+        age = tracker.seconds_since_score_change(state, now)
+        cooldown_reason = "clinch cooldown: score changed recently"
+    if age is None or age < settings.CLINCH_COOLDOWN_SECONDS:
+        return _near_miss(
+            state, match, pick, cooldown_reason, CLINCHED_FAIR_PRICE, quote.buy_price, None, now
+        )
+    tradable = market.long_tradable if decision.side_label == "long" else market.short_tradable
+    market_open = market.active and not market.closed and tradable
+    reason = _common_checks(
+        state=state, quote=quote, tracker=tracker, now=now, market_open=market_open
+    )
+    if reason:
+        return _near_miss(
+            state, match, pick, reason, CLINCHED_FAIR_PRICE, quote.buy_price, None, now
+        )
+    buy = quote.buy_price
+    assert buy is not None
+    theta = quote.theta
+    edge_value = edge_after_fee(CLINCHED_FAIR_PRICE, buy, theta)
+    if edge_value < settings.MIN_EDGE_CLINCHED - 1e-12:
+        return _near_miss(
+            state, match, pick, "edge too small", CLINCHED_FAIR_PRICE, buy, edge_value, now
+        )
+    if book is None:
+        return _near_miss(
+            state, match, pick, "rule 4: no book", CLINCHED_FAIR_PRICE, buy, edge_value, now
+        )
+    if not is_fresh(book.fetched_at, now, PRICE_STALE_SECONDS):
+        return _near_miss(
+            state, match, pick, "rule 4: stale book", CLINCHED_FAIR_PRICE, buy, edge_value, now
+        )
+    avail = availability_at_edge(
+        buy_levels(book, decision.side_label == "long"),
+        CLINCHED_FAIR_PRICE,
+        theta,
+        settings.MIN_EDGE_CLINCHED,
+    )
+    if avail.dollars < settings.MIN_DOLLARS_AVAILABLE - 1e-9:
+        return _near_miss(
+            state,
+            match,
+            pick,
+            "rule 4: not enough for sale",
+            CLINCHED_FAIR_PRICE,
+            buy,
+            edge_value,
+            now,
+        )
+    if _repeat_blocked(history, state.league.value, state.feed_id, pick, edge_value, now, settings):
+        return _near_miss(
+            state, match, pick, "rule 6: repeat too soon", CLINCHED_FAIR_PRICE, buy, edge_value, now
+        )
+    # The daily cap limits what reaches the phone. While these alerts are only being
+    # recorded, capping them would hide exactly the data they exist to gather.
+    if settings.PERIOD_ALERTS_ENABLED and history.count_today(now) >= settings.MAX_ALERTS_PER_DAY:
+        return _near_miss(
+            state, match, pick, "rule 7: daily cap", CLINCHED_FAIR_PRICE, buy, edge_value, now
+        )
+
+    alert = Alert(
+        alert_type=AlertType.PERIOD,
+        league=state.league,
+        created_at=now,
+        feed_id=state.feed_id,
+        event_slug=game.event_slug,
+        market_slug=market.market_slug,
+        home=match.home_team.abbreviation,
+        away=match.away_team.abbreviation,
+        pick=pick,
+        side_label=quote.side_label,
+        fair_price=CLINCHED_FAIR_PRICE,
+        model_price=None,
+        espn_price=None,
+        buy_price=buy,
+        fee=fee_per_contract(buy, theta),
+        edge=edge_value,
+        dollars_available=avail.dollars,
+        average_price=avail.average_price,
+        worst_price=avail.worst_price,
+        situation={
+            **_situation(state),
+            "decided_age_seconds": age,
+            "period_by_end": decision.by_period_end,
+            "period_detail": decision.detail,
+            "period_market": to_json(market, sides),
+        },
+        polymarket_score=game.display_score,
+        polymarket_score_differs=polymarket_score_differs(game.display_score, state),
+        line=market.line,
+        combined_score=decision.points,
+        pick_side=decision.pick_side,
+        enabled=bool(settings.ALERTS_ENABLED and settings.PERIOD_ALERTS_ENABLED),
     )
     return Decision(alert, None, "alert")
 

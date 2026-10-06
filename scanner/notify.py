@@ -206,9 +206,34 @@ def format_clinched(alert: Alert, tz: str) -> str:
     return "\n".join(lines)
 
 
+def format_period(alert: Alert, tz: str) -> str:
+    theta = _theta(alert)
+    s = alert.situation
+    detail = s.get("period_detail") or "result already known"
+    lines = [
+        _header(alert),
+        f"{alert.pick} is decided: {detail}",
+        f"Fair {cents(alert.fair_price)} | Buy {cents(alert.buy_price)} | "
+        f"Edge {cents_1(alert.edge)} after fee",
+        *_money_lines(alert, theta),
+    ]
+    age = s.get("decided_age_seconds")
+    if age is not None:
+        if s.get("period_by_end"):
+            lines.append(f"Period has been over for {int(age)} seconds")
+        else:
+            lines.append(f"Score has stood for {int(age)} seconds")
+    if alert.polymarket_score_differs and alert.polymarket_score:
+        lines.append(f"Polymarket scoreboard shows {alert.polymarket_score} (behind)")
+    lines.append(f"Checked {local_time(alert.created_at, tz)}")
+    return "\n".join(lines)
+
+
 def format_alert(alert: Alert, tz: str) -> str:
     if alert.alert_type is AlertType.CLINCHED_OVER:
         return format_clinched(alert, tz)
+    if alert.alert_type is AlertType.PERIOD:
+        return format_period(alert, tz)
     return format_winner(alert, tz)
 
 
@@ -230,8 +255,15 @@ def weekly_summary(card: dict) -> str:
         return "n/a" if v is None else f"{v * 100:.1f}%"
 
     lines = ["Weekly scorecard (paper results at the alerted price, after fees)"]
-    for key, title in (("winner", "Winner alerts"), ("clinched_over", "Clinched overs")):
-        s = card["by_type"][key]
+    titles = (
+        ("winner", "Winner alerts"),
+        ("clinched_over", "Clinched overs"),
+        ("period", "Period markets"),
+    )
+    for key, title in titles:
+        s = card["by_type"].get(key)
+        if s is None:
+            continue
         leagues = ", ".join(f"{k.upper()} {v}" for k, v in sorted(s["by_league"].items())) or "none"
         lines.append(
             f"{title}: {s['alerts']} ({leagues}); {s['wins']}W {s['losses']}L {s['ties']}T of "
@@ -243,6 +275,13 @@ def weekly_summary(card: dict) -> str:
     if misses:
         top = sorted(misses.items(), key=lambda kv: -kv[1])[:4]
         lines.append("Near misses: " + ", ".join(f"{r} {n}" for r, n in top))
+    obs = card.get("observations") or {}
+    if obs.get("rows"):
+        lines.append(
+            f"Observation window (nothing sent): {obs['picks']} would-be alerts on "
+            f"{obs['games']} games; {obs['wins']}W {obs['losses']}L {obs['ties']}T of "
+            f"{obs['graded']} graded; ${obs['profit_per_100']:,.2f} per 100 contracts"
+        )
     lines.append("Small sample. Real fills can be worse than the alerted price.")
     return "\n".join(lines)
 
@@ -269,8 +308,15 @@ class Notifier:
         return bool(self.settings.ALERTS_ENABLED)
 
     def send_alert(self, alert: Alert) -> bool:
-        """Format and send one alert. Returns True only when it really went out."""
+        """Format and send one alert. Returns True only when it really went out.
+
+        Quarter and half alerts also need PERIOD_ALERTS_ENABLED; without it they
+        are recorded in the diary and never leave the box.
+        """
         alert.message = format_alert(alert, self.settings.TZ)
+        if alert.alert_type is AlertType.PERIOD and not self.settings.PERIOD_ALERTS_ENABLED:
+            log.info("PERIOD_ALERTS_ENABLED is false, not sending:\n%s", alert.message)
+            return False
         return self._send(alert.message)
 
     def send_system(self, text: str) -> bool:

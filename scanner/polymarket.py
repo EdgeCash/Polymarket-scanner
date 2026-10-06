@@ -36,6 +36,7 @@ from scanner.models import (
     BookLevel,
     League,
     MarketTeam,
+    PeriodMarket,
     PolymarketGame,
     Quote,
     TotalMarket,
@@ -45,6 +46,23 @@ log = logging.getLogger(__name__)
 
 MONEYLINE_TYPE = "football_team_full_game_winner"
 GAME_TOTAL_TYPE = "football_team_full_game_total"
+# Quarter and half markets, as Polymarket US names them (seen live 6 October 2026).
+PERIOD_MARKET_TYPES = {
+    "football_game_first_quarter_total": ("1q", "total"),
+    "football_game_second_quarter_total": ("2q", "total"),
+    "football_game_third_quarter_total": ("3q", "total"),
+    "football_game_fourth_quarter_total": ("4q", "total"),
+    "football_game_first_half_total": ("1h", "total"),
+    "football_game_second_half_total": ("2h", "total"),
+    "football_team_first_half_total": ("1h", "team_total"),
+    "football_team_second_half_total": ("2h", "team_total"),
+    "football_team_first_quarter_spread": ("1q", "spread"),
+    "football_team_second_quarter_spread": ("2q", "spread"),
+    "football_team_third_quarter_spread": ("3q", "spread"),
+    "football_team_fourth_quarter_spread": ("4q", "spread"),
+    "football_team_first_half_spread": ("1h", "spread"),
+    "football_team_second_half_spread": ("2h", "spread"),
+}
 MONEYLINE_TYPE_V2 = "SPORTS_MARKET_TYPE_MONEYLINE"
 OPEN_STATE = "MARKET_STATE_OPEN"
 EVENTS_PAGE_SIZE = 100
@@ -229,6 +247,85 @@ def _parse_total(market: dict[str, Any]) -> TotalMarket | None:
     )
 
 
+def _side_team_id(side: dict[str, Any]) -> int | None:
+    team_id = side.get("teamId")
+    if team_id is None and isinstance(side.get("team"), dict):
+        team_id = side["team"].get("id")
+    try:
+        return None if team_id is None else int(team_id)
+    except (TypeError, ValueError):
+        return None
+
+
+def _signed(text: Any) -> float | None:
+    """'+4.50' -> 4.5, '-14.50' -> -14.5; None for anything else."""
+    if not isinstance(text, str):
+        return None
+    stripped = text.strip().replace(" ", "")
+    if not stripped or stripped[0] not in "+-":
+        return None
+    try:
+        return float(stripped)
+    except ValueError:
+        return None
+
+
+def _parse_period_market(market: dict[str, Any]) -> PeriodMarket | None:
+    """A quarter or half total, team total or spread. None when any side is unclear."""
+    period_kind = PERIOD_MARKET_TYPES.get(market.get("sportsMarketType") or "")
+    slug = market.get("slug")
+    line = market.get("line")
+    if period_kind is None or not slug or line is None:
+        return None
+    try:
+        line_value = float(line)
+    except (TypeError, ValueError):
+        return None
+    period, kind = period_kind
+    sides = [side for side in market.get("marketSides") or [] if isinstance(side, dict)]
+    long_sides = [side for side in sides if side.get("long") is True]
+    short_sides = [side for side in sides if side.get("long") is False]
+    if len(long_sides) != 1 or len(short_sides) != 1:
+        return None
+    long_side, short_side = long_sides[0], short_sides[0]
+    common = dict(
+        market_slug=str(slug),
+        period=period,
+        kind=kind,
+        line=line_value,
+        theta=_theta(market),
+        active=bool(market.get("active")),
+        closed=bool(market.get("closed")),
+        long_tradable=bool(long_side.get("tradable", True)),
+        short_tradable=bool(short_side.get("tradable", True)),
+        title=str(market.get("title") or ""),
+    )
+    if kind in ("total", "team_total"):
+        labels = {
+            (side.get("description") or "").strip().lower(): side
+            for side in (long_side, short_side)
+        }
+        if set(labels) != {"over", "under"}:
+            return None
+        team_id = None
+        if kind == "team_total":
+            team_id = _side_team_id(long_side)
+            if team_id is None or team_id != _side_team_id(short_side):
+                return None
+        return PeriodMarket(**common, over_is_long=labels["over"] is long_side, team_id=team_id)
+    long_line = _signed(long_side.get("description"))
+    short_line = _signed(short_side.get("description"))
+    long_team = _side_team_id(long_side)
+    short_team = _side_team_id(short_side)
+    if long_line is None or short_line is None or long_team is None or short_team is None:
+        return None
+    if long_team == short_team or abs(long_line + short_line) > 1e-9:
+        return None
+    if abs(abs(long_line) - abs(line_value)) > 1e-9:
+        return None  # the sides and the market's own line disagree
+    return PeriodMarket(**common, team_id=long_team, other_team_id=short_team, long_line=long_line)
+
+
 def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | None:
     """Turn one raw event into a :class:`PolymarketGame`, or None if unusable."""
     event_id = raw_event.get("id")
@@ -293,6 +390,13 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
                 totals.append(total)
     totals.sort(key=lambda t: t.line)
 
+    period_markets = []
+    for market in raw_event.get("markets") or []:
+        period_market = _parse_period_market(market)
+        if period_market is not None:
+            period_markets.append(period_market)
+    period_markets.sort(key=lambda m: (m.period, m.kind, m.line, m.market_slug))
+
     state = raw_event.get("eventState") or {}
     return PolymarketGame(
         event_id=str(event_id),
@@ -311,6 +415,7 @@ def parse_event(raw_event: dict[str, Any], league: League) -> PolymarketGame | N
         display_score=raw_event.get("score") or state.get("score"),
         display_period=raw_event.get("period") or state.get("period"),
         display_elapsed=raw_event.get("elapsed") or state.get("elapsed"),
+        period_markets=tuple(period_markets),
     )
 
 
@@ -575,3 +680,16 @@ class PolymarketReader:
 
     def over_quote(self, total: TotalMarket) -> Quote:
         return self.quote(total.market_slug, total.over_is_long, total.theta, total.over_tradable)
+
+    def side_quotes(self, market: PeriodMarket) -> dict[str, Quote]:
+        """Both sides of a quarter or half market from one BBO read, keyed "long"/"short"."""
+        raw = self._get(f"/v1/markets/{market.market_slug}/bbo")
+        fetched = self._now()
+        return {
+            "long": parse_quote(
+                raw, market.market_slug, True, market.theta, market.long_tradable, fetched
+            ),
+            "short": parse_quote(
+                raw, market.market_slug, False, market.theta, market.short_tradable, fetched
+            ),
+        }

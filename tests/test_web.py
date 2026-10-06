@@ -103,3 +103,51 @@ def test_scorecard_near_miss_table_names_the_alert_type():
     page = client.get("/scorecard?token=phone-secret").text
     assert "<td>Winner</td><td>stale score</td>" in page
     assert "<td>Over</td><td>edge too small</td>" in page
+
+
+def test_scorecard_shows_the_period_and_observation_sections():
+    client, _ = make_client()
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "Period markets (quarter and half, decided)" in page
+    assert "Observation window (8 to 15 minutes left, nothing sent)" in page
+    assert "nothing recorded yet" in page
+    client, _ = make_client(OBSERVATION_MINUTES_LEFT=0)
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "<h2>Observation window</h2><p class='note'>off</p>" in page
+
+
+def test_scorecard_observation_numbers_and_period_near_misses():
+    from scanner.models import League, NearMiss
+    from tests.conftest import at
+    from tests.test_diary import observation
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    diary.record_observation(observation(would_alert=False, reason="rule 3: edge too small"))
+    diary.record_observation(observation(created_at=at(30)))
+    diary.record_near_miss(
+        NearMiss(at(2), League.NFL, "g", "s", "1Q PHI +2.5", "market not open", 0.995, None, None)
+    )
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "<th>Checks</th><td class='num'>2 on 1 games</td>" in page
+    assert "<th>Would have alerted</th><td class='num'>1 picks (1 checks)</td>" in page
+    assert "<td>rule 3: edge too small</td><td class='num'>1</td>" in page
+    assert "<td>Period</td><td>market not open</td>" in page
+    data = client.get(
+        "/scorecard?token=phone-secret", headers={"accept": "application/json"}
+    ).json()
+    assert data["observations"]["picks"] == 1 and data["by_type"]["period"]["alerts"] == 0
+
+
+def test_health_shows_the_period_and_observation_switches():
+    client, _ = make_client()
+    page = client.get("/health?token=phone-secret").text
+    assert "<th>Period markets</th><td>recorded, not sent</td>" in page
+    assert "<th>Observation window</th><td>8 to 15 min, nothing sent</td>" in page
+    client, _ = make_client(PERIOD_ALERTS_ENABLED=True, OBSERVATION_MINUTES_LEFT=0)
+    page = client.get("/health?token=phone-secret").text
+    assert "<th>Period markets</th><td>alerts on</td>" in page
+    assert "<th>Observation window</th><td>off</td>" in page
+    client, _ = make_client(PERIOD_MARKETS_ENABLED=False)
+    assert "<th>Period markets</th><td>off</td>" in client.get("/health?token=phone-secret").text

@@ -27,7 +27,8 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
     sent = sum(1 for a in alerts if a["sent"])
     lines.append(
         f"Would-be alerts: {len(alerts)} ({sent} actually sent); "
-        f"winner {by_type.get('winner', 0)}, clinched over {by_type.get('clinched_over', 0)}; "
+        f"winner {by_type.get('winner', 0)}, clinched over {by_type.get('clinched_over', 0)}, "
+        f"period {by_type.get('period', 0)}; "
         + ", ".join(f"{k} {v}" for k, v in sorted(by_league.items()))
     )
     graded = [a for a in alerts if a["outcome"] in ("win", "loss", "tie")]
@@ -54,13 +55,20 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
             f"${a['dollars_available']:,.0f} -> {a['outcome'] or 'ungraded'}"
         )
     if misses:
-        for kind, title in (("winner", "winner"), ("clinched_over", "over")):
+        for kind, title in (("winner", "winner"), ("clinched_over", "over"), ("period", "period")):
             reasons = miss_split.get(kind, {})
             if reasons:
                 ranked = sorted(reasons.items(), key=lambda kv: -kv[1])
                 lines.append(f"Near misses ({title}): " + ", ".join(f"{r} {n}" for r, n in ranked))
     else:
         lines.append("Near misses: none")
+    obs = diary.observation_summary(since)
+    if obs["rows"]:
+        lines.append(
+            f"Observation window (nothing sent): {obs['rows']} checks on {obs['games']} games, "
+            f"{obs['picks']} would have alerted; graded {obs['graded']}: {obs['wins']}W "
+            f"{obs['losses']}L {obs['ties']}T, ${obs['profit_per_100']:,.2f} per 100 contracts"
+        )
     lines.append(
         f"Feed failures: score {kinds.get('score_feed_failure', 0)}, "
         f"price {kinds.get('price_feed_failure', 0)}; "

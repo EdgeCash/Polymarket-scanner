@@ -372,3 +372,90 @@ def test_cloudflare_ban_page_becomes_a_short_message():
     assert short_error(page) == "Cloudflare rate-limit page (error 1015: temporarily banned)"
     assert short_error("x" * 500).endswith("...") and len(short_error("x" * 500)) == 160
     assert short_error("plain  text\n here") == "plain text here"
+
+
+# -- quarter and half markets ----------------------------------------------------
+
+
+def tb_dal():
+    return parse_event(load_fixture("pm_nfl_tb_dal.json")["events"][0], League.NFL)
+
+
+def test_period_markets_are_parsed_from_a_real_event():
+    game = tb_dal()
+    by_slug = {m.market_slug: m for m in game.period_markets}
+    assert len(game.period_markets) == 30
+    kinds = {(m.period, m.kind) for m in game.period_markets}
+    assert kinds == {
+        ("1q", "total"),
+        ("2q", "total"),
+        ("3q", "total"),
+        ("4q", "total"),
+        ("1h", "total"),
+        ("2h", "total"),
+        ("1h", "team_total"),
+        ("2h", "team_total"),
+        ("1q", "spread"),
+        ("2q", "spread"),
+        ("3q", "spread"),
+        ("4q", "spread"),
+        ("1h", "spread"),
+        ("2h", "spread"),
+    }
+    total = by_slug["tsc-nfl-tb-dal-2026-10-08-1h-15pt5"]
+    assert (total.period, total.kind, total.line, total.over_is_long) == ("1h", "total", 15.5, True)
+    assert total.team_id is None and total.active and not total.closed and total.theta == 0.0695
+    team_total = by_slug["tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5"]
+    assert (team_total.kind, team_total.line, team_total.team_id) == ("team_total", 4.5, 77)
+    dog = by_slug["asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5"]
+    assert (dog.kind, dog.team_id, dog.other_team_id, dog.long_line) == ("spread", 77, 56, 1.5)
+    favourite = by_slug["asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5"]
+    assert (favourite.team_id, favourite.other_team_id, favourite.long_line) == (77, 56, -14.5)
+    # Full-game markets are not period markets.
+    assert not any("total-" in m.market_slug for m in game.period_markets)
+    assert game.moneyline_slug == "aec-nfl-tb-dal-2026-10-08" and len(game.totals) == 2
+
+
+def test_unclear_period_markets_are_skipped():
+    import copy
+
+    raw = copy.deepcopy(load_fixture("pm_nfl_tb_dal.json")["events"][0])
+    for market in raw["markets"]:
+        slug = market["slug"]
+        if slug == "asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5":
+            market["marketSides"][1]["description"] = "-2.50"  # sides disagree
+        elif slug == "asc-nfl-tb-dal-2026-10-08-1q-pos-2pt5":
+            market["marketSides"][1]["teamId"] = 77  # both sides the same team
+        elif slug == "tsc-nfl-tb-dal-2026-10-08-1h-15pt5":
+            market["marketSides"][0]["description"] = "Yes"  # not Over/Under
+        elif slug == "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5":
+            market["marketSides"][1]["teamId"] = 56  # Over and Under name different teams
+        elif slug == "asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5":
+            market["line"] = 13.5  # market line disagrees with its sides
+    game = parse_event(raw, League.NFL)
+    slugs = {m.market_slug for m in game.period_markets}
+    assert len(game.period_markets) == 25
+    assert (
+        not {
+            "asc-nfl-tb-dal-2026-10-08-1q-pos-1pt5",
+            "asc-nfl-tb-dal-2026-10-08-1q-pos-2pt5",
+            "tsc-nfl-tb-dal-2026-10-08-1h-15pt5",
+            "tsc-nfl-tb-dal-2026-10-08-tt1h-tb-4pt5",
+            "asc-nfl-tb-dal-2026-10-08-1h-neg-14pt5",
+        }
+        & slugs
+    )
+
+
+def test_side_quotes_price_both_sides_from_one_read():
+    market = next(m for m in tb_dal().period_markets if m.market_slug.endswith("1h-15pt5"))
+    reader, transport, _ = make_reader(
+        {f"/v1/markets/{market.market_slug}/bbo": load_fixture("pm_bbo_open.json")}
+    )
+    quotes = reader.side_quotes(market)
+    assert set(quotes) == {"long", "short"}
+    assert quotes["long"].side_label == "long" and quotes["short"].side_label == "short"
+    assert quotes["long"].market_slug == market.market_slug
+    assert quotes["long"].buy_price == pytest.approx(quotes["long"].best_ask)
+    assert quotes["short"].buy_price == pytest.approx(1 - quotes["short"].best_bid)
+    assert len(transport.calls) == 1

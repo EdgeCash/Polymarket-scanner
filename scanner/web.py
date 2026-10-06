@@ -96,6 +96,9 @@ def _local(iso: str | None, tz: str) -> str:
     return moment.astimezone(ZoneInfo(tz)).strftime("%a %-I:%M:%S %p")
 
 
+TYPE_LABELS = {"winner": "Winner", "clinched_over": "Over", "period": "Period"}
+
+
 def render_scorecard(card: dict, settings: Settings) -> str:
     def section(title: str, s: dict) -> str:
         leagues = ", ".join(f"{k.upper()} {v}" for k, v in sorted(s["by_league"].items())) or "none"
@@ -119,8 +122,10 @@ def render_scorecard(card: dict, settings: Settings) -> str:
         return f"<h2>{html.escape(title)}</h2><table>{body}</table>"
 
     by_type = card.get("near_misses_by_type") or {}
-    labelled = [("Winner", r, n) for r, n in by_type.get("winner", {}).items()] + [
-        ("Over", r, n) for r, n in by_type.get("clinched_over", {}).items()
+    labelled = [
+        (label, reason, n)
+        for kind, label in TYPE_LABELS.items()
+        for reason, n in by_type.get(kind, {}).items()
     ]
     miss_rows = (
         "".join(
@@ -129,6 +134,11 @@ def render_scorecard(card: dict, settings: Settings) -> str:
         )
         or "<tr><td colspan='2'>none</td><td class='num'>0</td></tr>"
     )
+    period_section = ""
+    if "period" in card["by_type"]:
+        period_section = section(
+            "Period markets (quarter and half, decided)", card["by_type"]["period"]
+        )
     generated = html.escape(_local(card["generated_at"], settings.TZ))
     zone = html.escape(settings.TZ)
     sending = "are" if settings.ALERTS_ENABLED else "are NOT"
@@ -143,10 +153,41 @@ worse prices, and a few weeks is a small sample.</p>
 <p>Alerts recorded: <b>{card["alerts_total"]}</b> (sent to the phone: {card["alerts_sent"]})</p>
 {section("Winner alerts", card["by_type"]["winner"])}
 {section("Clinched-over alerts", card["by_type"]["clinched_over"])}
+{period_section}
+{_observation_section(card.get("observations") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
 </body></html>"""
+
+
+def _observation_section(obs: dict, settings: Settings) -> str:
+    """The window just outside the late-game filter: checked, graded, never sent."""
+    low, high = settings.MAX_MINUTES_LEFT, settings.OBSERVATION_MINUTES_LEFT
+    if high <= low:
+        return "<h2>Observation window</h2><p class='note'>off</p>"
+    title = f"Observation window ({low:g} to {high:g} minutes left, nothing sent)"
+    if not obs or not obs.get("rows"):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>nothing recorded yet</p>"
+    rows = [
+        ("Checks", f"{obs['rows']} on {obs['games']} games"),
+        ("Would have alerted", f"{obs['picks']} picks ({obs['would_alert_rows']} checks)"),
+        ("Graded", str(obs["graded"])),
+        ("Wins / losses / ties", f"{obs['wins']} / {obs['losses']} / {obs['ties']}"),
+        ("Win rate needed", _pct(obs["win_rate_needed"])),
+        ("Actual win rate", _pct(obs["actual_win_rate"])),
+        ("Profit per 100 contracts", _money(obs["profit_per_100"])),
+    ]
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    reasons = "".join(
+        f"<tr><td>{html.escape(reason)}</td><td class='num'>{n}</td></tr>"
+        for reason, n in (obs.get("reasons") or {}).items()
+    )
+    if reasons:
+        reasons = f"<table><tr><th>Why not</th><th></th></tr>{reasons}</table>"
+    return f"<h2>{html.escape(title)}</h2><table>{body}</table>{reasons}"
 
 
 def render_health(status: RuntimeStatus, settings: Settings) -> str:
@@ -174,6 +215,19 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
         ("Alerts today", f"{d['alerts_today']} (last {_local(d['last_alert_at'], settings.TZ)})"),
         ("Alerts enabled", "yes" if settings.ALERTS_ENABLED else "no (shadow mode)"),
         ("Clinched overs", "on" if settings.CLINCHED_OVERS_ENABLED else "off"),
+        (
+            "Period markets",
+            "off"
+            if not settings.PERIOD_MARKETS_ENABLED
+            else ("alerts on" if settings.PERIOD_ALERTS_ENABLED else "recorded, not sent"),
+        ),
+        (
+            "Observation window",
+            f"{settings.MAX_MINUTES_LEFT:g} to {settings.OBSERVATION_MINUTES_LEFT:g} min, "
+            "nothing sent"
+            if settings.OBSERVATION_MINUTES_LEFT > settings.MAX_MINUTES_LEFT
+            else "off",
+        ),
         (
             "Feeds",
             "ok"
