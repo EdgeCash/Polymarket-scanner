@@ -31,7 +31,7 @@ from scanner.config import (
     GAMELOG_UPCOMING_REFRESH_MINUTES,
     Settings,
 )
-from scanner.diary import Diary
+from scanner.diary import FOOTBALL_GAME_VERSION, Diary
 
 log = logging.getLogger(__name__)
 
@@ -153,6 +153,7 @@ class GameRecord:
     away_lines: tuple[int, ...]
     home_stats: dict
     away_stats: dict
+    book: BookLine | None = None  # the book's closing line, from the summary's pickcenter
 
 
 @dataclass(frozen=True, slots=True)
@@ -432,6 +433,10 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
             touchdowns[side][1] += 1
             touchdowns[side][3] += int(early)
     half_yards = _first_half_yards(raw, home)
+    book = None
+    pickcenter = raw.get("pickcenter")
+    if isinstance(pickcenter, list) and pickcenter and isinstance(pickcenter[0], dict):
+        book = parse_book_line(pickcenter[0])  # the line as it closed
     home_lines, away_lines = _lines(sides["home"]), _lines(sides["away"])
     for side, score, lines in (("home", home_score, home_lines), ("away", away_score, away_lines)):
         stats[side]["points"] = score
@@ -460,6 +465,7 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
         away_lines=away_lines,
         home_stats=stats["home"],
         away_stats=stats["away"],
+        book=book,
     )
 
 
@@ -930,6 +936,8 @@ class RefreshSummary:
     upcoming: int = 0
     summaries_fetched: int = 0
     backlog: int = 0  # finished games still to fetch when the budget ran out
+    reread: int = 0  # stored games read again because the parser has learned more
+    stale: int = 0  # stored games still waiting for that re-read
     errors: list[str] = field(default_factory=list)
 
 
@@ -987,8 +995,31 @@ class FootballLog:
                 budget = self._store_week(
                     sport, season, past, past_games, stored, now, budget, summary
                 )
+        self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
         return summary
+
+    def _reread_stale(self, sport, now, budget, summary) -> None:
+        """Re-read games stored by an older parser, with whatever budget is left.
+
+        New games always come first; the re-read only spends what they left. A game
+        whose summary no longer parses is marked current anyway, so it is not read
+        on every pass.
+        """
+        for game_id in self.diary.football_games_stale(sport, limit=max(budget, 0)):
+            summary.summaries_fetched += 1
+            try:
+                record = parse_game_summary(self.feed.summary(sport, game_id), sport)
+            except GameLogError as exc:
+                summary.errors.append(f"{sport} re-read {game_id}: {exc}")
+                continue
+            if record is None:
+                log.info("game %s %s: re-read gave no usable box score", sport, game_id)
+                self.diary.mark_football_game_version(sport, game_id, FOOTBALL_GAME_VERSION)
+            else:
+                self.diary.store_football_game(record, now)
+            summary.reread += 1
+        summary.stale = len(self.diary.football_games_stale(sport))
 
     def _store_week(self, sport, season, week, games, stored, now, budget, summary) -> int:
         finished = [g for g in games if g.completed]
