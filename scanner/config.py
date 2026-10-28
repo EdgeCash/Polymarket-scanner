@@ -64,6 +64,7 @@ GAMELOG_UPCOMING_HOURS = 48.0  # how far ahead matchup sheets are prepared
 GAMELOG_UPCOMING_REFRESH_MINUTES = (
     60.0  # how often an upcoming game's weather and venue are re-read
 )
+GAMELOG_SPORT_KEYS = ("nfl", "cfb", "nba", "nhl")  # sports with a game log (gamelog.LOGS)
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -123,10 +124,11 @@ class Settings(BaseSettings):
     PREGAME_MIN_EDGE: float = Field(0.03, ge=0, le=1)
     PREGAME_HORIZON_HOURS: float = Field(36, gt=0)
 
-    # Football game log and matchup sheets: every finished NFL and college game's box
-    # score kept in the diary, and a sheet per upcoming game on the status site.
+    # Game log and matchup sheets: every finished game's box score kept in the diary
+    # for the sports in GAMELOG_SPORTS, and a sheet per upcoming game on the status site.
     GAMELOG_ENABLED: bool = True
-    # The football projection model: fitted from the game log each pass, written to
+    GAMELOG_SPORTS: str = ",".join(GAMELOG_SPORT_KEYS)
+    # The projection model: fitted from each sport's game log every pass, written to
     # every upcoming sheet beside the book's line, graded in the diary, never sent.
     PROJECTION_ENABLED: bool = True
     # What the model would stake on Polymarket: a quarter-Kelly share of BANKROLL on
@@ -182,6 +184,21 @@ class Settings(BaseSettings):
     @property
     def pregame_sports(self) -> tuple[str, ...]:
         return tuple(n for n in self.PREGAME_SPORTS.split(",") if n)
+
+    @field_validator("GAMELOG_SPORTS")
+    @classmethod
+    def _check_gamelog_sports(cls, value: str) -> str:
+        names = [part.strip().lower() for part in value.split(",") if part.strip()]
+        unknown = [n for n in names if n not in GAMELOG_SPORT_KEYS]
+        if unknown:
+            raise ValueError(
+                f"unknown game log sport(s) {unknown}; choose from {GAMELOG_SPORT_KEYS}"
+            )
+        return ",".join(names)
+
+    @property
+    def gamelog_sports(self) -> tuple[str, ...]:
+        return tuple(n for n in self.GAMELOG_SPORTS.split(",") if n)
 
     @property
     def short_commit(self) -> str:

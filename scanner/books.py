@@ -18,6 +18,7 @@ from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import httpx
 
@@ -26,6 +27,7 @@ from scanner.models import League, Team
 log = logging.getLogger(__name__)
 
 SCOREBOARD_BASE = "https://site.api.espn.com/apis/site/v2/sports"
+ESPN_ZONE = ZoneInfo("America/New_York")  # ESPN counts days in US Eastern time
 
 
 @dataclass(frozen=True, slots=True)

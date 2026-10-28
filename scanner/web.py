@@ -19,7 +19,8 @@ from scanner import __version__
 from scanner.books import BookLine
 from scanner.config import Settings
 from scanner.diary import Diary
-from scanner.gamelog import FIRST_HALF_KEYS, FOOTBALL, METRICS, SECTIONS, sheet_from_diary
+from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
+from scanner.projection import book_margin, tuning_for
 from scanner.stakes import gate
 
 COOKIE = "scanner_token"
@@ -311,38 +312,59 @@ def _record(r: dict) -> str:
     return f"{r['wins']}-{r['losses']}-{r['pushes']}{share}"
 
 
+def _projection_rows(part: dict, sport: str) -> list[tuple[str, str]]:
+    """One sport's model record, in its own unit (points, or goals in hockey)."""
+
+    def trio(block: dict, decimals: int = 1) -> str:
+        return " / ".join(_fmt(block.get(k), decimals) for k in ("raw", "blend", "book"))
+
+    unit = LOGS[sport].unit if sport in LOGS else "points"
+    line = "margin" if tuning_for(sport).margin_from_moneyline else "spread"
+    rows = [
+        ("Graded", str(part["graded"])),
+        ("Avg margin miss: model / blend / book", trio(part["margin_error"])),
+        ("Avg total miss: model / blend / book", trio(part["total_error"])),
+        ("Brier score: model / blend / book", trio(part["brier"], 3)),
+    ]
+    for bucket in part.get("buckets") or ():
+        rows.append(
+            (
+                f"{line.capitalize()} record, model {bucket}+ {unit} off the book",
+                _record(part["ats"][bucket]),
+            )
+        )
+    for bucket in part.get("buckets") or ():
+        rows.append(
+            (f"Total record, model {bucket}+ {unit} off the book", _record(part["ou"][bucket]))
+        )
+    clv = part["clv"]
+    moved = (
+        f"{_signed(clv['margin'], 2)} {unit} avg, {_pct(clv['positive_share'])} of "
+        f"{clv['closed']} closed"
+    )
+    rows.append(("Line moved the model's way", moved))
+    return rows
+
+
 def _projection_section(pj: dict, settings: Settings) -> str:
-    """How the football model has done against the final scores and the book."""
-    title = "Projection model (football, graded against the book, nothing sent)"
+    """How the model has done against the final scores and the book, sport by sport."""
+    title = "Projection model (graded against the book, nothing sent)"
     if not settings.PROJECTION_ENABLED:
         return "<h2>Projection model</h2><p class='note'>off</p>"
     if not pj or not (pj.get("graded") or pj.get("open")):
         return f"<h2>{html.escape(title)}</h2><p class='note'>no projections yet</p>"
 
-    def trio(part: dict, decimals: int = 1) -> str:
-        return " / ".join(_fmt(part.get(k), decimals) for k in ("raw", "blend", "book"))
-
     sports = ", ".join(f"{k.upper()} {v}" for k, v in sorted(pj.get("by_sport", {}).items()))
-    rows = [
-        ("Graded", f"{pj['graded']} ({sports or 'none'}), {pj['open']} open"),
-        ("Avg margin miss: model / blend / book", trio(pj["margin_error"])),
-        ("Avg total miss: model / blend / book", trio(pj["total_error"])),
-        ("Brier score: model / blend / book", trio(pj["brier"], 3)),
-    ]
-    for bucket in ("1", "2", "3", "5"):
-        rows.append(
-            (f"Spread record, model {bucket}+ pts off the book", _record(pj["ats"][bucket]))
+    body = (
+        f"<tr><th>Graded</th><td class='num'>{pj['graded']} ({html.escape(sports or 'none')}), "
+        f"{pj['open']} open</td></tr>"
+    )
+    for sport, part in (pj.get("sports") or {}).items():
+        body += f"<tr><th colspan='2'>{html.escape(sport.upper())}</th></tr>"
+        body += "".join(
+            f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>"
+            for k, v in _projection_rows(part, sport)
         )
-    for bucket in ("1", "2", "3", "5"):
-        rows.append((f"Total record, model {bucket}+ pts off the book", _record(pj["ou"][bucket])))
-    clv = pj["clv"]
-    moved = (
-        f"{_signed(clv['margin'])} pts avg, {_pct(clv['positive_share'])} of {clv['closed']} closed"
-    )
-    rows.append(("Line moved the model's way", moved))
-    body = "".join(
-        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
-    )
     recent = "".join(
         "<tr><td>{when}<br>{game}</td><td class='num'>{model}<br>{book}</td>"
         "<td class='num'>{final}</td><td>{ats}</td><td>{ou}</td></tr>".format(
@@ -367,13 +389,14 @@ def _projection_section(pj: dict, settings: Settings) -> str:
         else ""
     )
     note = (
-        "<p class='note'>The model is half points, half yards-based points, each adjusted "
-        "for who was played and shrunk toward average, plus home field; the blend leans on "
-        "the book while games are few. Miss is the average distance from the final margin "
-        "or total, lower is better, and the book is the bar to beat. Brier scores the win "
-        "probability, lower is better. The spread and total records count the side the "
-        "model took against the book's line when it sat at least that far from it. "
-        "Nothing here is sent or placed.</p>"
+        "<p class='note'>The model is half points and half what the yards (football) or "
+        "shots (hockey) say, points alone in basketball, each adjusted for who was played "
+        "and shrunk toward average, plus home advantage; the blend leans on the book while "
+        "games are few. Miss is the average distance from the final margin or total, lower "
+        "is better, and the book is the bar to beat. Brier scores the win probability, lower "
+        "is better. The spread and total records count the side the model took against the "
+        "book's line (in hockey, the margin its moneyline implies) when it sat at least that "
+        "far from it. Nothing here is sent or placed.</p>"
     )
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
 
@@ -466,6 +489,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['backlog']} still to fetch"
     if gl.get("stale"):
         text += f", {gl['stale']} to re-read"
+    if gl.get("days_pending"):
+        text += f", {gl['days_pending']} days still to read"
     if gl.get("projected"):
         text += f", {gl['projected']} sheets projected"
     if gl.get("staked"):
@@ -571,7 +596,10 @@ def _cents(value: float | None) -> str:
 
 def _strip(sheet: dict, settings: Settings) -> str:
     home, away = sheet["home"]["abbreviation"], sheet["away"]["abbreviation"]
-    items: list[tuple[str, str]] = [("Kickoff", _kickoff(sheet.get("kickoff"), settings.TZ))]
+    profile = LOGS[sheet["sport"]]
+    items: list[tuple[str, str]] = [
+        (profile.start_label, _kickoff(sheet.get("kickoff"), settings.TZ))
+    ]
     venue = sheet.get("venue") or {}
     place = venue.get("name") or ""
     if venue.get("city"):
@@ -587,7 +615,7 @@ def _strip(sheet: dict, settings: Settings) -> str:
         surface.append("grass")
     elif venue.get("grass") is False:
         surface.append("turf")
-    if surface:
+    if surface and profile.outdoors:
         items.append(("Surface", ", ".join(surface)))
     weather = sheet.get("weather") or {}
     if weather.get("temperature") is not None:
@@ -653,6 +681,8 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
     raw, blend, book = proj["raw"], proj["blend"], proj.get("book") or {}
     implied = sheet.get("implied") or {}
     pm = sheet.get("polymarket") or {}
+    profile = LOGS[sheet["sport"]]
+    line_label = "Margin" if tuning_for(sheet["sport"]).margin_from_moneyline else "Spread"
 
     def pts(value: float | None) -> str:
         return "–" if value is None else f"{value:.1f}"
@@ -667,7 +697,7 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
         (f"{away} (away)", pts(raw["away"]), pts(blend["away"]), pts(implied.get("away")), "–"),
         (f"{home} (home)", pts(raw["home"]), pts(blend["home"]), pts(implied.get("home")), "–"),
         (
-            f"Spread ({home})",
+            f"{line_label} ({home})",
             spread(raw["margin"]),
             spread(blend["margin"]),
             spread(book.get("margin")),
@@ -690,8 +720,9 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
     )
     half = raw.get("first_half") or {}
     body += (
-        f"<tr><td class='label'>1st half</td><td colspan='4' class='left'>{html.escape(away)} "
-        f"{pts(half.get('away'))} – {html.escape(home)} {pts(half.get('home'))}</td></tr>"
+        f"<tr><td class='label'>{html.escape(profile.half_label)}</td><td colspan='4' "
+        f"class='left'>{html.escape(away)} {pts(half.get('away'))} – {html.escape(home)} "
+        f"{pts(half.get('home'))}</td></tr>"
     )
     head = (
         "<tr><th class='label'></th><th>Model</th><th>Blend</th><th>Book</th>"
@@ -701,7 +732,7 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
     bits = []
     if gap.get("margin") is not None:
         side = home if gap["margin"] > 0 else away
-        bits.append(f"{side} by {abs(gap['margin']):.1f} points more than the book")
+        bits.append(f"{side} by {abs(gap['margin']):.1f} {profile.unit} more than the book")
     if gap.get("total") is not None:
         bits.append(f"total {abs(gap['total']):.1f} {'higher' if gap['total'] > 0 else 'lower'}")
     if gap.get("home_win") is not None:
@@ -711,10 +742,10 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
     r, lg, used = proj["ratings"], proj["league"], proj["games_used"]
     site = " (neutral site, none applied)" if proj.get("neutral") else ""
     inputs = (
-        f"Ratings in points against an average side (defence below zero allows fewer): "
+        f"Ratings in {profile.unit} against an average side (defence below zero allows fewer): "
         f"{home} offence {_signed(r['home']['offense'])}, defence {_signed(r['home']['defense'])}; "
         f"{away} offence {_signed(r['away']['offense'])}, defence {_signed(r['away']['defense'])}. "
-        f"League {lg['points']:.1f} a side, home field {lg['hfa']:g}{site}; "
+        f"League {lg['points']:.1f} a side, {profile.home_label} {lg['hfa']:g}{site}; "
         f"{used['home']} and {used['away']} games used, blend {blend['weight'] * 100:.0f}% model."
     )
     thin = " <b>Thin: fewer than 3 games for a side.</b>" if proj.get("thin") else ""
@@ -775,11 +806,11 @@ def _stake_block(sheet: dict, settings: Settings) -> str:
     )
 
 
-def _metric_cells(team: dict, metric, league_size: int, reverse: bool) -> str:
+def _metric_cells(team: dict, metric, league_size: int, reverse: bool, half_keys) -> str:
     key = metric.key
     season = _fmt(team["season"].get(key), metric.decimals, metric.percent)
     split = _fmt(team["split"].get(key), metric.decimals, metric.percent)
-    half = _fmt(team["first_half"].get(key), metric.decimals) if key in FIRST_HALF_KEYS else "–"
+    half = _fmt(team["first_half"].get(key), metric.decimals) if key in half_keys else "–"
     last3 = _fmt(team["last3"].get(key), metric.decimals, metric.percent)
     if metric.higher_is_better is None:
         rank = "<td>–</td>"
@@ -797,22 +828,25 @@ def _metric_cells(team: dict, metric, league_size: int, reverse: bool) -> str:
 
 def _section_table(sheet: dict, section: str) -> str:
     away, home, n = sheet["away"], sheet["home"], sheet["league_size"]
+    profile = LOGS[sheet["sport"]]
+    half = html.escape(profile.half_label)
+    half_keys = set(profile.first_half_sources)
     away_head = (
         f"{_logo(away, 'logo-sm')}{html.escape(away['abbreviation'])} ({away['games']} games)"
     )
     home_head = (
         f"{_logo(home, 'logo-sm')}{html.escape(home['abbreviation'])} ({home['games']} games)"
     )
-    columns = "<th>Season</th><th>{split}</th><th>1st half</th><th>Last 3</th><th>L3 rank</th>"
+    columns = f"<th>Season</th><th>{{split}}</th><th>{half}</th><th>Last 3</th><th>L3 rank</th>"
     head = (
         f"<tr><th class='label'></th><th class='side' colspan='5'>{away_head}</th><th></th>"
         f"<th class='side' colspan='5'>{home_head}</th><th class='label'></th></tr>"
         f"<tr><th class='label'>Statistic</th>{columns.format(split='Away')}<th>Adv</th>"
-        "<th>L3 rank</th><th>Last 3</th><th>1st half</th><th>Home</th><th>Season</th>"
+        f"<th>L3 rank</th><th>Last 3</th><th>{half}</th><th>Home</th><th>Season</th>"
         "<th class='label'>Statistic</th></tr>"
     )
     rows = []
-    for metric in METRICS:
+    for metric in profile.metrics:
         if metric.section != section:
             continue
         adv = sheet["advantages"].get(metric.key)
@@ -822,8 +856,8 @@ def _section_table(sheet: dict, section: str) -> str:
             adv_html = _logo(sheet[adv], "") or html.escape(sheet[adv]["abbreviation"])
         label = html.escape(metric.label)
         rows.append(
-            f"<tr><td class='label'>{label}</td>{_metric_cells(away, metric, n, False)}"
-            f"<td class='adv'>{adv_html}</td>{_metric_cells(home, metric, n, True)}"
+            f"<tr><td class='label'>{label}</td>{_metric_cells(away, metric, n, False, half_keys)}"
+            f"<td class='adv'>{adv_html}</td>{_metric_cells(home, metric, n, True, half_keys)}"
             f"<td class='label'>{label}</td></tr>"
         )
     table = f"<table class='sheet'>{head}{''.join(rows)}</table>"
@@ -832,22 +866,23 @@ def _section_table(sheet: dict, section: str) -> str:
 
 def render_matchup(sheet: dict, settings: Settings) -> str:
     away, home = sheet["away"], sheet["home"]
+    profile = LOGS[sheet["sport"]]
     joiner = "vs" if sheet.get("neutral") else "at"
     title = f"{away['abbreviation']} {joiner} {home['abbreviation']}"
     sections = "".join(_section_table(sheet, section) for section in SECTIONS)
     week = f", week {sheet['week']}" if sheet.get("week") else ""
     subtitle = html.escape(sheet["sport"].upper() + week)
     n = sheet["league_size"]
+    split_by = "moneyline" if tuning_for(sheet["sport"]).margin_from_moneyline else "spread"
     footnote = (
         f"Per-game figures from ESPN box scores for this season's {sheet['games_in_log']} "
         f"logged games. Ranks are among the {n} teams in the log; the table ranks use each "
         "team's last 3 games, the Off, Def and Overall ranks under the names use the season "
-        "(points, points allowed, point margin). Green is the top third, red the bottom third. "
-        '"Away" and "Home" are the team\'s own games at that venue type. First-half yards '
-        "come from the play-by-play. Sacks and plays are not in college box scores. The market "
-        "implied score is the book's total split by its spread. The projection is the "
-        "scanner's own model, graded on the scorecard; the blend leans on the book while "
-        "games are few. Nothing on this page is a recommendation."
+        f"({profile.unit}, {profile.unit} allowed, margin). Green is the top third, red the "
+        'bottom third. "Away" and "Home" are the team\'s own games at that venue type. '
+        f"{profile.note} The market implied score is the book's total split by its "
+        f"{split_by}. The projection is the scanner's own model, graded on the scorecard; the "
+        "blend leans on the book while games are few. Nothing on this page is a recommendation."
     )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -875,20 +910,26 @@ def render_matchups(
 ) -> str:
     zone = ZoneInfo(settings.TZ)
     blocks = []
-    for sport in FOOTBALL:
+    for sport in settings.gamelog_sports:
         rows = by_sport.get(sport) or []
         items = []
         for row in rows:
             slate = row["slate"]
             kickoff = datetime.fromisoformat(row["date"]).astimezone(zone)
             book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
+            home_abbr, away_abbr = slate["home"]["abbreviation"], slate["away"]["abbreviation"]
             line = ""
-            if book is not None and book.home_spread is not None:
-                line = f"{slate['home']['abbreviation']} {book.home_spread:+g}"
-                if book.total is not None:
-                    line += f", total {book.total:g}"
-                    implied_home = (book.total - book.home_spread) / 2.0
-                    implied_away = (book.total + book.home_spread) / 2.0
+            if book is not None and tuning_for(sport).margin_from_moneyline:
+                if book.home_ml is not None and book.away_ml is not None:
+                    line = f"{home_abbr} {_odds(book.home_ml)} / {away_abbr} {_odds(book.away_ml)}"
+            elif book is not None and book.home_spread is not None:
+                line = f"{home_abbr} {book.home_spread:+g}"
+            margin = book_margin(book, sport)
+            if line and book.total is not None:
+                line += f", total {book.total:g}"
+                if margin is not None:
+                    implied_home = (book.total + margin) / 2.0
+                    implied_away = (book.total - margin) / 2.0
                     implied = f"implied {implied_away:.1f} – {implied_home:.1f}"
                     line += f"<br><span class='note'>{implied}</span>"
             stored = (projections or {}).get(sport, {}).get(row["game_id"])
@@ -922,7 +963,7 @@ def render_matchups(
 <body>
 <p class="note"><a href="/health">Status</a> · <a href="/scorecard">Scorecard</a></p>
 <h1>Matchups</h1>
-<p class="note">Upcoming football games with a matchup sheet. Times are {zone_label}.
+<p class="note">Upcoming games with a matchup sheet. Times are {zone_label}.
 Game log: {log_note}.</p>
 {"".join(blocks)}
 </body></html>"""
@@ -1078,8 +1119,8 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
     ):
         if not authorised(token, x_status_token, scanner_token):
             return denied()
-        by_sport = {sport: diary.football_upcoming(sport) for sport in FOOTBALL}
-        projections = {sport: diary.open_projections(sport) for sport in FOOTBALL}
+        by_sport = {sport: diary.football_upcoming(sport) for sport in settings.gamelog_sports}
+        projections = {sport: diary.open_projections(sport) for sport in settings.gamelog_sports}
         page = HTMLResponse(render_matchups(by_sport, settings, status, projections))
         return remember(page, request, token)
 
@@ -1094,7 +1135,7 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
     ):
         if not authorised(token, x_status_token, scanner_token):
             return denied()
-        sheet = sheet_from_diary(diary, sport, game_id) if sport in FOOTBALL else None
+        sheet = sheet_from_diary(diary, sport, game_id) if sport in LOGS else None
         if sheet is None:
             return JSONResponse({"error": "no sheet for this game"}, status_code=404)
         if "application/json" in request.headers.get("accept", ""):

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import copy
 from dataclasses import replace
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 import pytest
 
@@ -9,8 +10,11 @@ from scanner.books import BookLine
 from scanner.config import load_settings
 from scanner.diary import Diary
 from scanner.gamelog import (
-    METRICS,
-    FootballLog,
+    FOOTBALL_METRICS,
+    LOGS,
+    NBA_METRICS,
+    NHL_METRICS,
+    GameLog,
     GameLogError,
     GameRecord,
     TeamRef,
@@ -22,6 +26,7 @@ from scanner.gamelog import (
     last_n,
     league_ranks,
     margin_ranks,
+    parse_calendar,
     parse_game_summary,
     parse_upcoming_summary,
     parse_week_scoreboard,
@@ -272,7 +277,7 @@ def test_team_games_are_oldest_first_from_either_side():
 
 def test_aggregate_computes_per_game_figures_and_rates():
     games = team_games(RECORDS, "1")
-    figures = aggregate(games)
+    figures = aggregate(games, "nfl")
     assert figures["ppg"] == pytest.approx((30 + 24 + 14 + 35) / 4)
     assert figures["ppg_allowed"] == pytest.approx((10 + 21 + 28 + 17) / 4)
     assert figures["pass_ypg"] == pytest.approx((250 + 300 + 180 + 310) / 4)
@@ -286,7 +291,7 @@ def test_aggregate_computes_per_game_figures_and_rates():
     assert figures["possession"] == pytest.approx(30.0) and figures[
         "penalty_yards"
     ] == pytest.approx(50.0)
-    assert first_half(games) == {
+    assert first_half(games, "nfl") == {
         "ppg": pytest.approx((17 + 10 + 7 + 21) / 4),
         "ppg_allowed": pytest.approx((3 + 14 + 21 + 10) / 4),
         "pass_ypg": pytest.approx((125 + 150 + 90 + 155) / 4),
@@ -298,16 +303,16 @@ def test_aggregate_computes_per_game_figures_and_rates():
         "pass_td_allowed": 1.0,
         "rush_td_allowed": 0.0,
     }
-    empty = aggregate([])
+    empty = aggregate([], "nfl")
     assert all(v is None for v in empty.values())
-    assert all(v is None for v in first_half([]).values())
-    assert set(empty) == {m.key for m in METRICS}
+    assert all(v is None for v in first_half([], "nfl").values())
+    assert set(empty) == {m.key for m in FOOTBALL_METRICS}
 
 
 def test_missing_stats_are_left_out_of_the_averages():
     games = team_games(RECORDS, "1")
     no_sacks = [replace(g, own={**g.own, "sacks_taken": None, "plays": None}) for g in games]
-    figures = aggregate(no_sacks)
+    figures = aggregate(no_sacks, "nfl")
     assert figures["sacks_allowed"] is None and figures["pace"] is None and figures["ypp"] is None
     assert figures["ppg"] == pytest.approx(103 / 4)
 
@@ -503,10 +508,10 @@ def add_upcoming(feed, sport="nfl", game_id="upcoming-1", hours=20):
 
 
 def build():
-    settings = load_settings(DATABASE_PATH=":memory:")
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nfl,cfb")
     diary = Diary(":memory:")
     feed = FakeFeed()
-    return FootballLog(settings, diary, feed=feed, now=lambda: NOW), diary, feed
+    return GameLog(settings, diary, feed=feed, now=lambda: NOW), diary, feed
 
 
 def test_refresh_stores_each_finished_game_once_within_the_budget():
@@ -643,9 +648,7 @@ def test_refresh_records_what_the_model_would_stake_at_the_last_polymarket_price
     open_diary.record_pregame_line(
         PregameLineRecord(NOW, "nfl", "upcoming-1", "nfl-x", NOW, "CLE", "PIT", {}, prices)
     )
-    FootballLog(open_settings, open_diary, feed=feed, now=lambda: NOW).refresh(
-        "nfl", NOW, budget=40
-    )
+    GameLog(open_settings, open_diary, feed=feed, now=lambda: NOW).refresh("nfl", NOW, budget=40)
     assert all(r["gate_open"] == 1 for r in open_diary.stakes_for("nfl", "upcoming-1"))
 
 
@@ -661,9 +664,7 @@ def test_stakes_can_be_switched_off():
             NOW, "nfl", "upcoming-1", "nfl-x", NOW, "CLE", "PIT", {}, {"home": 0.4, "away": 0.62}
         )
     )
-    summary = FootballLog(settings, diary, feed=feed, now=lambda: NOW).refresh(
-        "nfl", NOW, budget=40
-    )
+    summary = GameLog(settings, diary, feed=feed, now=lambda: NOW).refresh("nfl", NOW, budget=40)
     assert summary.projected == 1 and summary.staked == 0
     assert diary.stakes_for("nfl", "upcoming-1") == []
 
@@ -673,7 +674,7 @@ def test_projections_can_be_switched_off():
     diary = Diary(":memory:")
     feed = FakeFeed()
     add_upcoming(feed)
-    log = FootballLog(settings, diary, feed=feed, now=lambda: NOW)
+    log = GameLog(settings, diary, feed=feed, now=lambda: NOW)
     summary = log.refresh("nfl", NOW, budget=40)
     assert summary.projected == 0 and diary.projection("nfl", "upcoming-1") is None
     assert sheet_from_diary(diary, "nfl", "upcoming-1")["projection"] is None
@@ -749,3 +750,271 @@ def test_refresh_all_covers_both_leagues_and_a_scoreboard_failure_is_reported():
     feed.week = broken
     summaries = log.refresh_all(NOW)
     assert all(s.errors == [f"{s.sport} scoreboard: nope"] for s in summaries)
+
+
+# -- basketball and hockey -------------------------------------------------------------
+
+
+def test_the_log_covers_exactly_the_sports_the_settings_allow():
+    from scanner.config import GAMELOG_SPORT_KEYS
+
+    assert tuple(LOGS) == GAMELOG_SPORT_KEYS
+    assert [s.daily for s in LOGS.values()] == [False, False, True, True]
+
+
+def test_a_days_scoreboard_names_the_season_on_its_events_and_carries_the_calendar():
+    raw = load_fixture("espn_nba_day.json")
+    season, week, games = parse_week_scoreboard(raw, "nba")
+    assert (season, week) == (2027, None) and len(games) == 4
+    bos = next(g for g in games if g.home.abbreviation == "BOS")
+    assert bos.completed and (bos.home_score, bos.away_score) == (125, 124)
+    assert bos.home_lines == (26, 30, 30, 31, 8) and bos.week is None and bos.season == 2027
+    assert bos.records["home"]["total"] == "3-1" and bos.book is None  # a final carries no odds
+    days = parse_calendar(raw)
+    assert days[0] == date(2026, 10, 3) and days[-1] == date(2027, 4, 11) and len(days) == 174
+    assert parse_calendar(load_fixture("espn_nfl_week4.json")) == []  # by week: no day list
+    assert parse_calendar({"leagues": [{"calendarType": "day", "calendar": ["x"]}]}) == []
+    raw["events"][0]["season"] = {"year": 2027, "type": 1}  # a preseason game is left out
+    assert len(parse_week_scoreboard(raw, "nba")[2]) == 3
+
+
+def test_the_nhl_scoreboard_calls_the_season_record_ytd():
+    _, _, games = parse_week_scoreboard(load_fixture("espn_nhl_day.json"), "nhl")
+    assert len(games) == 11
+    phi = games[0]
+    assert phi.home.abbreviation == "PHI" and phi.records["home"]["total"] == "3-7-4"
+    shootout = next(g for g in games if g.home.abbreviation == "NSH")
+    assert shootout.home_lines == (0, 2, 1, 0, 0) and shootout.away_lines == (2, 1, 0, 0, 1)
+
+
+def test_nba_summary_box_score_has_shooting_rebounds_and_possessions():
+    record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    assert record is not None and record.sport == "nba" and record.season == 2027
+    assert record.week is None and (record.home_score, record.away_score) == (125, 124)
+    assert record.home.abbreviation == "BOS" and record.away.abbreviation == "BKN"
+    home, away = record.home_stats, record.away_stats
+    assert home["points"] == 125 and home["first_half_points"] == 56  # 26 + 30
+    assert (home["fg_made"], home["fg_att"], home["three_made"], home["ft_att"]) == (42, 93, 11, 38)
+    assert home["off_reb"] == 11 and home["def_reb"] == 36 and home["rebounds"] == 47
+    assert home["turnovers"] == 14 and away["turnovers"] == 16  # team turnovers count
+    assert home["possessions"] == pytest.approx(93 - 11 + 14 + 0.44 * 38)
+    assert home["paint_points"] == 52 and away["fast_break_points"] == 11
+    assert "pass_td" not in home and "goals_in_play" not in home
+    assert record.book is not None and record.book.total == 223.5  # the closing line
+    assert record.book.home_spread == -13.5 and record.book.home_ml == -750
+
+
+def test_nhl_summary_counts_a_shootout_in_the_score_but_not_as_a_goal_in_play():
+    record = parse_game_summary(load_fixture("espn_nhl_summary_final.json"), "nhl")
+    assert record is not None and (record.home_score, record.away_score) == (3, 4)
+    assert record.home.abbreviation == "NSH" and record.away.abbreviation == "NYI"
+    home, away = record.home_stats, record.away_stats
+    assert (home["points"], away["points"]) == (3, 4)
+    assert (home["goals_in_play"], away["goals_in_play"]) == (3, 3)
+    assert (home["first_half_points"], away["first_half_points"]) == (0, 2)  # the first period
+    assert (home["shots"], away["shots"]) == (23, 28)
+    assert home["pp_goals"] == 1 and home["pp_opps"] == 5 and away["pp_opps"] == 5
+    assert home["faceoffs_won"] is not None and home["penalty_minutes"] is not None
+    assert "fg_att" not in home and record.book is not None  # the closing line: NSH -122
+    assert record.book.home_spread == -1.5 and record.book.home_ml == -122
+
+
+def ball_game(sport, game_id, day, home, away, home_stats, away_stats):
+    return GameRecord(
+        sport,
+        game_id,
+        2027,
+        None,
+        NOW - timedelta(days=day),
+        False,
+        home,
+        away,
+        home_stats["points"],
+        away_stats["points"],
+        (),
+        (),
+        home_stats,
+        away_stats,
+    )
+
+
+def nba_stats(points, fg=(40, 90), threes=(12, 35), ft=(20, 25), oreb=10, tov=14):
+    return {
+        "points": points,
+        "first_half_points": points // 2,
+        "fg_made": fg[0],
+        "fg_att": fg[1],
+        "three_made": threes[0],
+        "three_att": threes[1],
+        "ft_made": ft[0],
+        "ft_att": ft[1],
+        "off_reb": oreb,
+        "def_reb": 32,
+        "rebounds": oreb + 32,
+        "assists": 25,
+        "steals": 7,
+        "blocks": 5,
+        "turnovers": tov,
+        "fouls": 20,
+        "fast_break_points": 12,
+        "paint_points": 48,
+        "possessions": fg[1] - oreb + tov + 0.44 * ft[1],
+    }
+
+
+def test_nba_figures_rate_offence_and_defence_per_possession():
+    records = [
+        ball_game("nba", "n1", 3, A, B, nba_stats(110, tov=10), nba_stats(100, tov=16)),
+        ball_game("nba", "n2", 1, B, A, nba_stats(104), nba_stats(120, fg=(45, 90), oreb=14)),
+    ]
+    games = team_games(records, "1")
+    figures = aggregate(games, "nba")
+    own = sum(g.own["possessions"] for g in games)
+    opp = sum(g.opp["possessions"] for g in games)
+    assert figures["ppg"] == 115.0 and figures["ppg_allowed"] == 102.0
+    assert figures["off_rating"] == pytest.approx(100 * 230 / own)
+    assert figures["def_rating"] == pytest.approx(100 * 204 / opp)
+    assert figures["fg_pct"] == pytest.approx(100 * 85 / 180)
+    assert figures["turnovers"] == 12.0 and figures["takeaways"] == 15.0
+    assert figures["to_margin"] == 3.0 and figures["reb_margin"] == pytest.approx(2.0)
+    assert figures["pace"] == pytest.approx(own / 2) and figures["threes"] == 12.0
+    assert set(figures) == {m.key for m in NBA_METRICS}
+    assert first_half(games, "nba") == {"ppg": 57.5, "ppg_allowed": 51.0}
+    ranks, size = league_ranks(records, "season", "nba")
+    assert size == 2 and ranks["1"]["off_rating"] == 1 and ranks["2"]["ppg_allowed"] == 2
+    assert margin_ranks(records, "nba") == {"1": 1, "2": 2}
+
+
+def nhl_stats(goals, shots, pp=(1, 4), fo=30, in_play=None):
+    return {
+        "points": goals,
+        "first_half_points": 1,
+        "goals_in_play": goals if in_play is None else in_play,
+        "shots": shots,
+        "pp_goals": pp[0],
+        "pp_opps": pp[1],
+        "faceoffs_won": fo,
+        "hits": 20,
+        "blocked_shots": 15,
+        "takeaways": 6,
+        "giveaways": 8,
+        "penalties": 3,
+        "penalty_minutes": 6,
+    }
+
+
+def test_nhl_figures_use_goals_in_play_for_the_percentages():
+    records = [
+        ball_game("nhl", "h1", 2, A, B, nhl_stats(4, 30, (2, 4), 35), nhl_stats(1, 20, (0, 2), 25)),
+        ball_game(  # B won in a shootout: the score says 3, two goals were scored in play
+            "nhl", "h2", 1, B, A, nhl_stats(3, 25, (1, 3), in_play=2), nhl_stats(2, 35, (0, 5), 28)
+        ),
+    ]
+    games = team_games(records, "1")
+    figures = aggregate(games, "nhl")
+    assert figures["ppg"] == 3.0 and figures["ppg_allowed"] == 2.0
+    assert figures["shots"] == 32.5 and figures["shots_allowed"] == 22.5
+    assert figures["shot_margin"] == 10.0 and figures["pp_drawn"] == 4.5 and figures["pim"] == 6.0
+    assert figures["shooting_pct"] == pytest.approx(100 * 6 / 65)
+    assert figures["save_pct"] == pytest.approx(100 - 100 * 3 / 45)
+    assert figures["pp_pct"] == pytest.approx(100 * 2 / 9)
+    assert figures["pk_pct"] == pytest.approx(80.0)
+    assert figures["faceoff_pct"] == pytest.approx(100 * 63 / 118)
+    assert set(figures) == {m.key for m in NHL_METRICS}
+    assert first_half(games, "nhl") == {"ppg": 1.0, "ppg_allowed": 1.0}
+    assert all(v is None for v in aggregate([], "nhl").values())
+
+
+class FakeDailyFeed:
+    """Serves day scoreboards by (sport, YYYYMMDD) and the one box score under any id."""
+
+    def __init__(self):
+        self.days: dict[tuple[str, str], dict] = {}
+        self.calls: list[tuple] = []
+
+    def day(self, sport, day):
+        self.calls.append(("day", sport, day))
+        return self.days.get((sport, day), {"leagues": [], "events": []})
+
+    def summary(self, sport, game_id):
+        self.calls.append(("summary", sport, game_id))
+        name = "espn_nba_summary_final.json" if sport == "nba" else "espn_nhl_summary_final.json"
+        raw = load_fixture(name)
+        raw["header"]["competitions"][0]["id"] = game_id
+        if game_id.startswith("up-"):
+            raw["header"]["competitions"][0]["status"]["type"]["completed"] = False
+        return raw
+
+
+NBA_NOW = datetime.fromisoformat("2026-10-28T16:00:00+00:00")  # noon in New York on the 28th
+
+
+def scheduled_copy(event, game_id, when):
+    event = copy.deepcopy(event)
+    event["id"] = event["competitions"][0]["id"] = game_id
+    event["date"] = event["competitions"][0]["date"] = when.strftime("%Y-%m-%dT%H:%MZ")
+    event["status"]["type"] = {"name": "STATUS_SCHEDULED", "state": "pre", "completed": False}
+    for competitor in event["competitions"][0]["competitors"]:
+        competitor["score"] = None
+        competitor["linescores"] = []
+    return event
+
+
+def test_a_daily_sport_reads_three_days_and_backfills_the_seasons_calendar():
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nba")
+    diary = Diary(":memory:")
+    feed = FakeDailyFeed()
+    yesterday = load_fixture("espn_nba_day.json")  # four finals on 27 October, plus the calendar
+    feed.days[("nba", "20261027")] = yesterday
+    tonight = scheduled_copy(yesterday["events"][0], "up-1", NBA_NOW + timedelta(hours=7))
+    today = {**yesterday, "events": [tonight]}
+    feed.days[("nba", "20261028")] = today
+    before = [d for d in parse_calendar(yesterday) if d < date(2026, 10, 27)]
+    played, preseason = before[-1], before[0]
+    old = {**yesterday, "events": [copy.deepcopy(yesterday["events"][1])]}
+    old["events"][0]["id"] = old["events"][0]["competitions"][0]["id"] = "old-1"
+    feed.days[("nba", played.strftime("%Y%m%d"))] = old
+    pre = copy.deepcopy(old)
+    pre["events"][0]["season"] = {"year": 2027, "type": 1}
+    feed.days[("nba", preseason.strftime("%Y%m%d"))] = pre
+
+    log = GameLog(settings, diary, feed=feed, now=lambda: NBA_NOW)
+    summary = log.refresh("nba", NBA_NOW, budget=3)
+    assert (summary.season, summary.week) == (2027, None)
+    assert summary.games_stored == 3 and summary.backlog == 1 and summary.upcoming == 1
+    assert [c[2] for c in feed.calls if c[0] == "day"] == ["20261027", "20261028", "20261029"]
+    assert not diary.football_week_complete("nba", 2027, 20261027)
+    assert diary.football_week_complete("nba", 2027, 20261029)  # nothing listed: done
+    assert summary.days_pending == len(before)  # the calendar waits for a later pass
+    # The upcoming game is projected from the three stored games (all BOS v BKN here).
+    assert summary.projected == 1
+    projection = diary.projection("nba", "up-1")["projection"]
+    assert projection["sport"] == "nba" and projection["league"]["hfa"] == 2.5
+    sheet = sheet_from_diary(diary, "nba", "up-1")
+    assert sheet["sport"] == "nba" and sheet["home"]["abbreviation"] == "BOS"
+    assert sheet["home"]["season"]["off_rating"] is not None and sheet["week"] is None
+
+    feed.calls.clear()
+    summary = log.refresh("nba", NBA_NOW + timedelta(minutes=15), budget=40)
+    assert summary.games_stored == 2 and summary.backlog == 0  # the fourth final and old-1
+    assert summary.days_pending == 0
+    days_read = [c[2] for c in feed.calls if c[0] == "day"]
+    assert days_read[:3] == ["20261027", "20261028", "20261029"]
+    assert days_read[3:] == [d.strftime("%Y%m%d") for d in before]  # oldest first
+    assert all(diary.football_week_complete("nba", 2027, int(d.strftime("%Y%m%d"))) for d in before)
+    assert diary.football_week_complete("nba", 2027, 20261027)
+    assert "pre-1" not in diary.football_game_ids("nba")  # the preseason day stored nothing
+    assert diary.football_game_counts() == {"nba": 5}
+
+    feed.calls.clear()
+    log.refresh("nba", NBA_NOW + timedelta(minutes=30), budget=40)
+    assert [c[2] for c in feed.calls if c[0] == "day"] == ["20261027", "20261028", "20261029"]
+    assert [s.sport for s in log.refresh_all(NBA_NOW)] == ["nba"]
+
+    def broken(sport, day):
+        raise GameLogError("nope")
+
+    feed.day = broken
+    summary = log.refresh("nba", NBA_NOW, budget=40)
+    assert summary.errors == [f"nba 2026-10-{d}: nope" for d in (27, 28, 29)]
+    assert summary.season is None and summary.games_stored == 0

@@ -86,8 +86,9 @@ All settings are environment variables. Defaults are from the build brief.
 | `PREGAME_SCAN_MINUTES` | `15` | How often the pre-game scan runs |
 | `PREGAME_MIN_EDGE` | `0.03` | Recording threshold: edge after fee against the book's vig-free number |
 | `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
-| `GAMELOG_ENABLED` | `true` | The football game log and matchup sheets |
-| `PROJECTION_ENABLED` | `true` | The football projection model on the sheets and scorecard |
+| `GAMELOG_ENABLED` | `true` | The game log and matchup sheets |
+| `GAMELOG_SPORTS` | `nfl,cfb,nba,nhl` | Sports with a game log, sheets, projections and stake suggestions |
+| `PROJECTION_ENABLED` | `true` | The projection model on the sheets and scorecard |
 | `STAKE_ENABLED` | `true` | Record (and, once earned, show) what the model would stake |
 | `BANKROLL` | `1000` | Dollars the stake suggestions are sized from |
 | `STAKE_MIN_EDGE` | `0.03` | Edge after fees a suggestion needs, in probability |
@@ -477,6 +478,55 @@ recorded as shadow suggestions; the scorecard's "Stake suggestions" section
 shows all of them, shown or not, with wins, losses, pushes, money staked, profit
 and return. `STAKE_ENABLED=false` switches the layer off. A suggestion is a
 number on a page: nothing here places anything.
+
+## Basketball and hockey (NBA, NHL)
+
+The NBA and NHL seasons began in October 2026 and the owner asked for the same
+sheets, model and stake suggestions for them. Everything above carries over:
+the same `GameLog` thread, the same diary tables (still named `football_*`;
+for a sport ESPN lists by day the week column holds the day as `YYYYMMDD`),
+the same projection, grading and stake code, and the same per-sport gate.
+`GAMELOG_SPORTS` (`nfl,cfb,nba,nhl`) says which sports get a log; the `LOGS`
+table in `scanner/gamelog.py` says how each one is read and shown, and
+`TUNING` in `scanner/projection.py` holds the model's numbers per sport. What
+differs:
+
+- ESPN lists these sports by day (US Eastern), not by week. Each pass reads
+  yesterday, today and tomorrow, then walks the season's calendar (the
+  scoreboard carries it) from its first day with whatever summary budget the
+  new games left, marking each day complete once its games are stored, so the
+  walk is paid for once. Preseason games are left out.
+- Box scores. Basketball keeps shooting (field goals, threes, free throws),
+  rebounds, assists, steals, blocks, turnovers, fouls, paint and fast-break
+  points, and an estimate of possessions (FGA − ORB + TOV + 0.44·FTA), so the
+  sheet can show points per 100 possessions and pace. Hockey keeps shots,
+  power-play goals and chances, faceoffs, hits, blocked shots, takeaways,
+  giveaways and penalty minutes. A shootout counts in the score (the market
+  settles on it) but not as a goal in play, so the shooting and save
+  percentages use the goals scored in play. The sheet's "1st half" column is
+  the first period in hockey.
+- The model. Basketball uses points alone (home court 2.5, final margin
+  spread 12.5, total spread 19). Hockey uses half goals and half what the
+  shots say (the league's goals per shot times shots), with home ice 0.2, a
+  margin spread of 2.3 and a total spread of 2.4. The book's puck line is
+  always 1.5 whatever the matchup, so the margin the book expects is read off
+  its moneyline (the margin spread times the normal inverse of its vig-free
+  win probability); that margin also gives the market implied score, and the
+  scorecard's gap rows for hockey are in quarter goals. The scorecard shows
+  the model's record sport by sport, since the misses are in different units.
+- Stakes. The same quarter-Kelly rule against the last Polymarket prices the
+  pre-game scan saw: the moneyline, the total and the spread or puck line at
+  the book's number. The gate is per sport, 50 graded games with the closing
+  line moving the model's way, which these sports reach in a couple of weeks
+  of nights rather than a season.
+
+Live check on 28 October 2026: each pass stored 40 games per sport, the NBA's
+season to date (56 games from the 20 October opener) in two passes and the
+NHL's (from 29 September) within a couple of hours, with the status page
+counting the days still to read; 15 sheets per sport for the next two days,
+every one projected, and 30 and 32 teams ranked. The live football scanner and
+its alerts are untouched: the NBA and NHL are sheets, projections and shadow
+stakes only. Nothing is sent or placed.
 
 ## Milestones
 

@@ -370,7 +370,7 @@ def test_scorecard_shows_the_projection_model():
 
     client, _ = make_client()
     scorecard = client.get("/scorecard?token=phone-secret").text
-    assert "Projection model (football" in scorecard and "no projections yet" in scorecard
+    assert "Projection model (graded" in scorecard and "no projections yet" in scorecard
 
     settings = load_settings(STATUS_TOKEN="phone-secret")
     diary = Diary(":memory:")
@@ -393,10 +393,11 @@ def test_scorecard_shows_the_projection_model():
         in scorecard
     )
     assert (
-        "Spread record, model 1+ pts off the book</th><td class='num'>1-0-0 (100%)</td>"
+        "Spread record, model 1+ points off the book</th><td class='num'>1-0-0 (100%)</td>"
         in scorecard
     )
-    assert "Total record, model 5+ pts off the book</th><td class='num'>0-0-0</td>" in scorecard
+    assert "Total record, model 5+ points off the book</th><td class='num'>0-0-0</td>" in scorecard
+    assert "<tr><th colspan='2'>NFL</th></tr>" in scorecard
     assert "NFL PIT at CLE" in scorecard and "CLE -4.0 / 44.0" in scorecard and "24-27" in scorecard
     assert "home win" in scorecard and "over win" in scorecard
     data = client.get(
@@ -465,3 +466,76 @@ def replace_slate(game, **changes):
     from dataclasses import replace
 
     return replace(game, **changes)
+
+
+def test_hockey_and_basketball_sheets_use_their_own_words():
+    from datetime import datetime
+
+    from scanner.gamelog import parse_game_summary, parse_week_scoreboard
+    from scanner.projection import fit, project
+    from tests.conftest import load_fixture
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    at_time = datetime.fromisoformat("2026-10-28T16:00:00+00:00")
+    nhl_book = BookLine("DraftKings", -140, 120, None, 6.5, -110, -110, -1.5, 110, -130)
+    nba_book = BookLine("DraftKings", -300, 240, None, 223.5, -110, -110, -7.5, -110, -110)
+    games = {}
+    for sport, summary, day, home, book in (
+        ("nhl", "espn_nhl_summary_final.json", "espn_nhl_day.json", "NSH", nhl_book),
+        ("nba", "espn_nba_summary_final.json", "espn_nba_day.json", "BOS", nba_book),
+    ):
+        diary.store_football_game(parse_game_summary(load_fixture(summary), sport), at_time)
+        _, _, slate = parse_week_scoreboard(load_fixture(day), sport)
+        game = next(g for g in slate if g.home.abbreviation == home)
+        diary.store_football_upcoming(
+            replace_slate(game, completed=False, date=at_time, book=book), at_time
+        )
+        ratings = fit(diary.football_games(sport), sport)
+        projection = project(ratings, game.home.team_id, game.away.team_id, False, book)
+        diary.upsert_projection(
+            sport, game.game_id, at_time, home, game.away.abbreviation, projection, at_time
+        )
+        games[sport] = game
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    listing = client.get("/matchups?token=phone-secret").text
+    assert "Upcoming games with a matchup sheet" in listing
+    assert all(f"<h2>{s}</h2>" in listing for s in ("NFL", "CFB", "NBA", "NHL"))
+    assert "NSH -140 / NYI +120, total 6.5" in listing and "BOS -7.5, total 223.5" in listing
+    assert "implied 108.0 – 115.5" in listing  # basketball splits the total by the spread
+    assert "implied 3.1 – 3.4" in listing  # hockey splits it by the moneyline's margin
+
+    page = client.get(f"/matchup/nhl/{games['nhl'].game_id}?token=phone-secret").text
+    assert "<title>NYI at NSH</title>" in page and "<span>Puck drop</span>" in page
+    assert "<span>Surface</span>" not in page  # an arena: nothing to say
+    assert "<td class='label'>Margin (NSH)</td>" in page and "<th>1st period</th>" in page
+    assert "<td class='label'>1st period</td>" in page and "Goals allowed" in page
+    assert "Shooting %" in page and "Penalty kill %" in page and "<h2>Situational</h2>" in page
+    assert "goals more than the book" in page and "Ratings in goals" in page
+    assert "home ice 0.2" in page and "goals scored in play" in page
+    assert "split by its moneyline" in page and "Thin: fewer than 3 games" in page
+    assert "<span>Market implied score</span><b>NYI " in page
+    data = client.get(
+        f"/matchup/nhl/{games['nhl'].game_id}?token=phone-secret",
+        headers={"accept": "application/json"},
+    ).json()
+    assert data["home"]["season"]["save_pct"] is not None and data["projection"]["sport"] == "nhl"
+
+    page = client.get(f"/matchup/nba/{games['nba'].game_id}?token=phone-secret").text
+    assert "<title>BKN at BOS</title>" in page and "<span>Tip-off</span>" in page
+    assert "<td class='label'>Spread (BOS)</td>" in page and "<th>1st half</th>" in page
+    assert "Points per 100 poss" in page and "Rebound margin" in page
+    assert "home court 2.5" in page and "points more than the book" in page
+    assert "Possessions are estimated" in page and "split by its spread" in page
+    assert "<span>Market implied score</span><b>BKN 108.0 – BOS 115.5</b>" in page
+    assert client.get("/matchup/nhl/999?token=phone-secret").status_code == 404
+
+
+def test_health_counts_the_season_days_still_to_read():
+    from scanner.web import _gamelog_health
+
+    status = RuntimeStatus()
+    status.gamelog = {"last_refresh": "2026-10-28T16:00:00+00:00", "games": {"nhl": 80}}
+    assert _gamelog_health(status, load_settings()).endswith(": NHL 80 games")
+    status.gamelog["days_pending"] = 12
+    assert _gamelog_health(status, load_settings()).endswith("NHL 80 games, 12 days still to read")

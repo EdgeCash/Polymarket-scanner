@@ -21,9 +21,16 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from datetime import UTC, datetime, timedelta
-from zoneinfo import ZoneInfo
 
-from scanner.books import SPORTS, BookFeed, BookFeedError, BookLine, PregameEvent, Sport
+from scanner.books import (
+    ESPN_ZONE,
+    SPORTS,
+    BookFeed,
+    BookFeedError,
+    BookLine,
+    PregameEvent,
+    Sport,
+)
 from scanner.config import PREGAME_GRADE_DELAY_HOURS, PREGAME_MAX_RPS, Settings
 from scanner.diary import OUTCOME_LOSS, OUTCOME_NOT_GRADED, OUTCOME_PUSH, OUTCOME_WIN, Diary
 from scanner.fees import fee_per_contract
@@ -34,7 +41,6 @@ from scanner.web import RuntimeStatus
 
 log = logging.getLogger(__name__)
 
-ESPN_ZONE = ZoneInfo("America/New_York")
 MAX_EXTRA_FETCHES = 5  # scoreboards fetched per scan just to grade old gaps
 
 
@@ -356,7 +362,7 @@ class PregameScanner:
         self.settings = settings
         self.diary = diary
         self.status = status
-        self.gamelog = gamelog  # a FootballLog, refreshed after each scan on this thread
+        self.gamelog = gamelog  # a GameLog, refreshed after each scan on this thread
         self.reader = reader or PolymarketReader(max_rps=PREGAME_MAX_RPS)
         self.feed = feed or BookFeed()
         self._now = now
@@ -561,7 +567,7 @@ class PregameScanner:
             self.stop_event.wait(max(30.0, self.settings.PREGAME_SCAN_MINUTES * 60 - elapsed))
 
     def refresh_gamelog(self) -> None:
-        """Bring the football game log up to date and note the result on the status page."""
+        """Bring the game log up to date and note the result on the status page."""
         now = self._now()
         try:
             summaries = self.gamelog.refresh_all(now)
@@ -581,6 +587,7 @@ class PregameScanner:
             "fetched": sum(s.summaries_fetched for s in summaries),
             "reread": sum(s.reread for s in summaries),
             "stale": sum(s.stale for s in summaries),
+            "days_pending": sum(s.days_pending for s in summaries),
             "projected": sum(s.projected for s in summaries),
             "graded": sum(s.graded for s in summaries),
             "staked": sum(s.staked for s in summaries),
