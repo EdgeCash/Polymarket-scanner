@@ -1,12 +1,13 @@
-"""A football projection model built from the game log, graded against the book.
+"""A projection model built from the game log, graded against the book.
 
 What it does, in one breath: for every team, half of what it scored and half of
-what its yards say it should have scored, each adjusted for who it played, shrunk
-toward average while games are few, plus home field. Two ratings per team come
-out (points above average on offence and points above average allowed on
-defence); a game's projection is the league average plus the two ratings that
-meet, and the win probability is the projected margin against the usual spread
-of football results.
+what its volume says it should have scored (yards in football, shots in hockey;
+basketball uses points alone), each adjusted for who it played, shrunk toward
+average while games are few, plus home advantage. Two ratings per team come out
+(points above average on offence and points above average allowed on defence);
+a game's projection is the league average plus the two ratings that meet, and
+the win probability is the projected margin against the usual spread of results
+in that sport. TUNING holds what differs between sports.
 
 The diary records every projection and grades it against the book's line, so the
 scorecard can say whether the model beats the book before anyone acts on it.
@@ -18,6 +19,7 @@ from __future__ import annotations
 import math
 from collections import defaultdict
 from dataclasses import dataclass, field
+from statistics import NormalDist
 
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
@@ -26,23 +28,45 @@ MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
 PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this)
 BOOK_PSEUDO_GAMES = 6.0  # blend: the model's weight is games / (games + this)
-YARDS_SHARE = 0.5  # half of a performance is points, half yards-based points
-DEFAULT_FIRST_HALF_SHARE = 0.48  # used until the log has first-half points
+VOLUME_SHARE = 0.5  # half of a performance is points, half volume-based points
 MIN_GAMES = 3  # below this the projection is marked thin
 GAP_BUCKETS = (1.0, 2.0, 3.0, 5.0)  # the scorecard's "model differs from the book by" rows
+MONEYLINE_CLAMP = 0.02  # a book win probability is kept this far from 0 and 1 before inverting
 
 
 @dataclass(frozen=True, slots=True)
 class SportTuning:
-    hfa: float  # home-field advantage, in points of margin
+    hfa: float  # home advantage, in points (goals) of margin
     sigma: float  # standard deviation of the final margin around the projection
     sigma_total: float  # the same for the final total
+    volume_stat: str | None = None  # the box-score stat whose league rate makes the volume half
+    first_half_share: float = 0.48  # used until the log has first-half (first-period) points
+    margin_from_moneyline: bool = False  # read the book's margin off its moneyline, not its spread
+    buckets: tuple[float, ...] = GAP_BUCKETS  # the scorecard's gap rows, in this sport's unit
 
 
 TUNING = {
-    "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=10.5),
-    "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=13.0),
+    "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=10.5, volume_stat="total_yards"),
+    "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=13.0, volume_stat="total_yards"),
+    # Basketball: points alone, and a home edge that has shrunk to a few points.
+    "nba": SportTuning(hfa=2.5, sigma=12.5, sigma_total=19.0, first_half_share=0.5),
+    # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
+    # whatever the matchup, so its margin is read off the moneyline instead; the
+    # "first half" is the first period; gaps are in goals, so the buckets are finer.
+    "nhl": SportTuning(
+        hfa=0.2,
+        sigma=2.3,
+        sigma_total=2.4,
+        volume_stat="shots",
+        first_half_share=0.31,
+        margin_from_moneyline=True,
+        buckets=(0.25, 0.5, 0.75, 1.0),
+    ),
 }
+
+
+def tuning_for(sport: str | None) -> SportTuning:
+    return TUNING.get(sport or "", TUNING["cfb"])
 
 
 @dataclass
@@ -52,7 +76,7 @@ class Ratings:
     sport: str
     season: int | None
     league_points: float  # average points per team-game
-    points_per_yard: float | None
+    points_per_volume: float | None  # league points per unit of the volume stat
     first_half_share: float
     hfa: float
     sigma: float
@@ -78,27 +102,41 @@ def win_probability(margin: float, sigma: float) -> float:
     return 0.5 * (1.0 + math.erf(margin / (sigma * math.sqrt(2.0))))
 
 
+def book_margin(book: BookLine | None, sport: str) -> float | None:
+    """The home margin the book expects: its spread, or in hockey what its moneyline says."""
+    if book is None:
+        return None
+    tuning = tuning_for(sport)
+    if not tuning.margin_from_moneyline:
+        return None if book.home_spread is None else -book.home_spread
+    fair = book.fair_moneyline()
+    if fair is None:
+        return None
+    p_home = min(max(fair[0], MONEYLINE_CLAMP), 1.0 - MONEYLINE_CLAMP)
+    return tuning.sigma * NormalDist().inv_cdf(p_home)
+
+
 def fit(records: list[GameRecord], sport: str) -> Ratings:
     """Fit offence and defence ratings from finished games (any number, even none)."""
-    tuning = TUNING.get(sport, TUNING["cfb"])
+    tuning = tuning_for(sport)
     season = records[-1].season if records else None
-    points_sum = yards_sum = 0.0
+    points_sum = volume_sum = 0.0
     half_sum = half_total = 0.0
     for record in records:
         for score, stats in (
             (record.home_score, record.home_stats),
             (record.away_score, record.away_stats),
         ):
-            yards = stats.get("total_yards")
-            if isinstance(yards, int | float) and yards > 0:
+            volume = stats.get(tuning.volume_stat) if tuning.volume_stat else None
+            if isinstance(volume, int | float) and volume > 0:
                 points_sum += score
-                yards_sum += yards
+                volume_sum += volume
             half = stats.get("first_half_points")
             if isinstance(half, int | float):
                 half_sum += half
                 half_total += score
-    points_per_yard = points_sum / yards_sum if yards_sum > 0 else None
-    first_half_share = half_sum / half_total if half_total > 0 else DEFAULT_FIRST_HALF_SHARE
+    points_per_volume = points_sum / volume_sum if volume_sum > 0 else None
+    first_half_share = half_sum / half_total if half_total > 0 else tuning.first_half_share
 
     # One entry per side of each game: (team, opponent, offence, defence, home term).
     entries: dict[str, list[tuple[str, float, float, float]]] = defaultdict(list)
@@ -110,9 +148,9 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
             ("home", record.home_score, record.home_stats),
             ("away", record.away_score, record.away_stats),
         ):
-            yards = stats.get("total_yards")
-            if points_per_yard is not None and isinstance(yards, int | float) and yards > 0:
-                perf[side] = (1 - YARDS_SHARE) * score + YARDS_SHARE * points_per_yard * yards
+            volume = stats.get(tuning.volume_stat) if tuning.volume_stat else None
+            if points_per_volume is not None and isinstance(volume, int | float) and volume > 0:
+                perf[side] = (1 - VOLUME_SHARE) * score + VOLUME_SHARE * points_per_volume * volume
             else:
                 perf[side] = float(score)
         h = 0.0 if record.neutral else tuning.hfa / 2.0
@@ -142,7 +180,7 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
         sport=sport,
         season=season,
         league_points=league,
-        points_per_yard=points_per_yard,
+        points_per_volume=points_per_volume,
         first_half_share=first_half_share,
         hfa=tuning.hfa,
         sigma=tuning.sigma,
@@ -155,12 +193,12 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
     )
 
 
-def _book_parts(book: BookLine | None) -> dict | None:
+def _book_parts(book: BookLine | None, sport: str) -> dict | None:
     if book is None:
         return None
     fair = book.fair_moneyline()
     parts = {
-        "margin": None if book.home_spread is None else -book.home_spread,
+        "margin": book_margin(book, sport),
         "total": book.total,
         "home_win": None if fair is None else fair[0],
     }
@@ -192,7 +230,7 @@ def project(
             "away": away_points * ratings.first_half_share,
         },
     }
-    book_parts = _book_parts(book)
+    book_parts = _book_parts(book, ratings.sport)
 
     def blend_of(key: str) -> float:
         book_value = book_parts.get(key) if book_parts else None
@@ -215,6 +253,7 @@ def project(
         }
     return {
         "model": MODEL_VERSION,
+        "sport": ratings.sport,
         "games_used": {"home": home["games"], "away": away["games"]},
         "thin": games_used < MIN_GAMES,
         "ratings": {
@@ -226,7 +265,7 @@ def project(
             "hfa": ratings.hfa,
             "sigma": ratings.sigma,
             "sigma_total": ratings.sigma_total,
-            "points_per_yard": ratings.points_per_yard,
+            "points_per_volume": ratings.points_per_volume,
             "first_half_share": ratings.first_half_share,
             "games": ratings.games_fitted,
         },
@@ -283,7 +322,7 @@ def grade(projection: dict, final_home: int, final_away: int, close: BookLine | 
     ats = _pick(raw.get("margin"), book.get("margin"), actual_margin, "home", "away")
     ou = _pick(raw.get("total"), book.get("total"), actual_total, "over", "under")
     clv = None
-    close_parts = _book_parts(close)
+    close_parts = _book_parts(close, str(projection.get("sport") or ""))
     if close_parts:
         clv = {"margin": None, "total": None}
         if ats and close_parts.get("margin") is not None:
@@ -317,9 +356,14 @@ def _record(picks: list[dict], at_least: float) -> dict:
     }
 
 
-def summarise(grades: list[dict]) -> dict:
-    """The scorecard's numbers over a set of graded projections."""
+def summarise(grades: list[dict], sport: str | None = None) -> dict:
+    """The scorecard's numbers over a set of graded projections.
+
+    The gap rows use the sport's own buckets (points, or quarter goals in hockey),
+    so a summary across sports keeps only the misses, Brier scores and line moves.
+    """
     sources = ("raw", "blend", "book")
+    buckets = tuning_for(sport).buckets if sport else GAP_BUCKETS
     ats = [g["ats"] for g in grades if g.get("ats")]
     ou = [g["ou"] for g in grades if g.get("ou")]
     clv_margin = [(g.get("clv") or {}).get("margin") for g in grades]
@@ -327,11 +371,12 @@ def summarise(grades: list[dict]) -> dict:
     closed = [v for v in clv_margin if v is not None]
     return {
         "graded": len(grades),
+        "buckets": [f"{b:g}" for b in buckets],
         "margin_error": {s: _mean([g["margin_error"].get(s) for g in grades]) for s in sources},
         "total_error": {s: _mean([g["total_error"].get(s) for g in grades]) for s in sources},
         "brier": {s: _mean([g["brier"].get(s) for g in grades]) for s in sources},
-        "ats": {f"{b:g}": _record(ats, b) for b in GAP_BUCKETS},
-        "ou": {f"{b:g}": _record(ou, b) for b in GAP_BUCKETS},
+        "ats": {f"{b:g}": _record(ats, b) for b in buckets},
+        "ou": {f"{b:g}": _record(ou, b) for b in buckets},
         "clv": {
             "margin": _mean(clv_margin),
             "total": _mean(clv_total),

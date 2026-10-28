@@ -1,0 +1,914 @@
+{
+ "header": {
+  "id": "401892589",
+  "season": {
+   "year": 2027,
+   "current": true,
+   "type": 2
+  },
+  "week": null,
+  "competitions": [
+   {
+    "id": "401892589",
+    "date": "2026-10-28T00:00Z",
+    "neutralSite": false,
+    "status": {
+     "type": {
+      "id": "3",
+      "name": "STATUS_FINAL",
+      "state": "post",
+      "completed": true,
+      "description": "Final",
+      "detail": "Final/SO",
+      "shortDetail": "Final/SO",
+      "altDetail": "SO"
+     }
+    },
+    "competitors": [
+     {
+      "id": "27",
+      "homeAway": "home",
+      "winner": false,
+      "score": "3",
+      "linescores": [
+       {
+        "displayValue": "0"
+       },
+       {
+        "displayValue": "2"
+       },
+       {
+        "displayValue": "1"
+       },
+       {
+        "displayValue": "0"
+       },
+       {
+        "displayValue": "0"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "4-3-5",
+        "displayValue": "4-3-5, 13 PTS"
+       },
+       {
+        "type": "home",
+        "summary": "3-2-2",
+        "displayValue": "3-2-2"
+       }
+      ],
+      "team": {
+       "id": "27",
+       "abbreviation": "NSH",
+       "displayName": "Nashville Predators",
+       "name": "Predators",
+       "location": "Nashville",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500/nsh.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-07-02T15:51Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/nsh.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-07-02T15:46Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nsh.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-07-02T15:51Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/scoreboard/nsh.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-07-02T15:46Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/d9088081-d43d-e521-3c19-d9b4fc1bc3ba/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        }
+       ],
+       "color": "fdba31"
+      }
+     },
+     {
+      "id": "12",
+      "homeAway": "away",
+      "winner": true,
+      "score": "4",
+      "linescores": [
+       {
+        "displayValue": "2"
+       },
+       {
+        "displayValue": "1"
+       },
+       {
+        "displayValue": "0"
+       },
+       {
+        "displayValue": "0"
+       },
+       {
+        "displayValue": "1"
+       }
+      ],
+      "record": [
+       {
+        "type": "total",
+        "summary": "6-4-2",
+        "displayValue": "6-4-2, 14 PTS"
+       },
+       {
+        "type": "road",
+        "summary": "2-3-1",
+        "displayValue": "2-3-1"
+       }
+      ],
+      "team": {
+       "id": "12",
+       "abbreviation": "NYI",
+       "displayName": "New York Islanders",
+       "name": "Islanders",
+       "location": "New York",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500/nyi.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-07-02T15:51Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/nyi.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-07-02T15:46Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500/scoreboard/nyi.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-07-02T15:51Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nhl/500-dark/scoreboard/nyi.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-07-02T15:46Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/dab46111-bd72-868c-eff2-340e3cfc4d62/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:31Z"
+        }
+       ],
+       "color": "00529b"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "boxscore": {
+  "teams": [
+   {
+    "homeAway": "away",
+    "team": {
+     "id": "12",
+     "abbreviation": "NYI",
+     "displayName": "New York Islanders",
+     "logo": "https://a.espncdn.com/i/teamlogos/nhl/500/nyi.png",
+     "color": "00529b"
+    },
+    "statistics": [
+     {
+      "name": "blockedShots",
+      "abbreviation": "BS",
+      "displayValue": "21",
+      "label": "Blocked Shots"
+     },
+     {
+      "name": "hits",
+      "abbreviation": "HT",
+      "displayValue": "23",
+      "label": "Hits"
+     },
+     {
+      "name": "takeaways",
+      "abbreviation": "TK",
+      "displayValue": "2",
+      "label": "Takeaways"
+     },
+     {
+      "name": "shotsTotal",
+      "abbreviation": "S",
+      "displayValue": "28",
+      "label": "Shots"
+     },
+     {
+      "name": "powerPlayGoals",
+      "abbreviation": "PPG",
+      "displayValue": "0",
+      "label": "Power Play Goals"
+     },
+     {
+      "name": "powerPlayOpportunities",
+      "abbreviation": "PPO",
+      "displayValue": "5",
+      "label": "Power Play Opportunities"
+     },
+     {
+      "name": "powerPlayPct",
+      "abbreviation": "PCT",
+      "displayValue": "0.0",
+      "label": "Power Play Percentage"
+     },
+     {
+      "name": "shortHandedGoals",
+      "abbreviation": "SHG",
+      "displayValue": "0",
+      "label": "Short Handed Goals"
+     },
+     {
+      "name": "shootoutGoals",
+      "abbreviation": "SOG",
+      "displayValue": "0",
+      "label": "Shootout Goals"
+     },
+     {
+      "name": "faceoffsWon",
+      "abbreviation": "FW",
+      "displayValue": "33",
+      "label": "Faceoffs Won"
+     },
+     {
+      "name": "faceoffPercent",
+      "abbreviation": "FO%",
+      "displayValue": "58.9",
+      "label": "Faceoff Win Percent"
+     },
+     {
+      "name": "giveaways",
+      "abbreviation": "GV",
+      "displayValue": "6",
+      "label": "Giveaways"
+     },
+     {
+      "name": "penalties",
+      "abbreviation": "PN",
+      "displayValue": "5",
+      "label": "Total Penalties"
+     },
+     {
+      "name": "penaltyMinutes",
+      "abbreviation": "PIM",
+      "displayValue": "10",
+      "label": "Penalty Minutes"
+     }
+    ]
+   },
+   {
+    "homeAway": "home",
+    "team": {
+     "id": "27",
+     "abbreviation": "NSH",
+     "displayName": "Nashville Predators",
+     "logo": "https://a.espncdn.com/i/teamlogos/nhl/500/nsh.png",
+     "color": "fdba31"
+    },
+    "statistics": [
+     {
+      "name": "blockedShots",
+      "abbreviation": "BS",
+      "displayValue": "17",
+      "label": "Blocked Shots"
+     },
+     {
+      "name": "hits",
+      "abbreviation": "HT",
+      "displayValue": "20",
+      "label": "Hits"
+     },
+     {
+      "name": "takeaways",
+      "abbreviation": "TK",
+      "displayValue": "5",
+      "label": "Takeaways"
+     },
+     {
+      "name": "shotsTotal",
+      "abbreviation": "S",
+      "displayValue": "23",
+      "label": "Shots"
+     },
+     {
+      "name": "powerPlayGoals",
+      "abbreviation": "PPG",
+      "displayValue": "1",
+      "label": "Power Play Goals"
+     },
+     {
+      "name": "powerPlayOpportunities",
+      "abbreviation": "PPO",
+      "displayValue": "5",
+      "label": "Power Play Opportunities"
+     },
+     {
+      "name": "powerPlayPct",
+      "abbreviation": "PCT",
+      "displayValue": "20.0",
+      "label": "Power Play Percentage"
+     },
+     {
+      "name": "shortHandedGoals",
+      "abbreviation": "SHG",
+      "displayValue": "0",
+      "label": "Short Handed Goals"
+     },
+     {
+      "name": "shootoutGoals",
+      "abbreviation": "SOG",
+      "displayValue": "0",
+      "label": "Shootout Goals"
+     },
+     {
+      "name": "faceoffsWon",
+      "abbreviation": "FW",
+      "displayValue": "23",
+      "label": "Faceoffs Won"
+     },
+     {
+      "name": "faceoffPercent",
+      "abbreviation": "FO%",
+      "displayValue": "41.1",
+      "label": "Faceoff Win Percent"
+     },
+     {
+      "name": "giveaways",
+      "abbreviation": "GV",
+      "displayValue": "19",
+      "label": "Giveaways"
+     },
+     {
+      "name": "penalties",
+      "abbreviation": "PN",
+      "displayValue": "5",
+      "label": "Total Penalties"
+     },
+     {
+      "name": "penaltyMinutes",
+      "abbreviation": "PIM",
+      "displayValue": "10",
+      "label": "Penalty Minutes"
+     }
+    ]
+   }
+  ]
+ },
+ "format": {
+  "regulation": {
+   "periods": 3,
+   "displayName": "Period",
+   "slug": "period",
+   "clock": 1200.0
+  }
+ },
+ "gameInfo": {
+  "venue": {
+   "id": "1834",
+   "fullName": "Bridgestone Arena",
+   "address": {
+    "city": "Nashville",
+    "state": "TN",
+    "zipCode": "37250",
+    "country": "USA"
+   },
+   "grass": false
+  }
+ },
+ "pickcenter": [
+  {
+   "details": "NSH -122",
+   "overUnder": 5.5,
+   "spread": -1.5,
+   "overOdds": -120.0,
+   "underOdds": 100.0,
+   "awayTeamOdds": {
+    "favorite": false,
+    "underdog": true,
+    "moneyLine": 102,
+    "spreadOdds": -250.0,
+    "team": {
+     "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2027/teams/12?lang=en&region=us"
+    },
+    "teamId": "12",
+    "favoriteAtOpen": false
+   },
+   "homeTeamOdds": {
+    "favorite": true,
+    "underdog": false,
+    "moneyLine": -122,
+    "spreadOdds": 205.0,
+    "team": {
+     "$ref": "http://sports.core.api.espn.pvt/v2/sports/hockey/leagues/nhl/seasons/2027/teams/27?lang=en&region=us"
+    },
+    "teamId": "27",
+    "favoriteAtOpen": true
+   },
+   "links": [
+    {
+     "language": "en-US",
+     "rel": [
+      "home",
+      "desktop",
+      "bets",
+      "draftkings"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0ML86864510_1",
+     "text": "Home Bet",
+     "shortText": "Home Bet",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "away",
+      "desktop",
+      "bets",
+      "draftkings"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0ML86864510_3",
+     "text": "Away Bet",
+     "shortText": "Away Bet",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "homeSpread",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0HC86864510N150_1",
+     "text": "Home Point Spread",
+     "shortText": "Home Point Spread",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "awaySpread",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0HC86864510P150_3",
+     "text": "Away Point Spread",
+     "shortText": "Away Point Spread",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "over",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0OU86864510O550_1",
+     "text": "Over Odds",
+     "shortText": "Over Odds",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "under",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482%3Foutcomes%3D0OU86864510U550_3",
+     "text": "Under Odds",
+     "shortText": "Under Odds",
+     "isExternal": true,
+     "isPremium": false
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "game",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34876482",
+     "text": "Game",
+     "shortText": "Game",
+     "isExternal": true,
+     "isPremium": false
+    }
+   ],
+   "moneyline": {
+    "displayName": "Moneyline",
+    "shortDisplayName": "ML",
+    "home": {
+     "close": {
+      "odds": "-122"
+     },
+     "open": {
+      "odds": "-118"
+     }
+    },
+    "away": {
+     "close": {
+      "odds": "+102"
+     },
+     "open": {
+      "odds": "-102"
+     }
+    }
+   },
+   "pointSpread": {
+    "displayName": "Spread",
+    "shortDisplayName": "Spread",
+    "home": {
+     "close": {
+      "line": "-1.5",
+      "odds": "+205"
+     },
+     "open": {
+      "line": "-1.5",
+      "odds": "+200"
+     }
+    },
+    "away": {
+     "close": {
+      "line": "+1.5",
+      "odds": "-250"
+     },
+     "open": {
+      "line": "+1.5",
+      "odds": "-245"
+     }
+    }
+   },
+   "total": {
+    "displayName": "Total",
+    "shortDisplayName": "Total",
+    "over": {
+     "close": {
+      "line": "o5.5",
+      "odds": "-120"
+     },
+     "open": {
+      "line": "o5.5",
+      "odds": "-125"
+     }
+    },
+    "under": {
+     "close": {
+      "line": "u5.5",
+      "odds": "+100"
+     },
+     "open": {
+      "line": "u5.5",
+      "odds": "+105"
+     }
+    }
+   },
+   "link": {
+    "text": "See More Odds",
+    "language": "en-US",
+    "rel": [
+     "main",
+     "desktop",
+     "bets"
+    ],
+    "href": "https://sportsbook.draftkings.com",
+    "isExternal": true,
+    "isPremium": false
+   },
+   "header": {
+    "logo": {
+     "dark": "https://a.espncdn.com/i/espnbet/dark/espn-bet-square-off.svg",
+     "light": "https://a.espncdn.com/i/espnbet/espn-bet-square-off.svg",
+     "exclusivesLogoDark": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg",
+     "exclusivesLogoLight": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg"
+    },
+    "text": "Game Odds"
+   },
+   "footer": {
+    "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+   },
+   "provider": {
+    "name": "DraftKings"
+   }
+  }
+ ]
+}

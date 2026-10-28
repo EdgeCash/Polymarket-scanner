@@ -52,6 +52,7 @@ def _clean_env(monkeypatch):
             "PREGAME_MIN_EDGE",
             "PREGAME_HORIZON_HOURS",
             "GAMELOG_ENABLED",
+            "GAMELOG_SPORTS",
             "GIT_COMMIT",
             "RAILWAY_GIT_COMMIT_SHA",
         }:

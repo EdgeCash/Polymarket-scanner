@@ -106,3 +106,11 @@ def test_pregame_defaults_and_sport_validation():
     assert Settings(PREGAME_SPORTS="NHL, mlb").pregame_sports == ("nhl", "mlb")
     with pytest.raises(ValueError):
         Settings(PREGAME_SPORTS="mlb,curling")
+
+
+def test_gamelog_sports_default_and_validation():
+    s = Settings()
+    assert s.gamelog_sports == ("nfl", "cfb", "nba", "nhl")
+    assert Settings(GAMELOG_SPORTS="NBA, nhl").gamelog_sports == ("nba", "nhl")
+    with pytest.raises(ValueError):
+        Settings(GAMELOG_SPORTS="nfl,mlb")

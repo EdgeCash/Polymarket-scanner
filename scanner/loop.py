@@ -748,9 +748,9 @@ def run(settings: Settings, once: bool = False) -> int:
         serve_web(settings, diary, status)
         gamelog = None
         if settings.GAMELOG_ENABLED:
-            from scanner.gamelog import FootballLog
+            from scanner.gamelog import GameLog
 
-            gamelog = FootballLog(settings, diary)
+            gamelog = GameLog(settings, diary)
         if settings.PREGAME_ENABLED or gamelog is not None:
             from scanner.pregame import PregameScanner
 

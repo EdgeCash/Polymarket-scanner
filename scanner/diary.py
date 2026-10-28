@@ -166,6 +166,9 @@ CREATE TABLE IF NOT EXISTS pregame_gaps (
     final_away INTEGER,
     graded_at TEXT
 );
+-- football_games, football_weeks and football_upcoming hold every sport with a game
+-- log (the NBA and NHL too); the names date from when football was the only one. For
+-- a sport ESPN lists by day, "week" is the day as YYYYMMDD.
 CREATE TABLE IF NOT EXISTS football_games (
     sport TEXT NOT NULL,
     game_id TEXT NOT NULL,
@@ -265,9 +268,9 @@ CREATE INDEX IF NOT EXISTS projections_open ON projections (sport, outcome, kick
 
 ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.PERIOD.value)
 
-# The stored football game format. Rows written by an older parser are re-read once
-# so that fields the parser has since learned (first-half yards, the closing line)
-# fill in. Bump it when parse_game_summary learns something worth a re-read.
+# The stored game format. Rows written by an older parser are re-read once so that
+# fields the parser has since learned (first-half yards, the closing line) fill in.
+# Bump it when parse_game_summary learns something worth a re-read.
 FOOTBALL_GAME_VERSION = 2
 # Columns added after a table first shipped: (table, column, definition).
 MIGRATIONS = (
@@ -879,6 +882,7 @@ class Diary:
         return {r["sport"]: int(r["n"]) for r in rows}
 
     def football_week_complete(self, sport: str, season: int, week: int) -> bool:
+        """Whether a week's (or, by day, a day's) games are all stored."""
         with self._lock:
             row = self._conn.execute(
                 "SELECT complete FROM football_weeks WHERE sport = ? AND season = ? AND week = ?",
@@ -1069,9 +1073,16 @@ class Diary:
                 () if sport is None else (sport,),
             ).fetchone()["n"]
         rows = [self._projection_row(r) for r in rows]
-        out = summarise([r["grades"] for r in rows])
+        out = summarise([r["grades"] for r in rows], sport)
         out["open"] = int(open_count)
         out["by_sport"] = dict(Counter(r["sport"] for r in rows))
+        if sport is None:
+            # Misses and gap rows are in each sport's own unit, so the scorecard
+            # shows them sport by sport.
+            out["sports"] = {
+                key: summarise([r["grades"] for r in rows if r["sport"] == key], key)
+                for key in sorted(out["by_sport"])
+            }
         out["recent"] = [
             {
                 "kickoff": r["kickoff"],

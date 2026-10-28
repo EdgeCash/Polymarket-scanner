@@ -1,0 +1,842 @@
+{
+ "leagues": [
+  {
+   "id": "46",
+   "name": "National Basketball Association",
+   "abbreviation": "NBA",
+   "slug": "nba",
+   "season": {
+    "year": 2027,
+    "startDate": "2026-09-30T07:00Z",
+    "endDate": "2027-06-26T06:59Z",
+    "displayName": "2026-27",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "day",
+   "calendarStartDate": "2026-09-30T07:00Z",
+   "calendarEndDate": "2027-06-26T06:59Z",
+   "calendar": [
+    "2026-10-03T07:00Z",
+    "2026-10-04T07:00Z",
+    "2026-10-05T07:00Z",
+    "2026-10-06T07:00Z",
+    "2026-10-07T07:00Z",
+    "2026-10-08T07:00Z",
+    "2026-10-09T07:00Z",
+    "2026-10-10T07:00Z",
+    "2026-10-11T07:00Z",
+    "2026-10-12T07:00Z",
+    "2026-10-13T07:00Z",
+    "2026-10-14T07:00Z",
+    "2026-10-15T07:00Z",
+    "2026-10-16T07:00Z",
+    "2026-10-20T07:00Z",
+    "2026-10-21T07:00Z",
+    "2026-10-22T07:00Z",
+    "2026-10-23T07:00Z",
+    "2026-10-24T07:00Z",
+    "2026-10-25T07:00Z",
+    "2026-10-26T07:00Z",
+    "2026-10-27T07:00Z",
+    "2026-10-28T07:00Z",
+    "2026-10-29T07:00Z",
+    "2026-10-30T07:00Z",
+    "2026-10-31T07:00Z",
+    "2026-11-01T07:00Z",
+    "2026-11-02T08:00Z",
+    "2026-11-04T08:00Z",
+    "2026-11-05T08:00Z",
+    "2026-11-06T08:00Z",
+    "2026-11-07T08:00Z",
+    "2026-11-08T08:00Z",
+    "2026-11-09T08:00Z",
+    "2026-11-10T08:00Z",
+    "2026-11-11T08:00Z",
+    "2026-11-12T08:00Z",
+    "2026-11-13T08:00Z",
+    "2026-11-14T08:00Z",
+    "2026-11-15T08:00Z",
+    "2026-11-16T08:00Z",
+    "2026-11-17T08:00Z",
+    "2026-11-18T08:00Z",
+    "2026-11-19T08:00Z",
+    "2026-11-20T08:00Z",
+    "2026-11-21T08:00Z",
+    "2026-11-22T08:00Z",
+    "2026-11-23T08:00Z",
+    "2026-11-24T08:00Z",
+    "2026-11-25T08:00Z",
+    "2026-11-27T08:00Z",
+    "2026-11-28T08:00Z",
+    "2026-11-29T08:00Z",
+    "2026-11-30T08:00Z",
+    "2026-12-01T08:00Z",
+    "2026-12-02T08:00Z",
+    "2026-12-03T08:00Z",
+    "2026-12-04T08:00Z",
+    "2026-12-05T08:00Z",
+    "2026-12-08T08:00Z",
+    "2026-12-11T08:00Z",
+    "2026-12-12T08:00Z",
+    "2026-12-13T08:00Z",
+    "2026-12-14T08:00Z",
+    "2026-12-15T08:00Z",
+    "2026-12-16T08:00Z",
+    "2026-12-17T08:00Z",
+    "2026-12-18T08:00Z",
+    "2026-12-19T08:00Z",
+    "2026-12-20T08:00Z",
+    "2026-12-21T08:00Z",
+    "2026-12-22T08:00Z",
+    "2026-12-23T08:00Z",
+    "2026-12-25T08:00Z",
+    "2026-12-26T08:00Z",
+    "2026-12-27T08:00Z",
+    "2026-12-28T08:00Z",
+    "2026-12-29T08:00Z",
+    "2026-12-30T08:00Z",
+    "2026-12-31T08:00Z",
+    "2027-01-01T08:00Z",
+    "2027-01-02T08:00Z",
+    "2027-01-03T08:00Z",
+    "2027-01-04T08:00Z",
+    "2027-01-05T08:00Z",
+    "2027-01-06T08:00Z",
+    "2027-01-07T08:00Z",
+    "2027-01-08T08:00Z",
+    "2027-01-09T08:00Z",
+    "2027-01-10T08:00Z",
+    "2027-01-11T08:00Z",
+    "2027-01-12T08:00Z",
+    "2027-01-13T08:00Z",
+    "2027-01-14T08:00Z",
+    "2027-01-15T08:00Z",
+    "2027-01-16T08:00Z",
+    "2027-01-17T08:00Z",
+    "2027-01-18T08:00Z",
+    "2027-01-19T08:00Z",
+    "2027-01-20T08:00Z",
+    "2027-01-21T08:00Z",
+    "2027-01-22T08:00Z",
+    "2027-01-23T08:00Z",
+    "2027-01-24T08:00Z",
+    "2027-01-25T08:00Z",
+    "2027-01-26T08:00Z",
+    "2027-01-27T08:00Z",
+    "2027-01-28T08:00Z",
+    "2027-01-29T08:00Z",
+    "2027-01-30T08:00Z",
+    "2027-01-31T08:00Z",
+    "2027-02-01T08:00Z",
+    "2027-02-02T08:00Z",
+    "2027-02-03T08:00Z",
+    "2027-02-04T08:00Z",
+    "2027-02-05T08:00Z",
+    "2027-02-06T08:00Z",
+    "2027-02-07T08:00Z",
+    "2027-02-08T08:00Z",
+    "2027-02-09T08:00Z",
+    "2027-02-10T08:00Z",
+    "2027-02-11T08:00Z",
+    "2027-02-12T08:00Z",
+    "2027-02-13T08:00Z",
+    "2027-02-14T08:00Z",
+    "2027-02-15T08:00Z",
+    "2027-02-16T08:00Z",
+    "2027-02-17T08:00Z",
+    "2027-02-18T08:00Z",
+    "2027-02-25T08:00Z",
+    "2027-02-26T08:00Z",
+    "2027-02-27T08:00Z",
+    "2027-02-28T08:00Z",
+    "2027-03-01T08:00Z",
+    "2027-03-02T08:00Z",
+    "2027-03-03T08:00Z",
+    "2027-03-04T08:00Z",
+    "2027-03-05T08:00Z",
+    "2027-03-06T08:00Z",
+    "2027-03-07T08:00Z",
+    "2027-03-08T08:00Z",
+    "2027-03-09T08:00Z",
+    "2027-03-10T08:00Z",
+    "2027-03-11T08:00Z",
+    "2027-03-12T08:00Z",
+    "2027-03-13T08:00Z",
+    "2027-03-14T08:00Z",
+    "2027-03-15T07:00Z",
+    "2027-03-16T07:00Z",
+    "2027-03-17T07:00Z",
+    "2027-03-18T07:00Z",
+    "2027-03-19T07:00Z",
+    "2027-03-20T07:00Z",
+    "2027-03-21T07:00Z",
+    "2027-03-22T07:00Z",
+    "2027-03-23T07:00Z",
+    "2027-03-24T07:00Z",
+    "2027-03-25T07:00Z",
+    "2027-03-26T07:00Z",
+    "2027-03-27T07:00Z",
+    "2027-03-28T07:00Z",
+    "2027-03-29T07:00Z",
+    "2027-03-30T07:00Z",
+    "2027-03-31T07:00Z",
+    "2027-04-01T07:00Z",
+    "2027-04-02T07:00Z",
+    "2027-04-03T07:00Z",
+    "2027-04-04T07:00Z",
+    "2027-04-05T07:00Z",
+    "2027-04-06T07:00Z",
+    "2027-04-07T07:00Z",
+    "2027-04-08T07:00Z",
+    "2027-04-09T07:00Z",
+    "2027-04-11T07:00Z"
+   ]
+  }
+ ],
+ "events": [
+  {
+   "id": "401909877",
+   "date": "2026-10-27T23:30Z",
+   "name": "Brooklyn Nets at Boston Celtics",
+   "shortName": "BKN @ BOS",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "week": null,
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 5,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final/OT",
+     "shortDetail": "Final/OT",
+     "altDetail": "OT"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909877",
+     "date": "2026-10-27T23:30Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "1824",
+      "fullName": "TD Garden",
+      "address": {
+       "city": "Boston",
+       "state": "MA"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "2",
+       "homeAway": "home",
+       "winner": true,
+       "score": "125",
+       "linescores": [
+        {
+         "value": 26.0,
+         "displayValue": "26",
+         "period": 1
+        },
+        {
+         "value": 30.0,
+         "displayValue": "30",
+         "period": 2
+        },
+        {
+         "value": 30.0,
+         "displayValue": "30",
+         "period": 3
+        },
+        {
+         "value": 31.0,
+         "displayValue": "31",
+         "period": 4
+        },
+        {
+         "value": 8.0,
+         "displayValue": "8",
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "3-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "3-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "2",
+        "abbreviation": "BOS",
+        "displayName": "Boston Celtics",
+        "name": "Celtics",
+        "location": "Boston",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bos.png",
+        "color": "008348"
+       }
+      },
+      {
+       "id": "17",
+       "homeAway": "away",
+       "winner": false,
+       "score": "124",
+       "linescores": [
+        {
+         "value": 31.0,
+         "displayValue": "31",
+         "period": 1
+        },
+        {
+         "value": 30.0,
+         "displayValue": "30",
+         "period": 2
+        },
+        {
+         "value": 21.0,
+         "displayValue": "21",
+         "period": 3
+        },
+        {
+         "value": 35.0,
+         "displayValue": "35",
+         "period": 4
+        },
+        {
+         "value": 7.0,
+         "displayValue": "7",
+         "period": 5
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-4"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-2"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "17",
+        "abbreviation": "BKN",
+        "displayName": "Brooklyn Nets",
+        "name": "Nets",
+        "location": "Brooklyn",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/bkn.png",
+        "color": "000000"
+       }
+      }
+     ],
+     "odds": []
+    }
+   ]
+  },
+  {
+   "id": "401909878",
+   "date": "2026-10-28T00:00Z",
+   "name": "Detroit Pistons at New York Knicks",
+   "shortName": "DET @ NY",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "week": null,
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0.0",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909878",
+     "date": "2026-10-28T00:00Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "1830",
+      "fullName": "Madison Square Garden",
+      "address": {
+       "city": "New York",
+       "state": "NY"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "18",
+       "homeAway": "home",
+       "winner": true,
+       "score": "111",
+       "linescores": [
+        {
+         "value": 25.0,
+         "displayValue": "25",
+         "period": 1
+        },
+        {
+         "value": 26.0,
+         "displayValue": "26",
+         "period": 2
+        },
+        {
+         "value": 37.0,
+         "displayValue": "37",
+         "period": 3
+        },
+        {
+         "value": 23.0,
+         "displayValue": "23",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "1-3"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-1"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "18",
+        "abbreviation": "NY",
+        "displayName": "New York Knicks",
+        "name": "Knicks",
+        "location": "New York",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/ny.png",
+        "color": "1d428a"
+       }
+      },
+      {
+       "id": "8",
+       "homeAway": "away",
+       "winner": false,
+       "score": "97",
+       "linescores": [
+        {
+         "value": 38.0,
+         "displayValue": "38",
+         "period": 1
+        },
+        {
+         "value": 12.0,
+         "displayValue": "12",
+         "period": 2
+        },
+        {
+         "value": 13.0,
+         "displayValue": "13",
+         "period": 3
+        },
+        {
+         "value": 34.0,
+         "displayValue": "34",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "3-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "2-1"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "8",
+        "abbreviation": "DET",
+        "displayName": "Detroit Pistons",
+        "name": "Pistons",
+        "location": "Detroit",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/det.png",
+        "color": "1d428a"
+       }
+      }
+     ],
+     "odds": []
+    }
+   ]
+  },
+  {
+   "id": "401909879",
+   "date": "2026-10-28T00:00Z",
+   "name": "Sacramento Kings at San Antonio Spurs",
+   "shortName": "SAC @ SA",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "week": null,
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909879",
+     "date": "2026-10-28T00:00Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "780",
+      "fullName": "Frost Bank Center",
+      "address": {
+       "city": "San Antonio",
+       "state": "TX"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "24",
+       "homeAway": "home",
+       "winner": true,
+       "score": "130",
+       "linescores": [
+        {
+         "value": 39.0,
+         "displayValue": "39",
+         "period": 1
+        },
+        {
+         "value": 41.0,
+         "displayValue": "41",
+         "period": 2
+        },
+        {
+         "value": 27.0,
+         "displayValue": "27",
+         "period": 3
+        },
+        {
+         "value": 23.0,
+         "displayValue": "23",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "2-2"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "24",
+        "abbreviation": "SA",
+        "displayName": "San Antonio Spurs",
+        "name": "Spurs",
+        "location": "San Antonio",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sa.png",
+        "color": "000000"
+       }
+      },
+      {
+       "id": "23",
+       "homeAway": "away",
+       "winner": false,
+       "score": "103",
+       "linescores": [
+        {
+         "value": 29.0,
+         "displayValue": "29",
+         "period": 1
+        },
+        {
+         "value": 25.0,
+         "displayValue": "25",
+         "period": 2
+        },
+        {
+         "value": 26.0,
+         "displayValue": "26",
+         "period": 3
+        },
+        {
+         "value": 23.0,
+         "displayValue": "23",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-4"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-2"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-2"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "23",
+        "abbreviation": "SAC",
+        "displayName": "Sacramento Kings",
+        "name": "Kings",
+        "location": "Sacramento",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/sac.png",
+        "color": "5a2d81"
+       }
+      }
+     ],
+     "odds": []
+    }
+   ]
+  },
+  {
+   "id": "401909880",
+   "date": "2026-10-28T03:00Z",
+   "name": "Portland Trail Blazers at Los Angeles Lakers",
+   "shortName": "POR @ LAL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "week": null,
+   "status": {
+    "clock": 720.0,
+    "displayClock": "12:00",
+    "period": 4,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909880",
+     "date": "2026-10-28T03:00Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "1841",
+      "fullName": "crypto.com Arena",
+      "address": {
+       "city": "Los Angeles",
+       "state": "CA"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "13",
+       "homeAway": "home",
+       "winner": false,
+       "score": "129",
+       "linescores": [
+        {
+         "value": 38.0,
+         "displayValue": "38",
+         "period": 1
+        },
+        {
+         "value": 35.0,
+         "displayValue": "35",
+         "period": 2
+        },
+        {
+         "value": 30.0,
+         "displayValue": "30",
+         "period": 3
+        },
+        {
+         "value": 26.0,
+         "displayValue": "26",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "3-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "2-1"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "1-0"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "13",
+        "abbreviation": "LAL",
+        "displayName": "Los Angeles Lakers",
+        "name": "Lakers",
+        "location": "Los Angeles",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+        "color": "552583"
+       }
+      },
+      {
+       "id": "22",
+       "homeAway": "away",
+       "winner": true,
+       "score": "136",
+       "linescores": [
+        {
+         "value": 32.0,
+         "displayValue": "32",
+         "period": 1
+        },
+        {
+         "value": 36.0,
+         "displayValue": "36",
+         "period": 2
+        },
+        {
+         "value": 34.0,
+         "displayValue": "34",
+         "period": 3
+        },
+        {
+         "value": 34.0,
+         "displayValue": "34",
+         "period": 4
+        }
+       ],
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "3-0"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "2-0"
+        }
+       ],
+       "curatedRank": null,
+       "team": {
+        "id": "22",
+        "abbreviation": "POR",
+        "displayName": "Portland Trail Blazers",
+        "name": "Trail Blazers",
+        "location": "Portland",
+        "logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/por.png",
+        "color": "e03a3e"
+       }
+      }
+     ],
+     "odds": []
+    }
+   ]
+  }
+ ]
+}

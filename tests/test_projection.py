@@ -77,7 +77,7 @@ def test_fit_recovers_the_pecking_order_and_shrinks_toward_average():
     assert 2.0 < off["A"] < 3.5 and -3.5 < off["D"] < -2.0
     assert all(abs(d) < 1.0 for d in ratings.defense.values())  # every defence was average
     assert ratings.league_points == pytest.approx(23.0, abs=0.5)
-    assert ratings.points_per_yard == pytest.approx(1 / 15, abs=0.001)
+    assert ratings.points_per_volume == pytest.approx(1 / 15, abs=0.001)
     assert 0.44 < ratings.first_half_share < 0.5
     assert (ratings.hfa, ratings.sigma) == (TUNING["nfl"].hfa, TUNING["nfl"].sigma)
     assert ratings.team("A") == {"offense": off["A"], "defense": ratings.defense["A"], "games": 18}
@@ -86,10 +86,10 @@ def test_fit_recovers_the_pecking_order_and_shrinks_toward_average():
 
 def test_fit_copes_without_yards_or_without_games():
     empty = fit([], "cfb")
-    assert empty.games == {} and empty.league_points == 0.0 and empty.points_per_yard is None
+    assert empty.games == {} and empty.league_points == 0.0 and empty.points_per_volume is None
     assert empty.first_half_share == pytest.approx(0.48) and empty.hfa == TUNING["cfb"].hfa
     no_yards = fit(season(yards=False), "nfl")
-    assert no_yards.points_per_yard is None
+    assert no_yards.points_per_volume is None
     assert no_yards.offense["A"] > no_yards.offense["B"] > no_yards.offense["C"]
 
 
@@ -225,3 +225,64 @@ def test_summarise_buckets_by_how_far_the_model_sat_from_the_book():
     empty = summarise([])
     assert empty["graded"] == 0 and empty["margin_error"]["raw"] is None
     assert empty["clv"]["positive_share"] is None and empty["ats"]["1"]["wins"] == 0
+
+
+def test_hockey_reads_the_books_margin_off_its_moneyline():
+    from statistics import NormalDist
+
+    from scanner.projection import book_margin, tuning_for
+
+    book = BookLine("DraftKings", -230, 190, None, 6.5, 105, -125, -1.5, 110, -130)
+    margin = book_margin(book, "nhl")
+    p_home = fair(-230, 190)[0]
+    assert margin == pytest.approx(tuning_for("nhl").sigma * NormalDist().inv_cdf(p_home))
+    assert 0.5 < margin < 1.5  # a -230 favourite by under a goal and a half, not the puck line
+    assert book_margin(book, "nfl") == 1.5  # football keeps the spread
+    assert book_margin(None, "nhl") is None
+    no_moneyline = BookLine("DraftKings", None, None, None, 6.5, 105, -125, -1.5, 110, -130)
+    assert book_margin(no_moneyline, "nhl") is None
+
+
+def test_hockey_fits_on_shots_as_the_volume_half_with_finer_gap_buckets():
+    from scanner.projection import book_margin
+
+    def rec(game_id, home, away, hs, as_, shots_home, shots_away, day):
+        return GameRecord(
+            "nhl",
+            game_id,
+            2027,
+            None,
+            START + timedelta(days=day),
+            False,
+            TEAMS[home],
+            TEAMS[away],
+            hs,
+            as_,
+            (),
+            (),
+            {"points": hs, "first_half_points": 1, "shots": shots_home},
+            {"points": as_, "first_half_points": 0, "shots": shots_away},
+        )
+
+    records = [
+        rec("1", "A", "B", 4, 1, 35, 20, 0),
+        rec("2", "B", "A", 2, 3, 25, 30, 1),
+        rec("3", "A", "C", 5, 2, 40, 22, 2),
+        rec("4", "C", "B", 2, 2, 30, 30, 3),
+    ]
+    ratings = fit(records, "nhl")
+    assert (ratings.hfa, ratings.sigma, ratings.sigma_total) == (0.2, 2.3, 2.4)
+    assert ratings.points_per_volume == pytest.approx(21 / 232)
+    assert ratings.first_half_share == pytest.approx(4 / 21)
+    assert ratings.offense["A"] > ratings.offense["B"] and ratings.season == 2027
+    book = BookLine("DraftKings", -150, 130, None, 6.5, -110, -110, -1.5, 110, -130)
+    p = project(ratings, "A", "B", False, book)
+    assert p["sport"] == "nhl" and p["league"]["points_per_volume"] == ratings.points_per_volume
+    assert p["book"]["margin"] == pytest.approx(book_margin(book, "nhl"))
+    close = BookLine("DraftKings", -200, 170, None, 6.5, -110, -110, -1.5, 110, -130)
+    g = grade(p, 3, 2, close)
+    assert g["ats"] is not None and g["clv"]["margin"] is not None
+    s = summarise([g], "nhl")
+    assert s["buckets"] == ["0.25", "0.5", "0.75", "1"] and set(s["ats"]) == set(s["buckets"])
+    assert summarise([], "nfl")["buckets"] == ["1", "2", "3", "5"] == summarise([])["buckets"]
+    assert fit([], "nba").first_half_share == 0.5 and fit([], "nba").hfa == 2.5

@@ -91,15 +91,17 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.gamelog_once:
         from scanner.diary import Diary
-        from scanner.gamelog import FootballLog
+        from scanner.gamelog import GameLog
 
         diary = Diary(settings.DATABASE_PATH)
-        summaries = FootballLog(settings, diary).refresh_all()
+        summaries = GameLog(settings, diary).refresh_all()
         for s in summaries:
             print(
                 f"{s.sport}: season {s.season} week {s.week}; {s.games_stored} games stored, "
                 f"{s.summaries_fetched} summaries fetched, {s.backlog} still to fetch, "
-                f"{s.upcoming} upcoming" + (f"; errors: {'; '.join(s.errors)}" if s.errors else "")
+                f"{s.upcoming} upcoming"
+                + (f", {s.days_pending} days still to read" if s.days_pending else "")
+                + (f"; errors: {'; '.join(s.errors)}" if s.errors else "")
             )
         print("games in the log:", diary.football_game_counts())
         return 0 if not any(s.errors for s in summaries) else 1

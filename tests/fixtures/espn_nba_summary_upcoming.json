@@ -1,0 +1,1094 @@
+{
+ "header": {
+  "id": "401909881",
+  "season": {
+   "year": 2027,
+   "current": true,
+   "type": 2
+  },
+  "week": null,
+  "competitions": [
+   {
+    "id": "401909881",
+    "date": "2026-10-28T23:00Z",
+    "neutralSite": false,
+    "status": {
+     "type": {
+      "id": "1",
+      "name": "STATUS_SCHEDULED",
+      "state": "pre",
+      "completed": false,
+      "description": "Scheduled",
+      "detail": "Wed, October 28th at 7:00 PM EDT",
+      "shortDetail": "10/28 - 7:00 PM EDT"
+     }
+    },
+    "competitors": [
+     {
+      "id": "1",
+      "homeAway": "home",
+      "winner": null,
+      "score": null,
+      "linescores": null,
+      "record": [
+       {
+        "type": "total",
+        "summary": "2-2",
+        "displayValue": "2-2"
+       },
+       {
+        "type": "home",
+        "summary": "0-1",
+        "displayValue": "0-1"
+       },
+       {
+        "type": "vsconf",
+        "summary": "2-0",
+        "displayValue": "2-0"
+       }
+      ],
+      "team": {
+       "id": "1",
+       "abbreviation": "ATL",
+       "displayName": "Atlanta Hawks",
+       "name": "Hawks",
+       "location": "Atlanta",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-06-25T21:17Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/atl.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T21:13Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/atl.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-06-25T21:18Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/atl.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T21:13Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/15096a54-f015-c987-5ec8-55afedf6272f/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        }
+       ],
+       "color": "c8102e"
+      }
+     },
+     {
+      "id": "14",
+      "homeAway": "away",
+      "winner": null,
+      "score": null,
+      "linescores": null,
+      "record": [
+       {
+        "type": "total",
+        "summary": "0-4",
+        "displayValue": "0-4"
+       },
+       {
+        "type": "road",
+        "summary": "0-1",
+        "displayValue": "0-1"
+       },
+       {
+        "type": "vsconf",
+        "summary": "0-2",
+        "displayValue": "0-2"
+       }
+      ],
+      "team": {
+       "id": "14",
+       "abbreviation": "MIA",
+       "displayName": "Miami Heat",
+       "name": "Heat",
+       "location": "Miami",
+       "logos": [
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "default"
+         ],
+         "lastUpdated": "2024-06-25T21:17Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/mia.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T21:13Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mia.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard"
+         ],
+         "lastUpdated": "2024-06-25T21:18Z"
+        },
+        {
+         "href": "https://a.espncdn.com/i/teamlogos/nba/500-dark/scoreboard/mia.png",
+         "width": 500,
+         "height": 500,
+         "alt": "",
+         "rel": [
+          "full",
+          "scoreboard",
+          "dark"
+         ],
+         "lastUpdated": "2024-06-25T21:14Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/primary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "primary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_on_white_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_white_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_on_black_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_black_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_on_primary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_primary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_on_secondary_color.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_on_secondary_color"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_black.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_black"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        },
+        {
+         "href": "https://a.espncdn.com/guid/81e3212c-30ef-9b1b-5edb-453b13ff265a/logos/secondary_logo_white.png",
+         "width": 4096,
+         "height": 4096,
+         "alt": "",
+         "rel": [
+          "full",
+          "secondary_logo_white"
+         ],
+         "lastUpdated": "2026-07-22T20:23Z"
+        }
+       ],
+       "color": "98002e"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "boxscore": {
+  "teams": [
+   {
+    "homeAway": "away",
+    "team": {
+     "id": "14",
+     "abbreviation": "MIA",
+     "displayName": "Miami Heat",
+     "logo": "https://a.espncdn.com/i/teamlogos/nba/500/mia.png",
+     "color": "98002e"
+    },
+    "statistics": [
+     {
+      "name": "streak",
+      "displayValue": "L4",
+      "abbreviation": "STRK",
+      "label": "Streak"
+     },
+     {
+      "name": "avgPointsAgainst",
+      "displayValue": "121.8",
+      "abbreviation": "OPP PPG",
+      "label": "Points Against"
+     },
+     {
+      "name": "Last Ten Games",
+      "displayValue": "0-4",
+      "abbreviation": "L10",
+      "label": "Last Ten Games"
+     },
+     {
+      "name": "avgPoints",
+      "displayValue": "109.0",
+      "abbreviation": "PTS",
+      "label": "Points Per Game"
+     },
+     {
+      "name": "fieldGoalPct",
+      "displayValue": "43",
+      "abbreviation": "FG%",
+      "label": "Field Goal %"
+     },
+     {
+      "name": "threePointFieldGoalPct",
+      "displayValue": "31",
+      "abbreviation": "3P%",
+      "label": "Three Point %"
+     },
+     {
+      "name": "avgRebounds",
+      "displayValue": "40.5",
+      "abbreviation": "REB",
+      "label": "Rebounds Per Game"
+     },
+     {
+      "name": "avgAssists",
+      "displayValue": "24.8",
+      "abbreviation": "AST",
+      "label": "Assists Per Game"
+     },
+     {
+      "name": "avgBlocks",
+      "displayValue": "5.0",
+      "abbreviation": "BLK",
+      "label": "Blocks Per Game"
+     },
+     {
+      "name": "avgSteals",
+      "displayValue": "8.3",
+      "abbreviation": "STL",
+      "label": "Steals Per Game"
+     },
+     {
+      "name": "avgTeamTurnovers",
+      "displayValue": "0.3",
+      "abbreviation": "TTO",
+      "label": "Team Turnovers Per Game"
+     },
+     {
+      "name": "avgTotalTurnovers",
+      "displayValue": "14.5",
+      "abbreviation": "ToTO",
+      "label": "Total Turnovers Per Game"
+     }
+    ]
+   },
+   {
+    "homeAway": "home",
+    "team": {
+     "id": "1",
+     "abbreviation": "ATL",
+     "displayName": "Atlanta Hawks",
+     "logo": "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
+     "color": "c8102e"
+    },
+    "statistics": [
+     {
+      "name": "streak",
+      "displayValue": "L2",
+      "abbreviation": "STRK",
+      "label": "Streak"
+     },
+     {
+      "name": "avgPointsAgainst",
+      "displayValue": "111.8",
+      "abbreviation": "OPP PPG",
+      "label": "Points Against"
+     },
+     {
+      "name": "Last Ten Games",
+      "displayValue": "2-2",
+      "abbreviation": "L10",
+      "label": "Last Ten Games"
+     },
+     {
+      "name": "avgPoints",
+      "displayValue": "121.0",
+      "abbreviation": "PTS",
+      "label": "Points Per Game"
+     },
+     {
+      "name": "fieldGoalPct",
+      "displayValue": "47",
+      "abbreviation": "FG%",
+      "label": "Field Goal %"
+     },
+     {
+      "name": "threePointFieldGoalPct",
+      "displayValue": "33",
+      "abbreviation": "3P%",
+      "label": "Three Point %"
+     },
+     {
+      "name": "avgRebounds",
+      "displayValue": "41.8",
+      "abbreviation": "REB",
+      "label": "Rebounds Per Game"
+     },
+     {
+      "name": "avgAssists",
+      "displayValue": "31.5",
+      "abbreviation": "AST",
+      "label": "Assists Per Game"
+     },
+     {
+      "name": "avgBlocks",
+      "displayValue": "3.3",
+      "abbreviation": "BLK",
+      "label": "Blocks Per Game"
+     },
+     {
+      "name": "avgSteals",
+      "displayValue": "11.3",
+      "abbreviation": "STL",
+      "label": "Steals Per Game"
+     },
+     {
+      "name": "avgTeamTurnovers",
+      "displayValue": "0.5",
+      "abbreviation": "TTO",
+      "label": "Team Turnovers Per Game"
+     },
+     {
+      "name": "avgTotalTurnovers",
+      "displayValue": "14.3",
+      "abbreviation": "ToTO",
+      "label": "Total Turnovers Per Game"
+     }
+    ]
+   }
+  ]
+ },
+ "format": {
+  "regulation": {
+   "periods": 4,
+   "displayName": "Quarter",
+   "slug": "quarter",
+   "clock": 720.0
+  },
+  "overtime": {
+   "displayName": "Quarter",
+   "slug": "quarter",
+   "clock": 300.0
+  }
+ },
+ "gameInfo": {
+  "venue": {
+   "id": "1827",
+   "guid": "1ac7d8d6-17b6-3b26-84b3-5a851c4b79a9",
+   "fullName": "State Farm Arena",
+   "shortName": "State Farm Arena",
+   "address": {
+    "city": "Atlanta",
+    "state": "GA"
+   },
+   "grass": false
+  }
+ },
+ "pickcenter": [
+  {
+   "details": "ATL -3.5",
+   "overUnder": 241.5,
+   "spread": -3.5,
+   "overOdds": -115.0,
+   "underOdds": -105.0,
+   "awayTeamOdds": {
+    "favorite": false,
+    "underdog": true,
+    "moneyLine": 136,
+    "spreadOdds": -112.0,
+    "team": {
+     "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/14?lang=en&region=us"
+    },
+    "teamId": "14",
+    "favoriteAtOpen": false
+   },
+   "homeTeamOdds": {
+    "favorite": true,
+    "underdog": false,
+    "moneyLine": -162,
+    "spreadOdds": -108.0,
+    "team": {
+     "$ref": "http://sports.core.api.espn.pvt/v2/sports/basketball/leagues/nba/seasons/2027/teams/1?lang=en&region=us"
+    },
+    "teamId": "1",
+    "favoriteAtOpen": true
+   },
+   "links": [
+    {
+     "language": "en-US",
+     "rel": [
+      "home",
+      "desktop",
+      "bets",
+      "draftkings"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0ML86939457_1",
+     "text": "Home Bet",
+     "shortText": "Home Bet",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "home",
+       "betType": "straight"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "away",
+      "desktop",
+      "bets",
+      "draftkings"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0ML86939457_3",
+     "text": "Away Bet",
+     "shortText": "Away Bet",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "away",
+       "betType": "straight"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "homeSpread",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0HC86939457N350_1",
+     "text": "Home Point Spread",
+     "shortText": "Home Point Spread",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "none",
+       "betType": "straight",
+       "betDetails": "Spread:ATL-3.5"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "awaySpread",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0HC86939457P350_3",
+     "text": "Away Point Spread",
+     "shortText": "Away Point Spread",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "none",
+       "betType": "straight",
+       "betDetails": "Spread:MIA+3.5"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "over",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0OU86939457O24150_1",
+     "text": "Over Odds",
+     "shortText": "Over Odds",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "over",
+       "betType": "straight",
+       "betDetails": "Over:241.5"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "under",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0OU86939457U24150_3",
+     "text": "Under Odds",
+     "shortText": "Under Odds",
+     "isExternal": true,
+     "isPremium": false,
+     "tracking": {
+      "campaign": "betting-integrations",
+      "tags": {
+       "league": "nba",
+       "sport": "basketball",
+       "gameId": 401909881,
+       "betSide": "under",
+       "betType": "straight",
+       "betDetails": "Under:241.5"
+      }
+     }
+    },
+    {
+     "language": "en-US",
+     "rel": [
+      "game",
+      "desktop",
+      "bets"
+     ],
+     "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704",
+     "text": "Game",
+     "shortText": "Game",
+     "isExternal": true,
+     "isPremium": false
+    }
+   ],
+   "moneyline": {
+    "displayName": "Moneyline",
+    "shortDisplayName": "ML",
+    "home": {
+     "close": {
+      "odds": "-162",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "home",
+        "desktop",
+        "bets",
+        "draftkings"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0ML86939457_1",
+       "text": "Home Bet",
+       "shortText": "Home Bet",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "home",
+         "betType": "straight"
+        }
+       }
+      }
+     },
+     "open": {
+      "odds": "-162"
+     }
+    },
+    "away": {
+     "close": {
+      "odds": "+136",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "away",
+        "desktop",
+        "bets",
+        "draftkings"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0ML86939457_3",
+       "text": "Away Bet",
+       "shortText": "Away Bet",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "away",
+         "betType": "straight"
+        }
+       }
+      }
+     },
+     "open": {
+      "odds": "+136"
+     }
+    }
+   },
+   "pointSpread": {
+    "displayName": "Spread",
+    "shortDisplayName": "Spread",
+    "home": {
+     "close": {
+      "line": "-3.5",
+      "odds": "-108",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "homeSpread",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0HC86939457N350_1",
+       "text": "Home Point Spread",
+       "shortText": "Home Point Spread",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "none",
+         "betType": "straight",
+         "betDetails": "Spread:ATL-3.5"
+        }
+       }
+      }
+     },
+     "open": {
+      "line": "-3.5",
+      "odds": "-115"
+     }
+    },
+    "away": {
+     "close": {
+      "line": "+3.5",
+      "odds": "-112",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "awaySpread",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0HC86939457P350_3",
+       "text": "Away Point Spread",
+       "shortText": "Away Point Spread",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "none",
+         "betType": "straight",
+         "betDetails": "Spread:MIA+3.5"
+        }
+       }
+      }
+     },
+     "open": {
+      "line": "+3.5",
+      "odds": "-105"
+     }
+    }
+   },
+   "total": {
+    "displayName": "Total",
+    "shortDisplayName": "Total",
+    "over": {
+     "close": {
+      "line": "o241.5",
+      "odds": "-115",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "over",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0OU86939457O24150_1",
+       "text": "Over Odds",
+       "shortText": "Over Odds",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "over",
+         "betType": "straight",
+         "betDetails": "Over:241.5"
+        }
+       }
+      }
+     },
+     "open": {
+      "line": "o239.5",
+      "odds": "-112"
+     }
+    },
+    "under": {
+     "close": {
+      "line": "u241.5",
+      "odds": "-105",
+      "link": {
+       "language": "en-US",
+       "rel": [
+        "under",
+        "desktop",
+        "bets"
+       ],
+       "href": "https://sportsbook.draftkings.com/gateway?s=__s__&wpcid=__wpcid__&wpsrc=413&wpcn=ESPN&wpscn=Widget&wpcrn=BetSlipDeepLink&wpscid=__wpscid__&wpcrid=xx&preurl=https%3A%2F%2Fsportsbook.draftkings.com%2Fevent%2F34904704%3Foutcomes%3D0OU86939457U24150_3",
+       "text": "Under Odds",
+       "shortText": "Under Odds",
+       "isExternal": true,
+       "isPremium": false,
+       "tracking": {
+        "campaign": "betting-integrations",
+        "tags": {
+         "league": "nba",
+         "sport": "basketball",
+         "gameId": 401909881,
+         "betSide": "under",
+         "betType": "straight",
+         "betDetails": "Under:241.5"
+        }
+       }
+      }
+     },
+     "open": {
+      "line": "u239.5",
+      "odds": "-108"
+     }
+    }
+   },
+   "link": {
+    "language": "en-US",
+    "rel": [
+     "odds",
+     "desktop",
+     "event"
+    ],
+    "href": "https://www.espn.com/nba/odds/_/gameId/401909881",
+    "text": "See More Odds and Props",
+    "shortText": "Odds",
+    "isExternal": false,
+    "isPremium": false
+   },
+   "header": {
+    "logo": {
+     "dark": "https://a.espncdn.com/i/espnbet/dark/espn-bet-square-off.svg",
+     "light": "https://a.espncdn.com/i/espnbet/espn-bet-square-off.svg",
+     "exclusivesLogoDark": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg",
+     "exclusivesLogoLight": "https://a.espncdn.com/i/espnbet/espn-bet-square-mint.svg"
+    },
+    "text": "Game Odds"
+   },
+   "footer": {
+    "disclaimer": "GAMBLING PROBLEM? CALL 1-800-GAMBLER or 1-800-MY-RESET, (800) 327-5050 or visit gamblinghelplinema.org (MA). Call 877-8-HOPENY/text HOPENY (467369) (NY). Call 888-789-7777/visit ccpg.org (CT), or visit www.mdgamblinghelp.org (MD), 1-800-981-0023 (PR). 21+ and present in most states. (18+ DC/KY/NH/PR/WY). Void in ONT. Eligibility restrictions apply. Terms: draftkings.com/sportsbook. On behalf of Boot Hill Casino (KS). Pass-thru of per wager tax may apply in IL."
+   },
+   "provider": {
+    "name": "DraftKings"
+   }
+  }
+ ],
+ "predictor": {
+  "header": "Matchup Predictor",
+  "homeTeam": {
+   "id": "1",
+   "gameProjection": "66",
+   "teamChanceLoss": "34"
+  },
+  "awayTeam": {
+   "id": "14",
+   "gameProjection": "34",
+   "teamChanceLoss": "66"
+  }
+ }
+}
