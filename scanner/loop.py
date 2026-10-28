@@ -686,6 +686,8 @@ class Scanner:
             awake, note, change_at = self.window(now)
             self.status.awake = awake
             self.status.window_note = note
+            # recounted every pass so the health page's count resets at local midnight
+            self.status.alerts_today = self.history.count_today(now)
             if awake:
                 games_today = sum(
                     1

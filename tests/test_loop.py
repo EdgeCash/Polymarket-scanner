@@ -446,6 +446,20 @@ def test_run_once_awake_sends_the_heartbeat_and_scans(model):
     assert sender.messages[-1] == "Scanner is up, watching 2 games"
 
 
+def test_alerts_today_on_the_status_page_resets_the_next_day(model):
+    clock = Clock()
+    scanner, reader, feed, _ = build(clock, model)
+    feed.states[League.NFL] = [poll(0)["espn_event"]]
+    scanner.scan_once()
+    clock.t = 20
+    feed.states[League.NFL] = [poll(20)["espn_event"]]
+    assert len(scanner.scan_once().alerts) == 1
+    assert scanner.status.alerts_today == 1
+    clock.t += 24 * 3600  # the next day, long after the game: the scanner sleeps
+    assert scanner.run_forever(once=True) == 0
+    assert scanner.status.awake is False and scanner.status.alerts_today == 0
+
+
 def test_start_retries_until_polymarket_answers(model):
     clock = Clock()
     settings = load_settings(DATABASE_PATH=":memory:")
