@@ -1871,4 +1871,5 @@ def sheet_from_diary(diary: Diary, sport: str, game_id: str) -> dict | None:
     sheet["projection"] = stored["projection"] if stored else None
     sheet["stakes"] = diary.stakes_for(sport, game_id)
     sheet["model_record"] = diary.projection_summary(sport=sport)
+    sheet["players"] = diary.player_projections(sport, game_id)
     return sheet

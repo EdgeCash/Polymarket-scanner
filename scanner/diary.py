@@ -1542,6 +1542,26 @@ class Diary:
             ).fetchone()
         return self._player_projection_row(row) if row else None
 
+    def player_projection_counts(self, sport: str) -> dict[str, int]:
+        """How many open player lines each upcoming game of a sport has."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT game_id, COUNT(*) AS n FROM player_projections WHERE sport = ? AND "
+                "outcome IS NULL GROUP BY game_id",
+                (sport,),
+            ).fetchall()
+        return {str(r["game_id"]): int(r["n"]) for r in rows}
+
+    def player_recent_games(self, sport: str, player_id: str, limit: int = 10) -> list[dict]:
+        """A player's last games in the log, newest first."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM player_games WHERE sport = ? AND player_id = ? "
+                "ORDER BY date DESC, game_id DESC LIMIT ?",
+                (sport, player_id, limit),
+            ).fetchall()
+        return [self._player_row(r) for r in rows]
+
     def player_projection_age(self, sport: str, game_id: str) -> datetime | None:
         """When a game's player lines were last written, or None when it has none."""
         with self._lock:

@@ -605,6 +605,17 @@ the bands mean what they claim, stat by stat. A projected player who did not
 play is counted, not graded. `PLAYERS_ENABLED=false` switches it off. Nothing
 is sent or placed.
 
+The lines are public, like the card: `/props` lists every upcoming game with
+lines and the record so far (lines graded, the share above the median, the
+share inside the 80% band, the average miss); `/props/<sport>/<game_id>` is a
+game's lines, both sides, a row a player and a column a stat, with the actual
+in bold once the game is in; `/props/<sport>/<game_id>/<player_id>` is one
+player's lines with each stat's distribution drawn 100,000 times (the 80%
+band shaded, the median marked, the actual marked once graded), the chance at
+lines either side of the median, the inputs behind it and his recent games;
+and `.png` on that address is a share image. The matchup sheet (token) shows
+the same table under "Player lines".
+
 ## The daily card and the simulator
 
 The owner wants to publish research, not tips to tail blindly, and cares most

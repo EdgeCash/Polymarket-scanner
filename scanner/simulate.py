@@ -242,9 +242,12 @@ def svg_histogram(
     width: int = WIDTH,
     height: int = HEIGHT,
     text: str = "currentColor",
+    band: tuple[float, float] | None = None,
+    mark: tuple[float, str] | None = None,
 ) -> str:
-    """A bar for each integer outcome, the pick's side shaded, the book's line and the model's
-    mean marked. Inline SVG with no scripts; colours work on a light or dark page."""
+    """A bar for each integer outcome, the pick's side (or a band) shaded, the book's line
+    and the model's mean marked, plus one more mark (an actual, say). Inline SVG with no
+    scripts; colours work on a light or dark page."""
     bars = _trim(hist)
     if not bars:
         return ""
@@ -252,9 +255,9 @@ def svg_histogram(
     values = [v for v, _ in bars]
     lo, hi = values[0], values[-1]
     # Room for the marked lines even when they sit outside the bars' range.
-    for mark in (line, mean):
-        if mark is not None:
-            lo, hi = min(lo, math.floor(mark)), max(hi, math.ceil(mark))
+    for marked in (line, mean, mark[0] if mark else None):
+        if marked is not None:
+            lo, hi = min(lo, math.floor(marked)), max(hi, math.ceil(marked))
     span = hi - lo + 1
     plot_w = width - PAD_LEFT - PAD_RIGHT
     plot_h = height - PAD_TOP - PAD_BOTTOM
@@ -282,6 +285,8 @@ def svg_histogram(
             if side_above is None or line is None
             else (value > line if side_above else value < line)
         )
+        if band is not None:
+            on_side = band[0] <= value <= band[1]
         fill = highlight if on_side else muted
         title = _tick(value, axis_label)
         parts.append(
@@ -312,6 +317,8 @@ def svg_histogram(
         marks.append((line, line_label, "#b42318", "4 3"))
     if mean is not None:
         marks.append((mean, mean_label, "#1f6f8b", None))
+    if mark is not None:
+        marks.append((mark[0], mark[1], "#b26a00", "2 2"))
     for i, (value, label, colour, dash) in enumerate(marks):
         x = x_of(value)
         dash_attr = f" stroke-dasharray='{dash}'" if dash else ""

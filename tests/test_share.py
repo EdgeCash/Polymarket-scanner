@@ -55,3 +55,19 @@ def test_the_pick_image_carries_the_call_the_numbers_and_the_histogram():
     assert ">WSH +3.5<" in open_pick and "WIN" not in open_pick and "Final" not in open_pick
     assert "book WSH +3.5" in open_pick and "Margin (WSH, points)" in open_pick
     assert png_size(to_png(svg)) == (WIDTH * 2, HEIGHT * 2)
+
+
+def test_the_player_image_lists_each_line_and_draws_the_first():
+    from scanner.share import player_svg
+    from tests.test_web import props_client
+
+    client, diary, _ = props_client()
+    lines = diary.player_projections("nba", "up-1")
+    top = max((r for r in lines if r["stat"] == "points"), key=lambda r: r["mean"])
+    mine = [r for r in lines if r["player_id"] == top["player_id"]]
+    settings = load_settings(GAMELOG_SPORTS="nba")
+    svg = player_svg("nba", diary.football_upcoming_game("nba", "up-1"), mine, settings)
+    assert ">Jayson Tatum<" in svg and ">NBA<" in svg and ">F<" in svg
+    assert ">Points<" in svg and f">{mine[0]['p10']}–{mine[0]['p90']}<" in svg
+    assert "<svg x='560'" in svg and f"median {mine[0]['median']}" in svg
+    assert png_size(to_png(svg)) == (WIDTH * 2, HEIGHT * 2)
