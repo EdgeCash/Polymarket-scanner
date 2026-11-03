@@ -1248,9 +1248,10 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
         )
         if pick.get("clv") is not None:
             final += f" Closing line moved {pick['clv']:+.1f} {unit} toward the pick."
+    where = f"/card/{html.escape(pick['card_date'])}/{pick['rank']}"
     more = (
-        f"<p class='note'><a href='/card/{html.escape(pick['card_date'])}/{pick['rank']}'>"
-        "Full simulation: every score, every line</a></p>"
+        f"<p class='note'><a href='{where}'>Full simulation: every score, every line</a> · "
+        f"<a href='{where}.png'>Share image</a></p>"
         if link
         else ""
     )
@@ -1330,7 +1331,8 @@ def render_card(
         title = f"Daily card, {card['card_date']}"
         body = (
             f"<p class='note'>Locked {html.escape(_kickoff(locked, zone))}{late}. "
-            f"{len(card['rows'])} picks, one per game.</p>"
+            f"{len(card['rows'])} picks, one per game. "
+            f"<a href='/card/{html.escape(card['card_date'])}.png'>Share image</a></p>"
             + "".join(_pick_block(p, settings, link=True) for p in card["rows"])
         )
     by_rank = "".join(
@@ -1680,6 +1682,40 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
             return JSONResponse({"card": card, "record": summary, "history": history})
         now = datetime.now(UTC)
         return HTMLResponse(render_card(card, summary, history, settings, now))
+
+    def png(svg: str) -> Response:
+        from scanner.share import to_png
+
+        return Response(
+            to_png(svg), media_type="image/png", headers={"Cache-Control": "public, max-age=300"}
+        )
+
+    def card_image(card_date: str | None):
+        from scanner.share import card_svg
+
+        card = diary.card(card_date) if card_date else None
+        if card is None:
+            return JSONResponse({"error": "no card for that day"}, status_code=404)
+        return png(card_svg(card, diary.card_summary(picks=settings.CARD_PICKS), settings))
+
+    # The image routes come before the page routes, which would otherwise take
+    # "2026-10-11.png" for a date.
+    @app.get("/card.png")
+    def card_png_latest():
+        return card_image(diary.latest_card_date())
+
+    @app.get("/card/{card_date}.png")
+    def card_png(card_date: str):
+        return card_image(card_date)
+
+    @app.get("/card/{card_date}/{rank}.png")
+    def card_pick_png(card_date: str, rank: int):
+        from scanner.share import pick_svg
+
+        pick = diary.card_pick(card_date, rank)
+        if pick is None:
+            return JSONResponse({"error": "no such pick"}, status_code=404)
+        return png(pick_svg(pick, settings))
 
     @app.get("/card", response_class=HTMLResponse)
     def card_latest(request: Request):

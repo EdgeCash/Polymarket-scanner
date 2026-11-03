@@ -585,6 +585,15 @@ game and the projection's timestamp, so a page shows the same games every time.
 It is a picture of the model, not a better model, and key numbers in football
 are not modelled. Nothing in it is sent or placed.
 
+For posting, `scanner/share.py` draws the same things as 1200 by 675 images
+(X's shape, served at twice that for sharpness): `/card.png` and
+`/card/<date>.png` are the day's card, every pick with its call, price, sim
+chance and result once graded, and the running record; `/card/<date>/<rank>.png`
+is one pick with its histogram. They are drawn as SVG and rasterised with
+cairosvg, so the Docker image carries `libcairo2` and DejaVu Sans; nothing is
+fetched while an image is drawn, so there are no logos, only the teams' colours.
+The pages link to them.
+
 ## Milestones
 
 | Tag | Milestone | Status |
