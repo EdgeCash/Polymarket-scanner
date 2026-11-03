@@ -26,13 +26,15 @@ from scanner.projection import tuning_for
 # How a tie is broken: the winner of overtime adds these to its score, each as
 # likely as the next (a field goal or a touchdown in football, a goal in hockey).
 # Basketball's overtime has both teams score for five more minutes, so its
-# winning margin is drawn beside a base both sides add.
+# winning margin is drawn beside a base both sides add (college a little lower).
 OVERTIME_MARGINS = {
     "nfl": (3, 3, 6, 7),
     "cfb": (3, 3, 6, 7, 8),
     "nhl": (1,),
 }
-NBA_OVERTIME_POINTS = 11.0  # what each side scores in a five-minute overtime, on average
+# What each side scores in a five-minute basketball overtime, on average.
+BASKETBALL_OVERTIME_POINTS = {"nba": 11.0, "cbb": 9.0}
+BASKETBALL = tuple(BASKETBALL_OVERTIME_POINTS)
 
 
 def seed_for(sport: str, game_id: str, stamp: str) -> int:
@@ -50,8 +52,8 @@ def hash_text(text: str) -> int:
 
 def _overtime(sport: str, home_wins: bool, rng: random.Random) -> tuple[int, int]:
     """(home points added, away points added) by an overtime the given side wins."""
-    if sport == "nba":
-        base = max(0, round(rng.gauss(NBA_OVERTIME_POINTS, 3.0)))
+    if sport in BASKETBALL:
+        base = max(0, round(rng.gauss(BASKETBALL_OVERTIME_POINTS[sport], 3.0)))
         margin = 1 + abs(round(rng.gauss(0.0, 3.0)))
         winner, loser = base + margin, base
     else:

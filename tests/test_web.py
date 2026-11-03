@@ -657,3 +657,35 @@ def test_the_share_images_are_served_as_png_without_a_token():
     assert client.get("/card/2026-10-11").status_code == 200  # the page still answers
     page = client.get("/card").text
     assert "href='/card/2026-10-11.png'" in page and "href='/card/2026-10-11/1.png'" in page
+
+
+def test_college_basketball_sheets_say_tip_off_and_home_court():
+    from datetime import datetime
+
+    from scanner.gamelog import parse_game_summary, parse_week_scoreboard
+    from scanner.projection import fit, project
+    from tests.conftest import load_fixture
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", GAMELOG_SPORTS="cbb")
+    diary = Diary(":memory:")
+    at_time = datetime.fromisoformat("2026-11-03T12:00:00+00:00")
+    record = parse_game_summary(load_fixture("espn_cbb_summary_final.json"), "cbb")
+    diary.store_football_game(record, at_time)
+    _, _, games = parse_week_scoreboard(load_fixture("espn_cbb_day.json"), "cbb")
+    duke = next(g for g in games if g.home.abbreviation == "DUKE")
+    book = BookLine("DraftKings", None, None, None, 150.5, -110, -110, -30.5, -110, -110)
+    upcoming = replace_slate(duke, completed=False, date=at_time, book=book)
+    diary.store_football_upcoming(upcoming, at_time)
+    ratings = fit(diary.football_games("cbb"), "cbb")
+    projection = project(ratings, duke.home.team_id, duke.away.team_id, False, book)
+    diary.upsert_projection("cbb", duke.game_id, at_time, "DUKE", "ARMY", projection, at_time)
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    listing = client.get("/matchups?token=phone-secret").text
+    assert "<h2>CBB</h2>" in listing and "DUKE -30.5, total 150.5" in listing
+    page = client.get(f"/matchup/cbb/{duke.game_id}?token=phone-secret").text
+    assert "<title>ARMY at DUKE</title>" in page and "<span>Tip-off</span>" in page
+    assert "<th>1st half</th>" in page and "home court 3.5" in page
+    assert "Points per 100 poss" in page and "Division I games only" in page
+    assert "Thin: fewer than 3 games" in page
+    sim = client.get(f"/sim/cbb/{duke.game_id}?token=phone-secret").text
+    assert "Spread at other lines" in sim and "Margin (DUKE, points)" in sim

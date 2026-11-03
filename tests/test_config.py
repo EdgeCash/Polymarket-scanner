@@ -110,7 +110,7 @@ def test_pregame_defaults_and_sport_validation():
 
 def test_gamelog_sports_default_and_validation():
     s = Settings()
-    assert s.gamelog_sports == ("nfl", "cfb", "nba", "nhl")
+    assert s.gamelog_sports == ("nfl", "cfb", "nba", "nhl", "cbb")
     assert Settings(GAMELOG_SPORTS="NBA, nhl").gamelog_sports == ("nba", "nhl")
     with pytest.raises(ValueError):
         Settings(GAMELOG_SPORTS="nfl,mlb")
