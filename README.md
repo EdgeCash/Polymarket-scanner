@@ -553,6 +553,24 @@ the others on the same scale; with 360 teams and few games each, its early
 gaps from the book are noisy, which the per-sport trust weight and the record
 by sport are there to show.
 
+## Player lines
+
+Every summary the log fetches also carries each player's line, and from
+version 3 of the game record the log keeps them (`player_games`, one row per
+player per game, with the team, the opponent, home or away and the date, so a
+player's season reads back in one query). Basketball keeps minutes, points,
+shooting, rebounds, assists, turnovers, steals, blocks and fouls, with a
+starter flag and whether the player played at all; hockey keeps skaters'
+goals, assists, shots, hits, blocked shots, time on ice and power-play time,
+and goalies' saves, shots against and goals against; football keeps passing,
+rushing, receiving (targets in the NFL only), fumbles, tackles, sacks,
+interceptions and kicking, one line per player across the groups ESPN lists
+him in. ESPN's football groups carry no position, so football lines have
+none. Games stored before version 3 are re-read with the leftover budget each
+pass, the same way older parsers' games were, and the health page's game log
+row counts how many games have their player lines until every one does. This
+is the data under the player projections; nothing here is shown yet.
+
 ## The daily card and the simulator
 
 The owner wants to publish research, not tips to tail blindly, and cares most

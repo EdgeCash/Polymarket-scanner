@@ -882,15 +882,7 @@
    {
     "team": {
      "id": "23",
-     "uid": "s:20~l:28~t:23",
-     "slug": "pittsburgh-steelers",
-     "location": "Pittsburgh",
-     "name": "Steelers",
-     "abbreviation": "PIT",
-     "displayName": "Pittsburgh Steelers",
-     "shortDisplayName": "Steelers",
-     "color": "000000",
-     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png"
+     "abbreviation": "PIT"
     },
     "statistics": [
      {
@@ -905,35 +897,10 @@
        "adjQBR",
        "QBRating"
       ],
-      "text": "Pittsburgh Passing",
-      "labels": [
-       "C/ATT",
-       "YDS",
-       "AVG",
-       "TD",
-       "INT",
-       "SACKS",
-       "QBR",
-       "RTG"
-      ],
-      "descriptions": [
-       "Completions/Attempts",
-       "Yards",
-       "Yards Per Pass Attempt",
-       "Touchdowns",
-       "Interceptions",
-       "Sacks",
-       "Adjusted QBR",
-       "Passer Rating"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "8439",
-         "uid": "s:20~l:28~a:8439",
-         "guid": "5fbab03e-2816-55ab-ae10-83b132803d9e",
-         "firstName": "Aaron",
-         "lastName": "Rodgers",
          "displayName": "Aaron Rodgers",
          "jersey": "8"
         },
@@ -944,20 +911,10 @@
          "3",
          "2",
          "5-30",
-         "49.4",
+         "50.5",
          "83.2"
         ]
        }
-      ],
-      "totals": [
-       "22/40",
-       "269",
-       "7.5",
-       "3",
-       "2",
-       "5-30",
-       "--",
-       "83.2"
       ]
      },
      {
@@ -969,29 +926,10 @@
        "rushingTouchdowns",
        "longRushing"
       ],
-      "text": "Pittsburgh Rushing",
-      "labels": [
-       "CAR",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Rushing Attempts",
-       "Yards",
-       "Yards Per Rushing Attempt",
-       "Touchdowns",
-       "Longest Run"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4569987",
-         "uid": "s:20~l:28~a:4569987",
-         "guid": "224e4c1e-625d-b1b2-b8ea-1316942fa7ac",
-         "firstName": "Jaylen",
-         "lastName": "Warren",
          "displayName": "Jaylen Warren",
          "jersey": "30"
         },
@@ -1006,10 +944,6 @@
        {
         "athlete": {
          "id": "4037457",
-         "uid": "s:20~l:28~a:4037457",
-         "guid": "c40bfd45-2886-d6d0-ad72-0ad8f0aee91d",
-         "firstName": "Travis",
-         "lastName": "Homer",
          "displayName": "Travis Homer",
          "jersey": "21"
         },
@@ -1021,13 +955,6 @@
          "2"
         ]
        }
-      ],
-      "totals": [
-       "19",
-       "92",
-       "4.8",
-       "0",
-       "24"
       ]
      },
      {
@@ -1040,31 +967,10 @@
        "longReception",
        "receivingTargets"
       ],
-      "text": "Pittsburgh Receiving",
-      "labels": [
-       "REC",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG",
-       "TGTS"
-      ],
-      "descriptions": [
-       "Receptions",
-       "Yards",
-       "Yards Per Reception",
-       "Touchdowns",
-       "Longest Reception",
-       "Receiving Targets"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4047650",
-         "uid": "s:20~l:28~a:4047650",
-         "guid": "c6727be7-1ac0-315c-437d-e281fe9a2e84",
-         "firstName": "DK",
-         "lastName": "Metcalf",
          "displayName": "DK Metcalf",
          "jersey": "4"
         },
@@ -1080,10 +986,6 @@
        {
         "athlete": {
          "id": "4431492",
-         "uid": "s:20~l:28~a:4431492",
-         "guid": "26f43986-7674-3ef9-b523-f3f66dbd16a4",
-         "firstName": "Roman",
-         "lastName": "Wilson",
          "displayName": "Roman Wilson",
          "jersey": "14"
         },
@@ -1099,10 +1001,6 @@
        {
         "athlete": {
          "id": "4569987",
-         "uid": "s:20~l:28~a:4569987",
-         "guid": "224e4c1e-625d-b1b2-b8ea-1316942fa7ac",
-         "firstName": "Jaylen",
-         "lastName": "Warren",
          "displayName": "Jaylen Warren",
          "jersey": "30"
         },
@@ -1118,10 +1016,6 @@
        {
         "athlete": {
          "id": "4430802",
-         "uid": "s:20~l:28~a:4430802",
-         "guid": "cc423765-e806-35e3-ae40-863502fa6122",
-         "firstName": "Darnell",
-         "lastName": "Washington",
          "displayName": "Darnell Washington",
          "jersey": "80"
         },
@@ -1137,10 +1031,6 @@
        {
         "athlete": {
          "id": "4361411",
-         "uid": "s:20~l:28~a:4361411",
-         "guid": "dd0c7d09-aed2-e7dd-defd-12de97619e6e",
-         "firstName": "Pat",
-         "lastName": "Freiermuth",
          "displayName": "Pat Freiermuth",
          "jersey": "88"
         },
@@ -1156,10 +1046,6 @@
        {
         "athlete": {
          "id": "4035687",
-         "uid": "s:20~l:28~a:4035687",
-         "guid": "f9ac7a55-5934-2bf7-e70a-9c1d04cac2eb",
-         "firstName": "Michael",
-         "lastName": "Pittman Jr.",
          "displayName": "Michael Pittman Jr.",
          "jersey": "11"
         },
@@ -1175,10 +1061,6 @@
        {
         "athlete": {
          "id": "4685261",
-         "uid": "s:20~l:28~a:4685261",
-         "guid": "e9fc2458-287b-37fb-a2a2-222f32efdad4",
-         "firstName": "Germie",
-         "lastName": "Bernard",
          "displayName": "Germie Bernard",
          "jersey": "17"
         },
@@ -1194,10 +1076,6 @@
        {
         "athlete": {
          "id": "4035656",
-         "uid": "s:20~l:28~a:4035656",
-         "guid": "6db86c11-4877-9443-8b4f-2f3af45dfab0",
-         "firstName": "Ben",
-         "lastName": "Skowronek",
          "displayName": "Ben Skowronek",
          "jersey": "15"
         },
@@ -1210,14 +1088,6 @@
          "2"
         ]
        }
-      ],
-      "totals": [
-       "22",
-       "299",
-       "13.6",
-       "3",
-       "49",
-       "39"
       ]
      },
      {
@@ -1227,25 +1097,10 @@
        "fumblesLost",
        "fumblesRecovered"
       ],
-      "text": "Pittsburgh Fumbles",
-      "labels": [
-       "FUM",
-       "LOST",
-       "REC"
-      ],
-      "descriptions": [
-       "Fumbles",
-       "Fumbles Lost",
-       "Fumbles Recovered"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "3045282",
-         "uid": "s:20~l:28~a:3045282",
-         "guid": "fa239d3e-e2c0-2e06-6856-2a52abea3f2c",
-         "firstName": "T.J.",
-         "lastName": "Watt",
          "displayName": "T.J. Watt",
          "jersey": "90"
         },
@@ -1255,11 +1110,6 @@
          "1"
         ]
        }
-      ],
-      "totals": [
-       "0",
-       "0",
-       "1"
       ]
      },
      {
@@ -1273,33 +1123,10 @@
        "QBHits",
        "defensiveTouchdowns"
       ],
-      "text": "Pittsburgh Defense",
-      "labels": [
-       "TOT",
-       "SOLO",
-       "SACKS",
-       "TFL",
-       "PD",
-       "QB HTS",
-       "TD"
-      ],
-      "descriptions": [
-       "Tackles",
-       "Solo Tackles",
-       "Sacks",
-       "Tackles For Loss",
-       "Passes Defended",
-       "Quarterback Hits",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4361652",
-         "uid": "s:20~l:28~a:4361652",
-         "guid": "c1a0c4b5-c6d8-b2e5-4d96-018b0cf333ec",
-         "firstName": "Payton",
-         "lastName": "Wilson",
          "displayName": "Payton Wilson",
          "jersey": "41"
         },
@@ -1316,10 +1143,6 @@
        {
         "athlete": {
          "id": "4820584",
-         "uid": "s:20~l:28~a:4820584",
-         "guid": "28a6ba42-138c-386b-9c1e-39901938bfbe",
-         "firstName": "Robert",
-         "lastName": "Spears-Jennings",
          "displayName": "Robert Spears-Jennings",
          "jersey": "28"
         },
@@ -1336,10 +1159,6 @@
        {
         "athlete": {
          "id": "4570044",
-         "uid": "s:20~l:28~a:4570044",
-         "guid": "036fd1d7-80a7-613d-5f86-981407de3d6d",
-         "firstName": "Jaquan",
-         "lastName": "Brisker",
          "displayName": "Jaquan Brisker",
          "jersey": "3"
         },
@@ -1356,10 +1175,6 @@
        {
         "athlete": {
          "id": "13977",
-         "uid": "s:20~l:28~a:13977",
-         "guid": "712b78be-6085-d619-137e-3179c2c4c1f4",
-         "firstName": "Cameron",
-         "lastName": "Heyward",
          "displayName": "Cameron Heyward",
          "jersey": "97"
         },
@@ -1376,10 +1191,6 @@
        {
         "athlete": {
          "id": "4242207",
-         "uid": "s:20~l:28~a:4242207",
-         "guid": "8822527a-d2cf-e259-fbf1-8989fdec740c",
-         "firstName": "Patrick",
-         "lastName": "Queen",
          "displayName": "Patrick Queen",
          "jersey": "6"
         },
@@ -1396,10 +1207,6 @@
        {
         "athlete": {
          "id": "4430947",
-         "uid": "s:20~l:28~a:4430947",
-         "guid": "719d67dc-96d8-3b44-9a9c-8ac9a3f58075",
-         "firstName": "Yahya",
-         "lastName": "Black",
          "displayName": "Yahya Black",
          "jersey": "94"
         },
@@ -1416,10 +1223,6 @@
        {
         "athlete": {
          "id": "3045282",
-         "uid": "s:20~l:28~a:3045282",
-         "guid": "fa239d3e-e2c0-2e06-6856-2a52abea3f2c",
-         "firstName": "T.J.",
-         "lastName": "Watt",
          "displayName": "T.J. Watt",
          "jersey": "90"
         },
@@ -1436,10 +1239,6 @@
        {
         "athlete": {
          "id": "4685327",
-         "uid": "s:20~l:28~a:4685327",
-         "guid": "c4f37108-302c-3730-b2eb-a6926cdb02bc",
-         "firstName": "Daylen",
-         "lastName": "Everette",
          "displayName": "Daylen Everette",
          "jersey": "23"
         },
@@ -1456,10 +1255,6 @@
        {
         "athlete": {
          "id": "4363034",
-         "uid": "s:20~l:28~a:4363034",
-         "guid": "d3e870a4-6ef6-23a2-d633-1ed041ea905e",
-         "firstName": "Asante",
-         "lastName": "Samuel Jr.",
          "displayName": "Asante Samuel Jr.",
          "jersey": "22"
         },
@@ -1476,10 +1271,6 @@
        {
         "athlete": {
          "id": "4426694",
-         "uid": "s:20~l:28~a:4426694",
-         "guid": "1b33cedc-29a8-f9f6-53dc-05a3d0ebcc07",
-         "firstName": "Keeanu",
-         "lastName": "Benton",
          "displayName": "Keeanu Benton",
          "jersey": "95"
         },
@@ -1496,10 +1287,6 @@
        {
         "athlete": {
          "id": "3116689",
-         "uid": "s:20~l:28~a:3116689",
-         "guid": "e34a3e1f-6169-a875-d6ae-76d9417b9320",
-         "firstName": "Cole",
-         "lastName": "Holcomb",
          "displayName": "Cole Holcomb",
          "jersey": "55"
         },
@@ -1516,10 +1303,6 @@
        {
         "athlete": {
          "id": "4428119",
-         "uid": "s:20~l:28~a:4428119",
-         "guid": "d9523718-5c26-7458-5735-84e5fde38e9c",
-         "firstName": "Lew",
-         "lastName": "Nichols",
          "displayName": "Lew Nichols",
          "jersey": "31"
         },
@@ -1536,10 +1319,6 @@
        {
         "athlete": {
          "id": "4429164",
-         "uid": "s:20~l:28~a:4429164",
-         "guid": "b5a6a0e4-88c9-3a7f-ae1c-8c7ecb944815",
-         "firstName": "Nick",
-         "lastName": "Herbig",
          "displayName": "Nick Herbig",
          "jersey": "51"
         },
@@ -1556,10 +1335,6 @@
        {
         "athlete": {
          "id": "3047495",
-         "uid": "s:20~l:28~a:3047495",
-         "guid": "23ac2df6-b423-cfe9-5527-7a09058b5b4b",
-         "firstName": "Sebastian",
-         "lastName": "Joseph-Day",
          "displayName": "Sebastian Joseph-Day",
          "jersey": "69"
         },
@@ -1576,10 +1351,6 @@
        {
         "athlete": {
          "id": "4431590",
-         "uid": "s:20~l:28~a:4431590",
-         "guid": "a810e96c-0c76-30c2-aa9f-16d54b53a1a4",
-         "firstName": "Jack",
-         "lastName": "Sawyer",
          "displayName": "Jack Sawyer",
          "jersey": "33"
         },
@@ -1596,10 +1367,6 @@
        {
         "athlete": {
          "id": "3045373",
-         "uid": "s:20~l:28~a:3045373",
-         "guid": "a5623fce-1fb1-d273-2b6e-61ac583303c3",
-         "firstName": "Jalen",
-         "lastName": "Ramsey",
          "displayName": "Jalen Ramsey",
          "jersey": "5"
         },
@@ -1616,10 +1383,6 @@
        {
         "athlete": {
          "id": "4035687",
-         "uid": "s:20~l:28~a:4035687",
-         "guid": "f9ac7a55-5934-2bf7-e70a-9c1d04cac2eb",
-         "firstName": "Michael",
-         "lastName": "Pittman Jr.",
          "displayName": "Michael Pittman Jr.",
          "jersey": "11"
         },
@@ -1636,10 +1399,6 @@
        {
         "athlete": {
          "id": "4037333",
-         "uid": "s:20~l:28~a:4037333",
-         "guid": "3d63171f-bbec-74eb-1235-7d4fc7745b73",
-         "firstName": "Alex",
-         "lastName": "Highsmith",
          "displayName": "Alex Highsmith",
          "jersey": "56"
         },
@@ -1656,10 +1415,6 @@
        {
         "athlete": {
          "id": "4431492",
-         "uid": "s:20~l:28~a:4431492",
-         "guid": "26f43986-7674-3ef9-b523-f3f66dbd16a4",
-         "firstName": "Roman",
-         "lastName": "Wilson",
          "displayName": "Roman Wilson",
          "jersey": "14"
         },
@@ -1676,10 +1431,6 @@
        {
         "athlete": {
          "id": "3873935",
-         "uid": "s:20~l:28~a:3873935",
-         "guid": "537896f1-aa7f-dc2b-5a56-b9bdae0e9c06",
-         "firstName": "Jamel",
-         "lastName": "Dean",
          "displayName": "Jamel Dean",
          "jersey": "35"
         },
@@ -1693,15 +1444,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "69",
-       "44",
-       "2",
-       "4",
-       "7",
-       "5",
-       "0"
       ]
      },
      {
@@ -1711,25 +1453,10 @@
        "interceptionYards",
        "interceptionTouchdowns"
       ],
-      "text": "Pittsburgh Interceptions",
-      "labels": [
-       "INT",
-       "YDS",
-       "TD"
-      ],
-      "descriptions": [
-       "Interceptions",
-       "Yards",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4820584",
-         "uid": "s:20~l:28~a:4820584",
-         "guid": "28a6ba42-138c-386b-9c1e-39901938bfbe",
-         "firstName": "Robert",
-         "lastName": "Spears-Jennings",
          "displayName": "Robert Spears-Jennings",
          "jersey": "28"
         },
@@ -1739,11 +1466,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "1",
-       "0",
-       "0"
       ]
      },
      {
@@ -1755,29 +1477,10 @@
        "longKickReturn",
        "kickReturnTouchdowns"
       ],
-      "text": "Pittsburgh Kick Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Kick Returns",
-       "Yards",
-       "Yards Per Kick Return",
-       "Longest Kick Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5081338",
-         "uid": "s:20~l:28~a:5081338",
-         "guid": "319efe37-aa87-38b0-9bd2-59f6317273c6",
-         "firstName": "Kaden",
-         "lastName": "Wetjen",
          "displayName": "Kaden Wetjen",
          "jersey": "10"
         },
@@ -1789,13 +1492,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "4",
-       "96",
-       "24.0",
-       "27",
-       "0"
       ]
      },
      {
@@ -1807,29 +1503,10 @@
        "longPuntReturn",
        "puntReturnTouchdowns"
       ],
-      "text": "Pittsburgh Punt Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Punt Returns",
-       "Yards",
-       "Yards Per Punt Return",
-       "Longest Punt Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5081338",
-         "uid": "s:20~l:28~a:5081338",
-         "guid": "319efe37-aa87-38b0-9bd2-59f6317273c6",
-         "firstName": "Kaden",
-         "lastName": "Wetjen",
          "displayName": "Kaden Wetjen",
          "jersey": "10"
         },
@@ -1841,13 +1518,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "30",
-       "15.0",
-       "15",
-       "0"
       ]
      },
      {
@@ -1859,29 +1529,10 @@
        "extraPointsMade/extraPointAttempts",
        "totalKickingPoints"
       ],
-      "text": "Pittsburgh Kicking",
-      "labels": [
-       "FG",
-       "PCT",
-       "LONG",
-       "XP",
-       "PTS"
-      ],
-      "descriptions": [
-       "Field Goals Made/Attempts",
-       "Field Goal Percentage",
-       "Longest Field Goal Made",
-       "Extra Points Made/Attempts",
-       "Kicking Points"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "17372",
-         "uid": "s:20~l:28~a:17372",
-         "guid": "8ad36dbe-d0e6-9493-9684-926df627f249",
-         "firstName": "Chris",
-         "lastName": "Boswell",
          "displayName": "Chris Boswell",
          "jersey": "9"
         },
@@ -1893,13 +1544,6 @@
          "4"
         ]
        }
-      ],
-      "totals": [
-       "1/2",
-       "50.0",
-       "31",
-       "1/1",
-       "4"
       ]
      },
      {
@@ -1912,31 +1556,10 @@
        "puntsInside20",
        "longPunt"
       ],
-      "text": "Pittsburgh Punting",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "TB",
-       "In 20",
-       "LONG"
-      ],
-      "descriptions": [
-       "Punts",
-       "Yards",
-       "Average Punt Yards",
-       "Touchbacks",
-       "Punts Inside 20",
-       "Longest Punt"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "3051397",
-         "uid": "s:20~l:28~a:3051397",
-         "guid": "625afb46-2094-7b6a-55ca-a3171dc77a35",
-         "firstName": "Cameron",
-         "lastName": "Johnston",
          "displayName": "Cameron Johnston",
          "jersey": "19"
         },
@@ -1949,31 +1572,14 @@
          "62"
         ]
        }
-      ],
-      "totals": [
-       "5",
-       "259",
-       "51.8",
-       "1",
-       "3",
-       "62"
       ]
      }
-    ],
-    "displayOrder": 1
+    ]
    },
    {
     "team": {
      "id": "5",
-     "uid": "s:20~l:28~t:5",
-     "slug": "cleveland-browns",
-     "location": "Cleveland",
-     "name": "Browns",
-     "abbreviation": "CLE",
-     "displayName": "Cleveland Browns",
-     "shortDisplayName": "Browns",
-     "color": "472a08",
-     "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png"
+     "abbreviation": "CLE"
     },
     "statistics": [
      {
@@ -1988,35 +1594,10 @@
        "adjQBR",
        "QBRating"
       ],
-      "text": "Cleveland Passing",
-      "labels": [
-       "C/ATT",
-       "YDS",
-       "AVG",
-       "TD",
-       "INT",
-       "SACKS",
-       "QBR",
-       "RTG"
-      ],
-      "descriptions": [
-       "Completions/Attempts",
-       "Yards",
-       "Yards Per Pass Attempt",
-       "Touchdowns",
-       "Interceptions",
-       "Sacks",
-       "Adjusted QBR",
-       "Passer Rating"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "3122840",
-         "uid": "s:20~l:28~a:3122840",
-         "guid": "b6ec8e9e-3d85-a1de-9d0a-5a51621a9c20",
-         "firstName": "Deshaun",
-         "lastName": "Watson",
          "displayName": "Deshaun Watson",
          "jersey": "4"
         },
@@ -2027,20 +1608,10 @@
          "1",
          "1",
          "2-8",
-         "53.4",
+         "61.0",
          "94.0"
         ]
        }
-      ],
-      "totals": [
-       "24/33",
-       "260",
-       "8.1",
-       "1",
-       "1",
-       "2-8",
-       "--",
-       "94.0"
       ]
      },
      {
@@ -2052,29 +1623,10 @@
        "rushingTouchdowns",
        "longRushing"
       ],
-      "text": "Cleveland Rushing",
-      "labels": [
-       "CAR",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Rushing Attempts",
-       "Yards",
-       "Yards Per Rushing Attempt",
-       "Touchdowns",
-       "Longest Run"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4685702",
-         "uid": "s:20~l:28~a:4685702",
-         "guid": "d5a1025a-0474-3cc4-90d2-99ebf41df879",
-         "firstName": "Quinshon",
-         "lastName": "Judkins",
          "displayName": "Quinshon Judkins",
          "jersey": "10"
         },
@@ -2089,10 +1641,6 @@
        {
         "athlete": {
          "id": "4722893",
-         "uid": "s:20~l:28~a:4722893",
-         "guid": "ee54ff50-5e40-3bd7-a534-9f6ef4ff7c9a",
-         "firstName": "Jaleel",
-         "lastName": "McLaughlin",
          "displayName": "Jaleel McLaughlin",
          "jersey": "38"
         },
@@ -2107,10 +1655,6 @@
        {
         "athlete": {
          "id": "3122840",
-         "uid": "s:20~l:28~a:3122840",
-         "guid": "b6ec8e9e-3d85-a1de-9d0a-5a51621a9c20",
-         "firstName": "Deshaun",
-         "lastName": "Watson",
          "displayName": "Deshaun Watson",
          "jersey": "4"
         },
@@ -2125,10 +1669,6 @@
        {
         "athlete": {
          "id": "4601080",
-         "uid": "s:20~l:28~a:4601080",
-         "guid": "7065be65-729f-30dc-891c-97c90744eaa9",
-         "firstName": "Raheim",
-         "lastName": "Sanders",
          "displayName": "Raheim Sanders",
          "jersey": "23"
         },
@@ -2140,13 +1680,6 @@
          "6"
         ]
        }
-      ],
-      "totals": [
-       "27",
-       "112",
-       "4.1",
-       "2",
-       "28"
       ]
      },
      {
@@ -2159,31 +1692,10 @@
        "longReception",
        "receivingTargets"
       ],
-      "text": "Cleveland Receiving",
-      "labels": [
-       "REC",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG",
-       "TGTS"
-      ],
-      "descriptions": [
-       "Receptions",
-       "Yards",
-       "Yards Per Reception",
-       "Touchdowns",
-       "Longest Reception",
-       "Receiving Targets"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4832800",
-         "uid": "s:20~l:28~a:4832800",
-         "guid": "1cb83812-2715-3ded-bb86-4c276fc0060c",
-         "firstName": "Denzel",
-         "lastName": "Boston",
          "displayName": "Denzel Boston",
          "jersey": "12"
         },
@@ -2199,10 +1711,6 @@
        {
         "athlete": {
          "id": "4870653",
-         "uid": "s:20~l:28~a:4870653",
-         "guid": "0385d73f-aa41-3619-868a-98942554ba97",
-         "firstName": "KC",
-         "lastName": "Concepcion",
          "displayName": "KC Concepcion",
          "jersey": "1"
         },
@@ -2218,10 +1726,6 @@
        {
         "athlete": {
          "id": "4685702",
-         "uid": "s:20~l:28~a:4685702",
-         "guid": "d5a1025a-0474-3cc4-90d2-99ebf41df879",
-         "firstName": "Quinshon",
-         "lastName": "Judkins",
          "displayName": "Quinshon Judkins",
          "jersey": "10"
         },
@@ -2237,10 +1741,6 @@
        {
         "athlete": {
          "id": "4241463",
-         "uid": "s:20~l:28~a:4241463",
-         "guid": "a6f54531-6f5b-5d5d-2026-28a308e5cb59",
-         "firstName": "Jerry",
-         "lastName": "Jeudy",
          "displayName": "Jerry Jeudy",
          "jersey": "3"
         },
@@ -2256,10 +1756,6 @@
        {
         "athlete": {
          "id": "5083076",
-         "uid": "s:20~l:28~a:5083076",
-         "guid": "32593c89-2e72-352a-a204-a2e034ca9a81",
-         "firstName": "Harold",
-         "lastName": "Fannin Jr.",
          "displayName": "Harold Fannin Jr.",
          "jersey": "44"
         },
@@ -2275,10 +1771,6 @@
        {
         "athlete": {
          "id": "4601080",
-         "uid": "s:20~l:28~a:4601080",
-         "guid": "7065be65-729f-30dc-891c-97c90744eaa9",
-         "firstName": "Raheim",
-         "lastName": "Sanders",
          "displayName": "Raheim Sanders",
          "jersey": "23"
         },
@@ -2294,10 +1786,6 @@
        {
         "athlete": {
          "id": "4808839",
-         "uid": "s:20~l:28~a:4808839",
-         "guid": "5b3ecef9-96f9-36c1-bcba-5f9452c45c81",
-         "firstName": "Isaiah",
-         "lastName": "Bond",
          "displayName": "Isaiah Bond",
          "jersey": "0"
         },
@@ -2310,14 +1798,6 @@
          "1"
         ]
        }
-      ],
-      "totals": [
-       "24",
-       "268",
-       "11.2",
-       "1",
-       "60",
-       "33"
       ]
      },
      {
@@ -2327,25 +1807,10 @@
        "fumblesLost",
        "fumblesRecovered"
       ],
-      "text": "Cleveland Fumbles",
-      "labels": [
-       "FUM",
-       "LOST",
-       "REC"
-      ],
-      "descriptions": [
-       "Fumbles",
-       "Fumbles Lost",
-       "Fumbles Recovered"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "3122840",
-         "uid": "s:20~l:28~a:3122840",
-         "guid": "b6ec8e9e-3d85-a1de-9d0a-5a51621a9c20",
-         "firstName": "Deshaun",
-         "lastName": "Watson",
          "displayName": "Deshaun Watson",
          "jersey": "4"
         },
@@ -2355,11 +1820,6 @@
          "1"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "1",
-       "1"
       ]
      },
      {
@@ -2373,33 +1833,10 @@
        "QBHits",
        "defensiveTouchdowns"
       ],
-      "text": "Cleveland Defense",
-      "labels": [
-       "TOT",
-       "SOLO",
-       "SACKS",
-       "TFL",
-       "PD",
-       "QB HTS",
-       "TD"
-      ],
-      "descriptions": [
-       "Tackles",
-       "Solo Tackles",
-       "Sacks",
-       "Tackles For Loss",
-       "Passes Defended",
-       "Quarterback Hits",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4876017",
-         "uid": "s:20~l:28~a:4876017",
-         "guid": "265dea72-f88b-38e4-be49-2a85cc9e0181",
-         "firstName": "Carson",
-         "lastName": "Schwesinger",
          "displayName": "Carson Schwesinger",
          "jersey": "49"
         },
@@ -2416,10 +1853,6 @@
        {
         "athlete": {
          "id": "4379397",
-         "uid": "s:20~l:28~a:4379397",
-         "guid": "5235f9a5-e8e2-d876-2ed4-83deb390b1b3",
-         "firstName": "Tyson",
-         "lastName": "Campbell",
          "displayName": "Tyson Campbell",
          "jersey": "7"
         },
@@ -2436,10 +1869,6 @@
        {
         "athlete": {
          "id": "4242208",
-         "uid": "s:20~l:28~a:4242208",
-         "guid": "a779bb68-fefd-f56b-6f64-bad23a1063d7",
-         "firstName": "Grant",
-         "lastName": "Delpit",
          "displayName": "Grant Delpit",
          "jersey": "9"
         },
@@ -2456,10 +1885,6 @@
        {
         "athlete": {
          "id": "4569620",
-         "uid": "s:20~l:28~a:4569620",
-         "guid": "c06119aa-1159-aac5-8817-9697b1f82326",
-         "firstName": "Ronnie",
-         "lastName": "Hickman",
          "displayName": "Ronnie Hickman",
          "jersey": "33"
         },
@@ -2476,10 +1901,6 @@
        {
         "athlete": {
          "id": "3915535",
-         "uid": "s:20~l:28~a:3915535",
-         "guid": "95f2a31d-db2e-076e-b5a9-26005a9bdfd6",
-         "firstName": "Denzel",
-         "lastName": "Ward",
          "displayName": "Denzel Ward",
          "jersey": "21"
         },
@@ -2496,10 +1917,6 @@
        {
         "athlete": {
          "id": "3040471",
-         "uid": "s:20~l:28~a:3040471",
-         "guid": "138412a8-726d-c360-74c9-7cad706112a8",
-         "firstName": "Maliek",
-         "lastName": "Collins",
          "displayName": "Maliek Collins",
          "jersey": "96"
         },
@@ -2516,10 +1933,6 @@
        {
         "athlete": {
          "id": "4605792",
-         "uid": "s:20~l:28~a:4605792",
-         "guid": "c662a696-b466-34d3-8ce2-965e6d7f2e2f",
-         "firstName": "Adin",
-         "lastName": "Huntington",
          "displayName": "Adin Huntington",
          "jersey": "98"
         },
@@ -2536,10 +1949,6 @@
        {
         "athlete": {
          "id": "4837186",
-         "uid": "s:20~l:28~a:4837186",
-         "guid": "4f7f3680-fcb2-3a1f-a474-c578525bef08",
-         "firstName": "Emmanuel",
-         "lastName": "McNeil-Warren",
          "displayName": "Emmanuel McNeil-Warren",
          "jersey": "28"
         },
@@ -2556,10 +1965,6 @@
        {
         "athlete": {
          "id": "3110565",
-         "uid": "s:20~l:28~a:3110565",
-         "guid": "d36a4fb5-1473-99ba-4388-d46ae05054fb",
-         "firstName": "Quincy",
-         "lastName": "Williams",
          "displayName": "Quincy Williams",
          "jersey": "5"
         },
@@ -2576,10 +1981,6 @@
        {
         "athlete": {
          "id": "4427963",
-         "uid": "s:20~l:28~a:4427963",
-         "guid": "b300b6e5-47a7-5f58-c938-3795674da9d0",
-         "firstName": "Isaiah",
-         "lastName": "McGuire",
          "displayName": "Isaiah McGuire",
          "jersey": "57"
         },
@@ -2596,10 +1997,6 @@
        {
         "athlete": {
          "id": "4695783",
-         "uid": "s:20~l:28~a:4695783",
-         "guid": "e8e65c70-6780-3165-a4c7-bf12252b4351",
-         "firstName": "Myles",
-         "lastName": "Harden",
          "displayName": "Myles Harden",
          "jersey": "26"
         },
@@ -2616,10 +2013,6 @@
        {
         "athlete": {
          "id": "4567242",
-         "uid": "s:20~l:28~a:4567242",
-         "guid": "030235b2-19ec-d391-8cec-490cc45098fd",
-         "firstName": "Sam",
-         "lastName": "Williams",
          "displayName": "Sam Williams",
          "jersey": "54"
         },
@@ -2636,10 +2029,6 @@
        {
         "athlete": {
          "id": "4035505",
-         "uid": "s:20~l:28~a:4035505",
-         "guid": "f95868cf-b161-276f-2bb1-ef19556b718b",
-         "firstName": "Daniel",
-         "lastName": "Thomas",
          "displayName": "Daniel Thomas",
          "jersey": "24"
         },
@@ -2656,10 +2045,6 @@
        {
         "athlete": {
          "id": "4578085",
-         "uid": "s:20~l:28~a:4578085",
-         "guid": "766e5e7b-7a10-7546-f027-91f35983a982",
-         "firstName": "Jared",
-         "lastName": "Verse",
          "displayName": "Jared Verse",
          "jersey": "8"
         },
@@ -2676,10 +2061,6 @@
        {
         "athlete": {
          "id": "4686027",
-         "uid": "s:20~l:28~a:4686027",
-         "guid": "1f250052-307a-30d5-a62b-0a0ffe844acd",
-         "firstName": "Donovan",
-         "lastName": "McMillon",
          "displayName": "Donovan McMillon",
          "jersey": "31"
         },
@@ -2696,10 +2077,6 @@
        {
         "athlete": {
          "id": "4600415",
-         "uid": "s:20~l:28~a:4600415",
-         "guid": "06ef637c-936e-33bf-b601-913d43d221ce",
-         "firstName": "Mike",
-         "lastName": "Hall Jr.",
          "displayName": "Mike Hall Jr.",
          "jersey": "51"
         },
@@ -2716,10 +2093,6 @@
        {
         "athlete": {
          "id": "4360677",
-         "uid": "s:20~l:28~a:4360677",
-         "guid": "f741e976-b932-553e-624b-adfc2aacf856",
-         "firstName": "Mekhi",
-         "lastName": "Blackmon",
          "displayName": "Mekhi Blackmon",
          "jersey": "29"
         },
@@ -2736,10 +2109,6 @@
        {
         "athlete": {
          "id": "4362018",
-         "uid": "s:20~l:28~a:4362018",
-         "guid": "f183a787-3a2d-48c3-9e68-c2c11b8be162",
-         "firstName": "Blake",
-         "lastName": "Whiteheart",
          "displayName": "Blake Whiteheart",
          "jersey": "86"
         },
@@ -2756,10 +2125,6 @@
        {
         "athlete": {
          "id": "4613104",
-         "uid": "s:20~l:28~a:4613104",
-         "guid": "a63d2bd9-8318-332e-93d4-4e3f012161f5",
-         "firstName": "Malachi",
-         "lastName": "Corley",
          "displayName": "Malachi Corley",
          "jersey": "11"
         },
@@ -2776,10 +2141,6 @@
        {
         "athlete": {
          "id": "4832800",
-         "uid": "s:20~l:28~a:4832800",
-         "guid": "1cb83812-2715-3ded-bb86-4c276fc0060c",
-         "firstName": "Denzel",
-         "lastName": "Boston",
          "displayName": "Denzel Boston",
          "jersey": "12"
         },
@@ -2796,10 +2157,6 @@
        {
         "athlete": {
          "id": "5085888",
-         "uid": "s:20~l:28~a:5085888",
-         "guid": "ff811ebc-2005-32cc-a69a-a133f34e00be",
-         "firstName": "Easton",
-         "lastName": "Mascarenas-Arnold",
          "displayName": "Easton Mascarenas-Arnold",
          "jersey": "42"
         },
@@ -2816,10 +2173,6 @@
        {
         "athlete": {
          "id": "3115336",
-         "uid": "s:20~l:28~a:3115336",
-         "guid": "cd5a9d17-b261-09fc-c377-5338355c985e",
-         "firstName": "Derek",
-         "lastName": "Barnett",
          "displayName": "Derek Barnett",
          "jersey": "97"
         },
@@ -2833,15 +2186,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "67",
-       "35",
-       "5",
-       "7",
-       "8",
-       "10",
-       "0"
       ]
      },
      {
@@ -2851,25 +2195,10 @@
        "interceptionYards",
        "interceptionTouchdowns"
       ],
-      "text": "Cleveland Interceptions",
-      "labels": [
-       "INT",
-       "YDS",
-       "TD"
-      ],
-      "descriptions": [
-       "Interceptions",
-       "Yards",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "3915535",
-         "uid": "s:20~l:28~a:3915535",
-         "guid": "95f2a31d-db2e-076e-b5a9-26005a9bdfd6",
-         "firstName": "Denzel",
-         "lastName": "Ward",
          "displayName": "Denzel Ward",
          "jersey": "21"
         },
@@ -2882,10 +2211,6 @@
        {
         "athlete": {
          "id": "4242208",
-         "uid": "s:20~l:28~a:4242208",
-         "guid": "a779bb68-fefd-f56b-6f64-bad23a1063d7",
-         "firstName": "Grant",
-         "lastName": "Delpit",
          "displayName": "Grant Delpit",
          "jersey": "9"
         },
@@ -2895,11 +2220,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "0",
-       "0"
       ]
      },
      {
@@ -2911,29 +2231,10 @@
        "longKickReturn",
        "kickReturnTouchdowns"
       ],
-      "text": "Cleveland Kick Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Kick Returns",
-       "Yards",
-       "Yards Per Kick Return",
-       "Longest Kick Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4601080",
-         "uid": "s:20~l:28~a:4601080",
-         "guid": "7065be65-729f-30dc-891c-97c90744eaa9",
-         "firstName": "Raheim",
-         "lastName": "Sanders",
          "displayName": "Raheim Sanders",
          "jersey": "23"
         },
@@ -2948,10 +2249,6 @@
        {
         "athlete": {
          "id": "4613104",
-         "uid": "s:20~l:28~a:4613104",
-         "guid": "a63d2bd9-8318-332e-93d4-4e3f012161f5",
-         "firstName": "Malachi",
-         "lastName": "Corley",
          "displayName": "Malachi Corley",
          "jersey": "11"
         },
@@ -2963,13 +2260,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "4",
-       "99",
-       "24.8",
-       "33",
-       "0"
       ]
      },
      {
@@ -2981,29 +2271,10 @@
        "longPuntReturn",
        "puntReturnTouchdowns"
       ],
-      "text": "Cleveland Punt Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Punt Returns",
-       "Yards",
-       "Yards Per Punt Return",
-       "Longest Punt Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4870653",
-         "uid": "s:20~l:28~a:4870653",
-         "guid": "0385d73f-aa41-3619-868a-98942554ba97",
-         "firstName": "KC",
-         "lastName": "Concepcion",
          "displayName": "KC Concepcion",
          "jersey": "1"
         },
@@ -3015,13 +2286,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "10",
-       "5.0",
-       "10",
-       "0"
       ]
      },
      {
@@ -3033,29 +2297,10 @@
        "extraPointsMade/extraPointAttempts",
        "totalKickingPoints"
       ],
-      "text": "Cleveland Kicking",
-      "labels": [
-       "FG",
-       "PCT",
-       "LONG",
-       "XP",
-       "PTS"
-      ],
-      "descriptions": [
-       "Field Goals Made/Attempts",
-       "Field Goal Percentage",
-       "Longest Field Goal Made",
-       "Extra Points Made/Attempts",
-       "Kicking Points"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4258620",
-         "uid": "s:20~l:28~a:4258620",
-         "guid": "99e25216-f4cd-9f29-51ed-1acfff24ce9d",
-         "firstName": "Andre",
-         "lastName": "Szmyt",
          "displayName": "Andre Szmyt",
          "jersey": "25"
         },
@@ -3067,13 +2312,6 @@
          "9"
         ]
        }
-      ],
-      "totals": [
-       "2/2",
-       "100.0",
-       "56",
-       "3/3",
-       "9"
       ]
      },
      {
@@ -3086,31 +2324,10 @@
        "puntsInside20",
        "longPunt"
       ],
-      "text": "Cleveland Punting",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "TB",
-       "In 20",
-       "LONG"
-      ],
-      "descriptions": [
-       "Punts",
-       "Yards",
-       "Average Punt Yards",
-       "Touchbacks",
-       "Punts Inside 20",
-       "Longest Punt"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4039396",
-         "uid": "s:20~l:28~a:4039396",
-         "guid": "692267f8-81f9-fbb1-b73c-4a0e7aef9197",
-         "firstName": "Corey",
-         "lastName": "Bojorquez",
          "displayName": "Corey Bojorquez",
          "jersey": "13"
         },
@@ -3123,18 +2340,9 @@
          "81"
         ]
        }
-      ],
-      "totals": [
-       "4",
-       "251",
-       "62.8",
-       "1",
-       "1",
-       "81"
       ]
      }
-    ],
-    "displayOrder": 2
+    ]
    }
   ]
  },

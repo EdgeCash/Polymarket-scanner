@@ -667,6 +667,1502 @@
      }
     ]
    }
+  ],
+  "players": [
+   {
+    "team": {
+     "id": "12",
+     "abbreviation": "NYI"
+    },
+    "statistics": [
+     {
+      "name": "forwards",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4419646",
+         "displayName": "Mitchell Chaffee",
+         "shortName": "M. Chaffee",
+         "jersey": "26",
+         "position": {
+          "abbreviation": "RW"
+         }
+        },
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "0",
+         "7:35",
+         "0:08",
+         "0:00",
+         "7:27",
+         "11",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5262",
+         "displayName": "Casey Cizikas",
+         "shortName": "C. Cizikas",
+         "jersey": "53",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "0",
+         "10:23",
+         "0:10",
+         "1:36",
+         "8:37",
+         "16",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "3",
+         "2",
+         "60.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "3042086",
+         "displayName": "Anthony Duclair",
+         "shortName": "A. Duclair",
+         "jersey": "11",
+         "position": {
+          "abbreviation": "LW"
+         }
+        },
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "0",
+         "16:11",
+         "1:38",
+         "0:00",
+         "14:33",
+         "27",
+         "1",
+         "3",
+         "0",
+         "2",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "1",
+         "2"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5291952",
+         "displayName": "Victor Eklund",
+         "shortName": "V. Eklund",
+         "jersey": "38",
+         "position": {
+          "abbreviation": "RW"
+         }
+        },
+        "stats": [
+         "1",
+         "4",
+         "0",
+         "0",
+         "14:00",
+         "1:58",
+         "0:00",
+         "12:02",
+         "20",
+         "0",
+         "3",
+         "0",
+         "3",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4697447",
+         "displayName": "Emil Heineman",
+         "shortName": "E. Heineman",
+         "jersey": "51",
+         "position": {
+          "abbreviation": "LW"
+         }
+        },
+        "stats": [
+         "1",
+         "5",
+         "0",
+         "-1",
+         "18:00",
+         "1:54",
+         "2:26",
+         "13:40",
+         "24",
+         "0",
+         "2",
+         "0",
+         "4",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4565244",
+         "displayName": "Simon Holmstrom",
+         "shortName": "S. Holmstrom",
+         "jersey": "92",
+         "position": {
+          "abbreviation": "RW"
+         }
+        },
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "1",
+         "25:02",
+         "6:00",
+         "2:18",
+         "16:44",
+         "26",
+         "0",
+         "4",
+         "1",
+         "3",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "3042002",
+         "displayName": "Bo Horvat",
+         "shortName": "B. Horvat",
+         "jersey": "14",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "2",
+         "1",
+         "1",
+         "26:04",
+         "6:18",
+         "3:07",
+         "16:39",
+         "27",
+         "1",
+         "6",
+         "0",
+         "2",
+         "3",
+         "0",
+         "11",
+         "10",
+         "52.4",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2593131",
+         "displayName": "Jean-Gabriel Pageau",
+         "shortName": "J. Pageau",
+         "jersey": "44",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "1",
+         "4",
+         "0",
+         "0",
+         "16:55",
+         "0:04",
+         "3:10",
+         "13:41",
+         "27",
+         "0",
+         "1",
+         "1",
+         "1",
+         "1",
+         "0",
+         "12",
+         "5",
+         "70.6",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2590389",
+         "displayName": "Ondrej Palat",
+         "shortName": "O. Palat",
+         "jersey": "81",
+         "position": {
+          "abbreviation": "LW"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "-1",
+         "16:38",
+         "2:03",
+         "0:02",
+         "14:33",
+         "24",
+         "0",
+         "2",
+         "1",
+         "1",
+         "0",
+         "0",
+         "2",
+         "0",
+         "100.0",
+         "0",
+         "1",
+         "2"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5517",
+         "displayName": "Kyle Palmieri",
+         "shortName": "K. Palmieri",
+         "jersey": "21",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "1",
+         "20:35",
+         "6:05",
+         "0:00",
+         "14:30",
+         "23",
+         "0",
+         "3",
+         "0",
+         "2",
+         "4",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5219",
+         "displayName": "Brayden Schenn",
+         "shortName": "B. Schenn",
+         "jersey": "10",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "2",
+         "3",
+         "0",
+         "1",
+         "19:15",
+         "3:37",
+         "0:00",
+         "15:38",
+         "22",
+         "1",
+         "4",
+         "0",
+         "1",
+         "1",
+         "0",
+         "5",
+         "5",
+         "50.0",
+         "0",
+         "1",
+         "2"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "defenses",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3114769",
+         "displayName": "Tony DeAngelo",
+         "shortName": "T. DeAngelo",
+         "jersey": "77",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "1",
+         "0",
+         "1",
+         "0",
+         "16:41",
+         "1:48",
+         "0:03",
+         "14:50",
+         "24",
+         "0",
+         "1",
+         "1",
+         "2",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4697719",
+         "displayName": "Matthew Kessel",
+         "shortName": "M. Kessel",
+         "jersey": "4",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "0",
+         "5:31",
+         "0:00",
+         "0:03",
+         "5:28",
+         "9",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "2",
+         "4"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2563069",
+         "displayName": "Scott Mayfield",
+         "shortName": "S. Mayfield",
+         "jersey": "24",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "3",
+         "0",
+         "0",
+         "0",
+         "9:06",
+         "0:00",
+         "2:16",
+         "6:50",
+         "13",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "3069621",
+         "displayName": "Adam Pelech",
+         "shortName": "A. Pelech",
+         "jersey": "3",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "-2",
+         "19:13",
+         "0:28",
+         "4:01",
+         "14:44",
+         "23",
+         "0",
+         "0",
+         "0",
+         "2",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "3042019",
+         "displayName": "Ryan Pulock",
+         "shortName": "R. Pulock",
+         "jersey": "6",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "5",
+         "0",
+         "0",
+         "2",
+         "18:00",
+         "0:00",
+         "3:47",
+         "14:13",
+         "23",
+         "0",
+         "0",
+         "0",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5291933",
+         "displayName": "Matthew Schaefer",
+         "shortName": "M. Schaefer",
+         "jersey": "48",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "2",
+         "1",
+         "0",
+         "0",
+         "32:16",
+         "6:19",
+         "0:00",
+         "25:57",
+         "29",
+         "0",
+         "2",
+         "1",
+         "2",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4024968",
+         "displayName": "Logan Stanley",
+         "shortName": "L. Stanley",
+         "jersey": "8",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "3",
+         "0",
+         "0",
+         "2",
+         "19:54",
+         "0:00",
+         "2:31",
+         "17:23",
+         "24",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "skaters",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": []
+     },
+     {
+      "name": "goalies",
+      "keys": [
+       "goalsAgainst",
+       "shotsAgainst",
+       "shootoutSaves",
+       "shootoutShotsAgainst",
+       "saves",
+       "savePct",
+       "evenStrengthSaves",
+       "powerPlaySaves",
+       "shortHandedSaves",
+       "timeOnIce",
+       "ytdGoals",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3759",
+         "displayName": "Semyon Varlamov",
+         "shortName": "S. Varlamov",
+         "jersey": "40",
+         "position": {
+          "abbreviation": "G"
+         }
+        },
+        "stats": [
+         "3",
+         "23",
+         "0",
+         "0",
+         "20",
+         ".870",
+         "14",
+         "4",
+         "2",
+         "63:10",
+         "0",
+         "0"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "team": {
+     "id": "27",
+     "abbreviation": "NSH"
+    },
+    "statistics": [
+     {
+      "name": "forwards",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4697413",
+         "displayName": "Mavrik Bourque",
+         "shortName": "M. Bourque",
+         "jersey": "22",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "2",
+         "0",
+         "0",
+         "17:12",
+         "1:15",
+         "0:10",
+         "15:47",
+         "21",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0",
+         "1",
+         "6",
+         "14.3",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4392471",
+         "displayName": "Ross Colton",
+         "shortName": "R. Colton",
+         "jersey": "79",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "0",
+         "13:24",
+         "0:33",
+         "0:00",
+         "12:51",
+         "18",
+         "0",
+         "1",
+         "0",
+         "1",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4378671",
+         "displayName": "Jack Drury",
+         "shortName": "J. Drury",
+         "jersey": "18",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "-2",
+         "20:05",
+         "0:00",
+         "4:29",
+         "15:36",
+         "24",
+         "0",
+         "2",
+         "0",
+         "2",
+         "0",
+         "0",
+         "8",
+         "9",
+         "47.1",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4894222",
+         "displayName": "Adam Edstrom",
+         "shortName": "A. Edstrom",
+         "jersey": "84",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "6",
+         "0",
+         "-2",
+         "16:32",
+         "0:00",
+         "2:07",
+         "14:25",
+         "24",
+         "0",
+         "4",
+         "0",
+         "2",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "2",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2968772",
+         "displayName": "Filip Forsberg",
+         "shortName": "F. Forsberg",
+         "jersey": "9",
+         "position": {
+          "abbreviation": "LW"
+         }
+        },
+        "stats": [
+         "1",
+         "3",
+         "3",
+         "0",
+         "22:47",
+         "5:07",
+         "0:00",
+         "17:40",
+         "25",
+         "1",
+         "3",
+         "1",
+         "4",
+         "1",
+         "0",
+         "0",
+         "1",
+         "0.0",
+         "4",
+         "1",
+         "2"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4565263",
+         "displayName": "Nils Hoglander",
+         "shortName": "N. Hoglander",
+         "jersey": "21",
+         "position": {
+          "abbreviation": "LW"
+         }
+        },
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "1",
+         "6:14",
+         "0:03",
+         "0:00",
+         "6:11",
+         "11",
+         "0",
+         "3",
+         "1",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "3069394",
+         "displayName": "Alexander Kerfoot",
+         "shortName": "A. Kerfoot",
+         "jersey": "14",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "4",
+         "0",
+         "1",
+         "1",
+         "16:30",
+         "1:37",
+         "3:56",
+         "10:57",
+         "24",
+         "1",
+         "2",
+         "0",
+         "3",
+         "0",
+         "0",
+         "1",
+         "5",
+         "16.7",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2967072",
+         "displayName": "Jonathan Marchessault",
+         "shortName": "J. Marchessault",
+         "jersey": "81",
+         "position": {
+          "abbreviation": "RW"
+         }
+        },
+        "stats": [
+         "0",
+         "0",
+         "0",
+         "0",
+         "17:27",
+         "4:53",
+         "0:00",
+         "12:34",
+         "18",
+         "0",
+         "2",
+         "1",
+         "1",
+         "1",
+         "0",
+         "0",
+         "2",
+         "0.0",
+         "2",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5208",
+         "displayName": "Ryan O'Reilly",
+         "shortName": "R. O'Reilly",
+         "jersey": "90",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "3",
+         "0",
+         "1",
+         "0",
+         "24:10",
+         "4:43",
+         "3:01",
+         "16:26",
+         "24",
+         "1",
+         "7",
+         "0",
+         "1",
+         "4",
+         "0",
+         "8",
+         "5",
+         "61.5",
+         "1",
+         "1",
+         "2"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5037",
+         "displayName": "Steven Stamkos",
+         "shortName": "S. Stamkos",
+         "jersey": "91",
+         "position": {
+          "abbreviation": "C"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "0",
+         "20:42",
+         "5:26",
+         "0:00",
+         "15:16",
+         "20",
+         "0",
+         "7",
+         "1",
+         "1",
+         "1",
+         "0",
+         "5",
+         "4",
+         "55.6",
+         "2",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5149189",
+         "displayName": "Matthew Wood",
+         "shortName": "M. Wood",
+         "jersey": "71",
+         "position": {
+          "abbreviation": "RW"
+         }
+        },
+        "stats": [
+         "1",
+         "0",
+         "0",
+         "0",
+         "10:39",
+         "1:11",
+         "0:24",
+         "9:04",
+         "17",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0.0",
+         "0",
+         "1",
+         "2"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "defenses",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "4233870",
+         "displayName": "Nicolas Hague",
+         "shortName": "N. Hague",
+         "jersey": "41",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "-2",
+         "12:13",
+         "0:00",
+         "0:00",
+         "12:13",
+         "15",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4697711",
+         "displayName": "Daemon Hunt",
+         "shortName": "D. Hunt",
+         "jersey": "52",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "2",
+         "0",
+         "0",
+         "1",
+         "14:45",
+         "0:03",
+         "0:00",
+         "14:42",
+         "17",
+         "0",
+         "0",
+         "1",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "5436",
+         "displayName": "Roman Josi",
+         "shortName": "R. Josi",
+         "jersey": "59",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "1",
+         "1",
+         "0",
+         "1",
+         "26:07",
+         "4:49",
+         "2:33",
+         "18:45",
+         "26",
+         "0",
+         "1",
+         "0",
+         "2",
+         "3",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "1",
+         "2"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4419638",
+         "displayName": "Nick Perbix",
+         "shortName": "N. Perbix",
+         "jersey": "48",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "0",
+         "1",
+         "0",
+         "0",
+         "18:44",
+         "0:18",
+         "5:36",
+         "12:50",
+         "23",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "2976856",
+         "displayName": "Brady Skjei",
+         "shortName": "B. Skjei",
+         "jersey": "76",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "0",
+         "2",
+         "0",
+         "0",
+         "19:47",
+         "1:21",
+         "5:30",
+         "12:56",
+         "24",
+         "0",
+         "0",
+         "0",
+         "1",
+         "2",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4565269",
+         "displayName": "Jayden Struble",
+         "shortName": "J. Struble",
+         "jersey": "3",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "1",
+         "2",
+         "0",
+         "-3",
+         "7:45",
+         "0:00",
+         "0:00",
+         "7:45",
+         "11",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "0",
+         "0",
+         "0"
+        ]
+       },
+       {
+        "athlete": {
+         "id": "4697765",
+         "displayName": "Adam Wilsby",
+         "shortName": "A. Wilsby",
+         "jersey": "2",
+         "position": {
+          "abbreviation": "D"
+         }
+        },
+        "stats": [
+         "2",
+         "0",
+         "0",
+         "1",
+         "22:40",
+         "0:21",
+         "2:38",
+         "19:41",
+         "23",
+         "0",
+         "0",
+         "0",
+         "1",
+         "0",
+         "0",
+         "0",
+         "0",
+         "0.0",
+         "1",
+         "0",
+         "0"
+        ]
+       }
+      ]
+     },
+     {
+      "name": "skaters",
+      "keys": [
+       "blockedShots",
+       "hits",
+       "takeaways",
+       "plusMinus",
+       "timeOnIce",
+       "powerPlayTimeOnIce",
+       "shortHandedTimeOnIce",
+       "evenStrengthTimeOnIce",
+       "shifts",
+       "goals",
+       "ytdGoals",
+       "assists",
+       "shotsTotal",
+       "shotsMissed",
+       "shootoutGoals",
+       "faceoffsWon",
+       "faceoffsLost",
+       "faceoffPercent",
+       "giveaways",
+       "penalties",
+       "penaltyMinutes"
+      ],
+      "athletes": []
+     },
+     {
+      "name": "goalies",
+      "keys": [
+       "goalsAgainst",
+       "shotsAgainst",
+       "shootoutSaves",
+       "shootoutShotsAgainst",
+       "saves",
+       "savePct",
+       "evenStrengthSaves",
+       "powerPlaySaves",
+       "shortHandedSaves",
+       "timeOnIce",
+       "ytdGoals",
+       "penaltyMinutes"
+      ],
+      "athletes": [
+       {
+        "athlete": {
+         "id": "3042109",
+         "displayName": "Juuse Saros",
+         "shortName": "J. Saros",
+         "jersey": "74",
+         "position": {
+          "abbreviation": "G"
+         }
+        },
+        "stats": [
+         "3",
+         "27",
+         "0",
+         "0",
+         "24",
+         ".889",
+         "21",
+         "3",
+         "0",
+         "65:00",
+         "0",
+         "0"
+        ]
+       }
+      ]
+     }
+    ]
+   }
   ]
  },
  "format": {

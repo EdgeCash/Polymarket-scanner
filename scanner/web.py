@@ -609,6 +609,11 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['stale']} to re-read"
     if gl.get("days_pending"):
         text += f", {gl['days_pending']} days still to read"
+    if gl.get("player_games") is not None:
+        with_players = sum(gl["player_games"].values())
+        games_total = sum((gl.get("games") or {}).values())
+        if with_players < games_total:
+            text += f", {with_players} with player lines"
     if gl.get("projected"):
         text += f", {gl['projected']} sheets projected"
     if gl.get("staked"):
