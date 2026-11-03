@@ -115,7 +115,13 @@ def test_pages_never_leak_the_token_or_secrets():
     client, _ = make_client()
     page = client.get("/health?token=phone-secret").text
     assert "phone-secret" not in page
-    assert client.get("/").json()["pages"] == ["/health", "/scorecard", "/matchups", "/card"]
+    assert client.get("/").json()["pages"] == [
+        "/health",
+        "/scorecard",
+        "/matchups",
+        "/card",
+        "/props",
+    ]
 
 
 def test_scorecard_near_miss_table_names_the_alert_type():
@@ -750,3 +756,105 @@ def test_scorecard_shows_the_player_lines():
     assert "<th>Inside the 80% band</th><td class='num'>100.0%</td>" in page
     assert "<tr><th colspan='2'>NBA (1)</th></tr>" in page and "<th>Points</th>" in page
     assert "Jayson Tatum (BOS v BKN)" in page and "<td class='num'>40</td>" in page
+
+
+def props_client():
+    """A log with an upcoming NBA game whose player lines are written, and a client."""
+    from datetime import timedelta
+
+    from scanner.gamelog import GameLog
+    from tests.conftest import load_fixture
+    from tests.test_gamelog import NBA_NOW, FakeDailyFeed, scheduled_copy
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", GAMELOG_SPORTS="nba")
+    diary = Diary(":memory:")
+    feed = FakeDailyFeed()
+    yesterday = load_fixture("espn_nba_day.json")
+    feed.days[("nba", "20261027")] = yesterday
+    tonight = scheduled_copy(yesterday["events"][0], "up-1", NBA_NOW + timedelta(hours=7))
+    feed.days[("nba", "20261028")] = {**yesterday, "events": [tonight]}
+    log = GameLog(settings, diary, feed=feed, now=lambda: NBA_NOW)
+    assert log.refresh("nba", NBA_NOW, budget=40).player_lines > 0
+    return TestClient(create_app(settings, diary, RuntimeStatus())), diary, log
+
+
+def test_player_lines_are_public_on_the_props_pages_and_the_sheet():
+    from datetime import timedelta
+
+    from scanner.gamelog import parse_game_summary
+    from tests.conftest import load_fixture
+    from tests.test_gamelog import NBA_NOW
+    from tests.test_share import png_size
+
+    empty, _ = make_client()
+    page = empty.get("/props").text
+    assert "<h1>Player lines</h1>" in page and "No games with player lines" in page
+    assert empty.get("/props/nba/up-1").status_code == 404
+
+    client, diary, log = props_client()
+    lines = diary.player_projections("nba", "up-1")
+    top = max((r for r in lines if r["stat"] == "points"), key=lambda r: r["mean"])
+    assert top["name"] == "Jayson Tatum"
+    index = client.get("/props").text  # no token
+    assert "<h2>NBA</h2>" in index and "href='/props/nba/up-1'" in index
+    assert f"{len(lines)} lines" in index and "Lines graded" not in index
+    data = client.get("/props", headers={"accept": "application/json"}).json()
+    assert data["games"]["nba"]["up-1"] == len(lines)
+
+    game = client.get("/props/nba/up-1").text
+    assert "<h1>BKN at BOS" in game and "<th class='label'>BOS</th>" in game
+    assert "<th>Points</th>" in game and "<th>Threes</th>" in game
+    assert f"href='/props/nba/up-1/{top['player_id']}'>Jayson Tatum</a>" in game
+    assert f"{top['median']} ({top['p10']}–{top['p90']})" in game
+    assert len(client.get("/props/nba/up-1", headers={"accept": "application/json"}).json()) == len(
+        lines
+    )
+
+    player = client.get(f"/props/nba/up-1/{top['player_id']}").text
+    assert "<h1>Jayson Tatum <span class='note'>F</span>" in player
+    assert f"<h2>Points: {top['median']}" in player and "100,000 simulated games" in player
+    assert (
+        player.index("<h2>Points:") < player.index("<h2>Rebounds:") < player.index("<h2>Assists:")
+    )
+    assert "<svg" in player and f"median {top['median']}" in player
+    assert "<th>Line</th><th>Over</th><th>Under</th>" in player
+    assert "<h2>Recent games</h2>" in player and "<th>Min</th>" in player
+    assert "Rate 0." in player and "games used" in player
+    assert client.get("/props/nba/up-1/nobody").status_code == 404
+    assert client.get("/props/nba/up-1/nobody.png").status_code == 404
+    picture = client.get(f"/props/nba/up-1/{top['player_id']}.png")
+    assert picture.status_code == 200 and png_size(picture.content) == (2400, 1350)
+
+    sheet = client.get("/matchup/nba/up-1?token=phone-secret").text
+    assert "<h2>Player lines</h2>" in sheet and "Jayson Tatum</a>" in sheet
+    assert "href='/props/nba/up-1'>The public page</a>" in sheet
+
+    # Graded: the actuals show on the game page, the player page and the record.
+    from dataclasses import replace
+
+    played = replace(
+        parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba"), game_id="up-1"
+    )
+    diary.store_football_game(played, NBA_NOW + timedelta(hours=12))
+    log.refresh("nba", NBA_NOW + timedelta(hours=14), budget=40)
+    game = client.get("/props/nba/up-1").text
+    assert "<br><b>40</b>" in game  # Tatum's 40 beside his line
+    player = client.get(f"/props/nba/up-1/{top['player_id']}").text
+    assert "<b>Actual 40</b>" in player and "actual 40" in player and "percentile" in player
+    index = client.get("/props").text
+    assert "Lines graded" in index and "Inside the 80% band" in index
+    off = make_client(PLAYERS_ENABLED=False)[0].get("/matchup/nba/up-1?token=phone-secret")
+    assert off.status_code == 404  # no game in that diary; the block itself is off
+
+
+def test_a_sheet_without_lines_says_so():
+    from tests.test_card import seeded_diary
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", GAMELOG_SPORTS="nfl,cfb")
+    diary, _, first, _ = seeded_diary()
+    page = (
+        TestClient(create_app(settings, diary, RuntimeStatus()))
+        .get(f"/matchup/nfl/{first.game_id}?token=phone-secret")
+        .text
+    )
+    assert "<h2>Player lines</h2><p class='note'>none yet" in page

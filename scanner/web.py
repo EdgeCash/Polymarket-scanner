@@ -28,6 +28,7 @@ from scanner.card import (
 from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
+from scanner.players import SPORT_STATS, chance_over, simulate_player
 from scanner.projection import book_margin, tuning_for
 from scanner.simulate import chances, ladder, seed_for, simulate, svg_heatmap, svg_histogram
 from scanner.stakes import gate
@@ -1014,6 +1015,98 @@ def _stake_block(sheet: dict, settings: Settings) -> str:
     )
 
 
+LADDER_STEP = {
+    "points": 2,
+    "rebounds": 1,
+    "assists": 1,
+    "three_made": 1,
+    "shots": 1,
+    "goals": 1,
+    "saves": 3,
+    "pass_yards": 25,
+    "rush_yards": 10,
+    "rec_yards": 10,
+    "receptions": 1,
+    "pass_td": 1,
+}
+
+
+def _line_text(row: dict) -> str:
+    return f"{row['median']} ({row['p10']}–{row['p90']})"
+
+
+def _lines_table(sport: str, lines: list[dict], game_href: str, side_abbr: str) -> str:
+    """One side's leaders, a row a player, a column a stat, each cell the median and band."""
+    stats = list(SPORT_STATS.get(sport, {}))
+    rows_by_player: dict[str, dict] = {}
+    for row in lines:
+        entry = rows_by_player.setdefault(
+            row["player_id"], {"name": row["name"], "position": row["position"], "cells": {}}
+        )
+        entry["cells"][row["stat"]] = row
+    ordered = sorted(
+        rows_by_player.items(),
+        key=lambda kv: -max((r["mean"] for r in kv[1]["cells"].values()), default=0.0),
+    )
+    body = ""
+    for player_id, entry in ordered:
+        href = f"{game_href}/{html.escape(player_id)}"
+        pos = (
+            f" <span class='note'>{html.escape(entry['position'])}</span>"
+            if entry["position"]
+            else ""
+        )
+        cells = ""
+        for stat in stats:
+            row = entry["cells"].get(stat)
+            if row is None:
+                cells += "<td>–</td>"
+            else:
+                graded = row.get("outcome") == "graded"
+                text = html.escape(_line_text(row))
+                if graded:
+                    text += f"<br><b>{row['actual']}</b>"
+                elif row.get("outcome") == "did_not_play":
+                    text += "<br><span class='note'>DNP</span>"
+                cells += f"<td>{text}</td>"
+        body += (
+            f"<tr><td class='label'><a href='{href}'>{html.escape(entry['name'])}</a>{pos}</td>"
+            f"{cells}</tr>"
+        )
+    if not body:
+        return ""
+    head = (
+        "<tr><th class='label'>"
+        + html.escape(side_abbr)
+        + "</th>"
+        + "".join(f"<th>{html.escape(STAT_LABELS.get(s, s))}</th>" for s in stats)
+        + "</tr>"
+    )
+    return f"<div class='wrap'><table class='sheet'>{head}{body}</table></div>"
+
+
+def _players_block(sheet: dict, settings: Settings) -> str:
+    """The game's player lines on the sheet: each side's leaders, median and 80% band."""
+    if not settings.PLAYERS_ENABLED or not settings.PROJECTION_ENABLED:
+        return ""
+    lines = sheet.get("players") or []
+    if not lines:
+        return (
+            "<h2>Player lines</h2><p class='note'>none yet: lines need both sides' players in "
+            "the log with two games each, and are written within the hour.</p>"
+        )
+    href = f"/props/{html.escape(sheet['sport'])}/{html.escape(sheet['game_id'])}"
+    home, away = sheet["home"]["abbreviation"], sheet["away"]["abbreviation"]
+    tables = _lines_table(sheet["sport"], [r for r in lines if not r["home"]], href, away)
+    tables += _lines_table(sheet["sport"], [r for r in lines if r["home"]], href, home)
+    return (
+        f"<h2>Player lines</h2>{tables}<p class='note'>Median and 80% band of each line, from "
+        "the player's rate, his projected minutes and the game projection, graded at the final "
+        f"on the scorecard. <a href='{href}'>The public page</a> has every distribution. "
+        "Nothing here is a recommendation.</p>"
+    )
+
+
 def _metric_cells(team: dict, metric, league_size: int, reverse: bool, half_keys) -> str:
     key = metric.key
     season = _fmt(team["season"].get(key), metric.decimals, metric.percent)
@@ -1105,6 +1198,7 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 {_strip(sheet, settings)}
 {_projection_block(sheet, settings)}
 {_stake_block(sheet, settings)}
+{_players_block(sheet, settings)}
 {sections}
 <p class="note">{footnote}</p>
 </body></html>"""
@@ -1635,6 +1729,247 @@ def render_sim(sport: str, upcoming: dict, projection: dict, settings: Settings)
 </body></html>"""
 
 
+# -- player lines, public ------------------------------------------------------------------
+
+
+def _props_head(title: str) -> str:
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{html.escape(title)}</title>{STYLE}</head>
+<body class="wide">"""
+
+
+def _props_record(ps: dict) -> str:
+    if not ps or not ps.get("graded"):
+        return ""
+    return (
+        "<div class='strip'>"
+        f"<div><span>Lines graded</span><b>{ps['graded']}</b></div>"
+        f"<div><span>Above the median</span><b>{_pct(ps['over_median'])}</b></div>"
+        f"<div><span>Inside the 80% band</span><b>{_pct(ps['in_band'])}</b></div>"
+        f"<div><span>Avg miss</span><b>{ps['mae']:.1f}</b></div>"
+        "</div>"
+    )
+
+
+def render_props_index(
+    by_sport: dict[str, list[dict]],
+    counts: dict[str, dict[str, int]],
+    summary: dict,
+    settings: Settings,
+) -> str:
+    """Every upcoming game with player lines, by sport, and the record so far."""
+    zone = ZoneInfo(settings.CARD_TZ)
+    blocks = []
+    for sport in settings.gamelog_sports:
+        items = []
+        for row in by_sport.get(sport) or []:
+            n = (counts.get(sport) or {}).get(row["game_id"])
+            if not n:
+                continue
+            slate = row["slate"]
+            kickoff = datetime.fromisoformat(row["date"]).astimezone(zone)
+            joiner = "vs" if slate.get("neutral") else "at"
+            name = f"{slate['away']['abbreviation']} {joiner} {slate['home']['abbreviation']}"
+            href = f"/props/{html.escape(sport)}/{html.escape(row['game_id'])}"
+            items.append(
+                f"<tr><td class='when'>{html.escape(kickoff.strftime('%a %-I:%M %p'))}</td>"
+                f"<td class='who'><a href='{href}'>{html.escape(name)}</a></td>"
+                f"<td class='num'>{n} lines</td></tr>"
+            )
+        if items:
+            blocks.append(f"<h2>{html.escape(sport.upper())}</h2><table>{''.join(items)}</table>")
+    body = "".join(blocks) or "<p class='note'>No games with player lines in the next two days.</p>"
+    note = (
+        "<p class='note'>A line is the median of the player's projected stat, with the band "
+        "the model gives an 80% chance; every line is graded at the final and the record above "
+        "says whether the bands hold. The model knows the box scores and nothing else: no "
+        "injury news, no rotation changes. Research, not advice; nothing is placed.</p>"
+    )
+    label = html.escape(_zone_label(settings.CARD_TZ))
+    return f"""{_props_head("Player lines")}
+<p class="note"><a href="/card">Daily card</a></p>
+<h1>Player lines</h1>
+{_props_record(summary)}
+<p class="note">Times are {label}.</p>
+{body}
+{note}
+</body></html>"""
+
+
+def render_props_game(sport: str, upcoming: dict, lines: list[dict], settings: Settings) -> str:
+    """One game's lines, both sides, each player linked to his distributions."""
+    slate = upcoming["slate"]
+    home, away = slate["home"]["abbreviation"], slate["away"]["abbreviation"]
+    joiner = "vs" if slate.get("neutral") else "at"
+    kickoff = datetime.fromisoformat(slate["date"]) if slate.get("date") else None
+    href = f"/props/{html.escape(sport)}/{html.escape(upcoming['game_id'])}"
+    tables = _lines_table(sport, [r for r in lines if not r["home"]], href, away)
+    tables += _lines_table(sport, [r for r in lines if r["home"]], href, home)
+    when = datetime.fromisoformat(lines[0]["updated_at"]) if lines else None
+    written = f" Lines written {html.escape(_kickoff(when, settings.CARD_TZ))}." if when else ""
+    subtitle = html.escape(f"{sport.upper()}, {_kickoff(kickoff, settings.CARD_TZ)}")
+    note = (
+        "Median and 80% band of each projected line; a bold figure is the actual once the game "
+        "is in. Open a player for the whole distribution and the chance at any line."
+        f"{written} Research, not advice; nothing is placed."
+    )
+    return f"""{_props_head(f"{away} {joiner} {home} player lines")}
+<p class="note"><a href="/props">All games</a> · <a href="/card">Daily card</a></p>
+<h1>{html.escape(f"{away} {joiner} {home}")} <span class="note">{subtitle}</span></h1>
+{tables or "<p class='note'>no lines for this game</p>"}
+<p class="note">{note}</p>
+</body></html>"""
+
+
+def _stat_order(sport: str, stat: str) -> int:
+    """Each sport's own order of stats (points first), for the pages and the image."""
+    stats = list(SPORT_STATS.get(sport, {}))
+    return stats.index(stat) if stat in stats else len(stats)
+
+
+def _player_ladder(row: dict) -> str:
+    pmf = {int(x): p for x, p in row["pmf"].items()}
+    step = LADDER_STEP.get(row["stat"], 1)
+    centre = row["median"] + 0.5
+    rungs = ""
+    for k in range(-3, 4):
+        line = centre + k * step
+        if line < 0.5:
+            continue
+        split = chance_over(pmf, line)
+        rungs += (
+            f"<tr><td>{line:g}</td><td class='num'>{split['above'] * 100:.1f}%</td>"
+            f"<td class='num'>{split['below'] * 100:.1f}%</td></tr>"
+        )
+    return f"<table><tr><th>Line</th><th>Over</th><th>Under</th></tr>{rungs}</table>"
+
+
+def _player_stat_section(row: dict, sport: str) -> str:
+    label = STAT_LABELS.get(row["stat"], row["stat"])
+    stamp = f"{row['game_id']}:{row['player_id']}:{row['stat']}"
+    seed = seed_for(sport, stamp, str(row.get("updated_at") or ""))
+    sim = simulate_player(row["params"], seed=seed)
+    mark = None
+    if row.get("outcome") == "graded":
+        mark = (float(row["actual"]), f"actual {row['actual']}")
+    picture = svg_histogram(
+        sim["hist"],
+        line=None,
+        mean=float(row["median"]),
+        side_above=None,
+        line_label="",
+        mean_label=f"median {row['median']}",
+        axis_label=label,
+        band=(row["p10"], row["p90"]),
+        mark=mark,
+    )
+    p = row["params"]
+    if p.get("exposure_sd", 0) > 0:
+        unit = "seconds" if sport == "nhl" else "minutes"
+        exposure = f"{p['exposure_mu']:.0f} {unit} (±{p['exposure_sd']:.0f})"
+        per = "minute on the ice" if sport == "nhl" else "minute"
+        rate = f"{p['rate'] * (60 if sport == 'nhl' else 1):.3f} a {per}"
+    else:
+        exposure = "per game"
+        rate = f"{p['rate']:.2f} a game"
+    inputs = (
+        f"Rate {rate} (league {p['league_rate'] * (60 if sport == 'nhl' else 1):.3f}), playing "
+        f"time {exposure}, game factor {p['factor']:.2f}, {p['games']} games used, "
+        f"dispersion {p['k']:g}."
+    )
+    result = ""
+    if row.get("outcome") == "graded":
+        where = "inside" if row["in_band"] else "outside"
+        result = (
+            f" <b>Actual {row['actual']}</b>, {where} the band, at the "
+            f"{row['pit'] * 100:.0f}th percentile of the distribution."
+        )
+    elif row.get("outcome") == "did_not_play":
+        result = " <b>Did not play.</b>"
+    band = f"({row['p10']}–{row['p90']}, mean {row['mean']:.1f})"
+    return f"""<h2>{html.escape(label)}: {row["median"]} <span class="note">{band}</span></h2>
+<p class="note">{sim["draws"]:,} simulated games; the shaded bars are the 80% band.{result}</p>
+{picture}
+{_player_ladder(row)}
+<p class="note">{html.escape(inputs)}</p>"""
+
+
+def render_props_player(
+    sport: str, upcoming: dict, lines: list[dict], recent: list[dict], settings: Settings
+) -> str:
+    """One player's lines for a game: each stat's distribution and ladder, his recent games."""
+    slate = upcoming["slate"]
+    lines = sorted(lines, key=lambda r: _stat_order(sport, r["stat"]))
+    first = lines[0]
+    home, away = slate["home"]["abbreviation"], slate["away"]["abbreviation"]
+    kickoff = datetime.fromisoformat(slate["date"]) if slate.get("date") else None
+    game_href = f"/props/{html.escape(sport)}/{html.escape(upcoming['game_id'])}"
+    sections = "".join(_player_stat_section(row, sport) for row in lines)
+    stats = [s for s in SPORT_STATS.get(sport, {}) if any(r["stat"] == s for r in lines)]
+    exposure = "minutes" if sport in ("nba", "cbb") else ("toi" if sport == "nhl" else None)
+    recent_rows = ""
+    for g in recent:
+        when = datetime.fromisoformat(g["date"]).astimezone(ZoneInfo(settings.CARD_TZ))
+        opp = f"{'vs' if g['home'] else '@'} {g['opponent_abbr']}"
+        cells = ""
+        if exposure:
+            value = g["stats"].get(exposure)
+            if exposure == "toi" and value is not None:
+                value = f"{value // 60}:{value % 60:02d}"
+            cells += f"<td>{html.escape(str(value if value is not None else '–'))}</td>"
+        for stat in stats:
+            value = g["stats"].get(stat)
+            cells += f"<td>{html.escape(str(value if value is not None else '–'))}</td>"
+        played = "" if g["played"] else " <span class='note'>DNP</span>"
+        recent_rows += (
+            f"<tr><td class='label'>{html.escape(when.strftime('%b %-d'))} {html.escape(opp)}"
+            f"{played}</td>{cells}</tr>"
+        )
+    head = (
+        "<tr><th class='label'>Game</th>"
+        + ("<th>Min</th>" if exposure else "")
+        + "".join(f"<th>{html.escape(STAT_LABELS.get(s, s))}</th>" for s in stats)
+        + "</tr>"
+    )
+    recent_table = (
+        "<h2>Recent games</h2><div class='wrap'><table class='sheet'>"
+        f"{head}{recent_rows}</table></div>"
+        if recent_rows
+        else ""
+    )
+    pos = (
+        f" <span class='note'>{html.escape(first['position'])}</span>"
+        if first.get("position")
+        else ""
+    )
+    title = f"{first['name']}, {first['team_abbr']} v {first['opponent_abbr']}"
+    share = f"{game_href}/{html.escape(first['player_id'])}.png"
+    nav = (
+        f"<a href='{game_href}'>{html.escape(f'{away} at {home}')}</a> · "
+        f"<a href='/props'>All games</a> · <a href='{share}'>Share image</a>"
+    )
+    subtitle = html.escape(
+        f"{first['team_abbr']} v {first['opponent_abbr']}, {sport.upper()}, "
+        f"{_kickoff(kickoff, settings.CARD_TZ)}"
+    )
+    method = (
+        "Each line is the player's rate (shrunk toward his position's league rate while his "
+        "games are few) times his projected playing time, scaled by the game projection, "
+        "spread as a negative binomial over the uncertainty in his minutes. Only players who "
+        "played their team's last game are projected; nothing here knows about injuries. "
+        "Graded at the final on the scorecard. Research, not advice; nothing is placed."
+    )
+    return f"""{_props_head(title)}
+<p class="note">{nav}</p>
+<h1>{html.escape(first["name"])}{pos} <span class="note">{subtitle}</span></h1>
+{sections}
+{recent_table}
+<p class="note">{method}</p>
+</body></html>"""
+
+
 def _jsonable(value):
     """Dataclasses and datetimes in a sheet, made plain for JSON."""
     from dataclasses import asdict, is_dataclass
@@ -1826,6 +2161,46 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
             return JSONResponse(pick)
         return HTMLResponse(render_card_pick(pick, settings))
 
+    @app.get("/props", response_class=HTMLResponse)
+    def props_index(request: Request):
+        by_sport = {sport: diary.football_upcoming(sport) for sport in settings.gamelog_sports}
+        counts = {sport: diary.player_projection_counts(sport) for sport in settings.gamelog_sports}
+        summary = diary.player_projection_summary()
+        if "application/json" in request.headers.get("accept", ""):
+            return JSONResponse({"games": counts, "record": summary})
+        return HTMLResponse(render_props_index(by_sport, counts, summary, settings))
+
+    @app.get("/props/{sport}/{game_id}/{player_id}.png")
+    def props_player_png(sport: str, game_id: str, player_id: str):
+        from scanner.share import player_svg
+
+        lines = [r for r in diary.player_projections(sport, game_id) if r["player_id"] == player_id]
+        upcoming = diary.football_upcoming_game(sport, game_id) if lines else None
+        if not lines or upcoming is None:
+            return JSONResponse({"error": "no lines for this player"}, status_code=404)
+        return png(player_svg(sport, upcoming, lines, settings))
+
+    @app.get("/props/{sport}/{game_id}", response_class=HTMLResponse)
+    def props_game(sport: str, game_id: str, request: Request):
+        upcoming = diary.football_upcoming_game(sport, game_id) if sport in LOGS else None
+        if upcoming is None:
+            return JSONResponse({"error": "no such game"}, status_code=404)
+        lines = diary.player_projections(sport, game_id)
+        if "application/json" in request.headers.get("accept", ""):
+            return JSONResponse(_jsonable(lines))
+        return HTMLResponse(render_props_game(sport, upcoming, lines, settings))
+
+    @app.get("/props/{sport}/{game_id}/{player_id}", response_class=HTMLResponse)
+    def props_player(sport: str, game_id: str, player_id: str, request: Request):
+        lines = [r for r in diary.player_projections(sport, game_id) if r["player_id"] == player_id]
+        upcoming = diary.football_upcoming_game(sport, game_id) if lines else None
+        if not lines or upcoming is None:
+            return JSONResponse({"error": "no lines for this player"}, status_code=404)
+        if "application/json" in request.headers.get("accept", ""):
+            return JSONResponse(_jsonable(lines))
+        recent = diary.player_recent_games(sport, player_id)
+        return HTMLResponse(render_props_player(sport, upcoming, lines, recent, settings))
+
     @app.get("/logout", response_class=HTMLResponse)
     def logout():
         page = HTMLResponse(
@@ -1843,7 +2218,7 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         return JSONResponse(
             {
                 "service": "polymarket-scanner",
-                "pages": ["/health", "/scorecard", "/matchups", "/card"],
+                "pages": ["/health", "/scorecard", "/matchups", "/card", "/props"],
             }
         )
 

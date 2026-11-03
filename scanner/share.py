@@ -225,6 +225,78 @@ def pick_svg(pick: dict, settings: Settings) -> str:
     return "".join(parts)
 
 
+def player_svg(sport: str, upcoming: dict, lines: list[dict], settings: Settings) -> str:
+    """One player's lines for a game: every stat's median and band, the first stat's histogram."""
+    from scanner.players import simulate_player
+    from scanner.simulate import seed_for
+    from scanner.web import STAT_LABELS, _stat_order
+
+    lines = sorted(lines, key=lambda r: _stat_order(sport, r["stat"]))
+    first = lines[0]
+    parts = [_head()]
+    y = MARGIN + 36
+    chip, width = _chip(MARGIN, y, sport.upper(), ACCENT, 16)
+    parts.append(chip)
+    if first.get("position"):
+        chip, _ = _chip(MARGIN + width + 8, y, first["position"], "#334155", 16)
+        parts.append(chip)
+    parts.append(_text(WIDTH - MARGIN, y, "Player lines", 18, fill=DIM, text_anchor="end"))
+    y += 52
+    parts.append(_text(MARGIN, y, first["name"], 36, fill=INK, font_weight="700"))
+    y += 30
+    when = _when(first["kickoff"], settings.CARD_TZ)
+    where = f"{first['team_abbr']} v {first['opponent_abbr']} · {when}"
+    parts.append(_text(MARGIN, y, where, 20, fill=DIM))
+    y += 54
+    for row in lines[:5]:
+        label = STAT_LABELS.get(row["stat"], row["stat"])
+        parts.append(_text(MARGIN, y, label, 20, fill=DIM))
+        parts.append(_text(MARGIN + 230, y, str(row["median"]), 30, fill=INK, font_weight="800"))
+        parts.append(_text(MARGIN + 300, y, f"{row['p10']}–{row['p90']}", 20, fill=DIM))
+        result = _result_line(row)
+        if result:
+            parts.append(_text(MARGIN + 400, y, result, 18, fill=INK))
+        y += 46
+    stamp = f"{first['game_id']}:{first['player_id']}:{first['stat']}"
+    sim = simulate_player(
+        first["params"], seed=seed_for(sport, stamp, str(first.get("updated_at") or ""))
+    )
+    mark = (
+        (float(first["actual"]), f"actual {first['actual']}")
+        if first.get("outcome") == "graded"
+        else None
+    )
+    hist = svg_histogram(
+        sim["hist"],
+        line=None,
+        mean=float(first["median"]),
+        side_above=None,
+        line_label="",
+        mean_label=f"median {first['median']}",
+        axis_label=STAT_LABELS.get(first["stat"], first["stat"]),
+        muted="#334155",
+        text=INK,
+        band=(first["p10"], first["p90"]),
+        mark=mark,
+    )
+    if hist:
+        inner = hist.replace("<svg ", "<svg x='560' y='150' width='584' height='210' ", 1)
+        parts.append(inner.replace("width='100%' ", ""))
+    parts.append(_text(MARGIN, HEIGHT - 28,
+                       "Median and 80% band from the box scores alone. Graded at the final. "
+                       "Research, not advice; nothing placed.", 16, fill=DIM))  # fmt: skip
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def _result_line(row: dict) -> str | None:
+    if row.get("outcome") == "graded":
+        return f"actual {row['actual']}"
+    if row.get("outcome") == "did_not_play":
+        return "did not play"
+    return None
+
+
 def to_png(svg: str, scale: float = 2.0) -> bytes:
     """Rasterise one of the images above; ``scale`` 2 gives 2400 by 1350 for a sharp post."""
     import cairosvg
