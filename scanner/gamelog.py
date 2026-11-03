@@ -1296,6 +1296,7 @@ class GameLog:
         self.diary = diary
         self.feed = feed or ScoreboardFeed()
         self._now = now
+        self.last_card: dict | None = None  # the last daily card this process locked
 
     # -- refresh --------------------------------------------------------------------
 
@@ -1539,7 +1540,20 @@ class GameLog:
 
     def refresh_all(self, now: datetime | None = None) -> list[RefreshSummary]:
         now = now or self._now()
-        return [self.refresh(sport, now) for sport in self.settings.gamelog_sports]
+        summaries = [self.refresh(sport, now) for sport in self.settings.gamelog_sports]
+        if summaries and self.settings.PROJECTION_ENABLED and self.settings.CARD_ENABLED:
+            from scanner.card import build_if_due
+
+            try:
+                built = build_if_due(self.diary, self.settings, now)
+                if built is not None:
+                    self.last_card = built
+                    log.info("daily card %s locked: %d picks", built["card_date"], built["picks"])
+                self.diary.grade_card_picks(now)
+            except Exception as exc:  # the log's own refresh must not be lost to the card
+                log.exception("daily card failed")
+                summaries[-1].errors.append(f"card: {type(exc).__name__}: {exc}")
+        return summaries
 
     # -- reading ----------------------------------------------------------------------
 

@@ -1018,3 +1018,41 @@ def test_a_daily_sport_reads_three_days_and_backfills_the_seasons_calendar():
     summary = log.refresh("nba", NBA_NOW, budget=40)
     assert summary.errors == [f"nba 2026-10-{d}: nope" for d in (27, 28, 29)]
     assert summary.season is None and summary.games_stored == 0
+
+
+def test_refresh_all_locks_the_daily_card_when_its_time_comes_and_grades_it():
+    log, diary, feed = build()
+    add_upcoming(feed, hours=20)  # CLE v PIT at 08:00 UTC tomorrow: 4 AM Eastern
+    event = next(e for e in feed.current["nfl"]["events"] if e["id"] == "upcoming-1")
+    event["competitions"][0]["odds"] = [
+        {"provider": {"name": "DraftKings"}, "overUnder": 40.5, "spread": -3.5}
+    ]
+    # 8 AM Eastern: yesterday's card is the one due, and tomorrow's game is outside its day.
+    log.refresh_all(NOW)
+    assert diary.latest_card_date() is None and log.last_card is None
+    # 10:05 AM Eastern: today's card locks with the game, the model's side against CLE -3.5.
+    due = NOW + timedelta(hours=2, minutes=5)
+    summaries = log.refresh_all(due)
+    assert not any(s.errors for s in summaries)
+    built = log.last_card
+    assert built == {
+        "card_date": "2026-10-06",
+        "picks": 1,
+        "late": False,
+        "locked_at": due.isoformat(),
+    }
+    pick = diary.card("2026-10-06")["rows"][0]
+    assert pick["game_id"] == "upcoming-1" and pick["market"] in ("spread", "total")
+    assert pick["book_value"] in (3.5, 40.5) and pick["outcome"] is None
+    log.refresh_all(due + timedelta(minutes=15))  # locked once; nothing changes
+    assert diary.card_summary()["days"] == 1 and diary.card_summary()["picks"] == 1
+
+    played = replace(diary.football_games("nfl")[0], game_id="upcoming-1")
+    diary.store_football_game(played, NOW + timedelta(hours=24))
+    log.refresh_all(NOW + timedelta(hours=30))
+    assert diary.card_pick("2026-10-06", 1)["outcome"] in ("win", "loss", "push")
+
+    off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nfl,cfb", CARD_ENABLED=False)
+    quiet = Diary(":memory:")
+    GameLog(off, quiet, feed=feed, now=lambda: due).refresh_all(due)
+    assert quiet.latest_card_date() is None

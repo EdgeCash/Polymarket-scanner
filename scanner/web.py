@@ -1,4 +1,5 @@
-"""Two read-only pages: ``/health`` and ``/scorecard``. Both need STATUS_TOKEN.
+"""Read-only pages: ``/health``, ``/scorecard`` and the matchup sheets need STATUS_TOKEN;
+the daily card (``/card``) is public.
 
 Built for a phone screen: one column, large text, no scripts. Nothing here
 can change any setting or send anything.
@@ -9,7 +10,7 @@ from __future__ import annotations
 import html
 import secrets
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from fastapi import Cookie, FastAPI, Header, Query, Request
@@ -17,10 +18,18 @@ from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 from scanner import __version__
 from scanner.books import BookLine
+from scanner.card import (
+    MARKET_MONEYLINE,
+    MARKET_SPREAD,
+    MARKET_TOTAL,
+    card_date_for,
+    lock_moment,
+)
 from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
 from scanner.projection import book_margin, tuning_for
+from scanner.simulate import chances, ladder, seed_for, simulate, svg_heatmap, svg_histogram
 from scanner.stakes import gate
 
 COOKIE = "scanner_token"
@@ -79,6 +88,17 @@ STYLE = """
   .adv img { width: 22px; height: 22px; vertical-align: middle; }
   .logo-sm { width: 20px; height: 20px; vertical-align: middle; margin-right: 4px; }
   .implied { font-size: 20px; font-weight: 700; }
+  .pick { border: 1px solid #8884; border-radius: 12px; padding: 12px 14px; margin: 14px 0; }
+  .pick h2 { margin: 6px 0 0; font-size: 20px; }
+  .rank { display: inline-block; background: #0f172a; color: #fff; border-radius: 6px;
+          padding: 1px 8px; font-weight: 700; margin-right: 6px; }
+  .sport { background: #1f6f8b; }
+  .call { font-size: 24px; font-weight: 800; margin: 6px 0 2px; }
+  .call .odds { font-size: 15px; font-weight: 500; opacity: .75; }
+  .push, .not_graded { background: #6b7280; } .open { background: #1f6f8b; }
+  .pick svg { display: block; margin-top: 8px; }
+  .pick .meta { margin: 2px 0; }
+  .scores td { padding: 4px 8px; }
 </style>
 """
 
@@ -208,6 +228,7 @@ worse prices, and a few weeks is a small sample.</p>
 {_pregame_section(card.get("pregame") or {}, settings)}
 {_projection_section(card.get("projections") or {}, settings)}
 {_stake_section(card.get("stakes") or {}, settings)}
+{_card_section(card.get("card") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
@@ -458,6 +479,103 @@ def _stake_section(st: dict, settings: Settings) -> str:
         "suggested stake, after fees. Nothing is placed.</p>"
     )
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
+
+
+def _units(value: float | None) -> str:
+    return "–" if value is None else f"{value:+.2f}u"
+
+
+def _record_line(t: dict) -> str:
+    """W-L-P with the units beside it, for the card's tables."""
+    if not t.get("graded"):
+        return "–"
+    rate = f" ({t['win_rate'] * 100:.0f}%)" if t.get("win_rate") is not None else ""
+    return f"{t['wins']}-{t['losses']}-{t['pushes']}{rate}, {_units(t['units'])}"
+
+
+def _card_section(cd: dict, settings: Settings) -> str:
+    """The daily card's whole record: overall, rank by rank, and the last picks graded."""
+    title = "Daily card (chosen by rule, graded at the final, nothing sent)"
+    if not settings.CARD_ENABLED or not settings.PROJECTION_ENABLED:
+        return "<h2>Daily card</h2><p class='note'>off</p>"
+    if not cd or not cd.get("picks"):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>no card yet</p>"
+    clv = (
+        f"{_signed(cd['clv'], 2)} avg, {_pct(cd['clv_positive_share'])} toward the pick"
+        if cd.get("clv") is not None
+        else "–"
+    )
+    rows = [
+        ("Days", str(cd["days"])),
+        ("Picks", f"{cd['picks']} ({cd['open']} open)"),
+        ("Graded", f"{cd['graded']} ({cd['not_graded']} not graded)"),
+        ("Wins / losses / pushes", f"{cd['wins']} / {cd['losses']} / {cd['pushes']}"),
+        ("Win rate", _pct(cd["win_rate"])),
+        ("Units (one unit a pick)", _units(cd["units"])),
+        ("Return per pick", _pct(cd["roi"])),
+        ("Closing line", clv),
+    ]
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    by_rank = "".join(
+        f"<tr><th>Rank {html.escape(rank)}</th><td class='num'>{html.escape(_record_line(t))}</td>"
+        "</tr>"
+        for rank, t in cd["by_rank"].items()
+    )
+    by_sport = "".join(
+        f"<tr><th>{html.escape(s.upper())}</th><td class='num'>{html.escape(_record_line(t))}</td>"
+        "</tr>"
+        for s, t in cd["by_sport"].items()
+    )
+    by_market = "".join(
+        f"<tr><th>{html.escape(m.capitalize())}</th><td class='num'>"
+        f"{html.escape(_record_line(t))}</td></tr>"
+        for m, t in cd["by_market"].items()
+    )
+    recent = "".join(
+        "<tr><td>{day} #{rank}<br>{game}</td><td>{side}</td><td class='num'>{final}</td>"
+        "<td>{result}</td></tr>".format(
+            day=html.escape(r["card_date"]),
+            rank=r["rank"],
+            game=html.escape(f"{r['sport'].upper()} {r['away']} at {r['home']}"),
+            side=html.escape(f"{r['side_label']} ({_odds(r['odds'])})"),
+            final=html.escape(f"{r['final_away']}-{r['final_home']}"),
+            result=html.escape(f"{r['outcome']} {_units(r['units'])}"),
+        )
+        for r in cd.get("recent") or []
+    )
+    table = (
+        f"<table><tr><th>Pick</th><th>Side</th><th>Final</th><th>Result</th></tr>{recent}</table>"
+        if recent
+        else ""
+    )
+    note = (
+        f"<p class='note'>Each day at {settings.CARD_LOCK_TIME} {html.escape(settings.CARD_TZ)} "
+        f"the {settings.CARD_PICKS} sides the model is surest of against the book are locked: "
+        "one per game, ranked by the gap from the book in that sport's spread of results, "
+        "weighted by how often the sport's closing line has moved the model's way. Units are "
+        "at one unit a pick at the book's price. The record by rank is the point: it says "
+        "whether the top of the card deserves more trust than the bottom. "
+        "<a href='/card'>The public card page</a>. Nothing is sent or placed.</p>"
+    )
+    return (
+        f"<h2>{html.escape(title)}</h2><table>{body}</table>"
+        f"<table>{by_rank}{by_sport}{by_market}</table>{table}{note}"
+    )
+
+
+def _card_health(status: RuntimeStatus, settings: Settings) -> str:
+    if not settings.CARD_ENABLED or not settings.PROJECTION_ENABLED:
+        return "off"
+    built = (status.gamelog or {}).get("card")
+    if not built:
+        return f"none locked since start; locks at {settings.CARD_LOCK_TIME} {settings.CARD_TZ}"
+    late = ", late" if built.get("late") else ""
+    return (
+        f"{built['card_date']}: {built['picks']} picks locked "
+        f"{_local(built.get('locked_at'), settings.TZ)}{late}"
+    )
 
 
 def _pregame_health(status: RuntimeStatus, settings: Settings) -> str:
@@ -1009,6 +1127,7 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
         ),
         ("Pre-game scan", _pregame_health(status, settings)),
         ("Game log", _gamelog_health(status, settings)),
+        ("Daily card", _card_health(status, settings)),
         (
             "Feeds",
             "ok"
@@ -1030,7 +1149,397 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
 <h1>Scanner status: <span class="{klass}">{"ok" if feeds_ok else "feed trouble"}</span></h1>
 <table>{body}</table>
 <p class="note"><a href="/scorecard">Scorecard</a> · <a href="/matchups">Matchups</a> ·
-<a href="/logout">Sign out of this device</a></p>
+<a href="/card">Daily card</a> · <a href="/logout">Sign out of this device</a></p>
+</body></html>"""
+
+
+# -- the daily card --------------------------------------------------------------------
+
+
+def _implied(odds: int) -> float:
+    """The win probability a price implies, with the book's margin left in."""
+    return abs(odds) / (abs(odds) + 100.0) if odds < 0 else 100.0 / (odds + 100.0)
+
+
+def _value_text(pick: dict, value: float | None) -> str:
+    """A margin as the home side's line, or a total, in the pick's own words."""
+    if value is None:
+        return "–"
+    if pick["market"] == MARKET_TOTAL:
+        return f"{value:.1f}"
+    return f"{pick['home']} {-value:+.1f}"
+
+
+def _result_chip(pick: dict) -> str:
+    outcome = pick.get("outcome")
+    if outcome is None:
+        return "<span class='chip open'>open</span>"
+    if outcome in ("win", "loss", "push"):
+        return f"<span class='chip {outcome}'>{outcome.upper()} {_units(pick.get('units'))}</span>"
+    return f"<span class='chip not_graded'>{html.escape(outcome.replace('_', ' '))}</span>"
+
+
+def _pick_picture(pick: dict) -> str:
+    """The pick's histogram: margins for a side, totals for an over or under, its side shaded."""
+    sim = (pick.get("detail") or {}).get("sim")
+    if not sim:
+        return ""
+    home = pick["home"]
+    unit = LOGS[pick["sport"]].unit if pick["sport"] in LOGS else "points"
+    if pick["market"] == MARKET_TOTAL:
+        return svg_histogram(
+            sim["total"]["hist"],
+            line=pick["book_value"],
+            mean=pick["model_value"],
+            side_above=pick["side"] == "over",
+            line_label=f"book {pick['book_value']:g}",
+            mean_label=f"model {pick['model_value']:.1f}",
+            axis_label=f"Total {unit}",
+        )
+    return svg_histogram(
+        sim["margin"]["hist"],
+        line=pick["book_value"],
+        mean=pick["model_value"],
+        side_above=pick["side"] == "home",
+        line_label=f"book {home} {-pick['book_value']:+.1f}",
+        mean_label=f"model {home} {-pick['model_value']:+.1f}",
+        axis_label=f"Margin ({home}, {unit})",
+    )
+
+
+def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
+    """One pick as the card shows it: the call, the numbers behind it, its picture."""
+    detail = pick.get("detail") or {}
+    zone = settings.CARD_TZ
+    when = html.escape(_kickoff(datetime.fromisoformat(pick["kickoff"]), zone))
+    home_team = detail.get("home_team") or {"abbreviation": pick["home"]}
+    away_team = detail.get("away_team") or {"abbreviation": pick["away"]}
+    joiner = "vs" if detail.get("neutral") else "at"
+    matchup = (
+        f"{_logo(away_team, 'logo-sm')}{html.escape(pick['away'])} {joiner} "
+        f"{_logo(home_team, 'logo-sm')}{html.escape(pick['home'])}"
+    )
+    unit = LOGS[pick["sport"]].unit if pick["sport"] in LOGS else "points"
+    sim = detail.get("sim") or {}
+    chance = detail.get("chance")
+    draws = sim.get("draws") or 0
+    what = {
+        MARKET_SPREAD: "covers",
+        MARKET_MONEYLINE: "wins",
+        MARKET_TOTAL: "lands",
+    }[pick["market"]]
+    sim_text = (
+        f"In {draws:,} simulated games {html.escape(pick['side_label'])} {what} "
+        f"{chance * 100:.0f}% of the time; the price says {_implied(pick['odds']) * 100:.0f}%."
+        if chance is not None and draws
+        else ""
+    )
+    trust = detail.get("trust") or {}
+    trust_text = (
+        f"closing lines {trust['positive_share'] * 100:.0f}% the model's way over {trust['closed']}"
+        if trust.get("weighted")
+        else f"closing-line record not yet weighed, {trust.get('closed', 0)} closed"
+    )
+    final = ""
+    if pick.get("final_home") is not None:
+        final = (
+            f" Final {html.escape(pick['away'])} {pick['final_away']}, "
+            f"{html.escape(pick['home'])} {pick['final_home']}."
+        )
+        if pick.get("clv") is not None:
+            final += f" Closing line moved {pick['clv']:+.1f} {unit} toward the pick."
+    more = (
+        f"<p class='note'><a href='/card/{html.escape(pick['card_date'])}/{pick['rank']}'>"
+        "Full simulation: every score, every line</a></p>"
+        if link
+        else ""
+    )
+    sport_chip = f"<span class='chip sport'>{html.escape(pick['sport'].upper())}</span>"
+    call = (
+        f"{html.escape(pick['side_label'])} <span class='odds'>({_odds(pick['odds'])})</span> "
+        f"{_result_chip(pick)}"
+    )
+    numbers = (
+        f"Model {html.escape(_value_text(pick, pick['model_value']))} · book "
+        f"{html.escape(_value_text(pick, pick['book_value']))} · {abs(pick['gap']):.1f} {unit} "
+        f"apart, {pick['z']:.2f} of a game's spread."
+    )
+    conviction = (
+        f"Conviction {pick['conviction']:.2f}: trust {pick['trust']:.2f} "
+        f"({html.escape(trust_text)}).{final}"
+    )
+    return f"""<div class="pick">
+<p class="meta"><span class="rank">#{pick["rank"]}</span>{sport_chip} {when}</p>
+<h2>{matchup}</h2>
+<p class="call">{call}</p>
+<p class="meta">{numbers}</p>
+<p class="meta">{sim_text}</p>
+<p class="note">{conviction}</p>
+{_pick_picture(pick)}
+{more}
+</div>"""
+
+
+def _card_head(settings: Settings) -> str:
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily card</title>{STYLE}</head>
+<body>"""
+
+
+def _record_strip(cd: dict) -> str:
+    if not cd.get("graded"):
+        return ""
+    clv = "–" if cd.get("clv") is None else f"{cd['clv']:+.2f}"
+    return (
+        "<div class='strip'>"
+        f"<div><span>Record</span><b>{cd['wins']}-{cd['losses']}-{cd['pushes']}</b></div>"
+        f"<div><span>Units</span><b>{_units(cd['units'])}</b></div>"
+        f"<div><span>Per pick</span><b>{_pct(cd['roi'])}</b></div>"
+        f"<div><span>Closing line</span><b>{clv}</b></div>"
+        f"<div><span>Days</span><b>{cd['days']}</b></div>"
+        "</div>"
+    )
+
+
+def render_card(
+    card: dict | None,
+    summary: dict,
+    history: list[dict],
+    settings: Settings,
+    now: datetime,
+) -> str:
+    """The public card page: today's picks (or the latest), the record, the days before."""
+    zone = settings.CARD_TZ
+    label = _zone_label(zone)
+    lock = settings.card_lock_time.strftime("%-I:%M %p")
+    if card is None:
+        due = card_date_for(now, settings)
+        next_lock = lock_moment(due, settings)
+        if next_lock <= now:
+            next_lock = lock_moment(due + timedelta(days=1), settings)
+        body = (
+            "<p class='note'>No card yet. The first locks at "
+            f"{html.escape(_kickoff(next_lock, zone))}.</p>"
+        )
+        title = "Daily card"
+    else:
+        locked = datetime.fromisoformat(card["locked_at"])
+        late = " (late)" if card["late"] else ""
+        title = f"Daily card, {card['card_date']}"
+        body = (
+            f"<p class='note'>Locked {html.escape(_kickoff(locked, zone))}{late}. "
+            f"{len(card['rows'])} picks, one per game.</p>"
+            + "".join(_pick_block(p, settings, link=True) for p in card["rows"])
+        )
+    by_rank = "".join(
+        f"<tr><th>Rank {html.escape(rank)}</th><td class='num'>{html.escape(_record_line(t))}</td>"
+        "</tr>"
+        for rank, t in (summary.get("by_rank") or {}).items()
+    )
+    by_sport = "".join(
+        f"<tr><th>{html.escape(s.upper())}</th><td class='num'>{html.escape(_record_line(t))}</td>"
+        "</tr>"
+        for s, t in (summary.get("by_sport") or {}).items()
+    )
+    record = (
+        f"<h2>Record by rank</h2><table>{by_rank}</table><h2>Record by sport</h2>"
+        f"<table>{by_sport}</table>"
+        if summary.get("graded")
+        else ""
+    )
+    days = "".join(
+        "<tr><td><a href='/card/{d}'>{d}</a>{late}</td><td class='num'>{picks}</td>"
+        "<td class='num'>{rec}</td></tr>".format(
+            d=html.escape(day["card_date"]),
+            late=" <span class='note'>late</span>" if day["late"] else "",
+            picks=day["picks"],
+            rec=html.escape(
+                f"{day['wins']}-{day['losses']}-{day['pushes']}, {_units(day['units'])}"
+                if day["graded"]
+                else f"{day['open']} open"
+            ),
+        )
+        for day in history
+    )
+    history_table = (
+        f"<h2>Every card</h2><table><tr><th>Day</th><th>Picks</th><th>Record</th></tr>{days}"
+        "</table>"
+        if days
+        else ""
+    )
+    note = (
+        f"<p class='note'>Every day at {lock} {html.escape(label)} the model's "
+        f"{settings.CARD_PICKS} surest sides against the book are locked by a fixed rule: one per "
+        "game, ranked by the gap between the model's number and the book's in that sport's "
+        "usual spread of results, weighted by how often the sport's closing line has moved the "
+        "model's way. The model is built from this season's box scores alone: it does not know "
+        "about injuries, rest or weather, and the book does, so a big gap is as likely a missing "
+        "player as an edge. That is why every pick is graded at the final, misses included, and "
+        "why the record is kept rank by rank. Units are one unit a pick at the book's price. "
+        "The pictures are the model's own numbers played out 100,000 times. Nothing here is "
+        "advice and nothing is placed.</p>"
+    )
+    return f"""{_card_head(settings)}
+<h1>{html.escape(title)}</h1>
+{_record_strip(summary)}
+{body}
+{record}
+{history_table}
+{note}
+</body></html>"""
+
+
+def _sim_sections(sport: str, home: str, away: str, projection: dict, sim: dict, pick) -> str:
+    """The full picture of one simulated game: margins, totals, every score, every line."""
+    unit = LOGS[sport].unit if sport in LOGS else "points"
+    raw, book = projection.get("raw") or {}, projection.get("book") or {}
+    market = pick["market"] if pick else None
+    side = pick["side"] if pick else None
+    margin_side = None if market not in (MARKET_SPREAD, MARKET_MONEYLINE) else side == "home"
+    total_side = None if market != MARKET_TOTAL else side == "over"
+    margin_label = "Margin" if tuning_for(sport).margin_from_moneyline else "Spread"
+    book_margin, book_total = book.get("margin"), book.get("total")
+    margin_svg = svg_histogram(
+        sim["margin"]["hist"],
+        line=book_margin,
+        mean=raw.get("margin"),
+        side_above=margin_side,
+        line_label="" if book_margin is None else f"book {home} {-book_margin:+.1f}",
+        mean_label=f"model {home} {-raw['margin']:+.1f}" if raw.get("margin") is not None else "",
+        axis_label=f"Margin ({home}, {unit})",
+    )
+    total_svg = svg_histogram(
+        sim["total"]["hist"],
+        line=book_total,
+        mean=raw.get("total"),
+        side_above=total_side,
+        line_label="" if book_total is None else f"book {book_total:g}",
+        mean_label=f"model {raw['total']:.1f}" if raw.get("total") is not None else "",
+        axis_label=f"Total {unit}",
+    )
+    draws = sim["draws"]
+    scores = "".join(
+        f"<tr><td>{html.escape(away)} {a}, {html.escape(home)} {h}</td>"
+        f"<td class='num'>{n / draws * 100:.1f}%</td></tr>"
+        for h, a, n in sim["scores"]
+    )
+    step = 0.5 if unit == "goals" else 1.0
+    rungs = []
+    centre = book_margin if book_margin is not None else round(raw.get("margin") or 0.0)
+    for rung in ladder(sim["margin"]["hist"], centre, step):
+        rungs.append(
+            f"<tr><td>{html.escape(home)} {-rung['line']:+g}</td>"
+            f"<td class='num'>{rung['above'] * 100:.1f}%</td>"
+            f"<td class='num'>{rung['below'] * 100:.1f}%</td>"
+            f"<td class='num'>{rung['push'] * 100:.1f}%</td></tr>"
+        )
+    totals = []
+    centre = book_total if book_total is not None else round(raw.get("total") or 0.0)
+    for rung in ladder(sim["total"]["hist"], centre, step):
+        totals.append(
+            f"<tr><td>{rung['line']:g}</td><td class='num'>{rung['above'] * 100:.1f}%</td>"
+            f"<td class='num'>{rung['below'] * 100:.1f}%</td>"
+            f"<td class='num'>{rung['push'] * 100:.1f}%</td></tr>"
+        )
+    heat = svg_heatmap(sim.get("cells") or {}, home, away)
+    tie = chances(sim["margin"]["hist"], 0)["push"]
+    overtime = f"{sim['overtime'] * 100:.0f}% went to overtime" if sim.get("overtime") else ""
+    r, lg, used = projection.get("ratings") or {}, projection.get("league") or {}, {}
+    used = projection.get("games_used") or {}
+    inputs = ""
+    if r and lg:
+        inputs = (
+            f"<p class='note'>Ratings in {unit} against an average side (defence below zero "
+            f"allows fewer): {html.escape(home)} offence {_signed(r['home']['offense'])}, defence "
+            f"{_signed(r['home']['defense'])}; {html.escape(away)} offence "
+            f"{_signed(r['away']['offense'])}, defence {_signed(r['away']['defense'])}. League "
+            f"{lg['points']:.1f} a side, home edge {lg['hfa']:g}, spread of results "
+            f"{lg['sigma']:g} on the margin and {lg['sigma_total']:g} on the total; "
+            f"{used.get('home', '?')} and {used.get('away', '?')} games used.</p>"
+        )
+    wins = f"{html.escape(home)} wins {sim['home_win'] * 100:.0f}% of {draws:,} games"
+    if overtime:
+        wins += f"; {overtime}"
+    if tie:
+        wins += f"; {tie * 100:.1f}% ended level"
+    heat_note = (
+        f"{html.escape(away)} along the bottom, {html.escape(home)} up the side; darker came up "
+        f"more often. Above the dotted line {html.escape(home)} wins."
+    )
+    rung_head = (
+        f"<tr><th>Line</th><th>{html.escape(home)} covers</th><th>{html.escape(away)} covers</th>"
+        "<th>Push</th></tr>"
+    )
+    method = (
+        "Each game is a margin and a total drawn from the model's own numbers and their usual "
+        "spread, turned into a score; a level game goes to overtime. The picture inherits every "
+        "error in the ratings: it is the model's opinion in full, not a better model. Key "
+        "numbers (3 and 7 in football) are not modelled."
+    )
+    return f"""<h2>Margin</h2>
+<p class='note'>{wins}.</p>
+{margin_svg}
+<h2>Total</h2>
+{total_svg}
+<h2>Likeliest finals</h2>
+<table class='scores'><tr><th>Score</th><th>Share</th></tr>{scores}</table>
+<h2>Every score</h2>
+<p class='note'>{heat_note}</p>
+{heat}
+<h2>{margin_label} at other lines</h2>
+<table>{rung_head}{"".join(rungs)}</table>
+<h2>Total at other lines</h2>
+<table><tr><th>Line</th><th>Over</th><th>Under</th><th>Push</th></tr>{"".join(totals)}</table>
+{inputs}
+<p class='note'>{method}</p>"""
+
+
+def render_card_pick(pick: dict, settings: Settings) -> str:
+    """One pick's page: the card entry, then the whole simulation behind it."""
+    detail = pick.get("detail") or {}
+    projection = detail.get("projection") or {}
+    stored = detail.get("sim") or {}
+    sim = simulate(
+        projection,
+        pick["sport"],
+        draws=stored.get("draws") or 0,
+        seed=stored.get("seed"),
+        with_cells=True,
+    )
+    sections = (
+        _sim_sections(pick["sport"], pick["home"], pick["away"], projection, sim, pick)
+        if sim
+        else "<p class='note'>no simulation stored for this pick</p>"
+    )
+    day = html.escape(pick["card_date"])
+    return f"""{_card_head(settings)}
+<p class="note"><a href="/card/{day}">Card {day}</a> · <a href="/card">Latest card</a></p>
+<h1>Pick #{pick["rank"]}, {day}</h1>
+{_pick_block(pick, settings, link=False)}
+{sections}
+</body></html>"""
+
+
+def render_sim(sport: str, upcoming: dict, projection: dict, settings: Settings) -> str:
+    """The simulation page for any projected game (the owner's, behind the token)."""
+    slate = upcoming["slate"]
+    home, away = slate["home"]["abbreviation"], slate["away"]["abbreviation"]
+    seed = seed_for(sport, upcoming["game_id"], str(projection.get("updated_at") or ""))
+    sim = simulate(projection, sport, seed=seed, with_cells=True)
+    kickoff = datetime.fromisoformat(slate["date"]) if slate.get("date") else None
+    sections = (
+        _sim_sections(sport, home, away, projection, sim, None)
+        if sim
+        else "<p class='note'>no projection to simulate</p>"
+    )
+    href = f"/matchup/{html.escape(sport)}/{html.escape(upcoming['game_id'])}"
+    subtitle = html.escape(f"{sport.upper()}, {_kickoff(kickoff, settings.TZ)}")
+    return f"""{_card_head(settings)}
+<p class="note"><a href="{href}">Matchup sheet</a> · <a href="/matchups">All matchups</a></p>
+<h1>{html.escape(f"{away} at {home}")} <span class="note">{subtitle}</span></h1>
+{sections}
 </body></html>"""
 
 
@@ -1144,6 +1653,53 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
             page = HTMLResponse(render_matchup(sheet, settings))
         return remember(page, request, token)
 
+    @app.get("/sim/{sport}/{game_id}", response_class=HTMLResponse)
+    def sim_page(
+        sport: str,
+        game_id: str,
+        request: Request,
+        token: str | None = Query(default=None),
+        x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
+    ):
+        if not authorised(token, x_status_token, scanner_token):
+            return denied()
+        upcoming = diary.football_upcoming_game(sport, game_id) if sport in LOGS else None
+        stored = diary.projection(sport, game_id) if upcoming else None
+        if upcoming is None or stored is None:
+            return JSONResponse({"error": "no projection for this game"}, status_code=404)
+        projection = {**stored["projection"], "updated_at": stored["updated_at"]}
+        page = HTMLResponse(render_sim(sport, upcoming, projection, settings))
+        return remember(page, request, token)
+
+    def card_page(card_date: str | None, request: Request):
+        card = diary.card(card_date) if card_date else None
+        summary = diary.card_summary(picks=settings.CARD_PICKS)
+        history = diary.card_history()
+        if "application/json" in request.headers.get("accept", ""):
+            return JSONResponse({"card": card, "record": summary, "history": history})
+        now = datetime.now(UTC)
+        return HTMLResponse(render_card(card, summary, history, settings, now))
+
+    @app.get("/card", response_class=HTMLResponse)
+    def card_latest(request: Request):
+        return card_page(diary.latest_card_date(), request)
+
+    @app.get("/card/{card_date}", response_class=HTMLResponse)
+    def card_day(card_date: str, request: Request):
+        if not diary.card_exists(card_date):
+            return JSONResponse({"error": "no card for that day"}, status_code=404)
+        return card_page(card_date, request)
+
+    @app.get("/card/{card_date}/{rank}", response_class=HTMLResponse)
+    def card_pick(card_date: str, rank: int, request: Request):
+        pick = diary.card_pick(card_date, rank)
+        if pick is None:
+            return JSONResponse({"error": "no such pick"}, status_code=404)
+        if "application/json" in request.headers.get("accept", ""):
+            return JSONResponse(pick)
+        return HTMLResponse(render_card_pick(pick, settings))
+
     @app.get("/logout", response_class=HTMLResponse)
     def logout():
         page = HTMLResponse(
@@ -1159,7 +1715,10 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
     @app.get("/")
     def root():
         return JSONResponse(
-            {"service": "polymarket-scanner", "pages": ["/health", "/scorecard", "/matchups"]}
+            {
+                "service": "polymarket-scanner",
+                "pages": ["/health", "/scorecard", "/matchups", "/card"],
+            }
         )
 
     return app

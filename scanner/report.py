@@ -88,3 +88,47 @@ def shadow_report(diary: Diary, now: datetime, tz: str, days: int = 7) -> str:
         lines.append(f"Score timing notes: {len(lag)} (see the diary's events table)")
     lines.append("ESPN delay and wrong matches are checked by hand from the diary; see README.")
     return "\n".join(lines)
+
+
+def card_report(diary: Diary, settings) -> str:
+    """The latest daily card and the whole record, as plain text."""
+    zone = ZoneInfo(settings.CARD_TZ)
+    key = diary.latest_card_date()
+    card = diary.card(key) if key else None
+    lines = []
+    if card is None:
+        lines.append(f"No daily card yet; the first locks at {settings.CARD_LOCK_TIME} {zone.key}.")
+    else:
+        locked = datetime.fromisoformat(card["locked_at"]).astimezone(zone)
+        late = " (late)" if card["late"] else ""
+        lines.append(
+            f"Daily card {card['card_date']}, locked {locked.strftime('%a %b %-d %-I:%M %p')}{late}"
+        )
+        for r in card["rows"]:
+            when = datetime.fromisoformat(r["kickoff"]).astimezone(zone).strftime("%a %-I:%M %p")
+            chance = r["detail"].get("chance")
+            sim = "" if chance is None else f", sim {chance * 100:.0f}%"
+            result = r["outcome"] or "open"
+            if r["units"] is not None:
+                result += f" {r['units']:+.2f}u"
+            lines.append(
+                f"#{r['rank']} {r['sport'].upper()} {r['away']} at {r['home']} {when}: "
+                f"{r['side_label']} ({r['odds']:+d}), model {r['model_value']:.1f} v book "
+                f"{r['book_value']:.1f}, {r['z']:.2f} sd{sim}, conviction {r['conviction']:.2f} "
+                f"-> {result}"
+            )
+    s = diary.card_summary(picks=settings.CARD_PICKS)
+    if s["graded"]:
+        roi = "n/a" if s["roi"] is None else f"{s['roi'] * 100:+.1f}%"
+        clv = "n/a" if s["clv"] is None else f"{s['clv']:+.2f}"
+        lines.append(
+            f"Record over {s['days']} days: {s['wins']}W {s['losses']}L {s['pushes']}P, "
+            f"{s['units']:+.2f} units, {roi} per pick, closing line {clv} toward the pick"
+        )
+        for rank, part in s["by_rank"].items():
+            if part["graded"]:
+                lines.append(
+                    f"  rank {rank}: {part['wins']}W {part['losses']}L {part['pushes']}P, "
+                    f"{part['units']:+.2f} units"
+                )
+    return "\n".join(lines)

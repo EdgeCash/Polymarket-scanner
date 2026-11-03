@@ -38,6 +38,10 @@ scanner/
   notify.py        phone alerts                             (milestone 7)
   loop.py          the scan loop and game-window scheduler  (milestone 8)
   report.py        the shadow weekend report                (milestone 8)
+  projection.py    the projection model, graded against the book
+  stakes.py        what the model would stake (recorded, never placed)
+  card.py          the daily card: five picks by rule, locked, graded, public
+  simulate.py      100,000 games per pick, drawn from the model, as pictures
 tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py
 docs/              winprob_report.md
@@ -95,6 +99,10 @@ All settings are environment variables. Defaults are from the build brief.
 | `STAKE_KELLY_FRACTION` | `0.25` | Share of the full Kelly stake to suggest |
 | `STAKE_MAX_SHARE` | `0.05` | Largest suggestion as a share of the bankroll |
 | `STAKE_GATE_GAMES` | `50` | Graded projections per sport before the sheet shows stakes |
+| `CARD_ENABLED` | `true` | The daily card: picks chosen by rule, locked, graded, public at `/card` |
+| `CARD_PICKS` | `5` | Picks on a card, one per game |
+| `CARD_LOCK_TIME` | `10:00` | When the card locks each day, `HH:MM` in `CARD_TZ` |
+| `CARD_TZ` | `America/New_York` | The card's clock; the public page shows times in it |
 | `REPEAT_ALERT_MINUTES` | `5` | Gap between repeat alerts |
 | `MAX_ALERTS_PER_DAY` | `10` | Daily cap, both alert types together |
 | `CFB_EXTRA_MARGIN` | `0.01` | Extra caution for college winner alerts |
@@ -527,6 +535,55 @@ counting the days still to read; 15 sheets per sport for the next two days,
 every one projected, and 30 and 32 teams ranked. The live football scanner and
 its alerts are untouched: the NBA and NHL are sheets, projections and shadow
 stakes only. Nothing is sent or placed.
+
+## The daily card and the simulator
+
+The owner wants to publish research, not tips to tail blindly, and cares most
+that the model's few highest-conviction sides each day hold up. `scanner/card.py`
+makes that measurable. Once a day, at `CARD_LOCK_TIME` in `CARD_TZ` (10:00
+Eastern), the game log's refresh ranks every projected game that starts in the
+next 24 hours:
+
+- One side per game, the stronger of its spread (the moneyline in hockey,
+  where the puck line never moves) and its total. The side is the one the
+  model's raw number takes against the book's line at that moment, the same
+  comparison the scorecard's gap rows grade.
+- Conviction is the gap in that sport's usual spread of results (`sigma` in
+  `projection.TUNING`), so a goal in hockey and six points in football compare,
+  times a trust weight for the sport: 1 until the sport has 20 closed lines,
+  then a half plus the share of its closing lines that moved the model's way.
+  Thin projections (a side with under 3 games) and games without a book line
+  are left out.
+- The top `CARD_PICKS` (5) are written to the diary (`cards`, `card_picks`)
+  with the book's line and price at the lock, ranked, and never changed. A day
+  with nothing eligible is left unlocked so a later pass can lock it; a card
+  locked more than 30 minutes after its time is marked late, and the lock time
+  is shown. Each pick is settled at the final from the game log like the stakes
+  are (units at one unit a pick at the book's price, a push costs nothing), with
+  the closing line's move toward the pick kept beside it.
+
+`/card` is public, no token: the latest card, each pick with its picture, and
+the whole record, overall and rank by rank, by sport and by market, with every
+past day linked (`/card/<date>`). The record by rank is the point of the
+exercise: if rank 1 does no better than rank 5, conviction means nothing, and
+the page says so by showing it. The scorecard carries the same section;
+`python -m scanner --card` prints it. A big gap from the book is as likely a
+missing player as an edge, since the model knows nothing of injuries, rest or
+weather, which is why the closing line weighs on the ranking and why misses
+are shown with the wins.
+
+`scanner/simulate.py` draws each pick's game 100,000 times from the model's own
+numbers (a margin and a total from their normal spreads, turned into a score;
+a level game goes to overtime, resolved by the model's win probability) and
+keeps the shape: how often each margin and total landed, the likeliest finals
+and how often the pick came in. The card shows a histogram per pick with the
+book's line and the model's mean marked and the pick's side shaded; the pick's
+own page (`/card/<date>/<rank>`) adds the total, a heatmap of every final score,
+the ten likeliest, and the chance at other lines. `/sim/<sport>/<game_id>`
+(token) does the same for any projected game. The draws are seeded from the
+game and the projection's timestamp, so a page shows the same games every time.
+It is a picture of the model, not a better model, and key numbers in football
+are not modelled. Nothing in it is sent or placed.
 
 ## Milestones
 

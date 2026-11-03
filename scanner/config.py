@@ -65,6 +65,10 @@ GAMELOG_UPCOMING_REFRESH_MINUTES = (
     60.0  # how often an upcoming game's weather and venue are re-read
 )
 GAMELOG_SPORT_KEYS = ("nfl", "cfb", "nba", "nhl")  # sports with a game log (gamelog.LOGS)
+SIM_DRAWS = 100_000  # simulated games behind each card pick's picture
+CARD_WINDOW_HOURS = 24.0  # a card covers the games that start within a day of its lock
+CARD_TRUST_MIN_CLOSED = 20  # closed lines a sport needs before its record weighs the ranking
+CARD_LATE_MINUTES = 30.0  # a card locked later than this after its time is marked late
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -142,6 +146,13 @@ class Settings(BaseSettings):
     STAKE_KELLY_FRACTION: float = Field(0.25, gt=0, le=1)
     STAKE_MAX_SHARE: float = Field(0.05, gt=0, le=1)
     STAKE_GATE_GAMES: int = Field(50, ge=0)
+    # The daily card: the model's CARD_PICKS highest-conviction sides against the
+    # book, chosen by a fixed rule at CARD_LOCK_TIME in CARD_TZ, locked, graded at
+    # the final and shown on the public /card page with the whole record. Never sent.
+    CARD_ENABLED: bool = True
+    CARD_PICKS: int = Field(5, ge=1, le=20)
+    CARD_LOCK_TIME: str = "10:00"
+    CARD_TZ: str = "America/New_York"
 
     # Storage, time, web
     DATABASE_PATH: str = "/data/diary.db"
@@ -199,6 +210,35 @@ class Settings(BaseSettings):
     @property
     def gamelog_sports(self) -> tuple[str, ...]:
         return tuple(n for n in self.GAMELOG_SPORTS.split(",") if n)
+
+    @field_validator("CARD_LOCK_TIME")
+    @classmethod
+    def _check_card_lock_time(cls, value: str) -> str:
+        from datetime import time
+
+        try:
+            hours, minutes = value.strip().split(":")
+            parsed = time(int(hours), int(minutes))
+        except ValueError as exc:
+            raise ValueError("CARD_LOCK_TIME must be HH:MM, for example 10:00") from exc
+        return parsed.strftime("%H:%M")
+
+    @field_validator("CARD_TZ")
+    @classmethod
+    def _check_card_tz(cls, value: str) -> str:
+        from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+
+        try:
+            ZoneInfo(value)
+        except (ZoneInfoNotFoundError, ValueError) as exc:
+            raise ValueError(f"CARD_TZ {value!r} is not a known time zone") from exc
+        return value
+
+    @property
+    def card_lock_time(self):
+        from datetime import time
+
+        return time.fromisoformat(self.CARD_LOCK_TIME)
 
     @property
     def short_commit(self) -> str:

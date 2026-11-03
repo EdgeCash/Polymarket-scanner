@@ -54,6 +54,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="run one pre-game scan across every configured sport, print what it found, exit",
     )
+    parser.add_argument(
+        "--card",
+        action="store_true",
+        help="print the latest daily card and its record from the diary, and exit",
+    )
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -105,6 +110,13 @@ def main(argv: list[str] | None = None) -> int:
             )
         print("games in the log:", diary.football_game_counts())
         return 0 if not any(s.errors for s in summaries) else 1
+
+    if args.card:
+        from scanner.diary import Diary
+        from scanner.report import card_report
+
+        print(card_report(Diary(settings.DATABASE_PATH), settings))
+        return 0
 
     if args.pregame_once:
         from scanner.diary import Diary
