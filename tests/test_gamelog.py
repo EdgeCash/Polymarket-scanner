@@ -1186,9 +1186,59 @@ def test_player_lines_are_stored_with_the_game_and_read_back_by_team():
     # A game stored again (a re-read) replaces its lines rather than doubling them.
     diary.store_football_game(record, NOW + timedelta(hours=1))
     assert len(diary.player_games("nba")) == 27
+    # A record read back from the diary carries no lines; storing it keeps the ones held.
+    diary.store_football_game(diary.football_games("nba")[0], NOW + timedelta(hours=2))
+    assert len(diary.player_games("nba")) == 27
     # The team box scores read back exactly as before: players live in their own table.
     stored = diary.football_games("nba")[0]
     assert stored.players == () and stored.home_stats == record.home_stats
     # An older diary's games are stale until the re-read fills their players in.
     diary.mark_football_game_version("nba", record.game_id, 2)
     assert diary.football_games_stale("nba") == [record.game_id]
+
+
+def test_refresh_writes_player_lines_for_upcoming_games_and_grades_them():
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nba")
+    diary = Diary(":memory:")
+    feed = FakeDailyFeed()
+    yesterday = load_fixture("espn_nba_day.json")
+    feed.days[("nba", "20261027")] = yesterday
+    tonight = scheduled_copy(yesterday["events"][0], "up-1", NBA_NOW + timedelta(hours=7))
+    feed.days[("nba", "20261028")] = {**yesterday, "events": [tonight]}
+    log = GameLog(settings, diary, feed=feed, now=lambda: NBA_NOW)
+    summary = log.refresh("nba", NBA_NOW, budget=40)
+    assert summary.projected == 1 and summary.player_lines > 0 and summary.player_graded == 0
+    lines = diary.player_projections("nba", "up-1")
+    assert len(lines) == summary.player_lines and {r["stat"] for r in lines} == {
+        "points",
+        "rebounds",
+        "assists",
+        "three_made",
+    }
+    assert {r["team_abbr"] for r in lines} == {"BOS", "BKN"}
+    top = max((r for r in lines if r["stat"] == "points"), key=lambda r: r["mean"])
+    assert top["name"] == "Jayson Tatum" and top["params"]["games"] == 4  # four finals stored
+    assert top["params"]["factor"] != 1.0  # the game projection scaled it
+    # Within the hour nothing is rewritten; after it, the lines are refreshed in place.
+    again = log.refresh("nba", NBA_NOW + timedelta(minutes=15), budget=40)
+    assert again.player_lines == 0
+    assert diary.player_projection_age("nba", "up-1") == NBA_NOW
+    later = log.refresh("nba", NBA_NOW + timedelta(minutes=61), budget=40)
+    assert later.player_lines == len(lines)
+    assert diary.player_projection_age("nba", "up-1") == NBA_NOW + timedelta(minutes=61)
+    # The game lands (the same box score under its id): every line is graded.
+    played = replace(
+        parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba"), game_id="up-1"
+    )
+    assert played.players and played.game_id == "up-1"
+    diary.store_football_game(played, NBA_NOW + timedelta(hours=12))
+    done = log.refresh("nba", NBA_NOW + timedelta(hours=14), budget=40)
+    assert done.player_graded == len(lines)
+    assert all(
+        r["outcome"] in ("graded", "did_not_play") for r in diary.player_projections("nba", "up-1")
+    )
+    assert diary.player_projection_summary()["graded"] > 0
+    off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nba", PLAYERS_ENABLED=False)
+    quiet = Diary(":memory:")
+    GameLog(off, quiet, feed=feed, now=lambda: NBA_NOW).refresh("nba", NBA_NOW, budget=40)
+    assert quiet.player_projections("nba", "up-1") == []

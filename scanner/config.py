@@ -69,6 +69,9 @@ SIM_DRAWS = 100_000  # simulated games behind each card pick's picture
 CARD_WINDOW_HOURS = 24.0  # a card covers the games that start within a day of its lock
 CARD_TRUST_MIN_CLOSED = 20  # closed lines a sport needs before its record weighs the ranking
 CARD_LATE_MINUTES = 30.0  # a card locked later than this after its time is marked late
+PLAYER_MIN_GAMES = 2  # games a player needs before his line is projected
+PLAYER_REFRESH_MINUTES = 60.0  # how often a game's player lines are projected again
+PLAYER_MAX_PMF = 1e-6  # the tail of a stored distribution is cut below this probability
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -149,6 +152,9 @@ class Settings(BaseSettings):
     # The daily card: the model's CARD_PICKS highest-conviction sides against the
     # book, chosen by a fixed rule at CARD_LOCK_TIME in CARD_TZ, locked, graded at
     # the final and shown on the public /card page with the whole record. Never sent.
+    # Player lines: every leader's stat line for every upcoming game, as a whole
+    # distribution, recorded and graded at the final. Never sent.
+    PLAYERS_ENABLED: bool = True
     CARD_ENABLED: bool = True
     CARD_PICKS: int = Field(5, ge=1, le=20)
     CARD_LOCK_TIME: str = "10:00"

@@ -670,3 +670,106 @@ def test_stakes_follow_the_suggestions_until_kickoff_then_lock_and_grade():
     assert summary["recent"][0]["side_label"] == "PIT" and summary["recent"][0]["gate_open"]
     assert diary.stake_summary(since=kickoff + timedelta(days=1))["suggested"] == 0
     assert diary.scorecard()["stakes"]["graded"] == 1
+
+
+def test_player_lines_are_written_once_an_hour_graded_from_the_box_score_and_summarised():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+    from scanner.players import distribution, summarise_pmf
+
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    kickoff = datetime(2026, 10, 30, 23, 0, tzinfo=UTC)
+    t0 = kickoff - timedelta(hours=10)
+    params = {
+        "rate": 0.7,
+        "exposure_mu": 40.0,
+        "exposure_sd": 4.0,
+        "exposure_cap": 48.0,
+        "factor": 1.0,
+        "k": 12.0,
+    }
+    pmf = distribution(params)
+    tatum = next(p for p in record.players if p.name == "Jayson Tatum")
+
+    def line(stat, player=tatum, **changes):
+        base = {
+            "player_id": player.player_id,
+            "stat": stat,
+            "team_id": player.team_id,
+            "team_abbr": "BOS",
+            "opponent_abbr": "BKN",
+            "home": True,
+            "name": player.name,
+            "position": player.position,
+            "kickoff": kickoff,
+            "model": "p1",
+            "params": params,
+            "pmf": {str(x): p for x, p in pmf.items()},
+            **summarise_pmf(pmf),
+        }
+        return {**base, **changes}
+
+    assert diary.player_projection_age("nba", record.game_id) is None
+    assert (
+        diary.replace_player_projections(
+            "nba", record.game_id, [line("points"), line("rebounds")], t0
+        )
+        == 2
+    )
+    assert diary.player_projection_age("nba", record.game_id) == t0
+    later = t0 + timedelta(hours=1)
+    assert (
+        diary.replace_player_projections("nba", record.game_id, [line("points", mean=31.0)], later)
+        == 1
+    )
+    rows = diary.player_projections("nba", record.game_id)
+    assert len(rows) == 1 and rows[0]["mean"] == 31.0  # rebounds dropped, points replaced
+    assert rows[0]["made_at"] == t0.isoformat() and rows[0]["updated_at"] == later.isoformat()
+    assert rows[0]["params"]["k"] == 12.0 and rows[0]["home"] is True and rows[0]["outcome"] is None
+    assert (
+        diary.player_projection("nba", record.game_id, tatum.player_id, "points")["name"]
+        == "Jayson Tatum"
+    )
+    assert diary.player_projection("nba", record.game_id, "nobody", "points") is None
+
+    benched = next(p for p in record.players if not p.played)
+    diary.replace_player_projections(
+        "nba", record.game_id, [line("points"), line("points", player=benched)], later
+    )
+    # Not graded before the game is in the log; then from each player's own line.
+    assert diary.grade_player_projections("nba", kickoff + timedelta(hours=6)) == 0
+    diary.store_football_game(record, kickoff + timedelta(hours=3))
+    assert diary.grade_player_projections("nba", kickoff + timedelta(hours=6)) == 2
+    graded = diary.player_projection("nba", record.game_id, tatum.player_id, "points")
+    assert graded["outcome"] == "graded" and graded["actual"] == 40 and graded["in_band"] is True
+    assert (
+        graded["over_median"] is True
+        and graded["pit"] > 0.85
+        and graded["error"] == pytest.approx(40 - graded["mean"])
+    )
+    sat = diary.player_projection("nba", record.game_id, benched.player_id, "points")
+    assert sat["outcome"] == "did_not_play" and sat["actual"] is None and sat["in_band"] is None
+    # Once graded the lines are fixed.
+    assert diary.replace_player_projections("nba", record.game_id, [line("points")], kickoff) == 0
+    assert (
+        diary.player_projection("nba", record.game_id, tatum.player_id, "points")["outcome"]
+        == "graded"
+    )
+    # A game that never lands is given up on.
+    ghost = kickoff - timedelta(days=12)
+    diary.replace_player_projections("nba", "ghost", [line("points", kickoff=ghost)], ghost)
+    assert diary.grade_player_projections("nba", kickoff) == 0
+    assert (
+        diary.player_projection("nba", "ghost", tatum.player_id, "points")["outcome"]
+        == OUTCOME_NOT_GRADED
+    )
+
+    summary = diary.player_projection_summary()
+    assert summary["projected"] == 3 and summary["graded"] == 1 and summary["did_not_play"] == 1
+    assert summary["open"] == 0 and summary["over_median"] == 1.0 and summary["in_band"] == 1.0
+    assert summary["by_sport"]["nba"]["by_stat"]["points"]["graded"] == 1
+    assert summary["recent"][0]["name"] == "Jayson Tatum" and summary["recent"][0]["actual"] == 40
+    assert diary.player_projection_summary(since=kickoff + timedelta(days=1))["graded"] == 0
+    assert diary.scorecard()["players"]["graded"] == 1

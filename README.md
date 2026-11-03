@@ -99,6 +99,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `STAKE_KELLY_FRACTION` | `0.25` | Share of the full Kelly stake to suggest |
 | `STAKE_MAX_SHARE` | `0.05` | Largest suggestion as a share of the bankroll |
 | `STAKE_GATE_GAMES` | `50` | Graded projections per sport before the sheet shows stakes |
+| `PLAYERS_ENABLED` | `true` | Player lines for every upcoming game, graded at the final |
 | `CARD_ENABLED` | `true` | The daily card: picks chosen by rule, locked, graded, public at `/card` |
 | `CARD_PICKS` | `5` | Picks on a card, one per game |
 | `CARD_LOCK_TIME` | `10:00` | When the card locks each day, `HH:MM` in `CARD_TZ` |
@@ -568,8 +569,41 @@ interceptions and kicking, one line per player across the groups ESPN lists
 him in. ESPN's football groups carry no position, so football lines have
 none. Games stored before version 3 are re-read with the leftover budget each
 pass, the same way older parsers' games were, and the health page's game log
-row counts how many games have their player lines until every one does. This
-is the data under the player projections; nothing here is shown yet.
+row counts how many games have their player lines until every one does. This is the data under the player projections.
+
+### Player lines
+
+`scanner/players.py` turns those lines into a projection for every leader of
+every upcoming game, as a whole distribution rather than one number. A
+player's rate for a stat is what he has produced per minute (per second on
+the ice in hockey; per game in football, whose box scores give no playing
+time), shrunk toward the league rate for his position while his games are few
+(72 minutes of league-average play in the NBA, two games in football). His
+playing time is projected from his last five games, most recent weighted
+most, with a spread from his last ten (floored at four minutes). The game
+projection says how his team's scoring should differ from its average against
+this opponent at this pace, and that scales scoring stats (points, assists,
+threes, shots, goals, yards, receptions); rebounds scale by the pace alone; a
+goalie's saves by the other side's scoring. The stat is a negative binomial
+around that mean, with a dispersion per stat (`DISPERSION`) that gives a
+25-point scorer the 15-to-35 range real games show, mixed over the
+uncertainty in his minutes. The distribution is computed exactly for the
+diary, which makes every player of every game affordable each pass, and drawn
+100,000 times for the pages from the same parameters.
+
+Only players who played their team's last game are projected (a man who sat
+out is most likely hurt, and the box score cannot say) and only after
+`PLAYER_MIN_GAMES` (2). Goalies are projected as if they start. Each game's
+lines are written when it comes into the 48-hour window and refreshed hourly
+(`PLAYER_REFRESH_MINUTES`) until kickoff, then fixed; `SPORT_STATS` says which
+stats and how many leaders a side. When the game lands every line is graded
+from the player's own line in the box score: the miss against the projected
+mean, whether the actual fell above the median (should be near half), whether
+it fell inside the 80% band (should be near 80%) and where in the
+distribution it fell, so the scorecard's "Player lines" section says whether
+the bands mean what they claim, stat by stat. A projected player who did not
+play is counted, not graded. `PLAYERS_ENABLED=false` switches it off. Nothing
+is sent or placed.
 
 ## The daily card and the simulator
 

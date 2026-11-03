@@ -38,6 +38,7 @@ from scanner.config import (
     GAMELOG_REQUEST_GAP_SECONDS,
     GAMELOG_UPCOMING_HOURS,
     GAMELOG_UPCOMING_REFRESH_MINUTES,
+    PLAYER_REFRESH_MINUTES,
     Settings,
 )
 from scanner.diary import FOOTBALL_GAME_VERSION, Diary
@@ -1533,6 +1534,8 @@ class RefreshSummary:
     projected: int = 0  # upcoming games given a projection this pass
     graded: int = 0  # projections graded this pass
     staked: int = 0  # stake suggestions open after this pass
+    player_lines: int = 0  # player lines written this pass
+    player_graded: int = 0  # player lines graded this pass
     days_pending: int = 0  # season days still to read when the budget ran out (by day)
     errors: list[str] = field(default_factory=list)
 
@@ -1717,6 +1720,39 @@ class GameLog:
         summary.graded = self.diary.grade_projections(sport, now)
         if stakes_on:
             self.diary.grade_stakes(sport, now)
+        if self.settings.PLAYERS_ENABLED:
+            self._project_players(sport, season, now, summary)
+
+    def _project_players(self, sport, season, now, summary) -> None:
+        """Write every leader's stat line for each upcoming game, at most once an hour."""
+        from scanner.players import project_game, team_averages
+
+        rows = None
+        averages = None
+        for row in self.diary.football_upcoming(sport):
+            kickoff = datetime.fromisoformat(row["date"])
+            if kickoff <= now:
+                continue
+            last = self.diary.player_projection_age(sport, row["game_id"])
+            if last is not None and now - last < timedelta(minutes=PLAYER_REFRESH_MINUTES):
+                continue
+            if rows is None:
+                rows = self.diary.player_games(sport, season)
+                averages = team_averages(self.diary.football_games(sport, season), sport)
+            stored = self.diary.projection(sport, row["game_id"])
+            lines = project_game(
+                sport,
+                row["slate"],
+                kickoff,
+                stored["projection"] if stored else None,
+                rows,
+                averages,
+                now,
+            )
+            summary.player_lines += self.diary.replace_player_projections(
+                sport, row["game_id"], lines, now
+            )
+        summary.player_graded = self.diary.grade_player_projections(sport, now)
 
     def _reread_stale(self, sport, now, budget, summary) -> None:
         """Re-read games stored by an older parser, with whatever budget is left.
