@@ -858,3 +858,29 @@ def test_a_sheet_without_lines_says_so():
         .text
     )
     assert "<h2>Player lines</h2><p class='note'>none yet" in page
+
+
+def test_the_root_is_a_public_front_door_for_browsers_and_json_for_the_rest():
+    client, _ = make_client()
+    page = client.get("/", headers={"accept": "text/html"})
+    assert page.status_code == 200 and "<h1>Research, graded</h1>" in page.text
+    assert "No card yet; the first locks at 10:00 AM ET" in page.text
+    assert 'href="/card"' in page.text and "href='/props'" in page.text
+    assert "phone-secret" not in page.text
+    assert client.get("/").json()["pages"][0] == "/health"  # API clients still get the list
+
+    from datetime import UTC, datetime
+
+    from scanner.card import build_if_due
+    from tests.test_card import seeded_diary
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", GAMELOG_SPORTS="nfl,cfb")
+    diary, _, _, _ = seeded_diary()
+    build_if_due(diary, settings, datetime(2026, 10, 11, 14, 5, tzinfo=UTC))
+    page = (
+        TestClient(create_app(settings, diary, RuntimeStatus()))
+        .get("/", headers={"accept": "text/html"})
+        .text
+    )
+    assert "Card 2026-10-11, 2 picks." in page and "Over 41.5 (-105)" in page
+    assert "<span class='chip open'>open</span>" in page
