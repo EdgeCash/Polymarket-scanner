@@ -68,6 +68,6 @@ def test_the_player_image_lists_each_line_and_draws_the_first():
     settings = load_settings(GAMELOG_SPORTS="nba")
     svg = player_svg("nba", diary.football_upcoming_game("nba", "up-1"), mine, settings)
     assert ">Jayson Tatum<" in svg and ">NBA<" in svg and ">F<" in svg
-    assert ">Points<" in svg and f">{mine[0]['p10']}–{mine[0]['p90']}<" in svg
-    assert "<svg x='560'" in svg and f"median {mine[0]['median']}" in svg
+    assert ">Points<" in svg and f">{top['p10']}–{top['p90']}<" in svg
+    assert "<svg x='560'" in svg and f"median {top['median']}" in svg  # points drawn first
     assert png_size(to_png(svg)) == (WIDTH * 2, HEIGHT * 2)
