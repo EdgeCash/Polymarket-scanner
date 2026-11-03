@@ -239,6 +239,7 @@ def svg_histogram(
     muted: str = "#8884",
     width: int = WIDTH,
     height: int = HEIGHT,
+    text: str = "currentColor",
 ) -> str:
     """A bar for each integer outcome, the pick's side shaded, the book's line and the model's
     mean marked. Inline SVG with no scripts; colours work on a light or dark page."""
@@ -298,10 +299,10 @@ def svg_histogram(
         label = _tick(value, axis_label)
         parts.append(
             f"<text x='{x_of(value):.1f}' y='{height - 12}' text-anchor='middle' "
-            f"fill='currentColor' opacity='0.8'>{label}</text>"
+            f"fill='{text}' opacity='0.8'>{label}</text>"
         )
     parts.append(
-        f"<text x='{width - PAD_RIGHT}' y='{height - 1}' text-anchor='end' fill='currentColor' "
+        f"<text x='{width - PAD_RIGHT}' y='{height - 1}' text-anchor='end' fill='{text}' "
         f"opacity='0.7' font-size='13'>{html.escape(axis_label)}</text>"
     )
     marks = []

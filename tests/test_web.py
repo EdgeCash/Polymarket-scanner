@@ -636,3 +636,24 @@ def test_health_shows_the_daily_card():
         .text
     )
     assert "<th>Daily card</th><td>2026-10-11: 5 picks locked Sun 9:05:00 AM, late</td>" in page
+
+
+def test_the_share_images_are_served_as_png_without_a_token():
+    from tests.test_share import graded_card, png_size
+
+    client, _ = make_client()
+    assert client.get("/card.png").status_code == 404
+    diary, settings = graded_card()
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    latest = client.get("/card.png")
+    assert latest.status_code == 200 and latest.headers["content-type"] == "image/png"
+    assert latest.headers["cache-control"] == "public, max-age=300"
+    assert png_size(latest.content) == (2400, 1350)
+    assert client.get("/card/2026-10-11.png").content == latest.content
+    pick = client.get("/card/2026-10-11/1.png")
+    assert pick.status_code == 200 and png_size(pick.content) == (2400, 1350)
+    assert client.get("/card/2026-10-10.png").status_code == 404
+    assert client.get("/card/2026-10-11/9.png").status_code == 404
+    assert client.get("/card/2026-10-11").status_code == 200  # the page still answers
+    page = client.get("/card").text
+    assert "href='/card/2026-10-11.png'" in page and "href='/card/2026-10-11/1.png'" in page
