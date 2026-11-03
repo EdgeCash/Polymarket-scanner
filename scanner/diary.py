@@ -276,6 +276,38 @@ CREATE TABLE IF NOT EXISTS stakes (
     graded_at TEXT,
     UNIQUE (sport, game_id, market)
 );
+CREATE TABLE IF NOT EXISTS player_projections (
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    player_id TEXT NOT NULL,
+    stat TEXT NOT NULL,
+    team_id TEXT NOT NULL,
+    team_abbr TEXT NOT NULL,
+    opponent_abbr TEXT NOT NULL,
+    home INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    position TEXT,
+    kickoff TEXT NOT NULL,
+    model TEXT NOT NULL,
+    made_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    mean REAL NOT NULL,
+    sd REAL NOT NULL,
+    median INTEGER NOT NULL,
+    p10 INTEGER NOT NULL,
+    p90 INTEGER NOT NULL,
+    params TEXT NOT NULL,
+    pmf TEXT NOT NULL,
+    outcome TEXT,
+    actual INTEGER,
+    error REAL,
+    pit REAL,
+    in_band INTEGER,
+    over_median INTEGER,
+    graded_at TEXT,
+    PRIMARY KEY (sport, game_id, player_id, stat)
+);
+CREATE INDEX IF NOT EXISTS player_projections_open ON player_projections (sport, outcome, kickoff);
 CREATE TABLE IF NOT EXISTS cards (
     card_date TEXT PRIMARY KEY,
     locked_at TEXT NOT NULL,
@@ -869,6 +901,8 @@ class Diary:
                     book,
                 ),
             )
+            if not record.players:
+                return  # a record without lines (one read back from here) keeps what is stored
             self._conn.execute(
                 "DELETE FROM player_games WHERE sport = ? AND game_id = ?",
                 (record.sport, record.game_id),
@@ -1418,6 +1452,198 @@ class Diary:
             ],
         }
 
+    # -- player lines ---------------------------------------------------------------------
+
+    def replace_player_projections(
+        self, sport: str, game_id: str, rows: list[dict], at: datetime
+    ) -> int:
+        """Make a game's open player lines match this pass's projections, keeping made_at."""
+        with self._lock:
+            graded = {
+                (r["player_id"], r["stat"])
+                for r in self._conn.execute(
+                    "SELECT player_id, stat FROM player_projections WHERE sport = ? AND "
+                    "game_id = ? AND outcome IS NOT NULL",
+                    (sport, game_id),
+                ).fetchall()
+            }
+            if graded:
+                return 0  # the game has landed: its lines are fixed
+            made = {
+                (r["player_id"], r["stat"]): r["made_at"]
+                for r in self._conn.execute(
+                    "SELECT player_id, stat, made_at FROM player_projections WHERE sport = ? "
+                    "AND game_id = ?",
+                    (sport, game_id),
+                ).fetchall()
+            }
+            self._conn.execute(
+                "DELETE FROM player_projections WHERE sport = ? AND game_id = ?", (sport, game_id)
+            )
+            for row in rows:
+                key = (row["player_id"], row["stat"])
+                self._conn.execute(
+                    """INSERT INTO player_projections (sport, game_id, player_id, stat, team_id,
+                       team_abbr, opponent_abbr, home, name, position, kickoff, model, made_at,
+                       updated_at, mean, sd, median, p10, p90, params, pmf)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        sport,
+                        game_id,
+                        row["player_id"],
+                        row["stat"],
+                        row["team_id"],
+                        row["team_abbr"],
+                        row["opponent_abbr"],
+                        int(row["home"]),
+                        row["name"],
+                        row["position"],
+                        _iso(row["kickoff"]),
+                        row["model"],
+                        made.get(key, _iso(at)),
+                        _iso(at),
+                        row["mean"],
+                        row["sd"],
+                        row["median"],
+                        row["p10"],
+                        row["p90"],
+                        json.dumps(row["params"]),
+                        json.dumps(row["pmf"]),
+                    ),
+                )
+        return len(rows)
+
+    @staticmethod
+    def _player_projection_row(row) -> dict:
+        out = dict(row)
+        out["params"] = json.loads(out["params"])
+        out["pmf"] = json.loads(out["pmf"])
+        out["home"] = bool(out["home"])
+        for key in ("in_band", "over_median"):
+            out[key] = None if out[key] is None else bool(out[key])
+        return out
+
+    def player_projections(self, sport: str, game_id: str) -> list[dict]:
+        """A game's player lines, the home side first, each side's leaders by mean."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM player_projections WHERE sport = ? AND game_id = ? "
+                "ORDER BY home DESC, stat, mean DESC",
+                (sport, game_id),
+            ).fetchall()
+        return [self._player_projection_row(r) for r in rows]
+
+    def player_projection(self, sport: str, game_id: str, player_id: str, stat: str) -> dict | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM player_projections WHERE sport = ? AND game_id = ? AND "
+                "player_id = ? AND stat = ?",
+                (sport, game_id, player_id, stat),
+            ).fetchone()
+        return self._player_projection_row(row) if row else None
+
+    def player_projection_age(self, sport: str, game_id: str) -> datetime | None:
+        """When a game's player lines were last written, or None when it has none."""
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT MAX(updated_at) AS at FROM player_projections WHERE sport = ? AND "
+                "game_id = ?",
+                (sport, game_id),
+            ).fetchone()
+        return datetime.fromisoformat(row["at"]) if row and row["at"] else None
+
+    def grade_player_projections(
+        self, sport: str, now: datetime, grace_hours: float = 4.0, give_up_days: float = 10.0
+    ) -> int:
+        """Grade player lines whose game is in the log, from the player's own line in it."""
+        from scanner.players import grade_line
+
+        graded = 0
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM player_projections WHERE sport = ? AND outcome IS NULL "
+                "AND kickoff < ?",
+                (sport, _iso(now - timedelta(hours=grace_hours))),
+            ).fetchall()
+            for row in rows:
+                game = self._conn.execute(
+                    "SELECT 1 FROM football_games WHERE sport = ? AND game_id = ?",
+                    (sport, row["game_id"]),
+                ).fetchone()
+                if game is None:
+                    if datetime.fromisoformat(row["kickoff"]) < now - timedelta(days=give_up_days):
+                        self._conn.execute(
+                            "UPDATE player_projections SET outcome = ?, graded_at = ? WHERE "
+                            "sport = ? AND game_id = ? AND player_id = ? AND stat = ?",
+                            (OUTCOME_NOT_GRADED, _iso(now), sport, row["game_id"],
+                             row["player_id"], row["stat"]),
+                        )  # fmt: skip
+                    continue
+                line = self._conn.execute(
+                    "SELECT played, stats FROM player_games WHERE sport = ? AND game_id = ? "
+                    "AND player_id = ?",
+                    (sport, row["game_id"], row["player_id"]),
+                ).fetchone()
+                actual = None
+                if line is not None and line["played"]:
+                    value = json.loads(line["stats"]).get(row["stat"])
+                    actual = int(round(value)) if isinstance(value, int | float) else None
+                grade = grade_line(self._player_projection_row(row), actual)
+                self._conn.execute(
+                    """UPDATE player_projections SET outcome = ?, actual = ?, error = ?, pit = ?,
+                       in_band = ?, over_median = ?, graded_at = ? WHERE sport = ? AND
+                       game_id = ? AND player_id = ? AND stat = ?""",
+                    (
+                        grade["outcome"],
+                        grade.get("actual"),
+                        grade.get("error"),
+                        grade.get("pit"),
+                        None if grade.get("in_band") is None else int(grade["in_band"]),
+                        None if grade.get("over_median") is None else int(grade["over_median"]),
+                        _iso(now),
+                        sport,
+                        row["game_id"],
+                        row["player_id"],
+                        row["stat"],
+                    ),
+                )
+                graded += 1
+        return graded
+
+    def player_projection_summary(self, since: datetime | None = None) -> dict:
+        """How the player lines have done: the miss, the bias and the calibration, by stat."""
+        from scanner.players import summarise_grades
+
+        where, params = ["outcome IS NOT NULL"], []
+        if since is not None:
+            where.append("kickoff >= ?")
+            params.append(_iso(since))
+        with self._lock:
+            rows = self._conn.execute(
+                f"SELECT sport, stat, outcome, actual, error, pit, in_band, over_median, median, "
+                f"mean FROM player_projections WHERE {' AND '.join(where)}",
+                params,
+            ).fetchall()
+            open_count = self._conn.execute(
+                "SELECT COUNT(*) AS n FROM player_projections WHERE outcome IS NULL"
+            ).fetchone()["n"]
+            recent = self._conn.execute(
+                "SELECT sport, game_id, kickoff, name, team_abbr, opponent_abbr, stat, mean, "
+                "median, p10, p90, actual, pit FROM player_projections WHERE outcome = 'graded' "
+                "ORDER BY kickoff DESC, mean DESC LIMIT 12"
+            ).fetchall()
+        graded = []
+        for r in rows:
+            d = dict(r)
+            if d["outcome"] == "graded":
+                d["abs_error"] = abs(d["error"])
+                d["on_median"] = d["actual"] == d["median"]
+            graded.append(d)
+        out = summarise_grades(graded)
+        out["open"] = int(open_count)
+        out["recent"] = [dict(r) for r in recent]
+        return out
+
     # -- the daily card ---------------------------------------------------------------
 
     def record_card(
@@ -1814,6 +2040,7 @@ class Diary:
             "projections": self.projection_summary(since),
             "stakes": self.stake_summary(since),
             "card": self.card_summary(since),
+            "players": self.player_projection_summary(since),
         }
 
     @staticmethod

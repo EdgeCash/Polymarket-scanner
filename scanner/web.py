@@ -229,6 +229,7 @@ worse prices, and a few weeks is a small sample.</p>
 {_projection_section(card.get("projections") or {}, settings)}
 {_stake_section(card.get("stakes") or {}, settings)}
 {_card_section(card.get("card") or {}, settings)}
+{_players_section(card.get("players") or {}, settings)}
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
@@ -565,6 +566,88 @@ def _card_section(cd: dict, settings: Settings) -> str:
     )
 
 
+STAT_LABELS = {
+    "points": "Points",
+    "rebounds": "Rebounds",
+    "assists": "Assists",
+    "three_made": "Threes",
+    "shots": "Shots on goal",
+    "goals": "Goals",
+    "saves": "Saves",
+    "pass_yards": "Passing yards",
+    "rush_yards": "Rushing yards",
+    "rec_yards": "Receiving yards",
+    "receptions": "Receptions",
+    "pass_td": "Passing TDs",
+}
+
+
+def _players_section(ps: dict, settings: Settings) -> str:
+    """How the player lines have done: the miss, the bias and whether the bands hold."""
+    title = "Player lines (every leader's stat line, graded at the final, nothing sent)"
+    if not settings.PLAYERS_ENABLED or not settings.PROJECTION_ENABLED:
+        return "<h2>Player lines</h2><p class='note'>off</p>"
+    if not ps or not (ps.get("projected") or ps.get("open")):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>no player lines yet</p>"
+    rows = [
+        ("Lines", f"{ps['projected']} graded or settled, {ps['open']} open"),
+        ("Did not play", str(ps["did_not_play"])),
+    ]
+    if ps.get("graded"):
+        rows += [
+            ("Graded", str(ps["graded"])),
+            ("Avg miss", f"{ps['mae']:.2f}"),
+            ("Bias (actual minus projected)", _signed(ps["bias"], 2)),
+            ("Actual above the median", _pct(ps["over_median"])),
+            ("Inside the 80% band", _pct(ps["in_band"])),
+        ]
+    body = "".join(
+        f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>" for k, v in rows
+    )
+    by_sport = ""
+    for sport, part in (ps.get("by_sport") or {}).items():
+        by_sport += f"<tr><th colspan='2'>{html.escape(sport.upper())} ({part['graded']})</th></tr>"
+        for stat, tally in (part.get("by_stat") or {}).items():
+            text = (
+                f"{tally['graded']} graded, miss {tally['mae']:.1f}, bias "
+                f"{_signed(tally['bias'], 1)}, over median {_pct(tally['over_median'])}, "
+                f"in band {_pct(tally['in_band'])}"
+            )
+            by_sport += (
+                f"<tr><th>{html.escape(STAT_LABELS.get(stat, stat))}</th>"
+                f"<td class='num'>{html.escape(text)}</td></tr>"
+            )
+    recent = "".join(
+        "<tr><td>{when}<br>{who}</td><td>{stat}</td><td class='num'>{line}</td>"
+        "<td class='num'>{actual}</td></tr>".format(
+            when=html.escape(_local(r["kickoff"], settings.TZ)),
+            who=html.escape(f"{r['name']} ({r['team_abbr']} v {r['opponent_abbr']})"),
+            stat=html.escape(STAT_LABELS.get(r["stat"], r["stat"])),
+            line=html.escape(f"{r['median']} ({r['p10']}–{r['p90']})"),
+            actual=html.escape(str(r["actual"])),
+        )
+        for r in ps.get("recent") or []
+    )
+    table = (
+        "<table><tr><th>Player</th><th>Stat</th><th>Line (80% band)</th><th>Actual</th></tr>"
+        f"{recent}</table>"
+        if recent
+        else ""
+    )
+    note = (
+        "<p class='note'>A line is the player's rate per minute (per second on the ice; per "
+        "game in football) shrunk toward his position's league rate, times his projected "
+        "playing time from his last five games, scaled by how the game projection sees his "
+        "team's scoring and the pace. The spread is a negative binomial mixed over his "
+        "minutes. Only players who played their team's last game are projected. Actual above "
+        "the median should sit near 50% and inside the band near 80% if the spread is honest; "
+        "the miss is the average distance from the projected mean. Nothing is sent or placed.</p>"
+    )
+    return (
+        f"<h2>{html.escape(title)}</h2><table>{body}</table><table>{by_sport}</table>{table}{note}"
+    )
+
+
 def _card_health(status: RuntimeStatus, settings: Settings) -> str:
     if not settings.CARD_ENABLED or not settings.PROJECTION_ENABLED:
         return "off"
@@ -618,6 +701,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['projected']} sheets projected"
     if gl.get("staked"):
         text += f", {gl['staked']} stakes open"
+    if gl.get("player_lines"):
+        text += f", {gl['player_lines']} player lines"
     if gl.get("error"):
         text += f"; error: {gl['error']}"
     return text

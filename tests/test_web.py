@@ -694,3 +694,59 @@ def test_college_basketball_sheets_say_tip_off_and_home_court():
     assert "Thin: fewer than 3 games" in page
     sim = client.get(f"/sim/cbb/{duke.game_id}?token=phone-secret").text
     assert "Spread at other lines" in sim and "Margin (DUKE, points)" in sim
+
+
+def test_scorecard_shows_the_player_lines():
+    client, _ = make_client()
+    page = client.get("/scorecard?token=phone-secret").text
+    assert "Player lines (every leader" in page and "no player lines yet" in page
+    off = make_client(PLAYERS_ENABLED=False)[0].get("/scorecard?token=phone-secret").text
+    assert "<h2>Player lines</h2><p class='note'>off</p>" in off
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.gamelog import parse_game_summary
+    from scanner.players import distribution, summarise_pmf
+    from tests.conftest import load_fixture
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    tatum = next(p for p in record.players if p.name == "Jayson Tatum")
+    kickoff = datetime(2026, 10, 30, 23, 0, tzinfo=UTC)
+    params = {
+        "rate": 0.7,
+        "exposure_mu": 40.0,
+        "exposure_sd": 4.0,
+        "exposure_cap": 48.0,
+        "factor": 1.0,
+        "k": 12.0,
+    }
+    pmf = distribution(params)
+    line = {
+        "player_id": tatum.player_id,
+        "stat": "points",
+        "team_id": tatum.team_id,
+        "team_abbr": "BOS",
+        "opponent_abbr": "BKN",
+        "home": True,
+        "name": tatum.name,
+        "position": "F",
+        "kickoff": kickoff,
+        "model": "p1",
+        "params": params,
+        "pmf": {str(x): p for x, p in pmf.items()},
+        **summarise_pmf(pmf),
+    }
+    diary.replace_player_projections("nba", record.game_id, [line], kickoff - timedelta(hours=5))
+    diary.store_football_game(record, kickoff + timedelta(hours=3))
+    assert diary.grade_player_projections("nba", kickoff + timedelta(hours=6)) == 1
+    page = (
+        TestClient(create_app(settings, diary, RuntimeStatus()))
+        .get("/scorecard?token=phone-secret")
+        .text
+    )
+    assert "<th>Graded</th><td class='num'>1</td>" in page
+    assert "<th>Actual above the median</th><td class='num'>100.0%</td>" in page
+    assert "<th>Inside the 80% band</th><td class='num'>100.0%</td>" in page
+    assert "<tr><th colspan='2'>NBA (1)</th></tr>" in page and "<th>Points</th>" in page
+    assert "Jayson Tatum (BOS v BKN)" in page and "<td class='num'>40</td>" in page
