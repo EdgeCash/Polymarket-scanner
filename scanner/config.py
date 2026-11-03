@@ -64,7 +64,7 @@ GAMELOG_UPCOMING_HOURS = 48.0  # how far ahead matchup sheets are prepared
 GAMELOG_UPCOMING_REFRESH_MINUTES = (
     60.0  # how often an upcoming game's weather and venue are re-read
 )
-GAMELOG_SPORT_KEYS = ("nfl", "cfb", "nba", "nhl")  # sports with a game log (gamelog.LOGS)
+GAMELOG_SPORT_KEYS = ("nfl", "cfb", "nba", "nhl", "cbb")  # sports with a game log (gamelog.LOGS)
 SIM_DRAWS = 100_000  # simulated games behind each card pick's picture
 CARD_WINDOW_HOURS = 24.0  # a card covers the games that start within a day of its lock
 CARD_TRUST_MIN_CLOSED = 20  # closed lines a sport needs before its record weighs the ranking

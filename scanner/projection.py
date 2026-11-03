@@ -50,6 +50,9 @@ TUNING = {
     "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=13.0, volume_stat="total_yards"),
     # Basketball: points alone, and a home edge that has shrunk to a few points.
     "nba": SportTuning(hfa=2.5, sigma=12.5, sigma_total=19.0, first_half_share=0.5),
+    # College: a bigger home edge, two halves, and a wider spread of totals than the
+    # shorter game would suggest, since the teams range from Duke to a visitor playing up.
+    "cbb": SportTuning(hfa=3.5, sigma=11.0, sigma_total=17.0, first_half_share=0.47),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead; the
     # "first half" is the first period; gaps are in goals, so the buckets are finer.

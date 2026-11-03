@@ -91,7 +91,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `PREGAME_MIN_EDGE` | `0.03` | Recording threshold: edge after fee against the book's vig-free number |
 | `PREGAME_HORIZON_HOURS` | `36` | How far ahead games are compared |
 | `GAMELOG_ENABLED` | `true` | The game log and matchup sheets |
-| `GAMELOG_SPORTS` | `nfl,cfb,nba,nhl` | Sports with a game log, sheets, projections and stake suggestions |
+| `GAMELOG_SPORTS` | `nfl,cfb,nba,nhl,cbb` | Sports with a game log, sheets, projections and stake suggestions |
 | `PROJECTION_ENABLED` | `true` | The projection model on the sheets and scorecard |
 | `STAKE_ENABLED` | `true` | Record (and, once earned, show) what the model would stake |
 | `BANKROLL` | `1000` | Dollars the stake suggestions are sized from |
@@ -494,7 +494,7 @@ sheets, model and stake suggestions for them. Everything above carries over:
 the same `GameLog` thread, the same diary tables (still named `football_*`;
 for a sport ESPN lists by day the week column holds the day as `YYYYMMDD`),
 the same projection, grading and stake code, and the same per-sport gate.
-`GAMELOG_SPORTS` (`nfl,cfb,nba,nhl`) says which sports get a log; the `LOGS`
+`GAMELOG_SPORTS` (`nfl,cfb,nba,nhl,cbb`) says which sports get a log; the `LOGS`
 table in `scanner/gamelog.py` says how each one is read and shown, and
 `TUNING` in `scanner/projection.py` holds the model's numbers per sport. What
 differs:
@@ -535,6 +535,23 @@ counting the days still to read; 15 sheets per sport for the next two days,
 every one projected, and 30 and 32 teams ranked. The live football scanner and
 its alerts are untouched: the NBA and NHL are sheets, projections and shadow
 stakes only. Nothing is sent or placed.
+
+### College basketball (CBB)
+
+The college season opened on 2 November 2026 and the owner asked for it next.
+It is the NBA's path with three differences: ESPN's Division I listing
+(`groups=50`, the same filter the pre-game scan uses; a visitor from outside
+Division I appears with its games against Division I sides and is usually
+thin), two halves instead of four quarters (the sheet's "1st half" is the
+first line score), and its own numbers in `TUNING` (home court 3.5, a margin
+spread of 11, a total spread of 17, a first-half share of 0.47 until the log
+says otherwise). Opening night listed 182 games, so the backfill takes a few
+passes per day and the matchups page is long on a Saturday. The simulator's
+overtime for college is five minutes at a slightly lower pace than the NBA's.
+Conviction in the card is in each sport's own spread, so college sits beside
+the others on the same scale; with 360 teams and few games each, its early
+gaps from the book are noisy, which the per-sport trust weight and the record
+by sport are there to show.
 
 ## The daily card and the simulator
 

@@ -977,6 +977,24 @@ LOGS: dict[str, SportLog] = {
             "percentages count goals scored in play. The puck line is always 1.5, so the "
             "book's margin is read off its moneyline.",
         ),
+        SportLog(
+            "cbb",
+            True,
+            1,
+            "1st half",
+            None,
+            "points",
+            "Tip-off",
+            "home court",
+            False,
+            NBA_METRICS,
+            SCORE_FIRST_HALF,
+            _nba_box_stats,
+            _aggregate_nba,
+            "Possessions are estimated from shots, free throws, offensive rebounds and turnovers. "
+            "Division I games only; a non-Division I visitor is in the log with its games "
+            "against Division I sides.",
+        ),
     )
 }
 

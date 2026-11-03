@@ -759,7 +759,7 @@ def test_the_log_covers_exactly_the_sports_the_settings_allow():
     from scanner.config import GAMELOG_SPORT_KEYS
 
     assert tuple(LOGS) == GAMELOG_SPORT_KEYS
-    assert [s.daily for s in LOGS.values()] == [False, False, True, True]
+    assert [s.daily for s in LOGS.values()] == [False, False, True, True, True]
 
 
 def test_a_days_scoreboard_names_the_season_on_its_events_and_carries_the_calendar():
@@ -1056,3 +1056,35 @@ def test_refresh_all_locks_the_daily_card_when_its_time_comes_and_grades_it():
     quiet = Diary(":memory:")
     GameLog(off, quiet, feed=feed, now=lambda: due).refresh_all(due)
     assert quiet.latest_card_date() is None
+
+
+def test_college_basketball_is_read_like_the_nba_with_halves_for_periods():
+    raw = load_fixture("espn_cbb_day.json")
+    season, week, games = parse_week_scoreboard(raw, "cbb")
+    assert (season, week) == (2027, None) and len(games) == 4
+    duke = next(g for g in games if g.home.abbreviation == "DUKE")
+    assert duke.completed and (duke.home_score, duke.away_score) == (84, 50)
+    assert duke.home_lines == (33, 51) and duke.away_lines == (18, 32)  # two halves
+    assert duke.ranks == {"home": 2, "away": None} and duke.records["home"]["total"] == "1-0"
+    neutral = next(g for g in games if g.home.abbreviation == "FLA")
+    assert neutral.neutral and neutral.ranks == {"home": 1, "away": 14}
+    days = parse_calendar(raw)
+    assert days[0] == date(2026, 11, 1) and days[-1] == date(2027, 3, 7) and len(days) == 124
+
+    record = parse_game_summary(load_fixture("espn_cbb_summary_final.json"), "cbb")
+    assert record is not None and record.sport == "cbb" and record.season == 2027
+    assert record.home.abbreviation == "DUKE" and record.away.abbreviation == "ARMY"
+    home, away = record.home_stats, record.away_stats
+    assert home["points"] == 84 and home["first_half_points"] == 33  # the first half alone
+    assert away["first_half_points"] == 18
+    assert (home["fg_made"], home["fg_att"], home["three_att"], home["ft_att"]) == (29, 59, 22, 26)
+    assert home["off_reb"] == 14 and away["turnovers"] == 24 and home["paint_points"] == 50
+    assert home["possessions"] == pytest.approx(59 - 14 + 13 + 0.44 * 26)
+    assert record.book is not None and record.book.home_spread == -44.5
+    assert record.book.total == 157.5 and record.book.home_ml is None  # moneyline off
+    figures = aggregate(team_games([record], record.home.team_id), "cbb")
+    assert figures["ppg"] == 84 and figures["off_rating"] == pytest.approx(
+        84 / home["possessions"] * 100
+    )
+    assert LOGS["cbb"].daily and LOGS["cbb"].half_periods == 1
+    assert LOGS["cbb"].start_label == "Tip-off" and LOGS["cbb"].home_label == "home court"

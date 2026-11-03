@@ -1,0 +1,837 @@
+{
+ "leagues": [
+  {
+   "id": "41",
+   "name": "NCAA Men's Basketball",
+   "abbreviation": "NCAAM",
+   "slug": "mens-college-basketball",
+   "season": {
+    "year": 2027,
+    "startDate": "2026-07-13T07:00Z",
+    "endDate": "2027-04-07T06:59Z",
+    "displayName": "2026-27",
+    "type": {
+     "id": "2",
+     "type": 2,
+     "name": "Regular Season",
+     "abbreviation": "reg"
+    }
+   },
+   "calendarType": "day",
+   "calendarStartDate": "2026-07-13T07:00Z",
+   "calendarEndDate": "2027-04-07T06:59Z",
+   "calendar": [
+    "2026-11-01T07:00Z",
+    "2026-11-02T08:00Z",
+    "2026-11-03T08:00Z",
+    "2026-11-04T08:00Z",
+    "2026-11-05T08:00Z",
+    "2026-11-06T08:00Z",
+    "2026-11-07T08:00Z",
+    "2026-11-08T08:00Z",
+    "2026-11-09T08:00Z",
+    "2026-11-10T08:00Z",
+    "2026-11-11T08:00Z",
+    "2026-11-12T08:00Z",
+    "2026-11-13T08:00Z",
+    "2026-11-14T08:00Z",
+    "2026-11-15T08:00Z",
+    "2026-11-16T08:00Z",
+    "2026-11-17T08:00Z",
+    "2026-11-18T08:00Z",
+    "2026-11-19T08:00Z",
+    "2026-11-20T08:00Z",
+    "2026-11-21T08:00Z",
+    "2026-11-22T08:00Z",
+    "2026-11-23T08:00Z",
+    "2026-11-24T08:00Z",
+    "2026-11-25T08:00Z",
+    "2026-11-26T08:00Z",
+    "2026-11-27T08:00Z",
+    "2026-11-28T08:00Z",
+    "2026-11-29T08:00Z",
+    "2026-11-30T08:00Z",
+    "2026-12-01T08:00Z",
+    "2026-12-02T08:00Z",
+    "2026-12-03T08:00Z",
+    "2026-12-04T08:00Z",
+    "2026-12-05T08:00Z",
+    "2026-12-06T08:00Z",
+    "2026-12-07T08:00Z",
+    "2026-12-08T08:00Z",
+    "2026-12-09T08:00Z",
+    "2026-12-10T08:00Z",
+    "2026-12-11T08:00Z",
+    "2026-12-12T08:00Z",
+    "2026-12-13T08:00Z",
+    "2026-12-14T08:00Z",
+    "2026-12-15T08:00Z",
+    "2026-12-16T08:00Z",
+    "2026-12-17T08:00Z",
+    "2026-12-18T08:00Z",
+    "2026-12-19T08:00Z",
+    "2026-12-20T08:00Z",
+    "2026-12-21T08:00Z",
+    "2026-12-22T08:00Z",
+    "2026-12-23T08:00Z",
+    "2026-12-27T08:00Z",
+    "2026-12-28T08:00Z",
+    "2026-12-29T08:00Z",
+    "2026-12-30T08:00Z",
+    "2026-12-31T08:00Z",
+    "2027-01-01T08:00Z",
+    "2027-01-02T08:00Z",
+    "2027-01-03T08:00Z",
+    "2027-01-04T08:00Z",
+    "2027-01-05T08:00Z",
+    "2027-01-06T08:00Z",
+    "2027-01-07T08:00Z",
+    "2027-01-08T08:00Z",
+    "2027-01-09T08:00Z",
+    "2027-01-10T08:00Z",
+    "2027-01-11T08:00Z",
+    "2027-01-12T08:00Z",
+    "2027-01-13T08:00Z",
+    "2027-01-14T08:00Z",
+    "2027-01-15T08:00Z",
+    "2027-01-16T08:00Z",
+    "2027-01-17T08:00Z",
+    "2027-01-18T08:00Z",
+    "2027-01-19T08:00Z",
+    "2027-01-20T08:00Z",
+    "2027-01-21T08:00Z",
+    "2027-01-22T08:00Z",
+    "2027-01-23T08:00Z",
+    "2027-01-24T08:00Z",
+    "2027-01-25T08:00Z",
+    "2027-01-26T08:00Z",
+    "2027-01-27T08:00Z",
+    "2027-01-28T08:00Z",
+    "2027-01-29T08:00Z",
+    "2027-01-30T08:00Z",
+    "2027-01-31T08:00Z",
+    "2027-02-01T08:00Z",
+    "2027-02-02T08:00Z",
+    "2027-02-03T08:00Z",
+    "2027-02-04T08:00Z",
+    "2027-02-05T08:00Z",
+    "2027-02-06T08:00Z",
+    "2027-02-07T08:00Z",
+    "2027-02-08T08:00Z",
+    "2027-02-09T08:00Z",
+    "2027-02-10T08:00Z",
+    "2027-02-11T08:00Z",
+    "2027-02-12T08:00Z",
+    "2027-02-13T08:00Z",
+    "2027-02-14T08:00Z",
+    "2027-02-15T08:00Z",
+    "2027-02-16T08:00Z",
+    "2027-02-17T08:00Z",
+    "2027-02-18T08:00Z",
+    "2027-02-19T08:00Z",
+    "2027-02-20T08:00Z",
+    "2027-02-21T08:00Z",
+    "2027-02-22T08:00Z",
+    "2027-02-23T08:00Z",
+    "2027-02-24T08:00Z",
+    "2027-02-25T08:00Z",
+    "2027-02-26T08:00Z",
+    "2027-02-27T08:00Z",
+    "2027-02-28T08:00Z",
+    "2027-03-01T08:00Z",
+    "2027-03-02T08:00Z",
+    "2027-03-03T08:00Z",
+    "2027-03-04T08:00Z",
+    "2027-03-05T08:00Z",
+    "2027-03-06T08:00Z",
+    "2027-03-07T08:00Z"
+   ]
+  }
+ ],
+ "events": [
+  {
+   "id": "401906769",
+   "date": "2026-11-02T23:00Z",
+   "name": "Miami Hurricanes at Florida Gators",
+   "shortName": "MIA VS FLA",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 2,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401906769",
+     "date": "2026-11-02T23:00Z",
+     "neutralSite": true,
+     "venue": {
+      "id": "1396",
+      "fullName": "Benchmark International Arena",
+      "address": {
+       "city": "Tampa",
+       "state": "FL"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "57",
+       "uid": "s:40~l:41~t:57",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "57",
+        "abbreviation": "FLA",
+        "displayName": "Florida Gators",
+        "shortDisplayName": "Florida",
+        "name": "Gators",
+        "location": "Florida",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/57.png",
+        "color": "0021a5"
+       },
+       "score": "77",
+       "linescores": [
+        {
+         "value": 46.0,
+         "displayValue": "46",
+         "period": 1
+        },
+        {
+         "value": 31.0,
+         "displayValue": "31",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 1
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-0"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      },
+      {
+       "id": "2390",
+       "uid": "s:40~l:41~t:2390",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "2390",
+        "abbreviation": "MIA",
+        "displayName": "Miami Hurricanes",
+        "shortDisplayName": "Miami",
+        "name": "Hurricanes",
+        "location": "Miami",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/2390.png",
+        "color": "f47423"
+       },
+       "score": "67",
+       "linescores": [
+        {
+         "value": 36.0,
+         "displayValue": "36",
+         "period": 1
+        },
+        {
+         "value": 31.0,
+         "displayValue": "31",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 14
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-0"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 2,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "401909562",
+   "date": "2026-11-02T23:30Z",
+   "name": "Army Black Knights at Duke Blue Devils",
+   "shortName": "ARMY @ DUKE",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 2,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401909562",
+     "date": "2026-11-02T23:30Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "1914",
+      "fullName": "Cameron Indoor Stadium",
+      "address": {
+       "city": "Durham",
+       "state": "NC"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "150",
+       "uid": "s:40~l:41~t:150",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "150",
+        "abbreviation": "DUKE",
+        "displayName": "Duke Blue Devils",
+        "shortDisplayName": "Duke",
+        "name": "Blue Devils",
+        "location": "Duke",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/150.png",
+        "color": "00539b"
+       },
+       "score": "84",
+       "linescores": [
+        {
+         "value": 33.0,
+         "displayValue": "33",
+         "period": 1
+        },
+        {
+         "value": 51.0,
+         "displayValue": "51",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 2
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-0"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      },
+      {
+       "id": "349",
+       "uid": "s:40~l:41~t:349",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "349",
+        "abbreviation": "ARMY",
+        "displayName": "Army Black Knights",
+        "shortDisplayName": "Army",
+        "name": "Black Knights",
+        "location": "Army",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/349.png",
+        "color": "000000"
+       },
+       "score": "50",
+       "linescores": [
+        {
+         "value": 18.0,
+         "displayValue": "18",
+         "period": 1
+        },
+        {
+         "value": 32.0,
+         "displayValue": "32",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 99
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-1"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 2,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "401913525",
+   "date": "2026-11-03T01:00Z",
+   "name": "Fairleigh Dickinson Knights at Illinois Fighting Illini",
+   "shortName": "FDU @ ILL",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 2,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401913525",
+     "date": "2026-11-03T01:00Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "2127",
+      "fullName": "State Farm Center",
+      "address": {
+       "city": "Champaign",
+       "state": "IL"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "356",
+       "uid": "s:40~l:41~t:356",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "356",
+        "abbreviation": "ILL",
+        "displayName": "Illinois Fighting Illini",
+        "shortDisplayName": "Illinois",
+        "name": "Fighting Illini",
+        "location": "Illinois",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/356.png",
+        "color": "ff5f05"
+       },
+       "score": "120",
+       "linescores": [
+        {
+         "value": 67.0,
+         "displayValue": "67",
+         "period": 1
+        },
+        {
+         "value": 53.0,
+         "displayValue": "53",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 3
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-0"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      },
+      {
+       "id": "161",
+       "uid": "s:40~l:41~t:161",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "161",
+        "abbreviation": "FDU",
+        "displayName": "Fairleigh Dickinson Knights",
+        "shortDisplayName": "FDU",
+        "name": "Knights",
+        "location": "Fairleigh Dickinson",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/161.png",
+        "color": "72293c"
+       },
+       "score": "45",
+       "linescores": [
+        {
+         "value": 20.0,
+         "displayValue": "20",
+         "period": 1
+        },
+        {
+         "value": 25.0,
+         "displayValue": "25",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 99
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-1"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 2,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "401911390",
+   "date": "2026-11-03T02:00Z",
+   "name": "Gardner-Webb Runnin' Bulldogs at UConn Huskies",
+   "shortName": "GWEB @ CONN",
+   "season": {
+    "year": 2027,
+    "type": 2,
+    "slug": "regular-season"
+   },
+   "status": {
+    "clock": 0.0,
+    "displayClock": "0:00",
+    "period": 2,
+    "type": {
+     "id": "3",
+     "name": "STATUS_FINAL",
+     "state": "post",
+     "completed": true,
+     "description": "Final",
+     "detail": "Final",
+     "shortDetail": "Final"
+    }
+   },
+   "competitions": [
+    {
+     "id": "401911390",
+     "date": "2026-11-03T02:00Z",
+     "neutralSite": false,
+     "venue": {
+      "id": "64",
+      "fullName": "PeoplesBank Arena",
+      "address": {
+       "city": "Hartford",
+       "state": "CT"
+      },
+      "indoor": true
+     },
+     "competitors": [
+      {
+       "id": "41",
+       "uid": "s:40~l:41~t:41",
+       "type": "team",
+       "order": 0,
+       "homeAway": "home",
+       "winner": true,
+       "team": {
+        "id": "41",
+        "abbreviation": "CONN",
+        "displayName": "UConn Huskies",
+        "shortDisplayName": "UConn",
+        "name": "Huskies",
+        "location": "UConn",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/41.png",
+        "color": "0c2340"
+       },
+       "score": "86",
+       "linescores": [
+        {
+         "value": 43.0,
+         "displayValue": "43",
+         "period": 1
+        },
+        {
+         "value": 43.0,
+         "displayValue": "43",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 4
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "1-0"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "1-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-0"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      },
+      {
+       "id": "2241",
+       "uid": "s:40~l:41~t:2241",
+       "type": "team",
+       "order": 1,
+       "homeAway": "away",
+       "winner": false,
+       "team": {
+        "id": "2241",
+        "abbreviation": "GWEB",
+        "displayName": "Gardner-Webb Runnin' Bulldogs",
+        "shortDisplayName": "Gardner-Webb",
+        "name": "Runnin' Bulldogs",
+        "location": "Gardner-Webb",
+        "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/2241.png",
+        "color": "c12535"
+       },
+       "score": "46",
+       "linescores": [
+        {
+         "value": 24.0,
+         "displayValue": "24",
+         "period": 1
+        },
+        {
+         "value": 22.0,
+         "displayValue": "22",
+         "period": 2
+        }
+       ],
+       "curatedRank": {
+        "current": 99
+       },
+       "records": [
+        {
+         "name": "overall",
+         "abbreviation": "Game",
+         "type": "total",
+         "summary": "0-1"
+        },
+        {
+         "name": "Home",
+         "type": "home",
+         "summary": "0-0"
+        },
+        {
+         "name": "Road",
+         "type": "road",
+         "summary": "0-1"
+        },
+        {
+         "name": "vs. Conf.",
+         "type": "vsconf",
+         "summary": "0-0"
+        }
+       ]
+      }
+     ],
+     "status": {
+      "clock": 0.0,
+      "displayClock": "0:00",
+      "period": 2,
+      "type": {
+       "id": "3",
+       "name": "STATUS_FINAL",
+       "state": "post",
+       "completed": true,
+       "description": "Final",
+       "detail": "Final",
+       "shortDetail": "Final"
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
