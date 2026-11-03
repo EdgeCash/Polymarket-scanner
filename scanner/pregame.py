@@ -582,6 +582,7 @@ class PregameScanner:
         self.status.gamelog = {
             "last_refresh": now.isoformat(),
             "games": self.diary.football_game_counts(),
+            "player_games": self.diary.player_game_counts(),
             "upcoming": {s.sport: s.upcoming for s in summaries},
             "backlog": sum(s.backlog for s in summaries),
             "fetched": sum(s.summaries_fetched for s in summaries),

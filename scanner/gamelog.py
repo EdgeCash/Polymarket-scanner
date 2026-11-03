@@ -145,6 +145,19 @@ def vars_of(team: TeamRef) -> dict:
 
 
 @dataclass(frozen=True, slots=True)
+class PlayerLine:
+    """One player's line from a finished game's box score, in the sport's own counting stats."""
+
+    team_id: str
+    player_id: str
+    name: str
+    position: str | None  # ESPN's abbreviation (G, F, C; QB, RB, WR; LW, D, G) when it gives one
+    starter: bool | None  # None where the box score does not say (football, hockey)
+    played: bool  # False for a listed player who did not play
+    stats: dict
+
+
+@dataclass(frozen=True, slots=True)
 class GameRecord:
     """A finished game with both teams' box scores, as kept in the diary."""
 
@@ -163,6 +176,7 @@ class GameRecord:
     home_stats: dict
     away_stats: dict
     book: BookLine | None = None  # the book's closing line, from the summary's pickcenter
+    players: tuple[PlayerLine, ...] = ()  # every player the box score lists, both sides
 
 
 @dataclass(frozen=True, slots=True)
@@ -469,6 +483,227 @@ def _nhl_box_stats(team_block: dict) -> dict:
     }
 
 
+# -- players ---------------------------------------------------------------------------
+
+
+def _seconds(value: Any) -> int | None:
+    """Time on ice as seconds: "15:16" is 916; "65:00" a goalie's whole game."""
+    if not isinstance(value, str) or ":" not in value:
+        return None
+    minutes, _, seconds = value.partition(":")
+    m, s = _int(minutes), _int(seconds)
+    return None if m is None or s is None else m * 60 + s
+
+
+def _athletes(team_block: dict) -> list[tuple[str, dict, dict]]:
+    """(group name, stats by key, athlete entry) for every row of a team's player box score."""
+    out = []
+    for group in team_block.get("statistics") or []:
+        if not isinstance(group, dict):
+            continue
+        keys = group.get("keys") if isinstance(group.get("keys"), list) else []
+        for entry in group.get("athletes") or []:
+            if not isinstance(entry, dict) or not isinstance(entry.get("athlete"), dict):
+                continue
+            values = entry.get("stats") if isinstance(entry.get("stats"), list) else []
+            by_key = {str(k): v for k, v in zip(keys, values, strict=False)}
+            out.append((str(group.get("name") or ""), by_key, entry))
+    return out
+
+
+def _identity(entry: dict, team_id: str, position: str | None = None) -> dict:
+    athlete = entry["athlete"]
+    pos = athlete.get("position") if isinstance(athlete.get("position"), dict) else {}
+    return {
+        "team_id": team_id,
+        "player_id": str(athlete.get("id") or ""),
+        "name": str(athlete.get("displayName") or athlete.get("shortName") or ""),
+        "position": str(pos.get("abbreviation") or position or "") or None,
+    }
+
+
+def _basketball_players(team_block: dict, team_id: str) -> list[PlayerLine]:
+    """Minutes, points, shooting, rebounds, assists and the rest, one line a player."""
+    out = []
+    for _, raw, entry in _athletes(team_block):
+        who = _identity(entry, team_id)
+        if not who["player_id"]:
+            continue
+        dnp = bool(entry.get("didNotPlay"))
+        minutes = _int(raw.get("minutes"))
+        fg_made, fg_att = _pair(raw.get("fieldGoalsMade-fieldGoalsAttempted"), "-")
+        three_made, three_att = _pair(
+            raw.get("threePointFieldGoalsMade-threePointFieldGoalsAttempted"), "-"
+        )
+        ft_made, ft_att = _pair(raw.get("freeThrowsMade-freeThrowsAttempted"), "-")
+        stats = {
+            "minutes": minutes,
+            "points": _int(raw.get("points")),
+            "fg_made": fg_made,
+            "fg_att": fg_att,
+            "three_made": three_made,
+            "three_att": three_att,
+            "ft_made": ft_made,
+            "ft_att": ft_att,
+            "rebounds": _int(raw.get("rebounds")),
+            "off_reb": _int(raw.get("offensiveRebounds")),
+            "assists": _int(raw.get("assists")),
+            "turnovers": _int(raw.get("turnovers")),
+            "steals": _int(raw.get("steals")),
+            "blocks": _int(raw.get("blocks")),
+            "fouls": _int(raw.get("fouls")),
+        }
+        played = not dnp and bool(minutes)
+        out.append(
+            PlayerLine(
+                **who,
+                starter=bool(entry.get("starter")) if "starter" in entry else None,
+                played=played,
+                stats=stats if played else {},
+            )
+        )
+    return out
+
+
+def _hockey_players(team_block: dict, team_id: str) -> list[PlayerLine]:
+    """Skaters (goals, assists, shots, time on ice) and goalies (saves, shots against)."""
+    out = []
+    for group, raw, entry in _athletes(team_block):
+        if group not in ("forwards", "defenses", "skaters", "goalies"):
+            continue
+        who = _identity(
+            entry, team_id, {"forwards": "F", "defenses": "D", "goalies": "G"}.get(group)
+        )
+        if not who["player_id"]:
+            continue
+        toi = _seconds(raw.get("timeOnIce"))
+        if group == "goalies":
+            stats = {
+                "toi": toi,
+                "saves": _int(raw.get("saves")),
+                "shots_against": _int(raw.get("shotsAgainst")),
+                "goals_against": _int(raw.get("goalsAgainst")),
+            }
+        else:
+            stats = {
+                "toi": toi,
+                "pp_toi": _seconds(raw.get("powerPlayTimeOnIce")),
+                "goals": _int(raw.get("goals")),
+                "assists": _int(raw.get("assists")),
+                "shots": _int(raw.get("shotsTotal")),
+                "hits": _int(raw.get("hits")),
+                "blocked_shots": _int(raw.get("blockedShots")),
+                "penalty_minutes": _int(raw.get("penaltyMinutes")),
+            }
+        played = bool(toi)
+        out.append(PlayerLine(**who, starter=None, played=played, stats=stats if played else {}))
+    return out
+
+
+FOOTBALL_PLAYER_GROUPS = {
+    "passing": (
+        ("completions/passingAttempts", "/", ("completions", "pass_att")),
+        ("passingYards", None, "pass_yards"),
+        ("passingTouchdowns", None, "pass_td"),
+        ("interceptions", None, "interceptions_thrown"),
+    ),
+    "rushing": (
+        ("rushingAttempts", None, "rush_att"),
+        ("rushingYards", None, "rush_yards"),
+        ("rushingTouchdowns", None, "rush_td"),
+        ("longRushing", None, "long_rush"),
+    ),
+    "receiving": (
+        ("receptions", None, "receptions"),
+        ("receivingYards", None, "rec_yards"),
+        ("receivingTouchdowns", None, "rec_td"),
+        ("longReception", None, "long_rec"),
+        ("receivingTargets", None, "targets"),
+    ),
+    "fumbles": (("fumbles", None, "fumbles"), ("fumblesLost", None, "fumbles_lost")),
+    "defensive": (
+        ("totalTackles", None, "tackles"),
+        ("soloTackles", None, "solo_tackles"),
+        ("sacks", None, "sacks"),
+        ("tacklesForLoss", None, "tfl"),
+        ("passesDefended", None, "passes_defended"),
+    ),
+    "interceptions": (("interceptions", None, "interceptions"),),
+    "kicking": (
+        ("fieldGoalsMade/fieldGoalAttempts", "/", ("fg_made", "fg_att")),
+        ("extraPointsMade/extraPointAttempts", "/", ("xp_made", "xp_att")),
+        ("totalKickingPoints", None, "kicking_points"),
+    ),
+}
+
+
+def _football_players(team_block: dict, team_id: str) -> list[PlayerLine]:
+    """One line a player across the passing, rushing, receiving and other groups he appears in."""
+    lines: dict[str, dict] = {}
+    for group, raw, entry in _athletes(team_block):
+        rules = FOOTBALL_PLAYER_GROUPS.get(group)
+        if rules is None:
+            continue
+        who = _identity(entry, team_id)
+        if not who["player_id"]:
+            continue
+        line = lines.setdefault(who["player_id"], {**who, "stats": {}})
+        if line["position"] is None and who["position"]:
+            line["position"] = who["position"]
+        for key, sep, names in rules:
+            if sep is None:
+                value = raw.get(key)
+                parsed = _int(value)
+                if parsed is None and isinstance(value, str):
+                    try:
+                        parsed = float(value)  # sacks come as "0.5"
+                    except ValueError:
+                        parsed = None
+                line["stats"][names] = parsed
+            else:
+                left, right = _pair(raw.get(key), sep)
+                line["stats"][names[0]], line["stats"][names[1]] = left, right
+    return [
+        PlayerLine(
+            team_id=line["team_id"],
+            player_id=line["player_id"],
+            name=line["name"],
+            position=line["position"],
+            starter=None,
+            played=True,
+            stats=line["stats"],
+        )
+        for line in lines.values()
+    ]
+
+
+PLAYER_PARSERS = {
+    "nfl": _football_players,
+    "cfb": _football_players,
+    "nba": _basketball_players,
+    "cbb": _basketball_players,
+    "nhl": _hockey_players,
+}
+
+
+def parse_players(raw: dict, sport: str, home_id: str, away_id: str) -> tuple[PlayerLine, ...]:
+    """Every player line in a summary's box score, both sides, or nothing when it has none."""
+    parser = PLAYER_PARSERS.get(sport)
+    boxscore = raw.get("boxscore") if isinstance(raw.get("boxscore"), dict) else {}
+    if parser is None or not isinstance(boxscore.get("players"), list):
+        return ()
+    out: list[PlayerLine] = []
+    for block in boxscore["players"]:
+        if not isinstance(block, dict):
+            continue
+        team = block.get("team") if isinstance(block.get("team"), dict) else {}
+        team_id = str(team.get("id") or "")
+        if team_id not in (home_id, away_id):
+            continue
+        out.extend(parser(block, team_id))
+    return tuple(out)
+
+
 def _add_football_plays(raw: dict, home: TeamRef, stats: dict[str, dict]) -> None:
     """Touchdowns from the scoring plays and first-half yards from the drives."""
     # [pass TD, rush TD, first-half pass TD, first-half rush TD]
@@ -560,6 +795,7 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
             )
     if sport in FOOTBALL:
         _add_football_plays(raw, home, stats)
+    players = parse_players(raw, sport, home.team_id, away.team_id)
     season = header.get("season") if isinstance(header.get("season"), dict) else {}
     return GameRecord(
         sport=sport,
@@ -577,6 +813,7 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
         home_stats=stats["home"],
         away_stats=stats["away"],
         book=book,
+        players=players,
     )
 
 

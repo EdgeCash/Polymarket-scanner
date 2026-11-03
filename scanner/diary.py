@@ -191,6 +191,25 @@ CREATE TABLE IF NOT EXISTS football_games (
     fetched_at TEXT NOT NULL,
     PRIMARY KEY (sport, game_id)
 );
+CREATE TABLE IF NOT EXISTS player_games (
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    player_id TEXT NOT NULL,
+    team_id TEXT NOT NULL,
+    team_abbr TEXT NOT NULL,
+    opponent_id TEXT NOT NULL,
+    opponent_abbr TEXT NOT NULL,
+    home INTEGER NOT NULL,
+    season INTEGER,
+    date TEXT NOT NULL,
+    name TEXT NOT NULL,
+    position TEXT,
+    starter INTEGER,
+    played INTEGER NOT NULL,
+    stats TEXT NOT NULL,
+    PRIMARY KEY (sport, game_id, player_id)
+);
+CREATE INDEX IF NOT EXISTS player_games_by_player ON player_games (sport, player_id, date);
 CREATE TABLE IF NOT EXISTS football_weeks (
     sport TEXT NOT NULL,
     season INTEGER NOT NULL,
@@ -311,7 +330,7 @@ ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.
 # The stored game format. Rows written by an older parser are re-read once so that
 # fields the parser has since learned (first-half yards, the closing line) fill in.
 # Bump it when parse_game_summary learns something worth a re-read.
-FOOTBALL_GAME_VERSION = 2
+FOOTBALL_GAME_VERSION = 3  # 3: per-player lines are kept beside the team box scores
 # Columns added after a table first shipped: (table, column, definition).
 MIGRATIONS = (
     ("football_games", "version", "INTEGER NOT NULL DEFAULT 1"),
@@ -850,6 +869,83 @@ class Diary:
                     book,
                 ),
             )
+            self._conn.execute(
+                "DELETE FROM player_games WHERE sport = ? AND game_id = ?",
+                (record.sport, record.game_id),
+            )
+            sides = {
+                record.home.team_id: (record.home, record.away, 1),
+                record.away.team_id: (record.away, record.home, 0),
+            }
+            for line in record.players:
+                if line.team_id not in sides:
+                    continue
+                team, opponent, home = sides[line.team_id]
+                self._conn.execute(
+                    """INSERT OR REPLACE INTO player_games (sport, game_id, player_id, team_id,
+                       team_abbr, opponent_id, opponent_abbr, home, season, date, name, position,
+                       starter, played, stats) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        record.sport,
+                        record.game_id,
+                        line.player_id,
+                        line.team_id,
+                        team.abbreviation,
+                        opponent.team_id,
+                        opponent.abbreviation,
+                        home,
+                        record.season,
+                        _iso(record.date),
+                        line.name,
+                        line.position,
+                        None if line.starter is None else int(line.starter),
+                        int(line.played),
+                        json.dumps(line.stats),
+                    ),
+                )
+
+    @staticmethod
+    def _player_row(row) -> dict:
+        out = dict(row)
+        out["stats"] = json.loads(out["stats"])
+        out["home"] = bool(out["home"])
+        out["played"] = bool(out["played"])
+        out["starter"] = None if out["starter"] is None else bool(out["starter"])
+        return out
+
+    def player_games(
+        self, sport: str, season: int | None = None, team_id: str | None = None
+    ) -> list[dict]:
+        """Every stored player line of a sport (a season's, a team's), oldest game first."""
+        where, params = ["sport = ?"], [sport]
+        if season is not None:
+            where.append("season = ?")
+            params.append(season)
+        if team_id is not None:
+            where.append("team_id = ?")
+            params.append(team_id)
+        with self._lock:
+            rows = self._conn.execute(
+                f"SELECT * FROM player_games WHERE {' AND '.join(where)} ORDER BY date, game_id",
+                params,
+            ).fetchall()
+        return [self._player_row(r) for r in rows]
+
+    def player_lines_for_game(self, sport: str, game_id: str) -> list[dict]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM player_games WHERE sport = ? AND game_id = ? ORDER BY team_id, name",
+                (sport, game_id),
+            ).fetchall()
+        return [self._player_row(r) for r in rows]
+
+    def player_game_counts(self) -> dict[str, int]:
+        """Stored games with player lines, per sport (the re-read fills older games in)."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT sport, COUNT(DISTINCT game_id) AS n FROM player_games GROUP BY sport"
+            ).fetchall()
+        return {r["sport"]: int(r["n"]) for r in rows}
 
     def football_game_ids(self, sport: str) -> set[str]:
         with self._lock:

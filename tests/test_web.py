@@ -537,6 +537,11 @@ def test_health_counts_the_season_days_still_to_read():
     status = RuntimeStatus()
     status.gamelog = {"last_refresh": "2026-10-28T16:00:00+00:00", "games": {"nhl": 80}}
     assert _gamelog_health(status, load_settings()).endswith(": NHL 80 games")
+    status.gamelog["player_games"] = {"nhl": 30}
+    assert _gamelog_health(status, load_settings()).endswith("NHL 80 games, 30 with player lines")
+    status.gamelog["player_games"] = {"nhl": 80}
+    assert _gamelog_health(status, load_settings()).endswith(": NHL 80 games")  # all filled in
+    del status.gamelog["player_games"]
     status.gamelog["days_pending"] = 12
     assert _gamelog_health(status, load_settings()).endswith("NHL 80 games, 12 days still to read")
 

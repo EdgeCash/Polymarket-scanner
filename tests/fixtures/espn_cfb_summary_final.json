@@ -711,15 +711,7 @@
    {
     "team": {
      "id": "2335",
-     "uid": "s:20~l:23~t:2335",
-     "slug": "liberty-flames",
-     "location": "Liberty",
-     "name": "Flames",
-     "abbreviation": "LIB",
-     "displayName": "Liberty Flames",
-     "shortDisplayName": "Liberty",
-     "color": "0a254e",
-     "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/2335.png"
+     "abbreviation": "LIB"
     },
     "statistics": [
      {
@@ -732,31 +724,10 @@
        "interceptions",
        "adjQBR"
       ],
-      "text": "Liberty Passing",
-      "labels": [
-       "C/ATT",
-       "YDS",
-       "AVG",
-       "TD",
-       "INT",
-       "QBR"
-      ],
-      "descriptions": [
-       "Completions/Attempts",
-       "Yards",
-       "Yards Per Pass Attempt",
-       "Touchdowns",
-       "Interceptions",
-       "Adjusted QBR"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5138131",
-         "uid": "s:20~l:23~a:5138131",
-         "guid": "e47ef02d-6668-33a0-b374-59d75ddf262f",
-         "firstName": "Deshawn",
-         "lastName": "Purdie",
          "displayName": "Deshawn Purdie",
          "jersey": "5"
         },
@@ -766,16 +737,12 @@
          "13.5",
          "2",
          "0",
-         "40.7"
+         "46.5"
         ]
        },
        {
         "athlete": {
          "id": "4832918",
-         "uid": "s:20~l:23~a:4832918",
-         "guid": "7813e922-2911-3a8b-8bd7-b5f4aee060d2",
-         "firstName": "Ethan",
-         "lastName": "Vasko",
          "displayName": "Ethan Vasko",
          "jersey": "15"
         },
@@ -791,10 +758,6 @@
        {
         "athlete": {
          "id": "5079364",
-         "uid": "s:20~l:23~a:5079364",
-         "guid": "dde5f650-3c4a-3cd8-900c-13c01a171231",
-         "firstName": "Kam",
-         "lastName": "Davis",
          "displayName": "Kam Davis",
          "jersey": "4"
         },
@@ -807,14 +770,6 @@
          "--"
         ]
        }
-      ],
-      "totals": [
-       "12/18",
-       "222",
-       "12.3",
-       "3",
-       "0",
-       "--"
       ]
      },
      {
@@ -826,29 +781,10 @@
        "rushingTouchdowns",
        "longRushing"
       ],
-      "text": "Liberty Rushing",
-      "labels": [
-       "CAR",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Rushing Attempts",
-       "Yards",
-       "Yards Per Rushing Attempt",
-       "Touchdowns",
-       "Longest Run"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5079364",
-         "uid": "s:20~l:23~a:5079364",
-         "guid": "dde5f650-3c4a-3cd8-900c-13c01a171231",
-         "firstName": "Kam",
-         "lastName": "Davis",
          "displayName": "Kam Davis",
          "jersey": "4"
         },
@@ -863,10 +799,6 @@
        {
         "athlete": {
          "id": "4923298",
-         "uid": "s:20~l:23~a:4923298",
-         "guid": "8a53567f-47b4-3211-9f57-689b4383cfda",
-         "firstName": "Peyton",
-         "lastName": "Jones",
          "displayName": "Peyton Jones",
          "jersey": "7"
         },
@@ -881,10 +813,6 @@
        {
         "athlete": {
          "id": "5296294",
-         "uid": "s:20~l:23~a:5296294",
-         "guid": "991a7613-c57f-38b7-b400-b2f75ba472b1",
-         "firstName": "Jaylon",
-         "lastName": "Coleman",
          "displayName": "Jaylon Coleman",
          "jersey": "0"
         },
@@ -899,10 +827,6 @@
        {
         "athlete": {
          "id": "5138131",
-         "uid": "s:20~l:23~a:5138131",
-         "guid": "e47ef02d-6668-33a0-b374-59d75ddf262f",
-         "firstName": "Deshawn",
-         "lastName": "Purdie",
          "displayName": "Deshawn Purdie",
          "jersey": "5"
         },
@@ -917,10 +841,6 @@
        {
         "athlete": {
          "id": "4832918",
-         "uid": "s:20~l:23~a:4832918",
-         "guid": "7813e922-2911-3a8b-8bd7-b5f4aee060d2",
-         "firstName": "Ethan",
-         "lastName": "Vasko",
          "displayName": "Ethan Vasko",
          "jersey": "15"
         },
@@ -935,10 +855,6 @@
        {
         "athlete": {
          "id": "4880964",
-         "uid": "s:20~l:23~a:4880964",
-         "guid": "d9711147-75e7-36da-8fcb-3eb2fc5e6324",
-         "firstName": "Terron",
-         "lastName": "Kellman",
          "displayName": "Terron Kellman",
          "jersey": "11"
         },
@@ -953,9 +869,6 @@
        {
         "athlete": {
          "id": "-6417",
-         "uid": "s:20~l:23~a:-6417",
-         "firstName": "",
-         "lastName": "Team",
          "displayName": " Team"
         },
         "stats": [
@@ -966,13 +879,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "45",
-       "263",
-       "5.8",
-       "1",
-       "56"
       ]
      },
      {
@@ -984,29 +890,10 @@
        "receivingTouchdowns",
        "longReception"
       ],
-      "text": "Liberty Receiving",
-      "labels": [
-       "REC",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Receptions",
-       "Yards",
-       "Yards Per Reception",
-       "Touchdowns",
-       "Longest Reception"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5088336",
-         "uid": "s:20~l:23~a:5088336",
-         "guid": "8d237c47-569c-32a7-b3f0-8dff68faf69c",
-         "firstName": "Makai",
-         "lastName": "Jackson",
          "displayName": "Makai Jackson",
          "jersey": "2"
         },
@@ -1021,10 +908,6 @@
        {
         "athlete": {
          "id": "5117836",
-         "uid": "s:20~l:23~a:5117836",
-         "guid": "440a87bc-ede5-349e-a02e-3a82532adea9",
-         "firstName": "Jamari",
-         "lastName": "Person",
          "displayName": "Jamari Person",
          "jersey": "3"
         },
@@ -1039,10 +922,6 @@
        {
         "athlete": {
          "id": "5162399",
-         "uid": "s:20~l:23~a:5162399",
-         "guid": "c2f1852d-8b9e-3c09-acfe-0515f7e22fb7",
-         "firstName": "Darius",
-         "lastName": "Copeland",
          "displayName": "Darius Copeland",
          "jersey": "1"
         },
@@ -1057,10 +936,6 @@
        {
         "athlete": {
          "id": "5091845",
-         "uid": "s:20~l:23~a:5091845",
-         "guid": "d0d284f2-fef9-31c8-a4db-82000ddc5bd0",
-         "firstName": "Zeke",
-         "lastName": "Wimbush",
          "displayName": "Zeke Wimbush",
          "jersey": "88"
         },
@@ -1075,10 +950,6 @@
        {
         "athlete": {
          "id": "5079364",
-         "uid": "s:20~l:23~a:5079364",
-         "guid": "dde5f650-3c4a-3cd8-900c-13c01a171231",
-         "firstName": "Kam",
-         "lastName": "Davis",
          "displayName": "Kam Davis",
          "jersey": "4"
         },
@@ -1093,10 +964,6 @@
        {
         "athlete": {
          "id": "5215242",
-         "uid": "s:20~l:23~a:5215242",
-         "guid": "5b93a978-3ff3-3245-a3fd-247861cc64f8",
-         "firstName": "Bryce",
-         "lastName": "Randolph",
          "displayName": "Bryce Randolph",
          "jersey": "9"
         },
@@ -1108,13 +975,6 @@
          "6"
         ]
        }
-      ],
-      "totals": [
-       "12",
-       "222",
-       "18.5",
-       "3",
-       "58"
       ]
      },
      {
@@ -1124,25 +984,10 @@
        "fumblesLost",
        "fumblesRecovered"
       ],
-      "text": "Liberty Fumbles",
-      "labels": [
-       "FUM",
-       "LOST",
-       "REC"
-      ],
-      "descriptions": [
-       "Fumbles",
-       "Fumbles Lost",
-       "Fumbles Recovered"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5138131",
-         "uid": "s:20~l:23~a:5138131",
-         "guid": "e47ef02d-6668-33a0-b374-59d75ddf262f",
-         "firstName": "Deshawn",
-         "lastName": "Purdie",
          "displayName": "Deshawn Purdie",
          "jersey": "5"
         },
@@ -1155,10 +1000,6 @@
        {
         "athlete": {
          "id": "4923298",
-         "uid": "s:20~l:23~a:4923298",
-         "guid": "8a53567f-47b4-3211-9f57-689b4383cfda",
-         "firstName": "Peyton",
-         "lastName": "Jones",
          "displayName": "Peyton Jones",
          "jersey": "7"
         },
@@ -1168,11 +1009,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "3",
-       "2",
-       "0"
       ]
      },
      {
@@ -1186,33 +1022,10 @@
        "hurries",
        "defensiveTouchdowns"
       ],
-      "text": "Liberty Defense",
-      "labels": [
-       "TOT",
-       "SOLO",
-       "SACKS",
-       "TFL",
-       "PD",
-       "QB HUR",
-       "TD"
-      ],
-      "descriptions": [
-       "Tackles",
-       "Solo Tackles",
-       "Sacks",
-       "Tackles For Loss",
-       "Passes Defended",
-       "Quarterback Hurries",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5148316",
-         "uid": "s:20~l:23~a:5148316",
-         "guid": "e1da6fce-57f2-3e9d-9884-2a58285ca591",
-         "firstName": "Ronald",
-         "lastName": "Moore Jr.",
          "displayName": "Ronald Moore Jr.",
          "jersey": "10"
         },
@@ -1229,10 +1042,6 @@
        {
         "athlete": {
          "id": "4906884",
-         "uid": "s:20~l:23~a:4906884",
-         "guid": "1998d9c2-a915-39ab-b3aa-64381878e57e",
-         "firstName": "Aidan",
-         "lastName": "Vaughan",
          "displayName": "Aidan Vaughan",
          "jersey": "33"
         },
@@ -1249,10 +1058,6 @@
        {
         "athlete": {
          "id": "4838682",
-         "uid": "s:20~l:23~a:4838682",
-         "guid": "2ebeaf44-62d6-3352-a422-e55250193b00",
-         "firstName": "Derrell",
-         "lastName": "Farrar",
          "displayName": "Derrell Farrar",
          "jersey": "1"
         },
@@ -1269,10 +1074,6 @@
        {
         "athlete": {
          "id": "5215246",
-         "uid": "s:20~l:23~a:5215246",
-         "guid": "6942542f-f75e-36d5-b88f-6572e895f952",
-         "firstName": "Jeffrey",
-         "lastName": "Hairston Jr.",
          "displayName": "Jeffrey Hairston Jr.",
          "jersey": "95"
         },
@@ -1289,10 +1090,6 @@
        {
         "athlete": {
          "id": "5147366",
-         "uid": "s:20~l:23~a:5147366",
-         "guid": "b8f4c0d8-07a2-39de-9e43-cce19e9fdc87",
-         "firstName": "Jiquavious",
-         "lastName": "Marshall",
          "displayName": "Jiquavious Marshall",
          "jersey": "2"
         },
@@ -1309,10 +1106,6 @@
        {
         "athlete": {
          "id": "5076101",
-         "uid": "s:20~l:23~a:5076101",
-         "guid": "30c9fdeb-2dbe-3371-83f4-6814520c3480",
-         "firstName": "Brenton",
-         "lastName": "Williams",
          "displayName": "Brenton Williams",
          "jersey": "8"
         },
@@ -1329,10 +1122,6 @@
        {
         "athlete": {
          "id": "5382935",
-         "uid": "s:20~l:23~a:5382935",
-         "guid": "9c5c017e-849f-35f3-8607-491ad6983e72",
-         "firstName": "Lorenzo",
-         "lastName": "Payne",
          "displayName": "Lorenzo Payne",
          "jersey": "11"
         },
@@ -1349,10 +1138,6 @@
        {
         "athlete": {
          "id": "4808746",
-         "uid": "s:20~l:23~a:4808746",
-         "guid": "129f4b1b-b75f-382f-b8e8-e69f82d20ba0",
-         "firstName": "Micah",
-         "lastName": "Pollard",
          "displayName": "Micah Pollard",
          "jersey": "4"
         },
@@ -1369,10 +1154,6 @@
        {
         "athlete": {
          "id": "5162413",
-         "uid": "s:20~l:23~a:5162413",
-         "guid": "a7270308-c31e-3b5e-86c0-3fd529c5af66",
-         "firstName": "Nathan",
-         "lastName": "Pirolli",
          "displayName": "Nathan Pirolli",
          "jersey": "94"
         },
@@ -1389,10 +1170,6 @@
        {
         "athlete": {
          "id": "4869971",
-         "uid": "s:20~l:23~a:4869971",
-         "guid": "65cb3810-a2e0-3603-9166-efb68f88f6f0",
-         "firstName": "D-Icey",
-         "lastName": "Hopkins",
          "displayName": "D-Icey Hopkins",
          "jersey": "0"
         },
@@ -1409,10 +1186,6 @@
        {
         "athlete": {
          "id": "4685537",
-         "uid": "s:20~l:23~a:4685537",
-         "guid": "3677fcba-431d-32b9-a33d-fdc9159e0185",
-         "firstName": "Joe",
-         "lastName": "Strickland",
          "displayName": "Joe Strickland",
          "jersey": "44"
         },
@@ -1429,10 +1202,6 @@
        {
         "athlete": {
          "id": "5147185",
-         "uid": "s:20~l:23~a:5147185",
-         "guid": "2233923d-6398-3f6c-b3d7-6d5b6b21b43f",
-         "firstName": "Ashton",
-         "lastName": "McShane",
          "displayName": "Ashton McShane",
          "jersey": "21"
         },
@@ -1449,10 +1218,6 @@
        {
         "athlete": {
          "id": "4816111",
-         "uid": "s:20~l:23~a:4816111",
-         "guid": "99ac5ca3-c67e-3f54-82cc-01a8bbdbf345",
-         "firstName": "Deuce",
-         "lastName": "Spurlock",
          "displayName": "Deuce Spurlock",
          "jersey": "9"
         },
@@ -1469,10 +1234,6 @@
        {
         "athlete": {
          "id": "5216574",
-         "uid": "s:20~l:23~a:5216574",
-         "guid": "6c4e1126-5b1a-3949-99ca-9f952a3714b2",
-         "firstName": "Dillano",
-         "lastName": "Glaud",
          "displayName": "Dillano Glaud",
          "jersey": "6"
         },
@@ -1489,10 +1250,6 @@
        {
         "athlete": {
          "id": "4837159",
-         "uid": "s:20~l:23~a:4837159",
-         "guid": "cd91451d-323c-3b4d-88d6-d20dcaee9ec3",
-         "firstName": "Izaiah",
-         "lastName": "Guy",
          "displayName": "Izaiah Guy",
          "jersey": "7"
         },
@@ -1509,10 +1266,6 @@
        {
         "athlete": {
          "id": "5088336",
-         "uid": "s:20~l:23~a:5088336",
-         "guid": "8d237c47-569c-32a7-b3f0-8dff68faf69c",
-         "firstName": "Makai",
-         "lastName": "Jackson",
          "displayName": "Makai Jackson",
          "jersey": "2"
         },
@@ -1529,10 +1282,6 @@
        {
         "athlete": {
          "id": "5121343",
-         "uid": "s:20~l:23~a:5121343",
-         "guid": "51a8f0cb-8f8f-3cb1-9d79-9bf0ec8ec51a",
-         "firstName": "Tyler",
-         "lastName": "Black",
          "displayName": "Tyler Black",
          "jersey": "98"
         },
@@ -1549,10 +1298,6 @@
        {
         "athlete": {
          "id": "5121665",
-         "uid": "s:20~l:23~a:5121665",
-         "guid": "1fa3ae38-3491-3f71-b3ba-21ab5e10614f",
-         "firstName": "Jamal",
-         "lastName": "Miles",
          "displayName": "Jamal Miles",
          "jersey": "28"
         },
@@ -1569,10 +1314,6 @@
        {
         "athlete": {
          "id": "4683645",
-         "uid": "s:20~l:23~a:4683645",
-         "guid": "a92745ec-eb1e-313f-ba6f-705653e063b9",
-         "firstName": "Mike",
-         "lastName": "Jarvis",
          "displayName": "Mike Jarvis",
          "jersey": "97"
         },
@@ -1589,10 +1330,6 @@
        {
         "athlete": {
          "id": "4816091",
-         "uid": "s:20~l:23~a:4816091",
-         "guid": "e5be3aaf-8a4d-36f0-809d-a8981194333a",
-         "firstName": "Markus",
-         "lastName": "Clark",
          "displayName": "Markus Clark",
          "jersey": "15"
         },
@@ -1609,10 +1346,6 @@
        {
         "athlete": {
          "id": "4871014",
-         "uid": "s:20~l:23~a:4871014",
-         "guid": "3bed3225-b5d0-3d08-a670-11ab0b7b4d7a",
-         "firstName": "Jeremiah",
-         "lastName": "Vessel",
          "displayName": "Jeremiah Vessel",
          "jersey": "13"
         },
@@ -1629,10 +1362,6 @@
        {
         "athlete": {
          "id": "4880276",
-         "uid": "s:20~l:23~a:4880276",
-         "guid": "e4bf8908-8365-3ea2-a5b7-f01b23b9d668",
-         "firstName": "Ashton",
-         "lastName": "Whitner",
          "displayName": "Ashton Whitner",
          "jersey": "3"
         },
@@ -1649,10 +1378,6 @@
        {
         "athlete": {
          "id": "5148600",
-         "uid": "s:20~l:23~a:5148600",
-         "guid": "c5532c83-4c6a-341d-b59a-bb84df23aced",
-         "firstName": "Samuel",
-         "lastName": "Cohen",
          "displayName": "Samuel Cohen",
          "jersey": "56"
         },
@@ -1669,10 +1394,6 @@
        {
         "athlete": {
          "id": "5200107",
-         "uid": "s:20~l:23~a:5200107",
-         "guid": "0246cd37-ac74-3db9-9bb7-9931c7764814",
-         "firstName": "Kam",
-         "lastName": "Cullins",
          "displayName": "Kam Cullins",
          "jersey": "88"
         },
@@ -1689,10 +1410,6 @@
        {
         "athlete": {
          "id": "5296296",
-         "uid": "s:20~l:23~a:5296296",
-         "guid": "96dac237-5a4d-3808-b506-e7aca64a7241",
-         "firstName": "Myke",
-         "lastName": "Gunn",
          "displayName": "Myke Gunn",
          "jersey": "23"
         },
@@ -1706,15 +1423,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "61",
-       "25",
-       "4",
-       "5",
-       "2",
-       "1",
-       "0"
       ]
      },
      {
@@ -1724,25 +1432,10 @@
        "interceptionYards",
        "interceptionTouchdowns"
       ],
-      "text": "Liberty Interceptions",
-      "labels": [
-       "INT",
-       "YDS",
-       "TD"
-      ],
-      "descriptions": [
-       "Interceptions",
-       "Yards",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4812377",
-         "uid": "s:20~l:23~a:4812377",
-         "guid": "1e964816-f65f-3e13-b67c-94b3609bb397",
-         "firstName": "Elijah",
-         "lastName": "Hopkins",
          "displayName": "Elijah Hopkins",
          "jersey": "5"
         },
@@ -1755,10 +1448,6 @@
        {
         "athlete": {
          "id": "4871014",
-         "uid": "s:20~l:23~a:4871014",
-         "guid": "3bed3225-b5d0-3d08-a670-11ab0b7b4d7a",
-         "firstName": "Jeremiah",
-         "lastName": "Vessel",
          "displayName": "Jeremiah Vessel",
          "jersey": "13"
         },
@@ -1768,11 +1457,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "0",
-       "0"
       ]
      },
      {
@@ -1784,29 +1468,10 @@
        "longKickReturn",
        "kickReturnTouchdowns"
       ],
-      "text": "Liberty Kick Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Kick Returns",
-       "Yards",
-       "Yards Per Kick Return",
-       "Longest Kick Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5220265",
-         "uid": "s:20~l:23~a:5220265",
-         "guid": "e4ed8af7-5ce5-3077-a035-843e3171ee5d",
-         "firstName": "Jon",
-         "lastName": "Monteiro",
          "displayName": "Jon Monteiro",
          "jersey": "10"
         },
@@ -1818,13 +1483,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "40",
-       "20.0",
-       "20",
-       "0"
       ]
      },
      {
@@ -1836,29 +1494,10 @@
        "longPuntReturn",
        "puntReturnTouchdowns"
       ],
-      "text": "Liberty Punt Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Punt Returns",
-       "Yards",
-       "Yards Per Punt Return",
-       "Longest Punt Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5088336",
-         "uid": "s:20~l:23~a:5088336",
-         "guid": "8d237c47-569c-32a7-b3f0-8dff68faf69c",
-         "firstName": "Makai",
-         "lastName": "Jackson",
          "displayName": "Makai Jackson",
          "jersey": "2"
         },
@@ -1870,13 +1509,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "1",
-       "1",
-       "1.0",
-       "1",
-       "0"
       ]
      },
      {
@@ -1888,29 +1520,10 @@
        "extraPointsMade/extraPointAttempts",
        "totalKickingPoints"
       ],
-      "text": "Liberty Kicking",
-      "labels": [
-       "FG",
-       "PCT",
-       "LONG",
-       "XP",
-       "PTS"
-      ],
-      "descriptions": [
-       "Field Goals Made/Attempts",
-       "Field Goal Percentage",
-       "Longest Field Goal Made",
-       "Extra Points Made/Attempts",
-       "Kicking Points"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5086151",
-         "uid": "s:20~l:23~a:5086151",
-         "guid": "13e08cc9-71e2-3c97-b6f2-f2b0b2a7eebd",
-         "firstName": "Chase",
-         "lastName": "Reeves",
          "displayName": "Chase Reeves",
          "jersey": "42"
         },
@@ -1925,10 +1538,6 @@
        {
         "athlete": {
          "id": "5121343",
-         "uid": "s:20~l:23~a:5121343",
-         "guid": "51a8f0cb-8f8f-3cb1-9d79-9bf0ec8ec51a",
-         "firstName": "Tyler",
-         "lastName": "Black",
          "displayName": "Tyler Black",
          "jersey": "98"
         },
@@ -1940,13 +1549,6 @@
          "1"
         ]
        }
-      ],
-      "totals": [
-       "2/2",
-       "100.0",
-       "29",
-       "4/4",
-       "10"
       ]
      },
      {
@@ -1959,31 +1561,10 @@
        "puntsInside20",
        "longPunt"
       ],
-      "text": "Liberty Punting",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "TB",
-       "In 20",
-       "LONG"
-      ],
-      "descriptions": [
-       "Punts",
-       "Yards",
-       "Average Punt Yards",
-       "Touchbacks",
-       "Punts Inside 20",
-       "Longest Punt"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5220261",
-         "uid": "s:20~l:23~a:5220261",
-         "guid": "ba71c778-128b-3886-848e-7ac5ac5eab4a",
-         "firstName": "Sam",
-         "lastName": "Crossan",
          "displayName": "Sam Crossan",
          "jersey": "49"
         },
@@ -1996,31 +1577,14 @@
          "54"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "88",
-       "44.0",
-       "1",
-       "0",
-       "54"
       ]
      }
-    ],
-    "displayOrder": 1
+    ]
    },
    {
     "team": {
      "id": "324",
-     "uid": "s:20~l:23~t:324",
-     "slug": "coastal-carolina-chanticleers",
-     "location": "Coastal Carolina",
-     "name": "Chanticleers",
-     "abbreviation": "CCU",
-     "displayName": "Coastal Carolina Chanticleers",
-     "shortDisplayName": "Coastal",
-     "color": "006f71",
-     "logo": "https://a.espncdn.com/i/teamlogos/ncaa/500/324.png"
+     "abbreviation": "CCU"
     },
     "statistics": [
      {
@@ -2033,31 +1597,10 @@
        "interceptions",
        "adjQBR"
       ],
-      "text": "Coastal Carolina Passing",
-      "labels": [
-       "C/ATT",
-       "YDS",
-       "AVG",
-       "TD",
-       "INT",
-       "QBR"
-      ],
-      "descriptions": [
-       "Completions/Attempts",
-       "Yards",
-       "Yards Per Pass Attempt",
-       "Touchdowns",
-       "Interceptions",
-       "Adjusted QBR"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5296439",
-         "uid": "s:20~l:23~a:5296439",
-         "guid": "a318f90a-1582-34aa-b8d6-6f8ca07d6f4f",
-         "firstName": "Deuce",
-         "lastName": "Bailey",
          "displayName": "Deuce Bailey",
          "jersey": "2"
         },
@@ -2067,15 +1610,12 @@
          "6.3",
          "2",
          "2",
-         "32.2"
+         "37.3"
         ]
        },
        {
         "athlete": {
          "id": "-15591",
-         "uid": "s:20~l:23~a:-15591",
-         "firstName": "",
-         "lastName": "Team",
          "displayName": " Team"
         },
         "stats": [
@@ -2087,14 +1627,6 @@
          "--"
         ]
        }
-      ],
-      "totals": [
-       "17/35",
-       "213",
-       "6.1",
-       "2",
-       "2",
-       "--"
       ]
      },
      {
@@ -2106,29 +1638,10 @@
        "rushingTouchdowns",
        "longRushing"
       ],
-      "text": "Coastal Carolina Rushing",
-      "labels": [
-       "CAR",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Rushing Attempts",
-       "Yards",
-       "Yards Per Rushing Attempt",
-       "Touchdowns",
-       "Longest Run"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5296439",
-         "uid": "s:20~l:23~a:5296439",
-         "guid": "a318f90a-1582-34aa-b8d6-6f8ca07d6f4f",
-         "firstName": "Deuce",
-         "lastName": "Bailey",
          "displayName": "Deuce Bailey",
          "jersey": "2"
         },
@@ -2143,10 +1656,6 @@
        {
         "athlete": {
          "id": "5203477",
-         "uid": "s:20~l:23~a:5203477",
-         "guid": "a66b9ffd-0813-3984-ac81-f11a55305f38",
-         "firstName": "Dominic",
-         "lastName": "Lee-Knicely",
          "displayName": "Dominic Lee-Knicely",
          "jersey": "23"
         },
@@ -2161,10 +1670,6 @@
        {
         "athlete": {
          "id": "5265325",
-         "uid": "s:20~l:23~a:5265325",
-         "guid": "31983103-6a97-3e15-95ca-540c0e2473ac",
-         "firstName": "Jevon",
-         "lastName": "Edwards",
          "displayName": "Jevon Edwards",
          "jersey": "20"
         },
@@ -2179,10 +1684,6 @@
        {
         "athlete": {
          "id": "5295756",
-         "uid": "s:20~l:23~a:5295756",
-         "guid": "3f6fa67b-cf4d-302d-83b2-026c22e61dd3",
-         "firstName": "Breyahn",
-         "lastName": "Townsend",
          "displayName": "Breyahn Townsend",
          "jersey": "22"
         },
@@ -2197,10 +1698,6 @@
        {
         "athlete": {
          "id": "5193388",
-         "uid": "s:20~l:23~a:5193388",
-         "guid": "1e314e9a-6067-3eac-bd79-c21e847d4217",
-         "firstName": "Jaden",
-         "lastName": "Allen-Hendrix",
          "displayName": "Jaden Allen-Hendrix",
          "jersey": "25"
         },
@@ -2212,13 +1709,6 @@
          "2"
         ]
        }
-      ],
-      "totals": [
-       "31",
-       "79",
-       "2.5",
-       "0",
-       "20"
       ]
      },
      {
@@ -2230,29 +1720,10 @@
        "receivingTouchdowns",
        "longReception"
       ],
-      "text": "Coastal Carolina Receiving",
-      "labels": [
-       "REC",
-       "YDS",
-       "AVG",
-       "TD",
-       "LONG"
-      ],
-      "descriptions": [
-       "Receptions",
-       "Yards",
-       "Yards Per Reception",
-       "Touchdowns",
-       "Longest Reception"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5296438",
-         "uid": "s:20~l:23~a:5296438",
-         "guid": "1360aa8c-5d44-365d-b644-6bc0fb619dfb",
-         "firstName": "Tristian",
-         "lastName": "Gardner",
          "displayName": "Tristian Gardner",
          "jersey": "3"
         },
@@ -2267,10 +1738,6 @@
        {
         "athlete": {
          "id": "5265446",
-         "uid": "s:20~l:23~a:5265446",
-         "guid": "4558e299-8aa2-3580-ae26-0161167e95f4",
-         "firstName": "Clayton",
-         "lastName": "Coppock Jr.",
          "displayName": "Clayton Coppock Jr.",
          "jersey": "8"
         },
@@ -2285,10 +1752,6 @@
        {
         "athlete": {
          "id": "5153389",
-         "uid": "s:20~l:23~a:5153389",
-         "guid": "e51650b8-61d4-3aa2-bc59-a7c68659ea51",
-         "firstName": "Colton",
-         "lastName": "Hinton",
          "displayName": "Colton Hinton",
          "jersey": "14"
         },
@@ -2303,10 +1766,6 @@
        {
         "athlete": {
          "id": "5265325",
-         "uid": "s:20~l:23~a:5265325",
-         "guid": "31983103-6a97-3e15-95ca-540c0e2473ac",
-         "firstName": "Jevon",
-         "lastName": "Edwards",
          "displayName": "Jevon Edwards",
          "jersey": "20"
         },
@@ -2321,10 +1780,6 @@
        {
         "athlete": {
          "id": "5150845",
-         "uid": "s:20~l:23~a:5150845",
-         "guid": "c9ef3a7f-8211-3cea-85af-ebd75b322190",
-         "firstName": "Goldie",
-         "lastName": "Lawrence",
          "displayName": "Goldie Lawrence",
          "jersey": "5"
         },
@@ -2339,10 +1794,6 @@
        {
         "athlete": {
          "id": "4870699",
-         "uid": "s:20~l:23~a:4870699",
-         "guid": "3d06aba1-7603-3d9d-9d07-b39e11d3e73b",
-         "firstName": "Karmello",
-         "lastName": "English",
          "displayName": "Karmello English",
          "jersey": "0"
         },
@@ -2357,10 +1808,6 @@
        {
         "athlete": {
          "id": "5095242",
-         "uid": "s:20~l:23~a:5095242",
-         "guid": "df7e1fe5-3152-3341-b045-a4c14c8670aa",
-         "firstName": "Cyrus",
-         "lastName": "Ellison",
          "displayName": "Cyrus Ellison",
          "jersey": "9"
         },
@@ -2375,10 +1822,6 @@
        {
         "athlete": {
          "id": "4871022",
-         "uid": "s:20~l:23~a:4871022",
-         "guid": "5c92db26-033c-3bc0-949c-6c2052ea3b1f",
-         "firstName": "Robby",
-         "lastName": "Washington",
          "displayName": "Robby Washington",
          "jersey": "1"
         },
@@ -2393,10 +1836,6 @@
        {
         "athlete": {
          "id": "5379841",
-         "uid": "s:20~l:23~a:5379841",
-         "guid": "29abd590-3427-3c93-a112-b8a4f34722dc",
-         "firstName": "Ben",
-         "lastName": "Verges",
          "displayName": "Ben Verges",
          "jersey": "85"
         },
@@ -2408,13 +1847,6 @@
          "4"
         ]
        }
-      ],
-      "totals": [
-       "17",
-       "213",
-       "12.5",
-       "2",
-       "39"
       ]
      },
      {
@@ -2424,25 +1856,10 @@
        "fumblesLost",
        "fumblesRecovered"
       ],
-      "text": "Coastal Carolina Fumbles",
-      "labels": [
-       "FUM",
-       "LOST",
-       "REC"
-      ],
-      "descriptions": [
-       "Fumbles",
-       "Fumbles Lost",
-       "Fumbles Recovered"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5193658",
-         "uid": "s:20~l:23~a:5193658",
-         "guid": "ed1c5702-4519-350b-b679-ba933c3da1c5",
-         "firstName": "Se'Von",
-         "lastName": "McDowell",
          "displayName": "Se'Von McDowell",
          "jersey": "19"
         },
@@ -2452,11 +1869,6 @@
          "2"
         ]
        }
-      ],
-      "totals": [
-       "0",
-       "0",
-       "2"
       ]
      },
      {
@@ -2470,33 +1882,10 @@
        "hurries",
        "defensiveTouchdowns"
       ],
-      "text": "Coastal Carolina Defense",
-      "labels": [
-       "TOT",
-       "SOLO",
-       "SACKS",
-       "TFL",
-       "PD",
-       "QB HUR",
-       "TD"
-      ],
-      "descriptions": [
-       "Tackles",
-       "Solo Tackles",
-       "Sacks",
-       "Tackles For Loss",
-       "Passes Defended",
-       "Quarterback Hurries",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "4918441",
-         "uid": "s:20~l:23~a:4918441",
-         "guid": "e130d351-6f3a-38c8-8777-d159e815abb9",
-         "firstName": "Marcellius",
-         "lastName": "Pulliam",
          "displayName": "Marcellius Pulliam",
          "jersey": "4"
         },
@@ -2513,10 +1902,6 @@
        {
         "athlete": {
          "id": "5161775",
-         "uid": "s:20~l:23~a:5161775",
-         "guid": "d92ba4e5-331a-35ec-852b-b1fc33db8837",
-         "firstName": "Donovan",
-         "lastName": "Grayson",
          "displayName": "Donovan Grayson",
          "jersey": "94"
         },
@@ -2533,10 +1918,6 @@
        {
         "athlete": {
          "id": "5222870",
-         "uid": "s:20~l:23~a:5222870",
-         "guid": "75efac49-77bd-30a3-a567-4256e131033f",
-         "firstName": "Ahmad",
-         "lastName": "Poole",
          "displayName": "Ahmad Poole",
          "jersey": "92"
         },
@@ -2553,10 +1934,6 @@
        {
         "athlete": {
          "id": "5221086",
-         "uid": "s:20~l:23~a:5221086",
-         "guid": "6009e1f1-6cc0-32ef-9b55-02cb2a3f7071",
-         "firstName": "Ibrahim",
-         "lastName": "Diawara",
          "displayName": "Ibrahim Diawara",
          "jersey": "1"
         },
@@ -2573,10 +1950,6 @@
        {
         "athlete": {
          "id": "5085779",
-         "uid": "s:20~l:23~a:5085779",
-         "guid": "cea53af3-896b-36a3-952d-7b95c9d31f9f",
-         "firstName": "Jalen",
-         "lastName": "Lee",
          "displayName": "Jalen B. Lee",
          "jersey": "6"
         },
@@ -2593,10 +1966,6 @@
        {
         "athlete": {
          "id": "5086520",
-         "uid": "s:20~l:23~a:5086520",
-         "guid": "d06c7fce-10e6-3779-a608-bca126709aec",
-         "firstName": "Jesse",
-         "lastName": "Powell II",
          "displayName": "Jesse Powell II",
          "jersey": "16"
         },
@@ -2613,10 +1982,6 @@
        {
         "athlete": {
          "id": "5212695",
-         "uid": "s:20~l:23~a:5212695",
-         "guid": "67dcde8e-d0db-3252-93a2-65b5877b6307",
-         "firstName": "Brandon",
-         "lastName": "Rose",
          "displayName": "Brandon Rose",
          "jersey": "25"
         },
@@ -2633,10 +1998,6 @@
        {
         "athlete": {
          "id": "5161229",
-         "uid": "s:20~l:23~a:5161229",
-         "guid": "81db8a5f-e947-3c6b-8e40-de920ba6a71c",
-         "firstName": "Travis",
-         "lastName": "Roman",
          "displayName": "Travis Roman",
          "jersey": "10"
         },
@@ -2653,10 +2014,6 @@
        {
         "athlete": {
          "id": "5193658",
-         "uid": "s:20~l:23~a:5193658",
-         "guid": "ed1c5702-4519-350b-b679-ba933c3da1c5",
-         "firstName": "Se'Von",
-         "lastName": "McDowell",
          "displayName": "Se'Von McDowell",
          "jersey": "19"
         },
@@ -2673,10 +2030,6 @@
        {
         "athlete": {
          "id": "5193350",
-         "uid": "s:20~l:23~a:5193350",
-         "guid": "ee1d673d-6f0b-3866-b17e-b8693ddd709e",
-         "firstName": "Chase",
-         "lastName": "Jackson",
          "displayName": "Chase Jackson",
          "jersey": "26"
         },
@@ -2693,10 +2046,6 @@
        {
         "athlete": {
          "id": "4871038",
-         "uid": "s:20~l:23~a:4871038",
-         "guid": "f00ad655-06ef-31b5-8370-d25afe6e1635",
-         "firstName": "Jordan",
-         "lastName": "Thompson",
          "displayName": "Jordan Thompson",
          "jersey": "18"
         },
@@ -2713,10 +2062,6 @@
        {
         "athlete": {
          "id": "4717697",
-         "uid": "s:20~l:23~a:4717697",
-         "guid": "65271dea-2f9e-35d7-9410-6bba5bd66847",
-         "firstName": "DJ",
-         "lastName": "Wesolak",
          "displayName": "DJ Wesolak",
          "jersey": "7"
         },
@@ -2733,10 +2078,6 @@
        {
         "athlete": {
          "id": "5154291",
-         "uid": "s:20~l:23~a:5154291",
-         "guid": "d504d8d4-43ad-3624-813a-32ec5d0885e6",
-         "firstName": "Mitchell",
-         "lastName": "Toney",
          "displayName": "Mitchell Toney",
          "jersey": "50"
         },
@@ -2753,10 +2094,6 @@
        {
         "athlete": {
          "id": "5193351",
-         "uid": "s:20~l:23~a:5193351",
-         "guid": "104a9894-052e-3ccf-9dce-2145e29d6797",
-         "firstName": "Krosse",
-         "lastName": "Johnson",
          "displayName": "Krosse Johnson",
          "jersey": "6"
         },
@@ -2773,10 +2110,6 @@
        {
         "athlete": {
          "id": "4685602",
-         "uid": "s:20~l:23~a:4685602",
-         "guid": "da6a88a1-6c02-325c-9f3c-77832aca0d55",
-         "firstName": "Ja'Marion",
-         "lastName": "Wayne",
          "displayName": "Ja'Marion Wayne",
          "jersey": "2"
         },
@@ -2793,10 +2126,6 @@
        {
         "athlete": {
          "id": "4870633",
-         "uid": "s:20~l:23~a:4870633",
-         "guid": "b020cfab-9840-3712-8400-1f7b46e20e49",
-         "firstName": "Chandavian",
-         "lastName": "Bradley",
          "displayName": "Chandavian Bradley",
          "jersey": "0"
         },
@@ -2813,10 +2142,6 @@
        {
         "athlete": {
          "id": "5226273",
-         "uid": "s:20~l:23~a:5226273",
-         "guid": "a502d46c-6490-3d62-a39c-21013d22355f",
-         "firstName": "Azarel",
-         "lastName": "Juste",
          "displayName": "Azarel Juste",
          "jersey": "23"
         },
@@ -2833,10 +2158,6 @@
        {
         "athlete": {
          "id": "5231155",
-         "uid": "s:20~l:23~a:5231155",
-         "guid": "94e0b276-9ceb-3474-99bf-12b58dbc781b",
-         "firstName": "Gabe",
-         "lastName": "White",
          "displayName": "Gabe White",
          "jersey": "8"
         },
@@ -2853,10 +2174,6 @@
        {
         "athlete": {
          "id": "5085699",
-         "uid": "s:20~l:23~a:5085699",
-         "guid": "236e23b5-38d9-3dbf-8b58-afe53d7c4bcf",
-         "firstName": "Nolan",
-         "lastName": "Korzeniowski",
          "displayName": "Nolan Korzeniowski",
          "jersey": "95"
         },
@@ -2873,10 +2190,6 @@
        {
         "athlete": {
          "id": "5226953",
-         "uid": "s:20~l:23~a:5226953",
-         "guid": "bed1663b-c963-3a59-a1cf-6ecdb11fe23f",
-         "firstName": "Damill",
-         "lastName": "Bostic Jr.",
          "displayName": "Damill Bostic Jr.",
          "jersey": "5"
         },
@@ -2893,10 +2206,6 @@
        {
         "athlete": {
          "id": "5296455",
-         "uid": "s:20~l:23~a:5296455",
-         "guid": "b60d0c5a-20d5-393c-aeeb-0590b85b4fc7",
-         "firstName": "Dezmond",
-         "lastName": "Barnes",
          "displayName": "Dezmond Barnes",
          "jersey": "98"
         },
@@ -2913,10 +2222,6 @@
        {
         "athlete": {
          "id": "5300001",
-         "uid": "s:20~l:23~a:5300001",
-         "guid": "78072d02-0f97-37a2-b747-43c8395be982",
-         "firstName": "Xzavier",
-         "lastName": "Booker",
          "displayName": "Xzavier Booker",
          "jersey": "35"
         },
@@ -2930,15 +2235,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "78",
-       "24",
-       "3",
-       "4",
-       "1",
-       "1",
-       "0"
       ]
      },
      {
@@ -2948,19 +2244,7 @@
        "interceptionYards",
        "interceptionTouchdowns"
       ],
-      "text": "Coastal Carolina Interceptions",
-      "labels": [
-       "INT",
-       "YDS",
-       "TD"
-      ],
-      "descriptions": [
-       "Interceptions",
-       "Yards",
-       "Touchdowns"
-      ],
-      "athletes": [],
-      "totals": []
+      "athletes": []
      },
      {
       "name": "kickReturns",
@@ -2971,29 +2255,10 @@
        "longKickReturn",
        "kickReturnTouchdowns"
       ],
-      "text": "Coastal Carolina Kick Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Kick Returns",
-       "Yards",
-       "Yards Per Kick Return",
-       "Longest Kick Return",
-       "Touchdowns"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5153389",
-         "uid": "s:20~l:23~a:5153389",
-         "guid": "e51650b8-61d4-3aa2-bc59-a7c68659ea51",
-         "firstName": "Colton",
-         "lastName": "Hinton",
          "displayName": "Colton Hinton",
          "jersey": "14"
         },
@@ -3005,13 +2270,6 @@
          "0"
         ]
        }
-      ],
-      "totals": [
-       "2",
-       "72",
-       "36.0",
-       "51",
-       "0"
       ]
      },
      {
@@ -3023,23 +2281,7 @@
        "longPuntReturn",
        "puntReturnTouchdowns"
       ],
-      "text": "Coastal Carolina Punt Returns",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "LONG",
-       "TD"
-      ],
-      "descriptions": [
-       "Punt Returns",
-       "Yards",
-       "Yards Per Punt Return",
-       "Longest Punt Return",
-       "Touchdowns"
-      ],
-      "athletes": [],
-      "totals": []
+      "athletes": []
      },
      {
       "name": "kicking",
@@ -3050,29 +2292,10 @@
        "extraPointsMade/extraPointAttempts",
        "totalKickingPoints"
       ],
-      "text": "Coastal Carolina Kicking",
-      "labels": [
-       "FG",
-       "PCT",
-       "LONG",
-       "XP",
-       "PTS"
-      ],
-      "descriptions": [
-       "Field Goals Made/Attempts",
-       "Field Goal Percentage",
-       "Longest Field Goal Made",
-       "Extra Points Made/Attempts",
-       "Kicking Points"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5304544",
-         "uid": "s:20~l:23~a:5304544",
-         "guid": "43186bd0-5e88-313f-a730-6698e3c3f751",
-         "firstName": "Nico",
-         "lastName": "Cavanillas Alti",
          "displayName": "Nico Cavanillas Alti",
          "jersey": "30"
         },
@@ -3084,13 +2307,6 @@
          "5"
         ]
        }
-      ],
-      "totals": [
-       "1/1",
-       "100.0",
-       "41",
-       "2/2",
-       "5"
       ]
      },
      {
@@ -3103,31 +2319,10 @@
        "puntsInside20",
        "longPunt"
       ],
-      "text": "Coastal Carolina Punting",
-      "labels": [
-       "NO",
-       "YDS",
-       "AVG",
-       "TB",
-       "In 20",
-       "LONG"
-      ],
-      "descriptions": [
-       "Punts",
-       "Yards",
-       "Average Punt Yards",
-       "Touchbacks",
-       "Punts Inside 20",
-       "Longest Punt"
-      ],
       "athletes": [
        {
         "athlete": {
          "id": "5258479",
-         "uid": "s:20~l:23~a:5258479",
-         "guid": "ab115968-c401-3568-ab8b-8fc93e18f79a",
-         "firstName": "Roland",
-         "lastName": "Podesta",
          "displayName": "Roland Podesta",
          "jersey": "42"
         },
@@ -3140,18 +2335,9 @@
          "47"
         ]
        }
-      ],
-      "totals": [
-       "4",
-       "171",
-       "42.8",
-       "1",
-       "1",
-       "47"
       ]
      }
-    ],
-    "displayOrder": 2
+    ]
    }
   ]
  },

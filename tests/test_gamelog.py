@@ -1088,3 +1088,107 @@ def test_college_basketball_is_read_like_the_nba_with_halves_for_periods():
     )
     assert LOGS["cbb"].daily and LOGS["cbb"].half_periods == 1
     assert LOGS["cbb"].start_label == "Tip-off" and LOGS["cbb"].home_label == "home court"
+
+
+def test_player_lines_are_read_for_every_sport():
+    from scanner.gamelog import PlayerLine, parse_players
+
+    nba = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    assert len(nba.players) == 27 and sum(p.played for p in nba.players) == 21
+    tatum = next(p for p in nba.players if p.name == "Jayson Tatum")
+    assert isinstance(tatum, PlayerLine) and tatum.team_id == nba.home.team_id
+    assert tatum.position == "F" and tatum.starter is True and tatum.played
+    assert tatum.stats["minutes"] == 42 and tatum.stats["points"] == 40
+    assert (tatum.stats["fg_made"], tatum.stats["fg_att"], tatum.stats["ft_att"]) == (10, 20, 22)
+    assert (
+        tatum.stats["rebounds"] == 5 and tatum.stats["assists"] == 8 and tatum.stats["blocks"] == 1
+    )
+    benched = [p for p in nba.players if not p.played]
+    assert len(benched) == 6 and all(p.stats == {} for p in benched)
+    assert {p.team_id for p in nba.players} == {nba.home.team_id, nba.away.team_id}
+
+    cbb = parse_game_summary(load_fixture("espn_cbb_summary_final.json"), "cbb")
+    assert len(cbb.players) == 31 and sum(p.played for p in cbb.players) == 22
+    assert sum(p.stats.get("points", 0) for p in cbb.players if p.team_id == cbb.home.team_id) == 84
+
+    nhl = parse_game_summary(load_fixture("espn_nhl_summary_final.json"), "nhl")
+    assert len(nhl.players) == 38 and all(p.played for p in nhl.players)
+    saros = next(p for p in nhl.players if p.name == "Juuse Saros")
+    assert saros.position == "G" and saros.stats == {
+        "toi": 3900,
+        "saves": 24,
+        "shots_against": 27,
+        "goals_against": 3,
+    }
+    skaters = [p for p in nhl.players if p.position != "G"]
+    assert {p.position for p in skaters} == {"C", "LW", "RW", "D"}
+    assert sum(p.stats["goals"] for p in skaters) == 6  # the shootout goal is not in play
+    assert all(p.stats["toi"] and "shots" in p.stats and "pp_toi" in p.stats for p in skaters)
+
+    nfl = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    assert len(nfl.players) == 60 and all(p.played and p.starter is None for p in nfl.players)
+    rodgers = next(p for p in nfl.players if p.name == "Aaron Rodgers")
+    assert rodgers.position is None  # the football groups carry no position
+    assert rodgers.stats == {
+        "completions": 22,
+        "pass_att": 40,
+        "pass_yards": 299,
+        "pass_td": 3,
+        "interceptions_thrown": 2,
+    }
+    # One line a player, across the groups he appears in.
+    multi = [p for p in nfl.players if "rush_yards" in p.stats and "rec_yards" in p.stats]
+    assert multi and all(p.stats["rush_att"] is not None for p in multi)
+    receiver = max(
+        (p for p in nfl.players if "rec_yards" in p.stats), key=lambda p: p.stats["rec_yards"]
+    )
+    assert receiver.stats["targets"] is not None and receiver.stats["receptions"] is not None
+    kicker = next(p for p in nfl.players if "fg_att" in p.stats)
+    assert kicker.stats["kicking_points"] is not None and "xp_att" in kicker.stats
+    tackler = max(
+        (p for p in nfl.players if "tackles" in p.stats), key=lambda p: p.stats["tackles"]
+    )
+    assert tackler.stats["tackles"] >= 5 and isinstance(tackler.stats["sacks"], int | float)
+
+    cfb = parse_game_summary(load_fixture("espn_cfb_summary_final.json"), "cfb")
+    assert len(cfb.players) == 75
+    passer = max(
+        (p for p in cfb.players if "pass_yards" in p.stats), key=lambda p: p.stats["pass_yards"]
+    )
+    assert (
+        passer.stats["pass_yards"] == 216 and "targets" not in passer.stats
+    )  # no targets in college
+
+    assert parse_players({"boxscore": {}}, "nba", "1", "2") == ()
+    assert parse_players({}, "mlb", "1", "2") == ()
+    stray = {"boxscore": {"players": [{"team": {"id": "9"}, "statistics": []}, "junk"]}}
+    assert parse_players(stray, "nba", "1", "2") == ()  # a team not in the game is skipped
+
+
+def test_player_lines_are_stored_with_the_game_and_read_back_by_team():
+    from scanner.diary import FOOTBALL_GAME_VERSION
+
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    diary.store_football_game(record, NOW)
+    assert FOOTBALL_GAME_VERSION == 3 and diary.football_games_stale("nba") == []
+    rows = diary.player_games("nba")
+    assert len(rows) == 27 and diary.player_game_counts() == {"nba": 1}
+    tatum = next(r for r in rows if r["name"] == "Jayson Tatum")
+    assert tatum["team_abbr"] == "BOS" and tatum["opponent_abbr"] == "BKN" and tatum["home"] is True
+    assert tatum["season"] == 2027 and tatum["date"] == record.date.isoformat()
+    assert tatum["starter"] is True and tatum["played"] is True and tatum["stats"]["points"] == 40
+    benched = next(r for r in rows if not r["played"])
+    assert benched["stats"] == {} and benched["starter"] is False
+    assert len(diary.player_games("nba", season=2027, team_id=record.home.team_id)) == 14
+    assert diary.player_games("nba", season=2026) == []
+    assert len(diary.player_lines_for_game("nba", record.game_id)) == 27
+    # A game stored again (a re-read) replaces its lines rather than doubling them.
+    diary.store_football_game(record, NOW + timedelta(hours=1))
+    assert len(diary.player_games("nba")) == 27
+    # The team box scores read back exactly as before: players live in their own table.
+    stored = diary.football_games("nba")[0]
+    assert stored.players == () and stored.home_stats == record.home_stats
+    # An older diary's games are stale until the re-read fills their players in.
+    diary.mark_football_game_version("nba", record.game_id, 2)
+    assert diary.football_games_stale("nba") == [record.game_id]
