@@ -616,6 +616,18 @@ lines either side of the median, the inputs behind it and his recent games;
 and `.png` on that address is a share image. The matchup sheet (token) shows
 the same table under "Player lines".
 
+The lines are the model's own, not a book's. Polymarket US was checked for
+per-game player markets on 3 November 2026 (every league's event listing,
+the markets endpoint under its documented filters, and the search endpoint
+by player name): the listings carry team markets (the moneyline, spreads,
+totals, periods and team totals the scanner already reads), and a player's
+name finds only season-long futures (points leader, 100-point scorers). There
+is nothing to compare a line to or to grade a gap against, so no prop market
+code exists; if Polymarket lists them later, the pre-game scan's pattern
+(record the price, compare, grade at the final) is the one to follow. Until
+then the record on `/props`, the share of actuals above the median and inside
+the band, is what says whether the lines are worth anything.
+
 ## The daily card and the simulator
 
 The owner wants to publish research, not tips to tail blindly, and cares most
