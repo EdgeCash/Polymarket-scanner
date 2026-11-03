@@ -293,7 +293,9 @@ on the iPad.
    "Build" row shows the short git commit Railway deployed, so you can check
    that a merge has gone live without opening Railway. That one visit signs
    the iPad in for a year; after it, `https://<domain>/matchups` with no token
-   works, and a bookmark of it is enough.
+   works, and a bookmark of it is enough. The root, `https://<domain>/`, is
+   the public front door: the daily card and the player lines with their
+   records, no token, the address to give people.
 5. Phone check (milestone 7): set `SEND_TEST_MESSAGE_ON_START=true`, let
    Railway redeploy, confirm the message on the phone, then set it back to
    `false`. Do this on a weekday, never during a game window.

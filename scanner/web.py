@@ -1970,6 +1970,63 @@ def render_props_player(
 </body></html>"""
 
 
+def render_home(
+    card: dict | None, card_summary: dict, players_summary: dict, settings: Settings
+) -> str:
+    """The front door: the daily card and the player lines, each with its record, public."""
+    lock = settings.card_lock_time.strftime("%-I:%M %p")
+    zone = html.escape(_zone_label(settings.CARD_TZ))
+    if card:
+        picks = "".join(
+            f"<tr><td><span class='rank'>#{p['rank']}</span>"
+            f"{html.escape(p['sport'].upper())} {html.escape(p['away'])} at "
+            f"{html.escape(p['home'])}</td><td>{html.escape(p['side_label'])} "
+            f"({_odds(p['odds'])})</td><td>{_result_chip(p)}</td></tr>"
+            for p in card["rows"]
+        )
+        card_block = (
+            f"<p class='note'>Card {html.escape(card['card_date'])}, "
+            f"{len(card['rows'])} picks.</p><table>{picks}</table>"
+        )
+    else:
+        card_block = f"<p class='note'>No card yet; the first locks at {lock} {zone}.</p>"
+    intro = (
+        "A projection model built from this season's box scores, its "
+        f"{settings.CARD_PICKS} surest sides each day and every leader's stat line for every "
+        "game, all written down before the games and graded at the final, misses included. The "
+        "model knows nothing of injuries, rest or weather. Nothing here is advice and nothing is "
+        "placed."
+    )
+    card_note = (
+        f"Locked by a fixed rule at {lock} {zone}, one side per game, ranked by the gap from "
+        "the book. <a href='/card'>Every pick, every day, with its simulation</a>."
+    )
+    props_note = (
+        "Each leader's projected line for every upcoming game, as a whole distribution drawn "
+        "100,000 times. <a href='/props'>Today's games</a>."
+    )
+    owner = (
+        "Owner's pages: <a href='/health'>status</a>, <a href='/scorecard'>scorecard</a>, "
+        "<a href='/matchups'>matchup sheets</a> (token)."
+    )
+    return f"""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research</title>{STYLE}</head>
+<body>
+<h1>Research, graded</h1>
+<p class="note">{intro}</p>
+<h2><a href="/card">Daily card</a></h2>
+{_record_strip(card_summary)}
+{card_block}
+<p class="note">{card_note}</p>
+<h2><a href="/props">Player lines</a></h2>
+{_props_record(players_summary)}
+<p class="note">{props_note}</p>
+<p class="note">{owner}</p>
+</body></html>"""
+
+
 def _jsonable(value):
     """Dataclasses and datetimes in a sheet, made plain for JSON."""
     from dataclasses import asdict, is_dataclass
@@ -2214,12 +2271,22 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
         return page
 
     @app.get("/")
-    def root():
-        return JSONResponse(
-            {
-                "service": "polymarket-scanner",
-                "pages": ["/health", "/scorecard", "/matchups", "/card", "/props"],
-            }
+    def root(request: Request):
+        if "text/html" not in request.headers.get("accept", ""):
+            return JSONResponse(
+                {
+                    "service": "polymarket-scanner",
+                    "pages": ["/health", "/scorecard", "/matchups", "/card", "/props"],
+                }
+            )
+        key = diary.latest_card_date()
+        return HTMLResponse(
+            render_home(
+                diary.card(key) if key else None,
+                diary.card_summary(picks=settings.CARD_PICKS),
+                diary.player_projection_summary(),
+                settings,
+            )
         )
 
     return app
