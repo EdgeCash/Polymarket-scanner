@@ -115,7 +115,7 @@ def test_pages_never_leak_the_token_or_secrets():
     client, _ = make_client()
     page = client.get("/health?token=phone-secret").text
     assert "phone-secret" not in page
-    assert client.get("/").json()["pages"] == ["/health", "/scorecard", "/matchups"]
+    assert client.get("/").json()["pages"] == ["/health", "/scorecard", "/matchups", "/card"]
 
 
 def test_scorecard_near_miss_table_names_the_alert_type():
@@ -539,3 +539,100 @@ def test_health_counts_the_season_days_still_to_read():
     assert _gamelog_health(status, load_settings()).endswith(": NHL 80 games")
     status.gamelog["days_pending"] = 12
     assert _gamelog_health(status, load_settings()).endswith("NHL 80 games, 12 days still to read")
+
+
+def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
+    from datetime import UTC, datetime, timedelta
+
+    from scanner.card import build_if_due
+    from tests.test_card import seeded_diary
+
+    client, _ = make_client()
+    empty = client.get("/card")
+    assert empty.status_code == 200 and "No card yet. The first locks at" in empty.text
+    assert "10:00 AM ET" in empty.text and "phone-secret" not in empty.text
+    assert client.get("/card/2026-10-11").status_code == 404
+    assert client.get("/card/2026-10-11/1").status_code == 404
+    assert client.get("/card", headers={"accept": "application/json"}).json()["card"] is None
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", GAMELOG_SPORTS="nfl,cfb")
+    diary, record, first, second = seeded_diary()
+    now = datetime(2026, 10, 11, 14, 5, tzinfo=UTC)
+    assert build_if_due(diary, settings, now)["picks"] == 2
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    page = client.get("/card").text  # no token needed
+    assert "<h1>Daily card, 2026-10-11</h1>" in page
+    assert "Locked Sun Oct 11, 10:05 AM ET. 2 picks, one per game." in page
+    assert '<span class="rank">#1</span>' in page and "Over 41.5" in page and "(-105)" in page
+    assert "WSH +3.5" in page and "<span class='chip open'>open</span>" in page
+    assert "In 100,000 simulated games Over 41.5 lands" in page and "the price says 51%" in page
+    assert "<svg" in page and "book 41.5" in page and "model" in page
+    assert "/card/2026-10-11/1'>Full simulation" in page and "Record by rank" not in page
+    assert client.get("/card/2026-10-11").text == page
+
+    # The pick's own page re-runs the same simulation with every score and line.
+    pick = client.get("/card/2026-10-11/1").text
+    assert "<h1>Pick #1, 2026-10-11</h1>" in pick and "Likeliest finals" in pick
+    assert "Every score" in pick and "CLE score" in pick and "Spread at other lines" in pick
+    assert "Total at other lines" in pick and "<td>41.5</td>" in pick
+    assert "Full simulation" not in pick
+    data = client.get("/card/2026-10-11/1", headers={"accept": "application/json"}).json()
+    assert data["rank"] == 1 and data["detail"]["sim"]["draws"] == 100_000
+
+    # Graded: the result chip, the final and the record appear.
+    from dataclasses import replace
+
+    kickoff = datetime.fromisoformat(data["kickoff"])
+    diary.store_football_game(replace(record, game_id=first.game_id), kickoff + timedelta(hours=4))
+    diary.grade_card_picks(kickoff + timedelta(hours=6))
+    page = client.get("/card").text
+    assert "<span class='chip win'>WIN +0.95u</span>" in page
+    assert "Final PIT 24, CLE 27. Closing line moved -3.0 points toward the pick." in page
+    assert "<span>Record</span><b>1-0-0</b>" in page and "Record by rank" in page
+    assert "<th>Rank 1</th><td class='num'>1-0-0 (100%), +0.95u</td>" in page
+    assert "<a href='/card/2026-10-11'>2026-10-11</a>" in page
+    body = client.get("/card", headers={"accept": "application/json"}).json()
+    assert body["record"]["wins"] == 1 and body["history"][0]["graded"] == 1
+
+    scorecard = client.get("/scorecard?token=phone-secret").text
+    assert "Daily card (chosen by rule" in scorecard
+    assert "<th>Wins / losses / pushes</th><td class='num'>1 / 0 / 0</td>" in scorecard
+    assert "<th>Rank 1</th><td class='num'>1-0-0 (100%), +0.95u</td>" in scorecard
+    assert "2026-10-11 #1<br>NFL PIT at CLE" in scorecard
+    off = make_client(CARD_ENABLED=False)[0].get("/scorecard?token=phone-secret").text
+    assert "<h2>Daily card</h2><p class='note'>off</p>" in off
+
+    # The simulation page for any projected game stays behind the token (the client above
+    # was signed in by its first visit with the token, so a fresh one asks).
+    fresh = TestClient(create_app(settings, diary, RuntimeStatus()))
+    assert fresh.get(f"/sim/nfl/{second.game_id}").status_code == 401
+    assert fresh.get("/card").status_code == 200
+    sim = client.get(f"/sim/nfl/{second.game_id}?token=phone-secret")
+    title = f"{second.away.abbreviation} at {second.home.abbreviation}"
+    assert sim.status_code == 200 and "Every score" in sim.text and title in sim.text
+    assert client.get("/sim/nfl/nope?token=phone-secret").status_code == 404
+    assert client.get("/sim/mlb/x?token=phone-secret").status_code == 404
+
+
+def test_health_shows_the_daily_card():
+    client, _ = make_client()
+    page = client.get("/health?token=phone-secret").text
+    assert "<th>Daily card</th><td>none locked since start; locks at 10:00 America/New_York" in page
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    status = RuntimeStatus()
+    status.gamelog = {
+        "last_refresh": "2026-10-11T14:05:00+00:00",
+        "games": {"nfl": 3},
+        "card": {
+            "card_date": "2026-10-11",
+            "picks": 5,
+            "late": True,
+            "locked_at": "2026-10-11T14:05:00+00:00",
+        },
+    }
+    page = (
+        TestClient(create_app(settings, Diary(":memory:"), status))
+        .get("/health?token=phone-secret")
+        .text
+    )
+    assert "<th>Daily card</th><td>2026-10-11: 5 picks locked Sun 9:05:00 AM, late</td>" in page

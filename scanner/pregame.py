@@ -591,6 +591,7 @@ class PregameScanner:
             "projected": sum(s.projected for s in summaries),
             "graded": sum(s.graded for s in summaries),
             "staked": sum(s.staked for s in summaries),
+            "card": self.gamelog.last_card,
             "error": "; ".join(short_error(e) for e in errors[:2]) or None,
         }
         log.info(

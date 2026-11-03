@@ -257,6 +257,46 @@ CREATE TABLE IF NOT EXISTS stakes (
     graded_at TEXT,
     UNIQUE (sport, game_id, market)
 );
+CREATE TABLE IF NOT EXISTS cards (
+    card_date TEXT PRIMARY KEY,
+    locked_at TEXT NOT NULL,
+    picks INTEGER NOT NULL,
+    late INTEGER NOT NULL DEFAULT 0,
+    note TEXT
+);
+CREATE TABLE IF NOT EXISTS card_picks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    card_date TEXT NOT NULL,
+    locked_at TEXT NOT NULL,
+    rank INTEGER NOT NULL,
+    sport TEXT NOT NULL,
+    game_id TEXT NOT NULL,
+    kickoff TEXT NOT NULL,
+    home TEXT NOT NULL,
+    away TEXT NOT NULL,
+    market TEXT NOT NULL,
+    side TEXT NOT NULL,
+    side_label TEXT NOT NULL,
+    line REAL,
+    odds INTEGER NOT NULL,
+    price REAL NOT NULL,
+    model_value REAL NOT NULL,
+    book_value REAL NOT NULL,
+    gap REAL NOT NULL,
+    z REAL NOT NULL,
+    trust REAL NOT NULL,
+    conviction REAL NOT NULL,
+    detail TEXT NOT NULL,
+    outcome TEXT,
+    units REAL,
+    final_home INTEGER,
+    final_away INTEGER,
+    closing_value REAL,
+    clv REAL,
+    graded_at TEXT,
+    UNIQUE (card_date, rank),
+    UNIQUE (card_date, sport, game_id)
+);
 CREATE INDEX IF NOT EXISTS alerts_game ON alerts (league, feed_id);
 CREATE INDEX IF NOT EXISTS near_misses_time ON near_misses (created_at);
 CREATE INDEX IF NOT EXISTS observations_game ON observations (league, feed_id);
@@ -1282,6 +1322,210 @@ class Diary:
             ],
         }
 
+    # -- the daily card ---------------------------------------------------------------
+
+    def record_card(
+        self, card_date: str, locked_at: datetime, late: bool, note: str | None, picks: list[dict]
+    ) -> None:
+        """Lock a day's card: its picks are written once and never updated."""
+        with self._lock:
+            self._conn.execute(
+                "INSERT OR IGNORE INTO cards (card_date, locked_at, picks, late, note) "
+                "VALUES (?,?,?,?,?)",
+                (card_date, _iso(locked_at), len(picks), int(late), note),
+            )
+            for row in picks:
+                self._conn.execute(
+                    """INSERT OR IGNORE INTO card_picks (card_date, locked_at, rank, sport,
+                       game_id, kickoff, home, away, market, side, side_label, line, odds, price,
+                       model_value, book_value, gap, z, trust, conviction, detail)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        card_date,
+                        _iso(locked_at),
+                        row["rank"],
+                        row["sport"],
+                        row["game_id"],
+                        _iso(row["kickoff"]),
+                        row["home"],
+                        row["away"],
+                        row["market"],
+                        row["side"],
+                        row["side_label"],
+                        row["line"],
+                        row["odds"],
+                        row["price"],
+                        row["model_value"],
+                        row["book_value"],
+                        row["gap"],
+                        row["z"],
+                        row["trust"],
+                        row["conviction"],
+                        json.dumps(row["detail"]),
+                    ),
+                )
+
+    @staticmethod
+    def _card_pick_row(row) -> dict:
+        out = dict(row)
+        out["detail"] = json.loads(out["detail"]) if out.get("detail") else {}
+        return out
+
+    def card_exists(self, card_date: str) -> bool:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT 1 FROM cards WHERE card_date = ?", (card_date,)
+            ).fetchone()
+        return row is not None
+
+    def latest_card_date(self) -> str | None:
+        with self._lock:
+            row = self._conn.execute("SELECT MAX(card_date) AS d FROM cards").fetchone()
+        return row["d"] if row and row["d"] else None
+
+    def card(self, card_date: str) -> dict | None:
+        """A day's card with its picks in rank order, or None when that day has none."""
+        with self._lock:
+            head = self._conn.execute(
+                "SELECT * FROM cards WHERE card_date = ?", (card_date,)
+            ).fetchone()
+            if head is None:
+                return None
+            rows = self._conn.execute(
+                "SELECT * FROM card_picks WHERE card_date = ? ORDER BY rank", (card_date,)
+            ).fetchall()
+        out = dict(head)
+        out["late"] = bool(out["late"])
+        out["rows"] = [self._card_pick_row(r) for r in rows]
+        return out
+
+    def card_pick(self, card_date: str, rank: int) -> dict | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT * FROM card_picks WHERE card_date = ? AND rank = ?", (card_date, rank)
+            ).fetchone()
+        return self._card_pick_row(row) if row else None
+
+    def card_history(self, limit: int = 60) -> list[dict]:
+        """Each day's card with its record, newest first."""
+        from scanner.card import _tally
+
+        with self._lock:
+            heads = self._conn.execute(
+                "SELECT * FROM cards ORDER BY card_date DESC LIMIT ?", (limit,)
+            ).fetchall()
+            if not heads:
+                return []
+            oldest = heads[-1]["card_date"]
+            rows = self._conn.execute(
+                "SELECT card_date, rank, sport, market, outcome, units, clv FROM card_picks "
+                "WHERE card_date >= ?",
+                (oldest,),
+            ).fetchall()
+        by_day: dict[str, list[dict]] = {}
+        for r in rows:
+            by_day.setdefault(r["card_date"], []).append(dict(r))
+        out = []
+        for head in heads:
+            day = dict(head)
+            day["late"] = bool(day["late"])
+            picks = by_day.get(day["card_date"], [])
+            day.update(_tally(picks))
+            day["open"] = sum(1 for p in picks if p["outcome"] is None)
+            out.append(day)
+        return out
+
+    def grade_card_picks(
+        self, now: datetime, grace_hours: float = 4.0, give_up_days: float = 10.0
+    ) -> int:
+        """Settle picks whose game is in the log; give up on games that never land."""
+        from scanner.books import BookLine
+        from scanner.card import closing_for, settle_pick
+
+        graded = 0
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM card_picks WHERE outcome IS NULL AND kickoff < ?",
+                (_iso(now - timedelta(hours=grace_hours)),),
+            ).fetchall()
+            for row in rows:
+                game = self._conn.execute(
+                    "SELECT home_score, away_score, book FROM football_games "
+                    "WHERE sport = ? AND game_id = ?",
+                    (row["sport"], row["game_id"]),
+                ).fetchone()
+                if game is None:
+                    if datetime.fromisoformat(row["kickoff"]) < now - timedelta(days=give_up_days):
+                        self._conn.execute(
+                            "UPDATE card_picks SET outcome = ?, graded_at = ? WHERE id = ?",
+                            (OUTCOME_NOT_GRADED, _iso(now), row["id"]),
+                        )
+                    continue
+                outcome, units = settle_pick(dict(row), game["home_score"], game["away_score"])
+                close = BookLine.from_dict(json.loads(game["book"])) if game["book"] else None
+                closing, clv = closing_for(dict(row), close)
+                self._conn.execute(
+                    """UPDATE card_picks SET outcome = ?, units = ?, final_home = ?,
+                       final_away = ?, closing_value = ?, clv = ?, graded_at = ? WHERE id = ?""",
+                    (
+                        outcome,
+                        units,
+                        game["home_score"],
+                        game["away_score"],
+                        closing,
+                        clv,
+                        _iso(now),
+                        row["id"],
+                    ),
+                )
+                graded += 1
+        return graded
+
+    def card_summary(self, since: datetime | None = None, picks: int = 5) -> dict:
+        """The card's whole record, for the scorecard and the public page."""
+        from scanner.card import summarise
+
+        with self._lock:
+            if since is None:
+                rows = self._conn.execute(
+                    "SELECT * FROM card_picks ORDER BY card_date DESC, rank"
+                ).fetchall()
+            else:
+                rows = self._conn.execute(
+                    "SELECT * FROM card_picks WHERE kickoff >= ? ORDER BY card_date DESC, rank",
+                    (_iso(since),),
+                ).fetchall()
+            days = self._conn.execute("SELECT COUNT(*) AS n FROM cards").fetchone()["n"]
+        rows = [dict(r) for r in rows]
+        out = summarise(rows, picks)
+        out["days"] = int(days)
+        out["recent"] = [
+            {
+                k: r[k]
+                for k in (
+                    "card_date",
+                    "rank",
+                    "kickoff",
+                    "sport",
+                    "home",
+                    "away",
+                    "market",
+                    "side_label",
+                    "odds",
+                    "z",
+                    "conviction",
+                    "outcome",
+                    "units",
+                    "final_home",
+                    "final_away",
+                    "clv",
+                )
+            }
+            for r in rows
+            if r["outcome"] in ("win", "loss", "push")
+        ][:10]
+        return out
+
     # -- events (heartbeats, failures, paused messages) ----------------------
 
     def log_event(self, kind: str, detail: str, at: datetime) -> None:
@@ -1473,6 +1717,7 @@ class Diary:
             "pregame": self.pregame_summary(since),
             "projections": self.projection_summary(since),
             "stakes": self.stake_summary(since),
+            "card": self.card_summary(since),
         }
 
     @staticmethod
