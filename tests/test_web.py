@@ -866,8 +866,10 @@ def test_the_root_is_a_public_front_door_for_browsers_and_json_for_the_rest():
     assert page.status_code == 200 and "<h1>Research, graded</h1>" in page.text
     assert "No card yet; the first locks at 10:00 AM ET" in page.text
     assert 'href="/card"' in page.text and "href='/props'" in page.text
-    assert "phone-secret" not in page.text
+    assert "phone-secret" not in page.text and "Build unknown." in page.text
     assert client.get("/").json()["pages"][0] == "/health"  # API clients still get the list
+    built = make_client(GIT_COMMIT="4b0b26d267daad864f251f26b6fa16da2925718b")[0]
+    assert "Build 4b0b26d." in built.get("/", headers={"accept": "text/html"}).text
 
     from datetime import UTC, datetime
 
