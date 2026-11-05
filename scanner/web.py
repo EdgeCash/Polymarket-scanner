@@ -2007,7 +2007,7 @@ def render_home(
     )
     owner = (
         "Owner's pages: <a href='/health'>status</a>, <a href='/scorecard'>scorecard</a>, "
-        "<a href='/matchups'>matchup sheets</a> (token)."
+        f"<a href='/matchups'>matchup sheets</a> (token). Build {settings.short_commit}."
     )
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
