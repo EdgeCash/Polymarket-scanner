@@ -707,6 +707,7 @@ much of the favourite's edge survives into overtime are counted from the
 overtimes that happened. `scripts/grade_sim.py` prints the report card, and
 `tests/test_sim_history.py` fails if a change moves a sport's key numbers, its
 level-after-regulation rate or its misplaced margin chance past a tolerance.
+The full before-and-after report card is in `docs/sim_report.md`.
 
 Football before and after its tables, on 4,297 NFL games against the close
 (2010-2026) and 4,528 FBS games (2018-2025):
