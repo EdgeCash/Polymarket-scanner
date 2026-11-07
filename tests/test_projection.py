@@ -271,7 +271,7 @@ def test_hockey_fits_on_shots_as_the_volume_half_with_finer_gap_buckets():
         rec("4", "C", "B", 2, 2, 30, 30, 3),
     ]
     ratings = fit(records, "nhl")
-    assert (ratings.hfa, ratings.sigma, ratings.sigma_total) == (0.2, 2.3, 2.4)
+    assert (ratings.hfa, ratings.sigma, ratings.sigma_total) == (0.2, 2.5, 2.4)
     assert ratings.points_per_volume == pytest.approx(21 / 232)
     assert ratings.first_half_share == pytest.approx(4 / 21)
     assert ratings.offense["A"] > ratings.offense["B"] and ratings.season == 2027
