@@ -528,8 +528,9 @@ differs:
   shots say (the league's goals per shot times shots), with home ice 0.2, a
   margin spread of 2.5 and a total spread of 2.4. The book's puck line is
   always 1.5 whatever the matchup, so the margin the book expects is read off
-  its moneyline (the margin spread times the normal inverse of its vig-free
-  win probability); that margin also gives the market implied score, and the
+  its moneyline: the margin at which the model's own score grid (empty nets,
+  overtime and all) gives the book's vig-free win probability, at the book's
+  total; that margin also gives the market implied score, and the
   scorecard's gap rows for hockey are in quarter goals. The scorecard shows
   the model's record sport by sport, since the misses are in different units.
 - Stakes. The same quarter-Kelly rule against the last Polymarket prices the
@@ -735,6 +736,28 @@ the NBA by 13.9 and college by 12.0 when they have seen only earlier games, so
 `TUNING` holds 14 and 12 (college was 11, nine percent too narrow). Overtime
 goes to the regulation favourite at about half its edge (0.49 NBA, 0.52
 college), and adds what real overtimes added, by count.
+
+Hockey's bell curves are the goals before the net empties. A side ahead by one
+then scores into the empty net 47% of the time, by two 65%, by three 28% (from
+the league's own goal records), which is what makes three-goal games more
+common than two-goal ones. Overtime and the shootout go to the favourite at
+under a quarter of its regulation edge (0.23): favourites won 52.8% of 1,088
+overtimes. On 5,030 NHL games (2021-22 to 2024-25), each rated only on earlier
+games:
+
+| | Before | After | Real |
+|---|---|---|---|
+| One-goal margin | 44.8% | 39.6% | 39.1% |
+| Two-goal margin | 23.3% | 20.0% | 19.8% |
+| Three-goal margin | 16.0% | 23.7% | 23.9% |
+| Winner by two or more (the puck line) | 55.2% | 60.4% | 60.9% |
+| Level after regulation | 15.7% | 22.0% | 21.8% |
+
+Hockey's win chances are still too confident at the ends (a side given 80-90%
+won 67% of these games), which is the ratings, not the shape: projected margins
+from goals alone overshoot by about a quarter (by half early in a season). The
+scanner's own ratings add shots, which these games do not have, so its
+shrinkage is left to be fit on its own graded record.
 
 `scanner/simulate.py` turns the grid into what the pages draw, as counts out of
 100,000 games: how often each margin and total lands, the likeliest finals and

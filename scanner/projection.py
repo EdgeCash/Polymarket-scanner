@@ -23,7 +23,7 @@ from statistics import NormalDist
 
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
-from scanner.grid import win_chance
+from scanner.grid import margin_for_win, win_chance
 
 MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
@@ -43,6 +43,7 @@ class SportTuning:
     volume_stat: str | None = None  # the box-score stat whose league rate makes the volume half
     first_half_share: float = 0.48  # used until the log has first-half (first-period) points
     margin_from_moneyline: bool = False  # read the book's margin off its moneyline, not its spread
+    typical_total: float | None = None  # the total assumed when the book quotes none
     buckets: tuple[float, ...] = GAP_BUCKETS  # the scorecard's gap rows, in this sport's unit
 
 
@@ -65,7 +66,8 @@ TUNING = {
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
     "cbb": SportTuning(hfa=3.5, sigma=12.0, sigma_total=17.0, first_half_share=0.47),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
-    # whatever the matchup, so its margin is read off the moneyline instead; the
+    # whatever the matchup, so its margin is read off the moneyline instead (through
+    # the score grid's own win curve, empty nets and overtime included); the
     # "first half" is the first period; gaps are in goals, so the buckets are finer.
     "nhl": SportTuning(
         hfa=0.2,
@@ -74,6 +76,7 @@ TUNING = {
         volume_stat="shots",
         first_half_share=0.31,
         margin_from_moneyline=True,
+        typical_total=6.2,
         buckets=(0.25, 0.5, 0.75, 1.0),
     ),
 }
@@ -136,7 +139,13 @@ def book_margin(book: BookLine | None, sport: str) -> float | None:
     if fair is None:
         return None
     p_home = min(max(fair[0], MONEYLINE_CLAMP), 1.0 - MONEYLINE_CLAMP)
-    return tuning.sigma * NormalDist().inv_cdf(p_home)
+    total = book.total or tuning.typical_total
+    margin = (
+        None
+        if total is None
+        else margin_for_win(sport, p_home, total, tuning.sigma, tuning.sigma_total)
+    )
+    return tuning.sigma * NormalDist().inv_cdf(p_home) if margin is None else margin
 
 
 def fit(records: list[GameRecord], sport: str) -> Ratings:
