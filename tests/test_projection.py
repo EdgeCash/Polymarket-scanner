@@ -293,7 +293,7 @@ def test_college_basketball_has_its_own_numbers_and_its_overtime():
     from scanner.simulate import simulate
 
     college = tuning_for("cbb")
-    assert college is TUNING["cbb"] and college.hfa == 3.5 and college.sigma == 11.0
+    assert college is TUNING["cbb"] and college.hfa == 3.5 and college.sigma == 12.0
     assert college.sigma_total == 17.0 and college.volume_stat is None
     assert not college.margin_from_moneyline and college.buckets == TUNING["nba"].buckets
     sim = simulate(
@@ -302,5 +302,8 @@ def test_college_basketball_has_its_own_numbers_and_its_overtime():
         draws=10_000,
         seed=5,
     )
-    assert sim["total"]["mean"] > 146.0  # a level game plays five more minutes
-    assert 0.02 < sim["overtime"] < 0.06 and "0" not in sim["margin"]["hist"]
+    # A level game plays five more minutes; the mean keeps the projection's, which is
+    # fit to final scores, overtime included.
+    assert sim["total"]["mean"] == pytest.approx(146.0, abs=1e-3)
+    # Level after regulation as often as close college games are (6.2% across all).
+    assert 0.04 < sim["overtime"] < 0.09 and "0" not in sim["margin"]["hist"]

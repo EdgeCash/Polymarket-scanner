@@ -47,19 +47,23 @@ class SportTuning:
 
 
 # The sigmas are how far real results land from an expectation, measured on history:
-# NFL against 4,297 closing lines (2010-2026, margin 13.0, total 13.2), NBA against
-# 7,221 (margin 13.5), the others against out-of-sample team ratings. The model's own
-# projections miss by at least as much as the market does, so none sits below it.
+# NFL against 4,297 closing lines (2010-2026, margin 13.0, total 13.2); the others
+# against this model's own ratings fit only on each season's earlier games, as the
+# scanner sees a game before it starts (tests/fixtures/history, fetch_history.py):
+# college football 16.5 and 16.7 on 4,528 games, the NBA 13.9 and 18.8 on 4,730,
+# college basketball 12.0 and 16.8 on 15,460, the NHL 2.6 and 2.3 on 5,030. The
+# model's own projections miss by at least as much as the market does, so none
+# sits below it.
 # Football's margin and total share a width: the two teams' scores then move
 # independently, as they do against the close (correlation 0.01 in the NFL).
 TUNING = {
     "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=13.5, volume_stat="total_yards"),
     "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=16.5, volume_stat="total_yards"),
     # Basketball: points alone, and a home edge that has shrunk to a few points.
-    "nba": SportTuning(hfa=2.5, sigma=13.5, sigma_total=19.0, first_half_share=0.5),
+    "nba": SportTuning(hfa=2.5, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
-    "cbb": SportTuning(hfa=3.5, sigma=11.0, sigma_total=17.0, first_half_share=0.47),
+    "cbb": SportTuning(hfa=3.5, sigma=12.0, sigma_total=17.0, first_half_share=0.47),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead; the
     # "first half" is the first period; gaps are in goals, so the buckets are finer.
