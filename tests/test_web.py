@@ -886,3 +886,10 @@ def test_the_root_is_a_public_front_door_for_browsers_and_json_for_the_rest():
     )
     assert "Card 2026-10-11, 2 picks." in page and "Over 41.5 (-105)" in page
     assert "<span class='chip open'>open</span>" in page
+
+
+def test_the_owners_pages_link_to_the_card_and_the_player_lines():
+    client, _ = make_client()
+    for path in ("/health", "/scorecard", "/matchups"):
+        page = client.get(f"{path}?token=phone-secret").text
+        assert 'href="/card">Daily card</a>' in page and 'href="/props">Player lines</a>' in page

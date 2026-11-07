@@ -234,7 +234,9 @@ worse prices, and a few weeks is a small sample.</p>
 <h2>Near misses by reason</h2>
 <table><tr><th>Type</th><th>Reason</th><th></th></tr>{miss_rows}</table>
 <p class="note">Generated {generated} ({zone}). Alerts {sending} being sent.</p>
-<p class="note"><a href="/health">Status</a> · <a href="/matchups">Matchups</a></p>
+<p class="note"><a href="/health">Status</a> · <a href="/scorecard">Scorecard</a> ·
+<a href="/matchups">Matchups</a> · <a href="/card">Daily card</a> ·
+<a href="/props">Player lines</a></p>
 </body></html>"""
 
 
@@ -1191,7 +1193,8 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>{STYLE}</head>
 <body class="wide">
-<p class="note"><a href="/matchups">All matchups</a> · <a href="/health">Status</a></p>
+<p class="note"><a href="/matchups">All matchups</a> · <a href="/health">Status</a> ·
+<a href="/card">Daily card</a> · <a href="/props">Player lines</a></p>
 <div class="band">
 <h1 style="margin-top:0">{html.escape(title)} <span class="note">{subtitle}</span></h1>
 <div class="cards">{_team_card(away, "Away", n)}{_team_card(home, "Home", n)}</div>
@@ -1264,7 +1267,9 @@ def render_matchups(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Matchups</title>{STYLE}</head>
 <body>
-<p class="note"><a href="/health">Status</a> · <a href="/scorecard">Scorecard</a></p>
+<p class="note"><a href="/health">Status</a> · <a href="/scorecard">Scorecard</a> ·
+<a href="/matchups">Matchups</a> · <a href="/card">Daily card</a> ·
+<a href="/props">Player lines</a></p>
 <h1>Matchups</h1>
 <p class="note">Upcoming games with a matchup sheet. Times are {zone_label}.
 Game log: {log_note}.</p>
@@ -1334,7 +1339,8 @@ def render_health(status: RuntimeStatus, settings: Settings) -> str:
 <h1>Scanner status: <span class="{klass}">{"ok" if feeds_ok else "feed trouble"}</span></h1>
 <table>{body}</table>
 <p class="note"><a href="/scorecard">Scorecard</a> · <a href="/matchups">Matchups</a> ·
-<a href="/card">Daily card</a> · <a href="/logout">Sign out of this device</a></p>
+<a href="/card">Daily card</a> · <a href="/props">Player lines</a> ·
+<a href="/logout">Sign out of this device</a></p>
 </body></html>"""
 
 
