@@ -752,7 +752,7 @@ def test_scorecard_shows_the_player_lines():
         .text
     )
     assert "<th>Graded</th><td class='num'>1</td>" in page
-    assert "<th>Actual above the median</th><td class='num'>100.0%</td>" in page
+    assert "<th>Actual above the median (ties half)</th><td class='num'>100.0%</td>" in page
     assert "<th>Inside the 80% band</th><td class='num'>100.0%</td>" in page
     assert "<tr><th colspan='2'>NBA (1)</th></tr>" in page and "<th>Points</th>" in page
     assert "Jayson Tatum (BOS v BKN)" in page and "<td class='num'>40</td>" in page

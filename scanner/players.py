@@ -54,22 +54,27 @@ EXPOSURE_CAP = {"nba": 48.0, "cbb": 40.0, "nhl": 65 * 60.0}
 EXPOSURE_FLOOR_SD = {"nba": 4.0, "cbb": 4.0, "nhl": 120.0}
 # Shrinkage: how much league-average play is added to a player's own before
 # his rate is trusted, in exposure units (or games, for football).
-PRIOR_EXPOSURE = {"nba": 72.0, "cbb": 60.0, "nhl": 3600.0, "nfl": 2.0, "cfb": 2.0}
+# Football shrinks harder: the leaders are picked by projected mean, and with a
+# game or two of per-game rates the biggest estimates are the luckiest ones.
+PRIOR_EXPOSURE = {"nba": 72.0, "cbb": 60.0, "nhl": 3600.0, "nfl": 4.0, "cfb": 4.0}
 # The negative binomial's dispersion per stat: variance = mean + mean² / k.
-# Smaller is wider. Points at 12 puts a 25-a-game scorer's 80% band at
-# roughly 15 to 35; a stat near zero (goals) is close to Poisson whatever k is.
+# Smaller is wider. Set by hand, then moved to what the first days of grading
+# showed (7 November 2026, 3,400 lines): basketball and hockey counting stats
+# were too wide (90-96% of actuals inside the 80% band), points a touch narrow
+# (75%), football yards far too narrow (27-57%). A stat near zero (goals) is
+# close to Poisson whatever k is. The scorecard's "inside the band" is the dial.
 DISPERSION: dict[str, float] = {
-    "points": 12.0,
-    "rebounds": 8.0,
-    "assists": 6.0,
-    "three_made": 4.0,
-    "shots": 8.0,
+    "points": 10.0,
+    "rebounds": 14.0,
+    "assists": 12.0,
+    "three_made": 8.0,
+    "shots": 16.0,
     "goals": 3.0,
     "saves": 15.0,
-    "pass_yards": 12.0,
-    "rush_yards": 4.0,
-    "rec_yards": 3.0,
-    "receptions": 6.0,
+    "pass_yards": 5.0,
+    "rush_yards": 2.5,
+    "rec_yards": 2.0,
+    "receptions": 8.0,
     "pass_td": 4.0,
 }
 # Which game-level factor scales a stat: the team's projected scoring against its
@@ -483,6 +488,8 @@ def summarise_grades(rows: list[dict]) -> dict:
             return {"graded": 0}
         over = sum(1 for r in subset if r["over_median"])
         on = sum(1 for r in subset if r.get("on_median"))
+        # A discrete stat lands on its median often (a goal line of 0 or 1 nearly
+        # always), so the honest "above the median" counts those ties as half.
         deciles = [0] * 10
         for r in subset:
             deciles[min(int(r["pit"] * 10), 9)] += 1
@@ -492,6 +499,7 @@ def summarise_grades(rows: list[dict]) -> dict:
             "bias": sum(r["error"] for r in subset) / n,
             "over_median": over / n,
             "on_median": on / n,
+            "centred": (over + 0.5 * on) / n,
             "in_band": sum(1 for r in subset if r["in_band"]) / n,
             "pit_deciles": [d / n for d in deciles],
         }
