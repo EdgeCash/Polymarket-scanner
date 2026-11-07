@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from scanner.config import DEFAULT_THETA, Settings
 from scanner.fees import fee_per_contract
+from scanner.grid import cover, grid, over, without_push
 from scanner.projection import TUNING, win_probability
 
 MARKETS = ("moneyline", "total", "spread")
@@ -20,26 +21,43 @@ OUTCOME_WIN, OUTCOME_LOSS, OUTCOME_PUSH = "win", "loss", "push"
 
 
 def probabilities(projection: dict, sport: str, polymarket: dict) -> dict[str, dict[str, float]]:
-    """The blend's probability for each side the pre-game scan has a price for."""
+    """The blend's probability for each side the pre-game scan has a price for.
+
+    Spreads and totals come from the same grid as the simulation pages, so a line
+    on a key number is priced with its pushes: a push settles void (the stake comes
+    back), so a side's chance is its chance given the line does not push.
+    """
     blend = projection.get("blend") or {}
     league = projection.get("league") or {}
     tuning = TUNING.get(sport, TUNING["cfb"])
-    sigma = league.get("sigma") or tuning.sigma
-    sigma_total = league.get("sigma_total") or tuning.sigma_total
+    sigma = float(league.get("sigma") or tuning.sigma)
+    sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
     out: dict[str, dict[str, float]] = {}
     p_home = blend.get("home_win")
     if p_home is not None and (
         polymarket.get("home") is not None or polymarket.get("away") is not None
     ):
         out["moneyline"] = {"home": p_home, "away": 1.0 - p_home}
+    margin, total_mean = blend.get("margin"), blend.get("total")
+    g = (
+        grid(sport, margin, total_mean, sigma, sigma_total)
+        if margin is not None and total_mean is not None
+        else None
+    )
     total = polymarket.get("total")
-    if isinstance(total, list) and len(total) == 3 and blend.get("total") is not None:
-        p_over = win_probability(blend["total"] - float(total[0]), sigma_total)
-        out["total"] = {"over": p_over, "under": 1.0 - p_over}
+    if isinstance(total, list) and len(total) == 3 and total_mean is not None:
+        sides = without_push(over(g, float(total[0]))) if g is not None else None
+        if sides is None:
+            p_over = win_probability(total_mean - float(total[0]), sigma_total)
+            sides = (p_over, 1.0 - p_over)
+        out["total"] = {"over": sides[0], "under": sides[1]}
     spread = polymarket.get("spread")
-    if isinstance(spread, list) and len(spread) == 3 and blend.get("margin") is not None:
-        p_cover = win_probability(blend["margin"] + float(spread[0]), sigma)
-        out["spread"] = {"home": p_cover, "away": 1.0 - p_cover}
+    if isinstance(spread, list) and len(spread) == 3 and margin is not None:
+        sides = without_push(cover(g, float(spread[0]))) if g is not None else None
+        if sides is None:
+            p_cover = win_probability(margin + float(spread[0]), sigma)
+            sides = (p_cover, 1.0 - p_cover)
+        out["spread"] = {"home": sides[0], "away": sides[1]}
     return out
 
 

@@ -1,44 +1,35 @@
-"""A Monte Carlo picture of one game, drawn from the projection model's own numbers.
+"""The whole picture of one game, laid out from the projection model's own numbers.
 
 The projection says what the final margin and total should be and how widely
-each spreads (``TUNING``'s sigmas). This module plays the game out that many
-times: each draw is a margin and a total from those normal distributions, turned
-into a home and an away score; a tie goes to overtime. What comes out is the
-whole shape of the model's opinion rather than one number: how often each side
-wins, how often each margin and total lands, the likeliest final scores and the
-chance of any line clearing, for the card page's pictures.
+each spreads (``TUNING``'s sigmas). ``scanner.grid`` turns that into the exact
+chance of every final score, with the sport's real-game shape (football's key
+numbers, ties after regulation) and its overtime. This module puts that in the
+form the pages draw: how often each side wins, how often each margin and total
+lands, the likeliest final scores and the chance of any line clearing. The
+counts are those chances out of ``draws`` games (100,000 by default), so a page
+reads like a simulation without any of a simulation's noise.
 
-It is a picture of the model, not a better model. A game drawn 100,000 times
-inherits every error in the ratings underneath, and the record on the scorecard
-is what says whether those ratings are any good. Nothing here is sent or placed.
+It is a picture of the model, not a better model. The grid inherits every
+error in the ratings underneath, and the record on the scorecard is what says
+whether those ratings are any good. Nothing here is sent or placed.
 """
 
 from __future__ import annotations
 
 import html
 import math
-import random
 from collections import Counter
 
 from scanner.config import SIM_DRAWS
+from scanner.grid import BASKETBALL_OVERTIME_POINTS, OVERTIME_MARGINS, cells, grid
 from scanner.projection import tuning_for
 
-# How a tie is broken: the winner of overtime adds these to its score, each as
-# likely as the next (a field goal or a touchdown in football, a goal in hockey).
-# Basketball's overtime has both teams score for five more minutes, so its
-# winning margin is drawn beside a base both sides add (college a little lower).
-OVERTIME_MARGINS = {
-    "nfl": (3, 3, 6, 7),
-    "cfb": (3, 3, 6, 7, 8),
-    "nhl": (1,),
-}
-# What each side scores in a five-minute basketball overtime, on average.
-BASKETBALL_OVERTIME_POINTS = {"nba": 11.0, "cbb": 9.0}
+__all__ = ["BASKETBALL_OVERTIME_POINTS", "OVERTIME_MARGINS"]
 BASKETBALL = tuple(BASKETBALL_OVERTIME_POINTS)
 
 
 def seed_for(sport: str, game_id: str, stamp: str) -> int:
-    """A seed that pins a game's picture, so a page shows the same 100,000 games every time."""
+    """A seed that names a game's picture (kept on stored picks; the grid needs none)."""
     return hash_text(f"{sport}:{game_id}:{stamp}")
 
 
@@ -50,15 +41,14 @@ def hash_text(text: str) -> int:
     return value
 
 
-def _overtime(sport: str, home_wins: bool, rng: random.Random) -> tuple[int, int]:
-    """(home points added, away points added) by an overtime the given side wins."""
-    if sport in BASKETBALL:
-        base = max(0, round(rng.gauss(BASKETBALL_OVERTIME_POINTS[sport], 3.0)))
-        margin = 1 + abs(round(rng.gauss(0.0, 3.0)))
-        winner, loser = base + margin, base
-    else:
-        winner, loser = rng.choice(OVERTIME_MARGINS.get(sport, (1,))), 0
-    return (winner, loser) if home_wins else (loser, winner)
+def _counts(chances: dict, draws: int) -> dict:
+    """Chances as whole counts out of ``draws`` that add up exactly (largest remainder)."""
+    raw = {k: p * draws for k, p in chances.items()}
+    counts = {k: math.floor(v) for k, v in raw.items()}
+    short = draws - sum(counts.values())
+    for k in sorted(raw, key=lambda k: counts[k] - raw[k])[: max(short, 0)]:
+        counts[k] += 1
+    return {k: n for k, n in counts.items() if n > 0}
 
 
 def simulate(
@@ -69,12 +59,13 @@ def simulate(
     source: str = "raw",
     with_cells: bool = False,
 ) -> dict | None:
-    """Play a projected game out ``draws`` times. None when the projection has no numbers.
+    """A projected game's every outcome, as counts out of ``draws``. None without numbers.
 
-    ``source`` is which of the projection's views to draw from: the model
+    ``source`` is which of the projection's views to lay out: the model
     (``raw``, the default and what the card grades) or the ``blend``. With
-    ``with_cells`` the joint count of every (home, away) score comes back too,
-    for the heatmap; it is left out of what the diary stores.
+    ``with_cells`` the count of every (home, away) score comes back too, for the
+    heatmap; it is left out of what the diary stores. ``seed`` is only echoed
+    back, for the picks stored before the grid replaced random draws.
     """
     part = projection.get(source) or {}
     margin_mean, total_mean = part.get("margin"), part.get("total")
@@ -84,64 +75,39 @@ def simulate(
     tuning = tuning_for(sport)
     sigma = float(league.get("sigma") or tuning.sigma)
     sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
-    p_home = part.get("home_win")
-    if p_home is None:
-        p_home = 0.5 * (1.0 + math.erf(margin_mean / (sigma * math.sqrt(2.0))))
-    rng = random.Random(seed)
+    g = grid(sport, margin_mean, total_mean, sigma, sigma_total)
+    if g is None:
+        return None
+    margins, totals = g.margins(), g.totals()
 
-    margins: Counter[int] = Counter()
-    totals: Counter[int] = Counter()
-    cells: Counter[tuple[int, int]] = Counter()
-    home_wins = overtimes = 0
-    margin_sum = margin_sq = total_sum = total_sq = 0.0
-    for _ in range(draws):
-        margin = rng.gauss(margin_mean, sigma)
-        total = rng.gauss(total_mean, sigma_total)
-        home = max(0, round((total + margin) / 2.0))
-        away = max(0, round((total - margin) / 2.0))
-        if home == away:
-            overtimes += 1
-            won = rng.random() < p_home
-            add_home, add_away = _overtime(sport, won, rng)
-            home, away = home + add_home, away + add_away
-        final_margin, final_total = home - away, home + away
-        if final_margin > 0:
-            home_wins += 1
-        margins[final_margin] += 1
-        totals[final_total] += 1
-        cells[(home, away)] += 1
-        margin_sum += final_margin
-        margin_sq += final_margin * final_margin
-        total_sum += final_total
-        total_sq += final_total * final_total
+    def moments(pmf: dict[int, float]) -> tuple[float, float]:
+        mean = sum(v * p for v, p in pmf.items())
+        variance = sum((v - mean) ** 2 * p for v, p in pmf.items())
+        return mean, math.sqrt(max(variance, 0.0))
 
-    def moments(total_of: float, square_of: float) -> tuple[float, float]:
-        mean = total_of / draws
-        variance = max(square_of / draws - mean * mean, 0.0)
-        return mean, math.sqrt(variance)
-
-    margin_mu, margin_sd = moments(margin_sum, margin_sq)
-    total_mu, total_sd = moments(total_sum, total_sq)
+    margin_mu, margin_sd = moments(margins)
+    total_mu, total_sd = moments(totals)
+    scores = _counts(cells(sport, margin_mean, total_mean, sigma, sigma_total), draws)
     out = {
         "draws": draws,
         "seed": seed,
         "source": source,
-        "home_win": home_wins / draws,
-        "overtime": overtimes / draws,
+        "home_win": g.home_win,
+        "overtime": g.overtime,
         "margin": {
             "mean": margin_mu,
             "sd": margin_sd,
-            "hist": {str(k): v for k, v in sorted(margins.items())},
+            "hist": {str(k): v for k, v in sorted(_counts(margins, draws).items())},
         },
         "total": {
             "mean": total_mu,
             "sd": total_sd,
-            "hist": {str(k): v for k, v in sorted(totals.items())},
+            "hist": {str(k): v for k, v in sorted(_counts(totals, draws).items())},
         },
-        "scores": [[h, a, n] for (h, a), n in cells.most_common(10)],
+        "scores": [[h, a, n] for (h, a), n in Counter(scores).most_common(10)],
     }
     if with_cells:
-        out["cells"] = {f"{h},{a}": n for (h, a), n in cells.items()}
+        out["cells"] = {f"{h},{a}": n for (h, a), n in scores.items()}
     return out
 
 

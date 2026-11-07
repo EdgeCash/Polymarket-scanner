@@ -4,6 +4,7 @@ import pytest
 
 from scanner.config import load_settings
 from scanner.fees import fee_per_contract
+from scanner.grid import cover, grid, over
 from scanner.projection import win_probability
 from scanner.stakes import gate, probabilities, profit, settle, suggest
 
@@ -24,17 +25,41 @@ def test_probabilities_cover_each_market_the_scan_priced():
     pm = {"home": 0.5, "away": 0.52, "total": [45.5, 0.5, 0.52], "spread": [-2.5, 0.5, 0.52]}
     probs = probabilities(PROJ, "nfl", pm)
     assert probs["moneyline"] == {"home": 0.62, "away": pytest.approx(0.38)}
-    over = win_probability(48.0 - 45.5, 10.5)
-    assert probs["total"] == {"over": pytest.approx(over), "under": pytest.approx(1 - over)}
-    cover = win_probability(4.0 - 2.5, 13.5)
-    assert probs["spread"] == {"home": pytest.approx(cover), "away": pytest.approx(1 - cover)}
-    assert 0.59 < over < 0.60 and 0.54 < cover < 0.55
+    # Spreads and totals come from the same grid as the simulation pages.
+    g = grid("nfl", 4.0, 48.0, 13.5, 10.5)
+    over_chance = over(g, 45.5)["above"]
+    cover_chance = cover(g, -2.5)["above"]
+    assert probs["total"] == {
+        "over": pytest.approx(over_chance),
+        "under": pytest.approx(1 - over_chance),
+    }
+    assert probs["spread"] == {
+        "home": pytest.approx(cover_chance),
+        "away": pytest.approx(1 - cover_chance),
+    }
+    # Near the bell curve's own numbers; the spread a little higher, since a game level
+    # after regulation goes to overtime and most of those go the favourite's way past 2.5.
+    assert over_chance == pytest.approx(win_probability(48.0 - 45.5, 10.5), abs=0.01)
+    assert win_probability(4.0 - 2.5, 13.5) < cover_chance < 0.57
     assert probabilities(PROJ, "nfl", {}) == {}
     assert set(probabilities(PROJ, "nfl", {"home": 0.5})) == {"moneyline"}
     # Without the sigmas in the projection, the sport's own are used.
     bare = probabilities({"blend": PROJ["blend"]}, "nfl", pm)
-    assert bare["spread"]["home"] == pytest.approx(cover)
+    assert bare["spread"]["home"] == pytest.approx(
+        cover(grid("nfl", 4.0, 48.0, 13.5, 13.5), -2.5)["above"]
+    )
     assert probabilities({"blend": {}}, "nfl", pm) == {}
+
+
+def test_a_line_on_a_key_number_is_priced_given_it_does_not_push():
+    # A push settles void, so each side's chance is its chance given no push.
+    probs = probabilities(PROJ, "nfl", {"spread": [-3.0, 0.5, 0.5], "total": [48.0, 0.5, 0.5]})
+    g = grid("nfl", 4.0, 48.0, 13.5, 10.5)
+    split = cover(g, -3.0)
+    assert split["push"] > 0.03  # a whole-number line pushes often enough to matter
+    assert probs["spread"]["home"] == pytest.approx(split["above"] / (1 - split["push"]))
+    assert probs["spread"]["home"] + probs["spread"]["away"] == pytest.approx(1.0)
+    assert probs["total"]["over"] + probs["total"]["under"] == pytest.approx(1.0)
 
 
 def test_suggest_takes_the_best_side_per_market_at_a_quarter_kelly():
@@ -70,7 +95,7 @@ def test_suggest_takes_the_best_side_per_market_at_a_quarter_kelly():
         ("spread", "PIT +2.5"),
         ("total", "over 45.5"),
     }
-    strict = suggest(PROJ, pm, "nfl", "CLE", "PIT", load_settings(STAKE_MIN_EDGE=0.09))
+    strict = suggest(PROJ, pm, "nfl", "CLE", "PIT", load_settings(STAKE_MIN_EDGE=0.1))
     assert [r["market"] for r in strict] == ["moneyline"]
     assert suggest(PROJ, None, "nfl", "CLE", "PIT", SETTINGS) == []
     assert suggest(PROJ, {"home": 0.0, "away": 1.0}, "nfl", "CLE", "PIT", SETTINGS) == []

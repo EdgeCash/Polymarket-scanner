@@ -60,7 +60,10 @@ def test_hockey_scores_are_whole_goals_and_basketball_overtime_adds_points():
         draws=10_000,
         seed=4,
     )
-    assert nba["total"]["mean"] > 228.0  # overtime games add points
+    # The projection is fit to final scores, overtime included, so the picture keeps its
+    # mean total; the overtime games' extra points show up in the shape instead.
+    assert nba["total"]["mean"] == pytest.approx(228.0, abs=1e-4)
+    assert 0.01 < nba["overtime"] < 0.05
     assert nba["home_win"] == pytest.approx(0.4, abs=0.03)
 
 
@@ -98,7 +101,7 @@ def test_pictures_mark_the_book_and_the_model_and_shade_the_pick():
     assert svg.startswith("<svg") and svg.endswith("</svg>") and "<script" not in svg
     assert "book CLE -2.5" in svg and "model CLE -4.0" in svg and "stroke-dasharray" in svg
     assert "fill='#1a7f37'" in svg and "fill='#8884'" in svg  # the pick's side and the rest
-    assert ">+7<" in svg and ">0<" in svg  # signed margin ticks, zero unsigned
+    assert ">+6<" in svg and ">0<" in svg  # signed margin ticks, zero unsigned
     plain = svg_histogram(
         sim["total"]["hist"],
         line=None,
