@@ -44,7 +44,8 @@ scanner/
   grid.py          every final score's exact chance: the one source of odds
   simulate.py      the grid as 100,000 games per pick, as pictures
 tests/             pytest suite; fixtures/ holds saved API responses
-scripts/           smoke_live.py (by hand), train_winprob.py
+scripts/           smoke_live.py (by hand), train_winprob.py, and the simulator's
+                   fetch_history.py, build_sim_tables.py and grade_sim.py
 docs/              winprob_report.md
 ```
 
@@ -690,6 +691,33 @@ projection is fit to final scores, so overtime and the tables change the shape,
 never the expectation. Nothing is drawn at random, so a page shows the same
 picture every time with no simulation noise. The projection's win chance, the
 stakes and the card all read from the grid, so they cannot disagree.
+
+The tables come from history. `scripts/fetch_history.py` gathers every
+regular-season game into `tests/fixtures/history/` with what was expected of it
+(the NFL's closing spread and total; elsewhere, team ratings fit only on that
+season's earlier games, the way the scanner sees a game before kickoff), its
+score at the end of regulation and its final. `scripts/build_sim_tables.py`
+fits each sport's table by iterative proportional fitting: lay out every game
+at its expectation, add the chances up, and scale each margin and team score
+by how much more often real games landed there, until they agree; the widths
+are fit so the table changes only the shape, and the overtime outcomes and how
+much of the favourite's edge survives into overtime are counted from the
+overtimes that happened. `scripts/grade_sim.py` prints the report card, and
+`tests/test_sim_history.py` fails if a change moves a sport's key numbers, its
+level-after-regulation rate or its misplaced margin chance past a tolerance.
+
+Football before and after its tables, on 4,297 NFL games against the close
+(2010-2026) and 4,528 FBS games (2018-2025):
+
+| | NFL before | NFL after | NFL real | CFB before | CFB after | CFB real |
+|---|---|---|---|---|---|---|
+| Margin of exactly 3 | 6.7% | 14.4% | 14.6% | 5.0% | 10.8% | 10.6% |
+| Margin of exactly 7 | 5.5% | 8.6% | 8.7% | 4.4% | 8.8% | 8.6% |
+| Level after regulation | 2.7% | 5.9% | 6.0% | 2.1% | 4.7% | 4.6% |
+| Margin chance on the wrong numbers | 18.9% | 1.6% | | 22.1% | 2.0% | |
+
+One table serves every spread; games spread 2.5 to 4 still land on 3 a point
+and a half more often than the grid says (17.0% against 15.4%).
 
 `scanner/simulate.py` turns the grid into what the pages draw, as counts out of
 100,000 games: how often each margin and total lands, the likeliest finals and

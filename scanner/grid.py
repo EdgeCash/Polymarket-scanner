@@ -28,7 +28,7 @@ from pathlib import Path
 
 SPAN = 6.0  # how many sigmas either side of the projection the grid reaches
 SOLVE_STEPS = 12  # Newton steps for the centres; two or three are usually enough
-SOLVE_TOLERANCE = 1e-6  # in points (goals)
+SOLVE_TOLERANCE = 1e-3  # in points (goals): far inside any price
 TABLES_PATH = Path(__file__).with_name("sim_tables.json")
 
 # How a tie is broken when the sport's table says nothing: the winner of
@@ -65,6 +65,19 @@ class SportShape:
     overtime: tuple[tuple[int, int, float], ...] = ()
     # How much of the regulation favourite's edge carries into overtime (1 = all of it).
     overtime_edge: float = 1.0
+    # The bell curves' own widths as a share of the sport's: a table that piles chance
+    # onto a few numbers also narrows the spread of results, and this puts it back, so
+    # the final margin and total spread as widely as ``TUNING`` says.
+    margin_scale: float = 1.0
+    total_scale: float = 1.0
+    # Hockey: the chance a side leading by one (two) late scores into the empty net,
+    # turning the lead into two (three); the bell curves are the goals before that.
+    empty_net: dict[int, float] = field(default_factory=dict)
+
+    @property
+    def joint(self) -> bool:
+        """Whether the grid must lay out every score (a score table or empty nets)."""
+        return bool(self.score or self.empty_net)
 
 
 @lru_cache(maxsize=16)
@@ -75,6 +88,9 @@ def shape_for(sport: str) -> SportShape:
         score={int(k): float(v) for k, v in (table.get("score") or {}).items()},
         overtime=tuple((int(w), int(lo), float(p)) for w, lo, p in (table.get("overtime") or [])),
         overtime_edge=float(table.get("overtime_edge", 1.0)),
+        margin_scale=float(table.get("margin_scale", 1.0)),
+        total_scale=float(table.get("total_scale", 1.0)),
+        empty_net={int(k): float(v) for k, v in (table.get("empty_net") or {}).items()},
     )
 
 
@@ -86,6 +102,7 @@ class Grid:
     total: dict[int, float]
     overtime: float  # the chance the game is level after regulation
     home_win: float
+    centres: tuple[float, float] = (0.0, 0.0)  # the bell curves' solved centres
 
     def margins(self) -> dict[int, float]:
         return self.margin
@@ -223,35 +240,68 @@ def _settle(sport, shape, margin_reg, total_reg, level_totals):
     return margin, total, level
 
 
-def _joint(sport: str, mu: float, tau: float, sigma: float, sigma_total: float):
-    """Every final score (home, away) and its chance, plus the level chance."""
+def _regulation_cells(sport: str, mu: float, tau: float, sigma: float, sigma_total: float):
+    """Every regulation score (home, away) and its chance, with the sport's tables."""
     shape = shape_for(sport)
     m_lo, m_hi, t_lo, t_hi = _bounds(mu, tau, sigma, sigma_total)
     phi_m = {m: _phi(m, mu, sigma) * shape.margin.get(abs(m), 1.0) for m in range(m_lo, m_hi + 1)}
     phi_t = {t: _phi(t, tau, sigma_total) for t in range(t_lo, t_hi + 1)}
     score = shape.score
     regulation: dict[tuple[int, int], float] = {}
+    if shape.empty_net:
+        # The bell curves give the goals before the net empties (the margin table is
+        # applied after, to the regulation margin itself).
+        phi_m = {m: _phi(m, mu, sigma) for m in range(m_lo, m_hi + 1)}
     for t in range(t_lo, t_hi + 1):
         pt = phi_t[t]
         for m in range(max(m_lo, -t), min(m_hi, t) + 1):
             if (m + t) % 2:
                 continue
             h, a = (t + m) // 2, (t - m) // 2
-            p = phi_m[m] * pt
-            if score:
-                p *= score.get(h, 1.0) * score.get(a, 1.0)
-            regulation[(h, a)] = p
+            regulation[(h, a)] = phi_m[m] * pt
+    if shape.empty_net:
+        regulation = _empty_net(regulation, shape)
+    if score or shape.empty_net:
+        regulation = {
+            (h, a): p
+            * (shape.margin.get(abs(h - a), 1.0) if shape.empty_net else 1.0)
+            * score.get(h, 1.0)
+            * score.get(a, 1.0)
+            for (h, a), p in regulation.items()
+        }
     z = sum(regulation.values())
     if z <= 0:
+        return {}
+    return {k: v / z for k, v in regulation.items()}
+
+
+def _empty_net(cells: dict[tuple[int, int], float], shape: SportShape) -> dict:
+    """Move each one- and two-goal lead on by an empty-net goal at the sport's rates."""
+    out: dict[tuple[int, int], float] = {}
+    for (h, a), p in cells.items():
+        rate = shape.empty_net.get(abs(h - a), 0.0)
+        if rate <= 0:
+            out[(h, a)] = out.get((h, a), 0.0) + p
+            continue
+        moved = (h + 1, a) if h > a else (h, a + 1)
+        out[(h, a)] = out.get((h, a), 0.0) + p * (1.0 - rate)
+        out[moved] = out.get(moved, 0.0) + p * rate
+    return out
+
+
+def _joint(sport: str, mu: float, tau: float, sigma: float, sigma_total: float):
+    """Every final score (home, away) and its chance, plus the level chance."""
+    shape = shape_for(sport)
+    regulation = _regulation_cells(sport, mu, tau, sigma, sigma_total)
+    if not regulation:
         return None
     margin_reg: dict[int, float] = {}
     for (h, a), p in regulation.items():
-        margin_reg[h - a] = margin_reg.get(h - a, 0.0) + p / z
+        margin_reg[h - a] = margin_reg.get(h - a, 0.0) + p
     p_home = _overtime_home(shape, margin_reg)
     out: dict[tuple[int, int], float] = {}
     level = 0.0
     for (h, a), p in regulation.items():
-        p /= z
         if h != a:
             out[(h, a)] = out.get((h, a), 0.0) + p
             continue
@@ -288,19 +338,21 @@ def _solve(sport, margin_mean, total_mean, sigma, sigma_total, build):
     centre moves.
     """
     mu, tau = margin_mean, total_mean
-    result = None
+    best = None
     for _ in range(SOLVE_STEPS):
         result = build(sport, mu, tau, sigma, sigma_total)
         if result is None:
-            return None
+            break  # walked off the lattice (a margin no total can hold): keep the last
+        best = (result, mu, tau)
         margin, total = result[0], result[1]
         (m_mean, m_var), (t_mean, t_var) = _moments(margin), _moments(total)
         m_err, t_err = margin_mean - m_mean, total_mean - t_mean
         if abs(m_err) < SOLVE_TOLERANCE and abs(t_err) < SOLVE_TOLERANCE:
             break
-        mu += m_err * sigma**2 / max(m_var, 1e-9)
-        tau += t_err * sigma_total**2 / max(t_var, 1e-9)
-    return result, mu, tau
+        # Newton's step, at most one width at a time.
+        mu += max(-sigma, min(sigma, m_err * sigma**2 / max(m_var, 1e-9)))
+        tau += max(-sigma_total, min(sigma_total, t_err * sigma_total**2 / max(t_var, 1e-9)))
+    return best
 
 
 def _joint_marginals(sport, mu, tau, sigma, sigma_total):
@@ -316,16 +368,17 @@ def _joint_marginals(sport, mu, tau, sigma, sigma_total):
 def _grid(
     sport: str, margin_mean: float, total_mean: float, sigma: float, sigma_total: float
 ) -> Grid | None:
-    build = _joint_marginals if shape_for(sport).score else _separable
+    build = _joint_marginals if shape_for(sport).joint else _separable
     solved = _solve(sport, margin_mean, total_mean, sigma, sigma_total, build)
     if solved is None:
         return None
-    (margin, total, level), _, _ = solved
+    (margin, total, level), mu, tau = solved
     return Grid(
         margin=margin,
         total=total,
         overtime=level,
         home_win=sum(p for m, p in margin.items() if m > 0),
+        centres=(mu, tau),
     )
 
 
@@ -333,40 +386,58 @@ def _grid(
 def _cells(
     sport: str, margin_mean: float, total_mean: float, sigma: float, sigma_total: float
 ) -> dict[tuple[int, int], float]:
-    build = _joint_marginals if shape_for(sport).score else _separable
-    solved = _solve(sport, margin_mean, total_mean, sigma, sigma_total, build)
-    if solved is None:
+    g = _grid(sport, margin_mean, total_mean, sigma, sigma_total)
+    if g is None:
         return {}
-    _, mu, tau = solved
-    joint = _joint(sport, mu, tau, sigma, sigma_total)
+    joint = _joint(sport, *g.centres, sigma, sigma_total)
     return joint[0] if joint else {}
 
 
-def _key(margin_mean, total_mean, sigma, sigma_total) -> tuple[float, float, float, float]:
+def _key(sport, margin_mean, total_mean, sigma, sigma_total) -> tuple:
+    shape = shape_for(sport)
     return (
+        sport,
         round(float(margin_mean), 4),
         round(float(total_mean), 4),
-        round(float(sigma), 4),
-        round(float(sigma_total), 4),
+        round(float(sigma) * shape.margin_scale, 4),
+        round(float(sigma_total) * shape.total_scale, 4),
     )
+
+
+def _usable(sigma, sigma_total, total_mean) -> bool:
+    return sigma > 0 and sigma_total > 0 and total_mean > 0
 
 
 def grid(
     sport: str, margin_mean: float, total_mean: float, sigma: float, sigma_total: float
 ) -> Grid | None:
     """A game's final margins and totals and their chances; None with nothing to lay out."""
-    if sigma <= 0 or sigma_total <= 0 or total_mean <= 0:
+    if not _usable(sigma, sigma_total, total_mean):
         return None
-    return _grid(sport, *_key(margin_mean, total_mean, sigma, sigma_total))
+    return _grid(*_key(sport, margin_mean, total_mean, sigma, sigma_total))
 
 
 def cells(
     sport: str, margin_mean: float, total_mean: float, sigma: float, sigma_total: float
 ) -> dict[tuple[int, int], float]:
     """Every final score (home, away) and its chance, for the score pictures."""
-    if sigma <= 0 or sigma_total <= 0 or total_mean <= 0:
+    if not _usable(sigma, sigma_total, total_mean):
         return {}
-    return _cells(sport, *_key(margin_mean, total_mean, sigma, sigma_total))
+    return _cells(*_key(sport, margin_mean, total_mean, sigma, sigma_total))
+
+
+def regulation(
+    sport: str, margin_mean: float, total_mean: float, sigma: float, sigma_total: float
+) -> dict[tuple[int, int], float]:
+    """Every score at the end of regulation and its chance, before overtime (for grading
+    the shape against history and for building the tables)."""
+    if not _usable(sigma, sigma_total, total_mean):
+        return {}
+    key = _key(sport, margin_mean, total_mean, sigma, sigma_total)
+    g = _grid(*key)
+    if g is None:
+        return {}
+    return _regulation_cells(sport, *g.centres, key[3], key[4])
 
 
 def win_chance(
@@ -377,6 +448,26 @@ def win_chance(
         return None
     g = grid(sport, margin_mean, total_mean, sigma, sigma_total)
     return None if g is None else g.home_win
+
+
+def margin_for_win(
+    sport: str, p_home: float, total_mean: float, sigma: float, sigma_total: float
+) -> float | None:
+    """The expected margin at which the grid gives home ``p_home`` to win (bisection: the
+    grid's win chance rises with the margin). None when the grid cannot be laid out."""
+    lo, hi = -3.0 * sigma, 3.0 * sigma  # wider than any price the books quote
+    for _ in range(40):
+        mid = (lo + hi) / 2.0
+        g = grid(sport, mid, total_mean, sigma, sigma_total)
+        if g is None:
+            return None
+        if g.home_win < p_home:
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < 1e-4:
+            break
+    return round((lo + hi) / 2.0, 4)
 
 
 def split(pmf: dict[int, float], line: float) -> dict[str, float]:
