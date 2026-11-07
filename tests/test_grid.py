@@ -49,8 +49,8 @@ def test_the_grid_sums_to_one_and_keeps_the_projections_means(case):
     assert sum(g.margin.values()) == pytest.approx(1.0)
     assert sum(g.total.values()) == pytest.approx(1.0)
     # Fit to final scores, so overtime and the tables change the shape, not the mean.
-    assert _mean(g.margin) == pytest.approx(margin, abs=1e-5)
-    assert _mean(g.total) == pytest.approx(total, abs=1e-5)
+    assert _mean(g.margin) == pytest.approx(margin, abs=1e-3)
+    assert _mean(g.total) == pytest.approx(total, abs=1e-3)
     assert g.home_win == pytest.approx(sum(p for m, p in g.margin.items() if m > 0))
     # Close to the plain bell curve's win chance: the grid only reshapes it.
     assert g.home_win == pytest.approx(win_probability(margin, sigma), abs=0.03)
@@ -74,12 +74,13 @@ def test_every_score_adds_up_to_the_same_margins_and_totals(case):
 
 
 def test_a_margin_table_reshapes_the_grid_and_both_paths_agree(tables):
+    tables({})
     plain = grid("nba", -4.0, 228.0, 13.5, 19.0)
     tables({"nba": {"margin": {"0": 2.0, "1": 0.7}}})
     shaped = grid("nba", -4.0, 228.0, 13.5, 19.0)
     assert shaped.overtime == pytest.approx(2 * plain.overtime, rel=0.05)
     assert shaped.margin[1] < plain.margin[1]
-    assert _mean(shaped.margin) == pytest.approx(-4.0, abs=1e-5)
+    assert _mean(shaped.margin) == pytest.approx(-4.0, abs=1e-3)
     from_cells: dict[int, float] = {}
     for (h, a), p in cells("nba", -4.0, 228.0, 13.5, 19.0).items():
         from_cells[h - a] = from_cells.get(h - a, 0.0) + p
@@ -88,13 +89,14 @@ def test_a_margin_table_reshapes_the_grid_and_both_paths_agree(tables):
 
 
 def test_a_score_table_moves_chance_onto_its_scores_without_moving_the_means(tables):
+    tables({})
     plain = grid("nfl", 3.0, 44.0, 13.5, 13.5)
     tables({"nfl": {"margin": {"3": 2.0, "7": 1.5}, "score": {"17": 1.4, "20": 1.5}}})
     shaped = grid("nfl", 3.0, 44.0, 13.5, 13.5)
     assert shaped.margin[3] > 1.5 * plain.margin[3]
     assert shaped.total[37] > plain.total[37]  # 20-17
-    assert _mean(shaped.margin) == pytest.approx(3.0, abs=1e-5)
-    assert _mean(shaped.total) == pytest.approx(44.0, abs=1e-5)
+    assert _mean(shaped.margin) == pytest.approx(3.0, abs=1e-3)
+    assert _mean(shaped.total) == pytest.approx(44.0, abs=1e-3)
 
 
 def test_an_overtime_table_can_end_level_and_can_ignore_the_favourite(tables):

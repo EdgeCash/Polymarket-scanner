@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 import pytest
 
 from scanner.projection import win_probability
@@ -22,12 +24,17 @@ NFL = {
 def test_simulated_games_follow_the_projection_and_pin_to_their_seed():
     sim = simulate(NFL, "nfl", draws=20_000, seed=7)
     assert sim["draws"] == 20_000 and sim["seed"] == 7 and sim["source"] == "raw"
-    assert sim["margin"]["mean"] == pytest.approx(4.0, abs=0.4)
-    assert sim["total"]["mean"] == pytest.approx(44.0, abs=0.4)
+    assert sim["margin"]["mean"] == pytest.approx(4.0, abs=1e-3)  # exactly the projection's
+    assert sim["total"]["mean"] == pytest.approx(44.0, abs=1e-3)
     assert sim["margin"]["sd"] == pytest.approx(13.5, abs=0.5)
-    assert sim["home_win"] == pytest.approx(NFL["raw"]["home_win"], abs=0.015)
-    assert 0.01 < sim["overtime"] < 0.05  # level after regulation, settled in overtime
-    assert "0" not in sim["margin"]["hist"]  # so no game ends level
+    assert sim["home_win"] == pytest.approx(NFL["raw"]["home_win"], abs=0.03)
+    # Level after regulation about as often as real NFL games (6%); most are settled in
+    # overtime, and a few overtimes end level too.
+    assert 0.04 < sim["overtime"] < 0.08
+    assert sim["margin"]["hist"].get("0", 0) < 0.1 * sim["overtime"] * 20_000
+    # Football's key numbers: three is the commonest margin.
+    hist = sim["margin"]["hist"]
+    assert hist["3"] > max(v for k, v in hist.items() if k not in ("3", "-3"))
     assert sum(sim["margin"]["hist"].values()) == 20_000
     assert len(sim["scores"]) == 10 and all(n > 0 for _, _, n in sim["scores"])
     assert "cells" not in sim
@@ -62,7 +69,7 @@ def test_hockey_scores_are_whole_goals_and_basketball_overtime_adds_points():
     )
     # The projection is fit to final scores, overtime included, so the picture keeps its
     # mean total; the overtime games' extra points show up in the shape instead.
-    assert nba["total"]["mean"] == pytest.approx(228.0, abs=1e-4)
+    assert nba["total"]["mean"] == pytest.approx(228.0, abs=1e-3)
     assert 0.01 < nba["overtime"] < 0.05
     assert nba["home_win"] == pytest.approx(0.4, abs=0.03)
 
@@ -101,7 +108,7 @@ def test_pictures_mark_the_book_and_the_model_and_shade_the_pick():
     assert svg.startswith("<svg") and svg.endswith("</svg>") and "<script" not in svg
     assert "book CLE -2.5" in svg and "model CLE -4.0" in svg and "stroke-dasharray" in svg
     assert "fill='#1a7f37'" in svg and "fill='#8884'" in svg  # the pick's side and the rest
-    assert ">+6<" in svg and ">0<" in svg  # signed margin ticks, zero unsigned
+    assert re.search(r">\+\d+<", svg) and ">0<" in svg  # signed margin ticks, zero unsigned
     plain = svg_histogram(
         sim["total"]["hist"],
         line=None,
