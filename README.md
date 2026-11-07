@@ -445,7 +445,8 @@ college). Two ratings per team come out, points above average on offence and
 points above average allowed on defence; a game's projection is the league
 average plus the two ratings that meet, with half the home edge on each side,
 and the win probability is the projected margin against the usual spread of
-results (13.5 points NFL, 16.5 college). A first-half score is the projection
+results (13.5 points NFL, 16.5 college, the same for the total: real totals miss
+the NFL's closing number by 13.2). A first-half score is the projection
 times the league's first-half share. Turnover luck is mostly washed out by the
 yards half; rest, weather and injuries are not in it.
 
@@ -518,9 +519,9 @@ differs:
   percentages use the goals scored in play. The sheet's "1st half" column is
   the first period in hockey.
 - The model. Basketball uses points alone (home court 2.5, final margin
-  spread 12.5, total spread 19). Hockey uses half goals and half what the
+  spread 13.5, the miss against 7,221 closing lines; total spread 19). Hockey uses half goals and half what the
   shots say (the league's goals per shot times shots), with home ice 0.2, a
-  margin spread of 2.3 and a total spread of 2.4. The book's puck line is
+  margin spread of 2.5 and a total spread of 2.4. The book's puck line is
   always 1.5 whatever the matchup, so the margin the book expects is read off
   its moneyline (the margin spread times the normal inverse of its vig-free
   win probability); that margin also gives the market implied score, and the
