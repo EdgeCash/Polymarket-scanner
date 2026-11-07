@@ -70,7 +70,7 @@ def test_hockey_scores_are_whole_goals_and_basketball_overtime_adds_points():
     # The projection is fit to final scores, overtime included, so the picture keeps its
     # mean total; the overtime games' extra points show up in the shape instead.
     assert nba["total"]["mean"] == pytest.approx(228.0, abs=1e-3)
-    assert 0.01 < nba["overtime"] < 0.05
+    assert 0.03 < nba["overtime"] < 0.08  # real NBA games: 5.1% level after regulation
     assert nba["home_win"] == pytest.approx(0.4, abs=0.03)
 
 

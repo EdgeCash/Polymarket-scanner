@@ -523,7 +523,8 @@ differs:
   percentages use the goals scored in play. The sheet's "1st half" column is
   the first period in hockey.
 - The model. Basketball uses points alone (home court 2.5, final margin
-  spread 13.5, the miss against 7,221 closing lines; total spread 19). Hockey uses half goals and half what the
+  spread 14, the model's own miss on 4,730 games rated only on earlier ones;
+  total spread 19). Hockey uses half goals and half what the
   shots say (the league's goals per shot times shots), with home ice 0.2, a
   margin spread of 2.5 and a total spread of 2.4. The book's puck line is
   always 1.5 whatever the matchup, so the margin the book expects is read off
@@ -553,7 +554,7 @@ It is the NBA's path with three differences: ESPN's Division I listing
 Division I appears with its games against Division I sides and is usually
 thin), two halves instead of four quarters (the sheet's "1st half" is the
 first line score), and its own numbers in `TUNING` (home court 3.5, a margin
-spread of 11, a total spread of 17, a first-half share of 0.47 until the log
+spread of 12, a total spread of 17, a first-half share of 0.47 until the log
 says otherwise). Opening night listed 182 games, so the backfill takes a few
 passes per day and the matchups page is long on a Saturday. The simulator's
 overtime for college is five minutes at a slightly lower pace than the NBA's.
@@ -718,6 +719,22 @@ Football before and after its tables, on 4,297 NFL games against the close
 
 One table serves every spread; games spread 2.5 to 4 still land on 3 a point
 and a half more often than the grid says (17.0% against 15.4%).
+
+Basketball's tables are its end of game: a tie after regulation, which late
+fouling and the last shot make twice as common as a bell curve says, and fewer
+one-point games. On 4,730 NBA games (2021-22 to 2024-25) and 15,460 men's
+college games (2022-23 to 2024-25), each rated only on earlier games:
+
+| | NBA before | NBA after | NBA real | CBB before | CBB after | CBB real |
+|---|---|---|---|---|---|---|
+| One-point margin | 5.5% | 4.0% | 4.0% | 5.9% | 4.5% | 4.5% |
+| Level after regulation | 2.6% | 5.1% | 5.1% | 2.8% | 6.2% | 6.2% |
+
+The same games set basketball's margin spreads: the model's own ratings miss
+the NBA by 13.9 and college by 12.0 when they have seen only earlier games, so
+`TUNING` holds 14 and 12 (college was 11, nine percent too narrow). Overtime
+goes to the regulation favourite at about half its edge (0.49 NBA, 0.52
+college), and adds what real overtimes added, by count.
 
 `scanner/simulate.py` turns the grid into what the pages draw, as counts out of
 100,000 games: how often each margin and total lands, the likeliest finals and
