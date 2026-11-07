@@ -581,7 +581,9 @@ every upcoming game, as a whole distribution rather than one number. A
 player's rate for a stat is what he has produced per minute (per second on
 the ice in hockey; per game in football, whose box scores give no playing
 time), shrunk toward the league rate for his position while his games are few
-(72 minutes of league-average play in the NBA, two games in football). His
+(72 minutes of league-average play in the NBA, four games in football, where
+the leaders are picked by projected mean and the biggest early estimates are
+the luckiest ones). His
 playing time is projected from his last five games, most recent weighted
 most, with a spread from his last ten (floored at four minutes). The game
 projection says how his team's scoring should differ from its average against
@@ -601,11 +603,15 @@ lines are written when it comes into the 48-hour window and refreshed hourly
 (`PLAYER_REFRESH_MINUTES`) until kickoff, then fixed; `SPORT_STATS` says which
 stats and how many leaders a side. When the game lands every line is graded
 from the player's own line in the box score: the miss against the projected
-mean, whether the actual fell above the median (should be near half), whether
+mean, whether the actual fell above the median (a tie counted as half; should
+be near half), whether
 it fell inside the 80% band (should be near 80%) and where in the
 distribution it fell, so the scorecard's "Player lines" section says whether
 the bands mean what they claim, stat by stat. A projected player who did not
-play is counted, not graded. `PLAYERS_ENABLED=false` switches it off. Nothing
+play is counted, not graded. The dispersions were set by hand and then moved
+once on the first three days of grading (7 November 2026, 3,400 lines):
+basketball and hockey counting stats had been too wide and football yards far
+too narrow. The same two numbers say when to move them again. `PLAYERS_ENABLED=false` switches it off. Nothing
 is sent or placed.
 
 The lines are public, like the card: `/props` lists every upcoming game with

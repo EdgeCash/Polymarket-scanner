@@ -234,6 +234,9 @@ def test_grading_a_line_and_summarising_the_record():
     s = summarise_grades(rows)
     assert s["projected"] == 4 and s["did_not_play"] == 1 and s["graded"] == 3
     assert s["over_median"] == pytest.approx(2 / 3) and s["in_band"] == pytest.approx(2 / 3)
+    assert s["centred"] == pytest.approx(2 / 3)  # no tie on the median among these
+    tied = summarise_grades([{"sport": "nhl", "stat": "goals", **grade_line(row, row["median"])}])
+    assert tied["over_median"] == 0.0 and tied["on_median"] == 1.0 and tied["centred"] == 0.5
     assert (
         s["mae"] > 0 and len(s["pit_deciles"]) == 10 and sum(s["pit_deciles"]) == pytest.approx(1.0)
     )

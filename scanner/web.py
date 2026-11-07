@@ -599,7 +599,7 @@ def _players_section(ps: dict, settings: Settings) -> str:
             ("Graded", str(ps["graded"])),
             ("Avg miss", f"{ps['mae']:.2f}"),
             ("Bias (actual minus projected)", _signed(ps["bias"], 2)),
-            ("Actual above the median", _pct(ps["over_median"])),
+            ("Actual above the median (ties half)", _pct(ps["centred"])),
             ("Inside the 80% band", _pct(ps["in_band"])),
         ]
     body = "".join(
@@ -611,7 +611,7 @@ def _players_section(ps: dict, settings: Settings) -> str:
         for stat, tally in (part.get("by_stat") or {}).items():
             text = (
                 f"{tally['graded']} graded, miss {tally['mae']:.1f}, bias "
-                f"{_signed(tally['bias'], 1)}, over median {_pct(tally['over_median'])}, "
+                f"{_signed(tally['bias'], 1)}, above median {_pct(tally['centred'])}, "
                 f"in band {_pct(tally['in_band'])}"
             )
             by_sport += (
@@ -641,7 +641,8 @@ def _players_section(ps: dict, settings: Settings) -> str:
         "playing time from his last five games, scaled by how the game projection sees his "
         "team's scoring and the pace. The spread is a negative binomial mixed over his "
         "minutes. Only players who played their team's last game are projected. Actual above "
-        "the median should sit near 50% and inside the band near 80% if the spread is honest; "
+        "the median (a tie counted as half) should sit near 50% and inside the band near 80% "
+        "if the spread is honest; "
         "the miss is the average distance from the projected mean. Nothing is sent or placed.</p>"
     )
     return (
@@ -1746,7 +1747,7 @@ def _props_record(ps: dict) -> str:
     return (
         "<div class='strip'>"
         f"<div><span>Lines graded</span><b>{ps['graded']}</b></div>"
-        f"<div><span>Above the median</span><b>{_pct(ps['over_median'])}</b></div>"
+        f"<div><span>Above the median</span><b>{_pct(ps['centred'])}</b></div>"
         f"<div><span>Inside the 80% band</span><b>{_pct(ps['in_band'])}</b></div>"
         f"<div><span>Avg miss</span><b>{ps['mae']:.1f}</b></div>"
         "</div>"
