@@ -41,7 +41,8 @@ scanner/
   projection.py    the projection model, graded against the book
   stakes.py        what the model would stake (recorded, never placed)
   card.py          the daily card: five picks by rule, locked, graded, public
-  simulate.py      100,000 games per pick, drawn from the model, as pictures
+  grid.py          every final score's exact chance: the one source of odds
+  simulate.py      the grid as 100,000 games per pick, as pictures
 tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py
 docs/              winprob_report.md
@@ -474,8 +475,10 @@ anything.
 The owner set a bankroll of $1,000 (`BANKROLL`). `scanner/stakes.py` turns the
 blended projection into what the model would stake on Polymarket: for each
 market the pre-game scan has a price for (the moneyline, and the total and
-spread at the book's line), the blend's probability for each side (the margin
-and total against the sport's usual spread of results) is set against the last
+spread at the book's line), the blend's probability for each side (from the
+same score grid the simulation pages draw, key numbers and overtime included;
+a line that can push is priced given it does not, since a push is void) is set
+against the last
 Polymarket price seen, after the taker fee. When the edge clears
 `STAKE_MIN_EDGE` (3 cents), the stake is a quarter of the Kelly share
 (`STAKE_KELLY_FRACTION`) of the bankroll, capped at `STAKE_MAX_SHARE` (5%).
@@ -674,18 +677,28 @@ missing player as an edge, since the model knows nothing of injuries, rest or
 weather, which is why the closing line weighs on the ranking and why misses
 are shown with the wins.
 
-`scanner/simulate.py` draws each pick's game 100,000 times from the model's own
-numbers (a margin and a total from their normal spreads, turned into a score;
-a level game goes to overtime, resolved by the model's win probability) and
-keeps the shape: how often each margin and total landed, the likeliest finals
-and how often the pick came in. The card shows a histogram per pick with the
+`scanner/grid.py` lays out every final score of a game with its exact chance,
+from the model's own numbers: a margin and a total from their normal spreads,
+on the whole-number scores they can make (a margin and a total share a parity,
+and no margin is bigger than the total), times the sport's table of how much
+more or less often real games land on each regulation margin and team score
+(`scanner/sim_tables.json`, built from history). A level game goes to the
+sport's overtime, won by the regulation favourite at its regulation edge scaled
+by the table's `overtime_edge`. Last, the two bell curves' centres move just
+enough that the mean final margin and total are exactly the projection's: the
+projection is fit to final scores, so overtime and the tables change the shape,
+never the expectation. Nothing is drawn at random, so a page shows the same
+picture every time with no simulation noise. The projection's win chance, the
+stakes and the card all read from the grid, so they cannot disagree.
+
+`scanner/simulate.py` turns the grid into what the pages draw, as counts out of
+100,000 games: how often each margin and total lands, the likeliest finals and
+how often the pick comes in. The card shows a histogram per pick with the
 book's line and the model's mean marked and the pick's side shaded; the pick's
 own page (`/card/<date>/<rank>`) adds the total, a heatmap of every final score,
 the ten likeliest, and the chance at other lines. `/sim/<sport>/<game_id>`
-(token) does the same for any projected game. The draws are seeded from the
-game and the projection's timestamp, so a page shows the same games every time.
-It is a picture of the model, not a better model, and key numbers in football
-are not modelled. Nothing in it is sent or placed.
+(token) does the same for any projected game. It is a picture of the model, not
+a better model. Nothing in it is sent or placed.
 
 For posting, `scanner/share.py` draws the same things as 1200 by 675 images
 (X's shape, served at twice that for sharpness): `/card.png` and

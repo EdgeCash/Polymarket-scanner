@@ -23,6 +23,7 @@ from statistics import NormalDist
 
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
+from scanner.grid import win_chance
 
 MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
@@ -109,6 +110,15 @@ class Ratings:
 def win_probability(margin: float, sigma: float) -> float:
     """The chance the home side wins when the final margin is normal around ``margin``."""
     return 0.5 * (1.0 + math.erf(margin / (sigma * math.sqrt(2.0))))
+
+
+def home_win_chance(
+    sport: str, margin: float, total: float | None, sigma: float, sigma_total: float
+) -> float:
+    """The home side's chance of winning, from the same grid the simulation pages draw
+    (key numbers, overtime and all); the plain normal when the grid cannot be laid out."""
+    chance = win_chance(sport, margin, total, sigma, sigma_total)
+    return win_probability(margin, sigma) if chance is None else chance
 
 
 def book_margin(book: BookLine | None, sport: str) -> float | None:
@@ -233,7 +243,9 @@ def project(
         "away": away_points,
         "margin": margin,
         "total": total,
-        "home_win": win_probability(margin, ratings.sigma),
+        "home_win": home_win_chance(
+            ratings.sport, margin, total, ratings.sigma, ratings.sigma_total
+        ),
         "first_half": {
             "home": home_points * ratings.first_half_share,
             "away": away_points * ratings.first_half_share,
