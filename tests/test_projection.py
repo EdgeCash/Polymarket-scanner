@@ -228,15 +228,19 @@ def test_summarise_buckets_by_how_far_the_model_sat_from_the_book():
 
 
 def test_hockey_reads_the_books_margin_off_its_moneyline():
-    from statistics import NormalDist
 
+    from scanner.grid import grid
     from scanner.projection import book_margin, tuning_for
 
     book = BookLine("DraftKings", -230, 190, None, 6.5, 105, -125, -1.5, 110, -130)
     margin = book_margin(book, "nhl")
     p_home = fair(-230, 190)[0]
-    assert margin == pytest.approx(tuning_for("nhl").sigma * NormalDist().inv_cdf(p_home))
-    assert 0.5 < margin < 1.5  # a -230 favourite by under a goal and a half, not the puck line
+    # Read off the grid's own win curve, so the model and the book compare on one scale.
+    tuning = tuning_for("nhl")
+    assert grid("nhl", margin, 6.5, tuning.sigma, tuning.sigma_total).home_win == pytest.approx(
+        p_home, abs=1e-3
+    )
+    assert 0.5 < margin < 2.0  # a -230 favourite by under two goals, not the puck line
     assert book_margin(book, "nfl") == 1.5  # football keeps the spread
     assert book_margin(None, "nhl") is None
     no_moneyline = BookLine("DraftKings", None, None, None, 6.5, 105, -125, -1.5, 110, -130)
