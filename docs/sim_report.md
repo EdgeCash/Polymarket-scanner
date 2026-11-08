@@ -95,19 +95,17 @@ not tested here.
 
 ## Known limits
 
-- The NFL's table is one for every spread: its games spread 2.5 to 4 land on
-  3 at 17.0% against the grid's 15.4%, and games spread 7.5 to 11 at 11.0%
-  against 12.8%, but a table that moves with the expected margin does no better
-  on held-out seasons (2020-2026 log loss 3.8276 against 3.8260), so it is
-  built and checked (`build_sim_tables.py --spread-only --holdout-from YEAR`)
-  but not shipped. College football's passes, barely, now that its ratings are
-  fit (2023-2025 log loss 4.02610 against 4.02624, adjustments fit on
-  2018-2022), so it ships; the gain is a hair and the adjustments are modest
-  (3 lands 11% more often than the table says in an even game, 11% less at a
-  15-point spread). Each check's result lives in the tables under
-  `source.spread_check` and `tests/test_sim_history.py` rescores its
-  fingerprint, so a stale record fails the suite. `grade_sim.py` prints the key
-  numbers by spread for each rerun.
+- One table serves every spread in both football codes. NFL games spread 2.5
+  to 4 land on 3 at 17.0% against the grid's 15.4%, and games spread 7.5 to 11
+  at 11.0% against 12.8%, but tables that move with the expected margin must
+  beat the single table on held-out seasons by two standard errors of the
+  paired per-game log loss to ship (`build_sim_tables.py --spread-only
+  --holdout-from YEAR`), and neither sport's do: the NFL's are 1.9 standard
+  errors worse (2020-2026, 3.8276 against 3.8260), college football's a fifth
+  of a standard error better (2023-2025), which is noise. Each check's result
+  lives in the tables under `source.spread_check` and `tests/test_sim_history.py`
+  rescores its fingerprint and the rule, so a stale record fails the suite.
+  `grade_sim.py` prints the key numbers by spread for each rerun.
 - nflverse has no quarter scores, so an NFL overtime game is taken as level at
   the lower final score (a loser's points in overtime are missed).
 - Player props were not graded: Polymarket US lists no per-game player markets.

@@ -362,6 +362,13 @@ def main() -> None:
         start = None
         if args.spread_only:
             start = json.loads(args.out.read_text())[sport]
+            if "margin_by_spread" in start:
+                # The shipped adjustments came with their own width scales; the plain
+                # table's were kept beside the check, so it can be put back whole.
+                plain_scales = (
+                    (start.get("source") or {}).get("spread_check", {}).get("plain_scales", {})
+                )
+                start = {**start, **plain_scales}
             start = {k: v for k, v in start.items() if k != "margin_by_spread"}
         if args.spread_only and args.holdout_from is not None:
             # Fit on the seasons before the holdout and score both tables on the rest:
@@ -372,9 +379,14 @@ def main() -> None:
             check = spread_check(sport, start, trial, args.holdout_from)
             print(
                 f"{sport} held out {check['games']} games from {args.holdout_from}: log loss "
-                f"{check['plain']:.5f} plain, {check['shaped']:.5f} with the adjustments",
+                f"{check['plain']:.5f} plain, {check['shaped']:.5f} with the adjustments "
+                f"({check['z']:+.2f} standard errors; {check['min_se']:g} needed)",
                 flush=True,
             )
+            check["plain_scales"] = {
+                "margin_scale": start["margin_scale"],
+                "total_scale": start["total_scale"],
+            }
             if check["kept"]:
                 # Ship the adjustments as fit on the earlier seasons, so the held-out
                 # check stays a real one when the test reruns it.

@@ -10,7 +10,8 @@ Football's tables also carry the result of the held-out check on expected-margin
 adjustments (``source.spread_check``, from ``build_sim_tables.py --spread-only
 --holdout-from YEAR``). The test rescores its fingerprint with the grid, the widths
 and the tables as they stand, so a change that leaves the record stale fails here
-until the check is rerun.
+until the check is rerun; and the adjustments may ship only on an improvement of at
+least ``SPREAD_MIN_SE`` standard errors, so the record must say so too.
 """
 
 from __future__ import annotations
@@ -122,11 +123,15 @@ def test_the_held_out_check_on_spread_tables_is_recorded_and_still_holds(sport):
         f"--holdout-from YEAR"
     )
     assert check, f"{sport}: the held-out check on margin_by_spread has not been run ({rerun})"
-    # The decision the check reached is the state that shipped.
-    assert check["kept"] == (check["shaped"] < check["plain"])
+    # The decision the check reached is the state that shipped, and it was reached by the
+    # rule as it stands: the adjustments must beat the single table by SPREAD_MIN_SE
+    # standard errors of the paired per-game difference, not merely beat it.
+    grade_sim = _grade_sim()
+    assert check["min_se"] == grade_sim.SPREAD_MIN_SE, f"{sport}: the rule has changed; {rerun}"
+    assert check["kept"] == (check["z"] >= check["min_se"])
+    assert check["improvement"] == pytest.approx(check["plain"] - check["shaped"], abs=2e-5)
     assert ("margin_by_spread" in entry) == check["kept"], f"{sport}: tables disagree; {rerun}"
     # And it was reached with the grid, the widths and the tables as they are now.
-    grade_sim = _grade_sim()
     assert check["fingerprint"]["games"] == grade_sim.FINGERPRINT_SAMPLE
     plain = grade_sim.without_spread(entry)
     assert grade_sim.fingerprint(sport, plain, check["holdout_from"]) == pytest.approx(
