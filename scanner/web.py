@@ -1456,10 +1456,20 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
         f"{html.escape(_value_text(pick, pick['book_value']))} · {abs(pick['gap']):.1f} {unit} "
         f"apart, {pick['z']:.2f} of a game's spread."
     )
-    conviction = (
-        f"Conviction {pick['conviction']:.2f}: trust {pick['trust']:.2f} "
-        f"({html.escape(trust_text)}).{final}"
-    )
+    edge = detail.get("edge")
+    if edge is not None:
+        # Ranked by edge: the grid's chance given no push, less what the price needs.
+        conviction = (
+            f"Edge {edge * 100:+.1f} points: the model's {detail['chance_no_push'] * 100:.1f}% "
+            f"against the {detail['break_even'] * 100:.1f}% the price needs; conviction "
+            f"{pick['conviction'] * 100:+.1f} with trust {pick['trust']:.2f} "
+            f"({html.escape(trust_text)}).{final}"
+        )
+    else:  # a pick locked when the card ranked by the gap in the sport's spread
+        conviction = (
+            f"Conviction {pick['conviction']:.2f}: trust {pick['trust']:.2f} "
+            f"({html.escape(trust_text)}).{final}"
+        )
     return f"""<div class="pick">
 <p class="meta"><span class="rank">#{pick["rank"]}</span>{sport_chip} {when}</p>
 <h2>{matchup}</h2>

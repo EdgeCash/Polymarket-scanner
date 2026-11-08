@@ -1,19 +1,23 @@
 """The daily card: the model's few highest-conviction sides, chosen by rule, locked, graded.
 
 Once a day, at a fixed time, every projected game in the next day is ranked by
-how far the model sits from the book, in that sport's own spread of results
-(so a goal in hockey and six points in football compare), weighted by how
-often that sport's closing line has moved the model's way so far. One side per
-game, the stronger of its spread (moneyline in hockey) and its total; the top
-few make the card. The lines are the book's at that moment; nothing is chosen
-by hand and nothing is changed afterwards. Each pick is settled at the final
-and the whole record, rank by rank, is public on the card page.
+its edge: the model's chance that the side comes in, from the same score grid
+the simulation pages draw (key numbers, overtime and all, and given the line
+does not push, since a push is a refund), less the chance the book's price
+needs to break even (52.4% at -110). That puts every market and every sport on
+one scale, and it knows that half a point across football's 3 is worth more
+than half a point across 11. The edge is weighted by how often that sport's
+closing line has moved the model's way so far. One side per game, the stronger
+of its spread (moneyline in hockey) and its total; the top few make the card.
+The lines are the book's at that moment; nothing is chosen by hand and nothing
+is changed afterwards. Each pick is settled at the final and the whole record,
+rank by rank, is public on the card page.
 
-Conviction is not accuracy. The biggest gap from the book is as likely a missing
-quarterback as an edge, which is why the ranking also leans on the closing line
-and why the record by rank is kept: it is the only thing that can say whether
-the top of the card deserves more trust than the bottom. Nothing here is sent
-or placed.
+Conviction is not accuracy. The biggest edge over the book is as likely a
+missing quarterback as an edge, which is why the ranking also leans on the
+closing line and why the record by rank is kept: it is the only thing that can
+say whether the top of the card deserves more trust than the bottom. Nothing
+here is sent or placed.
 """
 
 from __future__ import annotations
@@ -30,7 +34,8 @@ from scanner.config import (
     SIM_DRAWS,
     Settings,
 )
-from scanner.projection import tuning_for
+from scanner.grid import cover, grid, over, without_push
+from scanner.projection import tuning_for, win_probability
 from scanner.simulate import pick_chance, seed_for, simulate
 from scanner.stakes import OUTCOME_PUSH, settle
 
@@ -44,6 +49,11 @@ def payout(odds: int | None) -> float:
     if odds is None or odds == 0:
         odds = STANDARD_ODDS
     return odds / 100.0 if odds > 0 else 100.0 / abs(odds)
+
+
+def break_even(odds: int | None) -> float:
+    """The chance a price needs to come in to break even, the book's margin left in."""
+    return 1.0 / (1.0 + payout(odds))
 
 
 # -- timing ------------------------------------------------------------------------------------
@@ -99,6 +109,50 @@ class Candidate:
     book_value: float
     gap: float  # signed: model minus book
     z: float  # the gap in that sport's spread of results
+    chance: float  # the model's chance the side comes in, given the line does not push
+    edge: float  # that chance less the chance the price needs to break even
+
+
+def side_chance(
+    sport: str,
+    raw: dict,
+    sigma: float,
+    sigma_total: float,
+    market: str,
+    side: str,
+    line: float | None,
+) -> float:
+    """The model's chance a side comes in, from the score grid, given no push.
+
+    The plain bell curve stands in when the grid cannot be laid out (a projection
+    without a total, say).
+    """
+    margin, total = raw.get("margin"), raw.get("total")
+    g = grid(sport, margin, total, sigma, sigma_total) if None not in (margin, total) else None
+    if market == MARKET_MONEYLINE:
+        p_home = g.home_win if g is not None else win_probability(margin, sigma)
+        decided = sum(p for m, p in g.margin.items() if m != 0) if g is not None else 1.0
+        p_home = p_home / decided if decided > 0 else p_home
+        return p_home if side == "home" else 1.0 - p_home
+    if market == MARKET_SPREAD:
+        split = without_push(cover(g, line)) if g is not None else None
+        if split is None:
+            p_home = win_probability(margin + line, sigma)
+            split = (p_home, 1.0 - p_home)
+        return split[0] if side == "home" else split[1]
+    split = without_push(over(g, line)) if g is not None else None
+    if split is None:
+        p_over = win_probability(total - line, sigma_total)
+        split = (p_over, 1.0 - p_over)
+    return split[0] if side == "over" else split[1]
+
+
+def _candidate(sport, game_id, market, side, line, odds, model, book, gap, z, chance_of):
+    chance = chance_of(market, side, line)
+    return Candidate(
+        sport, game_id, market, side, line, odds, model, book, gap, z,
+        chance, chance - break_even(odds),
+    )  # fmt: skip
 
 
 def _label(market: str, side: str, line: float | None, home: str, away: str) -> str:
@@ -121,6 +175,10 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
     sigma = float(league.get("sigma") or tuning.sigma)
     sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
     game_id = str(projection.get("game_id") or "")
+
+    def chance_of(market: str, side: str, line: float | None) -> float:
+        return side_chance(sport, raw, sigma, sigma_total, market, side, line)
+
     out = []
     margin, book_margin = raw.get("margin"), book_parts.get("margin")
     if margin is not None and book_margin is not None and margin != book_margin:
@@ -132,7 +190,7 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                 odds = book.home_ml if side == "home" else book.away_ml
             if odds is not None:
                 out.append(
-                    Candidate(
+                    _candidate(
                         sport,
                         game_id,
                         MARKET_MONEYLINE,
@@ -143,14 +201,15 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                         book_margin,
                         gap,
                         abs(gap) / sigma,
-                    )
+                        chance_of,
+                    )  # fmt: skip
                 )
         else:
             odds = None
             if book is not None:
                 odds = book.home_spread_odds if side == "home" else book.away_spread_odds
             out.append(
-                Candidate(
+                _candidate(
                     sport,
                     game_id,
                     MARKET_SPREAD,
@@ -161,7 +220,8 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                     book_margin,
                     gap,
                     abs(gap) / sigma,
-                )
+                    chance_of,
+                )  # fmt: skip
             )
     total, book_total = raw.get("total"), book_parts.get("total")
     if total is not None and book_total is not None and total != book_total:
@@ -171,7 +231,7 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
         if book is not None:
             odds = book.over_odds if side == "over" else book.under_odds
         out.append(
-            Candidate(
+            _candidate(
                 sport,
                 game_id,
                 MARKET_TOTAL,
@@ -182,7 +242,8 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                 book_total,
                 gap,
                 abs(gap) / sigma_total,
-            )
+                chance_of,
+            )  # fmt: skip
         )
     return out
 
@@ -191,6 +252,10 @@ def choose(
     games: list[dict], trust_by_sport: dict[str, dict], picks: int, draws: int = SIM_DRAWS
 ) -> list[dict]:
     """Rank every game's strongest side by conviction and keep the top ``picks``.
+
+    A side's conviction is its edge times its sport's trust. A side with no edge
+    (the price asks for more than the model gives) keeps its edge unweighted, so
+    it ranks below every side with one and a thin day still fills its card.
 
     Each entry of ``games`` is a dict with ``sport``, ``game_id``, ``kickoff``
     (aware), ``home`` and ``away`` (the slate's team dicts), ``book`` (a BookLine
@@ -202,9 +267,10 @@ def choose(
         options = candidates_for(sport, projection, game.get("book"))
         if not options:
             continue
-        best = max(options, key=lambda c: c.z)
+        best = max(options, key=lambda c: c.edge)
         trust = trust_by_sport.get(sport) or trust_for(None)
-        ranked.append((best.z * trust["trust"], game["kickoff"], best, trust, game))
+        conviction = best.edge * trust["trust"] if best.edge > 0 else best.edge
+        ranked.append((conviction, game["kickoff"], best, trust, game))
     ranked.sort(key=lambda item: (-item[0], item[1]))
     out = []
     for rank, (conviction, kickoff, best, trust, game) in enumerate(ranked[:picks], start=1):
@@ -257,6 +323,10 @@ def choose(
                     },
                     "sim": sim,
                     "chance": chance,
+                    # What the ranking used: the chance given no push and its edge.
+                    "chance_no_push": best.chance,
+                    "break_even": break_even(best.odds),
+                    "edge": best.edge,
                 },
             }
         )

@@ -10,7 +10,7 @@ from scanner.card import (
     MARKET_MONEYLINE,
     MARKET_SPREAD,
     MARKET_TOTAL,
-    Candidate,
+    break_even,
     build_if_due,
     candidates_for,
     card_date_for,
@@ -27,6 +27,7 @@ from scanner.card import (
 from scanner.config import load_settings
 from scanner.diary import Diary
 from scanner.gamelog import parse_game_summary, parse_week_scoreboard
+from scanner.grid import cover, grid
 from scanner.projection import fit, project
 from scanner.report import card_report
 from tests.conftest import load_fixture
@@ -83,9 +84,17 @@ def test_candidates_take_the_stronger_side_of_each_market_at_the_books_price():
     out = candidates_for("nfl", {**NFL, "game_id": "g1"}, BOOK)
     assert [c.market for c in out] == [MARKET_SPREAD, MARKET_TOTAL]
     spread, total = out
-    assert spread == Candidate(
-        "nfl", "g1", MARKET_SPREAD, "home", -2.5, -110, 6.0, 2.5, 3.5, 3.5 / 13.5
-    )
+    assert (spread.sport, spread.game_id, spread.market, spread.side, spread.line) == (
+        "nfl", "g1", MARKET_SPREAD, "home", -2.5,
+    )  # fmt: skip
+    assert (spread.odds, spread.model_value, spread.book_value, spread.gap) == (-110, 6.0, 2.5, 3.5)
+    assert spread.z == pytest.approx(3.5 / 13.5)
+    # The chance comes from the score grid at the model's numbers; the edge is that
+    # chance less what the price needs to break even (52.4% at -110).
+    g = grid("nfl", 6.0, 48.0, 13.5, 10.5)
+    assert spread.chance == pytest.approx(cover(g, -2.5)["above"] / (1 - cover(g, -2.5)["push"]))
+    assert spread.edge == pytest.approx(spread.chance - 110 / 210)
+    assert break_even(-110) == pytest.approx(110 / 210) and break_even(150) == pytest.approx(0.4)
     assert total.side == "over" and total.line == 41.5 and total.odds == -105
     assert total.z == pytest.approx(6.5 / 10.5)
     # The model below the book: the away side and the under, at their own prices.
@@ -116,6 +125,9 @@ def test_hockey_takes_the_moneyline_since_the_puck_line_never_moves():
     assert side.market == MARKET_MONEYLINE and side.side == "home" and side.line is None
     assert side.odds == -120 and side.z == pytest.approx(0.5 / 2.3)
     assert total.side == "over" and total.z == pytest.approx(0.4 / 2.4)
+    # The moneyline's chance is the grid's win chance, overtime and shootout included.
+    assert side.chance == pytest.approx(grid("nhl", 0.6, 6.4, 2.3, 2.4).home_win)
+    assert side.edge == pytest.approx(side.chance - 120 / 220)
     # The away side at its own price; with no moneyline there is no side to take.
     dog = {**nhl, "raw": {"margin": -0.5, "total": 6.4, "home_win": 0.42}}
     assert candidates_for("nhl", dog, book)[0].odds == 100
@@ -136,36 +148,67 @@ def game(game_id, projection, hours=3, book=BOOK, home=HOME, away=AWAY, sport="n
     }
 
 
-def test_choose_ranks_one_side_per_game_by_conviction_and_keeps_the_top_few():
+def test_choose_ranks_one_side_per_game_by_edge_and_keeps_the_top_few():
     mild = {**NFL, "raw": {"margin": 3.5, "total": 43.0, "home_win": 0.6}}  # 1 point, 1.5 points
     games = [
-        game("a", NFL),  # spread 3.5/13.5 = 0.26, total 6.5/10.5 = 0.62: the total
-        game("b", mild, hours=9),  # total 1.5/10.5 = 0.14
+        game("a", NFL),  # the over 41.5 at -105: 71.9% against 51.2%
+        game("b", mild, hours=9),  # the over again, a small edge
         game("c", {**NFL, "thin": True}),  # never
         game("d", {**NFL, "raw": {"margin": -6.0, "total": 41.5, "home_win": 0.3}}, hours=1),
     ]
     trust = {"nfl": {"trust": 1.0, "closed": 3, "positive_share": None, "weighted": False}}
     picks = choose(games, trust, picks=5, draws=2_000)
+    # PIT +2.5 is 8.5 points off the book, the over only 6.5, but the over's cheaper
+    # price (-105 against -110) leaves it the bigger edge.
     assert [(p["rank"], p["game_id"], p["market"], p["side_label"]) for p in picks] == [
-        (1, "d", MARKET_SPREAD, "PIT +2.5"),  # 8.5 points off the book
-        (2, "a", MARKET_TOTAL, "Over 41.5"),
+        (1, "a", MARKET_TOTAL, "Over 41.5"),
+        (2, "d", MARKET_SPREAD, "PIT +2.5"),
         (3, "b", MARKET_TOTAL, "Over 41.5"),
     ]
-    top = picks[0]
-    assert top["conviction"] == pytest.approx(8.5 / 13.5) and top["trust"] == 1.0
-    assert top["odds"] == -110 and top["price"] == pytest.approx(100 / 110)
-    assert top["line"] == -2.5 and top["model_value"] == -6.0 and top["book_value"] == 2.5
-    assert top["home"] == "CLE" and top["away"] == "PIT"
-    detail = top["detail"]
+    top, second = picks[:2]
+    detail = second["detail"]
+    assert second["conviction"] == pytest.approx(detail["edge"]) and second["trust"] == 1.0
+    assert detail["edge"] == pytest.approx(detail["chance_no_push"] - detail["break_even"])
+    assert top["conviction"] > second["conviction"] > picks[2]["conviction"] > 0
+    assert second["odds"] == -110 and second["price"] == pytest.approx(100 / 110)
+    assert second["line"] == -2.5 and second["model_value"] == -6.0
+    assert second["book_value"] == 2.5 and second["home"] == "CLE" and second["away"] == "PIT"
     assert detail["home_team"] == HOME and detail["sim"]["draws"] == 2_000
     assert 0.6 < detail["chance"] < 0.8  # PIT +2.5 when the model has PIT by 6
     assert detail["projection"]["raw"]["margin"] == -6.0 and detail["trust"] == trust["nfl"]
-    assert picks[1]["side_label"] == "Over 41.5" and picks[1]["odds"] == -105
+    assert top["odds"] == -105
     # A sport's trust scales its conviction; a tie in conviction goes to the earlier game.
     weighted = {"nfl": {"trust": 1.5, "closed": 30, "positive_share": 1.0, "weighted": True}}
-    assert choose(games, weighted, 1, draws=100)[0]["conviction"] == pytest.approx(8.5 / 13.5 * 1.5)
+    best = choose(games, weighted, 1, draws=100)[0]
+    assert best["conviction"] == pytest.approx(best["detail"]["edge"] * 1.5)
     assert len(choose(games, trust, 2, draws=100)) == 2
     assert choose([], trust, 5) == []
+
+
+def test_the_edge_knows_football_s_key_numbers_and_the_price():
+    # The same one-point gap from the book: across 3 it buys far more than across 11.
+    key = {**NFL, "raw": {"margin": 3.5, "total": 41.5}, "book": {"margin": 2.5, "total": 41.5}}
+    flat = {**NFL, "raw": {"margin": 11.5, "total": 41.5}, "book": {"margin": 10.5, "total": 41.5}}
+    flat_book = replace(BOOK, home_spread=-10.5)
+    across_three = candidates_for("nfl", key, BOOK)[0]
+    across_eleven = candidates_for("nfl", flat, flat_book)[0]
+    assert across_three.z == pytest.approx(across_eleven.z)
+    assert across_three.edge > across_eleven.edge + 0.02
+    # The same chance at a dearer price is a smaller edge.
+    dear = replace(BOOK, home_spread_odds=-130)
+    assert candidates_for("nfl", key, dear)[0].edge < across_three.edge - 0.03
+
+
+def test_a_side_with_no_edge_ranks_below_every_side_with_one():
+    # The model barely off the book, at a steep price: no edge, but still a card pick
+    # on a thin day, below the side with one and never lifted by its sport's trust.
+    steep = replace(BOOK, home_spread_odds=-200, over_odds=-200, under_odds=-200)
+    small = {**NFL, "raw": {"margin": 3.0, "total": 42.0}}
+    games = [game("x", small, book=steep), game("y", NFL, hours=5)]
+    weighted = {"nfl": {"trust": 1.5, "closed": 30, "positive_share": 1.0, "weighted": True}}
+    picks = choose(games, weighted, 5, draws=100)
+    assert [p["game_id"] for p in picks] == ["y", "x"]
+    assert picks[1]["detail"]["edge"] < 0 and picks[1]["conviction"] == picks[1]["detail"]["edge"]
 
 
 def test_settling_and_the_closing_line():
