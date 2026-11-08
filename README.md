@@ -754,22 +754,24 @@ Football before and after its tables, on 4,297 NFL games against the close
 The grid can also move a sport's margin table with the size of the expected
 margin (`margin_by_spread`, interpolated between a few centres so no price
 jumps), and `build_sim_tables.py --spread-only --holdout-from YEAR` fits those
-adjustments on earlier seasons and keeps them only if they beat the single
-table on the seasons held out. The NFL's do not: in-sample they look better
-(games spread 2.5 to 4 land on 3 at 17.0%, the single table says 15.4%, the
-adjusted 16.7%), but fit on 2010-2019 and scored on 2020-2026 the log loss of
-the real final margins is 3.8276 against the single table's 3.8260; much of
-what looks like spread dependence is era-to-era noise (an NFL margin of 7 ran
-8.8%, 9.9%, 7.0% and 8.5% across 2010-14, 2015-19, 2020-22 and 2023-26), so its
-table stays single. College football's pass, barely, now that its ratings are
-fit: adjustments fit on 2018-2022 score 4.02610 on 2023-2025 against the single
-table's 4.02624, so they ship (3 lands 11% more often than the table says in an
-even game and 11% less at a 15-point spread). Each check's result is recorded
-in the sport's table (`source.spread_check`), and `tests/test_sim_history.py`
-rescores its fingerprint on a fixed sample of the held-out games with the grid,
-the widths and the tables as they stand: a change that leaves the record stale
-fails the suite until the check is rerun, and the shipped state must match the
-decision it reached.
+adjustments on earlier seasons and scores them against the single table on the
+seasons held out. They ship only when they win by at least two standard errors
+of the paired, per-game difference in log loss (`grade_sim.SPREAD_MIN_SE`): a
+hair's improvement over two thousand games is noise, and the bar scales with
+the count. Neither sport's do. The NFL's, fit on 2010-2019 and scored on
+2020-2026, are 1.9 standard errors worse than the single table (3.8276 against
+3.8260); in-sample they had looked better (games spread 2.5 to 4 land on 3 at
+17.0%, the single table says 15.4%, the adjusted 16.7%), but much of what
+looks like spread dependence is era-to-era noise (an NFL margin of 7 ran 8.8%,
+9.9%, 7.0% and 8.5% across 2010-14, 2015-19, 2020-22 and 2023-26). College
+football's, fit on 2018-2022 and scored on 2023-2025, come out a fifth of a
+standard error better, which is nothing. Each check's result is recorded in
+the sport's table (`source.spread_check`, the z-score and the bar included),
+and `tests/test_sim_history.py` rescores its fingerprint on a fixed sample of
+the held-out games with the grid, the widths and the tables as they stand: a
+change that leaves the record stale fails the suite until the check is rerun,
+the shipped state must match the decision, and the decision must follow the
+rule as it stands.
 
 Basketball's tables are its end of game: a tie after regulation, which late
 fouling and the last shot make twice as common as a bell curve says, and fewer

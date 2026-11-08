@@ -1139,54 +1139,7 @@
    "8": 0.788,
    "9": 0.5438
   },
-  "margin_by_spread": [
-   {
-    "adjust": {
-     "10": 0.9902,
-     "14": 1.2073,
-     "3": 1.1098,
-     "7": 1.0826
-    },
-    "centre": 0.0
-   },
-   {
-    "adjust": {
-     "10": 1.0716,
-     "14": 0.917,
-     "3": 1.0426,
-     "7": 0.9555
-    },
-    "centre": 4.0
-   },
-   {
-    "adjust": {
-     "10": 1.0079,
-     "14": 1.0526,
-     "3": 0.9211,
-     "7": 1.0839
-    },
-    "centre": 9.0
-   },
-   {
-    "adjust": {
-     "10": 0.9197,
-     "14": 0.7999,
-     "3": 0.9186,
-     "7": 0.9717
-    },
-    "centre": 15.0
-   },
-   {
-    "adjust": {
-     "10": 0.9117,
-     "14": 0.9143,
-     "3": 0.8906,
-     "7": 0.9179
-    },
-    "centre": 24.0
-   }
-  ],
-  "margin_scale": 1.0529,
+  "margin_scale": 1.0563,
   "overtime": [
    [
     7,
@@ -1414,9 +1367,8 @@
   "source": {
    "built": "2026-11-08",
    "expected_from": "ratings",
-   "fit_seasons": "2018-2022",
-   "games": 2609,
-   "margin_sd": 16.32,
+   "games": 4528,
+   "margin_sd": 16.11,
    "seasons": "2018-2025",
    "spread_check": {
     "fingerprint": {
@@ -1426,13 +1378,21 @@
     },
     "games": 1919,
     "holdout_from": 2023,
-    "kept": true,
+    "improvement": 0.000139,
+    "kept": false,
+    "min_se": 2.0,
     "plain": 4.02624,
-    "shaped": 4.0261
+    "plain_scales": {
+     "margin_scale": 1.0563,
+     "total_scale": 1.0534
+    },
+    "se": 0.000663,
+    "shaped": 4.0261,
+    "z": 0.21
    },
-   "total_sd": 17.11
+   "total_sd": 16.75
   },
-  "total_scale": 1.0515
+  "total_scale": 1.0534
  },
  "nba": {
   "margin": {
@@ -2155,9 +2115,13 @@
     },
     "games": 1737,
     "holdout_from": 2020,
+    "improvement": -0.001599,
     "kept": false,
+    "min_se": 2.0,
     "plain": 3.82599,
-    "shaped": 3.82759
+    "se": 0.000862,
+    "shaped": 3.82759,
+    "z": -1.86
    },
    "total_sd": 13.19
   },

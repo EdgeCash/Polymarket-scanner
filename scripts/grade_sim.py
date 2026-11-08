@@ -71,9 +71,14 @@ def load(sport: str, sample: int | None = None) -> list[dict]:
 # the seasons before ``holdout_from`` and must lower the log loss of the real final
 # margins on the seasons from it. The result is recorded in the sport's table under
 # ``source.spread_check`` and the test recomputes it, so a change to the grid, the
-# widths or the base tables that leaves the record stale fails the suite.
+# widths or the base tables that leaves the record stale fails the suite. They ship
+# only when the improvement is at least SPREAD_MIN_SE standard errors.
 
 FINGERPRINT_SAMPLE = 120  # held-out games the test rescores, evenly spaced, to catch staleness
+# The adjustments ship only when they beat the single table on the held-out games by
+# at least this many standard errors of the paired, per-game difference in log loss:
+# a hair's improvement on two thousand games is noise, and this scales with the count.
+SPREAD_MIN_SE = 2.0
 
 
 def holdout_rows(sport: str, holdout_from: int, sample: int | None = None) -> list[dict]:
@@ -85,8 +90,8 @@ def holdout_rows(sport: str, holdout_from: int, sample: int | None = None) -> li
     return rows
 
 
-def margin_log_loss(sport: str, rows: list[dict], tables: dict) -> float:
-    """Mean log loss of the real final margins under ``tables``, at TUNING's widths.
+def margin_log_losses(sport: str, rows: list[dict], tables: dict) -> list[float]:
+    """Each game's log loss of its real final margin under ``tables``, at TUNING's widths.
 
     Swaps the tables in for the scoring and the file's back afterwards.
     """
@@ -96,16 +101,22 @@ def margin_log_loss(sport: str, rows: list[dict], tables: dict) -> float:
     step_m, step_t = ROUNDING.get(sport, DEFAULT_ROUNDING)
     grid_module.reload(tables)
     try:
-        total = 0.0
+        out = []
         for row in rows:
             margin = round(float(row["exp_margin"]) / step_m) * step_m
             expected_total = round(float(row["exp_total"]) / step_t) * step_t
             g = grid(sport, margin, expected_total, tuning.sigma, tuning.sigma_total)
             actual = int(float(row["home_final"])) - int(float(row["away_final"]))
-            total -= math.log(max(g.margin.get(actual, 0.0), 1e-12))
+            out.append(-math.log(max(g.margin.get(actual, 0.0), 1e-12)))
     finally:
         grid_module.reload()
-    return total / len(rows)
+    return out
+
+
+def margin_log_loss(sport: str, rows: list[dict], tables: dict) -> float:
+    """The mean of ``margin_log_losses``."""
+    losses = margin_log_losses(sport, rows, tables)
+    return sum(losses) / len(losses)
 
 
 def without_spread(entry: dict) -> dict:
@@ -123,14 +134,26 @@ def spread_check(sport: str, plain: dict, shaped: dict, holdout_from: int) -> di
     """Score a sport's plain table against one with margin_by_spread on every held-out
     game, and fingerprint both on the small sample the test rescores."""
     rows = holdout_rows(sport, holdout_from)
-    plain_loss = margin_log_loss(sport, rows, {sport: plain})
-    shaped_loss = margin_log_loss(sport, rows, {sport: shaped})
+    plain_losses = margin_log_losses(sport, rows, {sport: plain})
+    shaped_losses = margin_log_losses(sport, rows, {sport: shaped})
+    n = len(rows)
+    plain_loss, shaped_loss = sum(plain_losses) / n, sum(shaped_losses) / n
+    # Paired: each game's loss under one table less its loss under the other.
+    gains = [a - b for a, b in zip(plain_losses, shaped_losses, strict=True)]
+    improvement = sum(gains) / n
+    variance = sum((g - improvement) ** 2 for g in gains) / max(n - 1, 1)
+    se = math.sqrt(variance / n) if n > 1 else float("inf")
+    z = improvement / se if se > 0 else 0.0
     return {
         "holdout_from": holdout_from,
-        "games": len(rows),
+        "games": n,
         "plain": round(plain_loss, 5),
         "shaped": round(shaped_loss, 5),
-        "kept": shaped_loss < plain_loss,
+        "improvement": round(improvement, 6),
+        "se": round(se, 6),
+        "z": round(z, 2),
+        "min_se": SPREAD_MIN_SE,
+        "kept": z >= SPREAD_MIN_SE,
         "fingerprint": {
             "games": FINGERPRINT_SAMPLE,
             "plain": fingerprint(sport, plain, holdout_from),
