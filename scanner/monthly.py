@@ -14,12 +14,17 @@ close, and how often the close moved the model's way. It is the scorecard's
 
 from __future__ import annotations
 
+import logging
 from datetime import UTC, datetime
 from zoneinfo import ZoneInfo
+
+import httpx
 
 from scanner.books import BookLine
 from scanner.grid import cover, grid
 from scanner.projection import tuning_for
+
+log = logging.getLogger(__name__)
 
 BINS = ((0.5, 0.6), (0.6, 0.7), (0.7, 0.8), (0.8, 0.9), (0.9, 1.01))
 TAIL = 0.05  # each side: the middle 90%
@@ -268,3 +273,41 @@ def report(month: dict, tz: str) -> str:
             f"(mean {clv})"
         )
     return "\n".join(lines)
+
+
+def send_month(diary, settings, label: str | None, now: datetime, sender) -> dict:
+    """Build a month's check and hand it to ``sender``: what the endpoint and the CLI do."""
+    start, end, month_label = month_bounds(label, now, settings.TZ)
+    month = summary(diary, start, end, month_label)
+    text = report(month, settings.TZ)
+    sent = bool(sender.send(text))
+    log.info(
+        "monthly check for %s (%d graded) %s",
+        month_label,
+        month["games"],
+        "sent" if sent else "not sent",
+    )
+    return {"month": month_label, "games": month["games"], "sent": sent, "text": text}
+
+
+def send_remote(
+    url: str, token: str, label: str | None = None, client: httpx.Client | None = None
+) -> dict:
+    """Ask the running service to build and send a month: the cron's job.
+
+    The cron runs in its own container with no diary, so it posts to the service that
+    has one. Returns the service's answer; raises on an HTTP error.
+    """
+    own = client is None
+    client = client or httpx.Client(timeout=60.0)
+    try:
+        response = client.post(
+            url.rstrip("/") + "/monthly-check",
+            params={"month": label} if label else None,
+            headers={"x-status-token": token, "accept": "application/json"},
+        )
+        response.raise_for_status()
+        return response.json()
+    finally:
+        if own:
+            client.close()

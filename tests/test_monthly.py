@@ -140,3 +140,55 @@ def test_summary_reads_the_month_from_the_diary_and_the_report_prints_it():
     assert report(empty, "UTC").endswith("Nothing graded this month.")
     settings = load_settings()
     assert settings.TZ  # the report takes the sheet's zone, as the CLI passes it
+
+
+def test_the_service_builds_and_sends_a_month_on_request_and_the_cron_posts_to_it():
+    import httpx
+    from fastapi.testclient import TestClient
+
+    from scanner.monthly import send_remote
+    from scanner.web import RuntimeStatus, create_app
+
+    settings = load_settings(STATUS_TOKEN="phone-secret", TZ="UTC")
+    diary = Diary(":memory:")
+    record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    kickoff = datetime(2026, 10, 4, 17, 0, tzinfo=UTC)
+    projection = {
+        "model": "v1",
+        "raw": {"margin": 4.0, "total": 44.0, "home_win": 0.6},
+        "blend": {"margin": 3.0, "total": 43.0, "home_win": 0.58},
+        "book": {"margin": 2.0, "total": 42.0, "home_win": 0.55},
+        "league": {"sigma": 13.5, "sigma_total": 13.5},
+    }
+    diary.upsert_projection("nfl", record.game_id, kickoff, "CLE", "PIT", projection, kickoff)
+    diary.store_football_game(record, kickoff + timedelta(hours=4))
+    assert diary.grade_projections("nfl", kickoff + timedelta(hours=6)) == 1
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    # The token is required, as everywhere behind the sheet.
+    assert client.post("/monthly-check").status_code == 401
+    # Without Telegram configured the service builds the month and says it was a dry run.
+    answer = client.post("/monthly-check?month=2026-10", headers={"x-status-token": "phone-secret"})
+    assert answer.status_code == 200
+    body = answer.json()
+    assert body["month"] == "2026-10" and body["games"] == 1 and body["sent"] is True
+    assert body["dry_run"] is True and body["text"].startswith("Monthly check, 2026-10")
+    # No month named: the last full month before now (empty here, and it says so).
+    body = client.post("/monthly-check", headers={"x-status-token": "phone-secret"}).json()
+    assert body["games"] == 0 or body["month"] == "2026-10"
+
+    # The cron's side: send_remote posts to the service and returns its answer.
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.url.path == "/monthly-check" and request.url.params["month"] == "2026-10"
+        assert request.headers["x-status-token"] == "phone-secret"
+        return httpx.Response(200, json={"month": "2026-10", "games": 1, "sent": True})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as http:
+        got = send_remote("https://scanner.example", "phone-secret", "2026-10", client=http)
+    assert got == {"month": "2026-10", "games": 1, "sent": True}
+
+    def refused(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(401, json={"error": "token required"})
+
+    with httpx.Client(transport=httpx.MockTransport(refused)) as http:
+        with pytest.raises(httpx.HTTPStatusError):
+            send_remote("https://scanner.example/", "wrong", client=http)
