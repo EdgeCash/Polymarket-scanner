@@ -989,7 +989,7 @@ def test_a_daily_sport_reads_three_days_and_backfills_the_seasons_calendar():
     # The upcoming game is projected from the three stored games (all BOS v BKN here).
     assert summary.projected == 1
     projection = diary.projection("nba", "up-1")["projection"]
-    assert projection["sport"] == "nba" and projection["league"]["hfa"] == 2.5
+    assert projection["sport"] == "nba" and projection["league"]["hfa"] == 2.0
     sheet = sheet_from_diary(diary, "nba", "up-1")
     assert sheet["sport"] == "nba" and sheet["home"]["abbreviation"] == "BOS"
     assert sheet["home"]["season"]["off_rating"] is not None and sheet["week"] is None

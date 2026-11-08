@@ -289,7 +289,7 @@ def test_hockey_fits_on_shots_as_the_volume_half_with_finer_gap_buckets():
     s = summarise([g], "nhl")
     assert s["buckets"] == ["0.25", "0.5", "0.75", "1"] and set(s["ats"]) == set(s["buckets"])
     assert summarise([], "nfl")["buckets"] == ["1", "2", "3", "5"] == summarise([])["buckets"]
-    assert fit([], "nba").first_half_share == 0.5 and fit([], "nba").hfa == 2.5
+    assert fit([], "nba").first_half_share == 0.5 and fit([], "nba").hfa == 2.0
 
 
 def test_college_basketball_has_its_own_numbers_and_its_overtime():
@@ -297,7 +297,7 @@ def test_college_basketball_has_its_own_numbers_and_its_overtime():
     from scanner.simulate import simulate
 
     college = tuning_for("cbb")
-    assert college is TUNING["cbb"] and college.hfa == 3.5 and college.sigma == 12.0
+    assert college is TUNING["cbb"] and college.hfa == 4.0 and college.sigma == 12.0
     assert college.sigma_total == 17.0 and college.volume_stat is None
     assert not college.margin_from_moneyline and college.buckets == TUNING["nba"].buckets
     sim = simulate(

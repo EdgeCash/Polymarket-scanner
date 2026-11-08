@@ -443,7 +443,7 @@ on the sheet: for every team, half of what it scored and half of what its yards
 say it should have scored (the league's points per yard times its yards), each
 adjusted for who it played, shrunk toward average while games are few (so many
 pseudo-games of average: four in most sports, a half in college football),
-plus home field (1.8 points in the NFL, 2.8 in college). Two ratings per team
+plus home field (1.8 points in the NFL, 2.5 in college). Two ratings per team
 come out, points above average on offence and points above average allowed on
 defence; a game's projection is the league average plus the two ratings that
 meet, with half the home edge on each side, and the win probability is the
@@ -466,6 +466,15 @@ for a total miss 1.8% wider. Hockey's shots do the same job: with them the
 miss is flat from 1.5 to 5 pseudo-games, so it keeps four. On goals alone it
 would have wanted sixteen, which is why a grading that leaves the shots out
 calls the hockey ratings overconfident when they are not.
+
+The home edges are fit the same way (`--hfa-grid`): the edge at which home
+sides, rated on earlier games, come out with no residual. Hockey's 0.2 is
+right. College football's 2.8 was a touch high: 2.5 once the empty-stadium
+2020 season is set aside (2.9 over 2023-2025 alone, so it is drifting back;
+give or take a quarter of a point either way). The NBA's 2.5 left home sides
+0.44 a game short over 4,730 games, so it is 2; college basketball's 3.5 left
+them 0.65 short over 15,460, so it is 4. The NFL's 1.8 is not fit here, since
+its history is graded against the close rather than the ratings.
 
 Beside the raw projection the sheet shows a blend with the book: the model's
 weight is games over games plus six, so with five games logged the blend is
@@ -537,7 +546,7 @@ differs:
   settles on it) but not as a goal in play, so the shooting and save
   percentages use the goals scored in play. The sheet's "1st half" column is
   the first period in hockey.
-- The model. Basketball uses points alone (home court 2.5, final margin
+- The model. Basketball uses points alone (home court 2, final margin
   spread 14, the model's own miss on 4,730 games rated only on earlier ones;
   total spread 19). Hockey uses half goals and half what the
   shots say (the league's goals per shot times shots), with home ice 0.2, a
@@ -570,7 +579,7 @@ It is the NBA's path with three differences: ESPN's Division I listing
 (`groups=50`, the same filter the pre-game scan uses; a visitor from outside
 Division I appears with its games against Division I sides and is usually
 thin), two halves instead of four quarters (the sheet's "1st half" is the
-first line score), and its own numbers in `TUNING` (home court 3.5, a margin
+first line score), and its own numbers in `TUNING` (home court 4, a margin
 spread of 12, a total spread of 17, a first-half share of 0.47 until the log
 says otherwise). Opening night listed 182 games, so the backfill takes a few
 passes per day and the matchups page is long on a Saturday. The simulator's
@@ -742,20 +751,21 @@ Football before and after its tables, on 4,297 NFL games against the close
 | Level after regulation | 2.7% | 5.9% | 6.0% | 2.1% | 4.7% | 4.6% |
 | Margin chance on the wrong numbers | 18.9% | 1.6% | | 22.1% | 2.0% | |
 
-One table serves every spread. The grid can also move a sport's margin table
-with the size of the expected margin (`margin_by_spread`, interpolated between
-a few centres so no price jumps), and `build_sim_tables.py --spread-only
---holdout-from YEAR` fits those adjustments on earlier seasons and keeps them
-only if they beat the single table on the seasons held out. So far they do
-not. In-sample they look better (NFL games spread 2.5 to 4 land on 3 at 17.0%,
-the single table says 15.4%, the adjusted 16.7%), but fit on 2010-2019 and
-scored on 2020-2026 the log loss of the real final margins is 3.8276 against
-the single table's 3.8260; college football, fit on 2018-2022 and scored on
-2023-2025, 4.0265 against 4.0264. Most of what looks like spread dependence is
-era-to-era noise (an NFL margin of 7 ran 8.8%, 9.9%, 7.0% and 8.5% across
-2010-14, 2015-19, 2020-22 and 2023-26), so the tables stay single until a
-rerun of the check says otherwise. The check's result is recorded in the
-sport's table (`source.spread_check`), and `tests/test_sim_history.py`
+The grid can also move a sport's margin table with the size of the expected
+margin (`margin_by_spread`, interpolated between a few centres so no price
+jumps), and `build_sim_tables.py --spread-only --holdout-from YEAR` fits those
+adjustments on earlier seasons and keeps them only if they beat the single
+table on the seasons held out. The NFL's do not: in-sample they look better
+(games spread 2.5 to 4 land on 3 at 17.0%, the single table says 15.4%, the
+adjusted 16.7%), but fit on 2010-2019 and scored on 2020-2026 the log loss of
+the real final margins is 3.8276 against the single table's 3.8260; much of
+what looks like spread dependence is era-to-era noise (an NFL margin of 7 ran
+8.8%, 9.9%, 7.0% and 8.5% across 2010-14, 2015-19, 2020-22 and 2023-26), so its
+table stays single. College football's pass, barely, now that its ratings are
+fit: adjustments fit on 2018-2022 score 4.02610 on 2023-2025 against the single
+table's 4.02624, so they ship (3 lands 11% more often than the table says in an
+even game and 11% less at a 15-point spread). Each check's result is recorded
+in the sport's table (`source.spread_check`), and `tests/test_sim_history.py`
 rescores its fingerprint on a fixed sample of the held-out games with the grid,
 the widths and the tables as they stand: a change that leaves the record stale
 fails the suite until the check is rerun, and the shipped state must match the

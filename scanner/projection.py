@@ -55,7 +55,9 @@ class SportTuning:
 # uses them (tests/fixtures/history, fetch_history.py): college football 16.1 and
 # 16.8 on 4,528 games, the NBA 13.9 and 18.8 on 4,730, college basketball 12.0 and
 # 16.8 on 15,460, the NHL 2.55 and 2.30 on 5,030. The model's own projections miss
-# by at least as much as the market does, so none sits below it.
+# by at least as much as the market does, so none sits below it. The home edges
+# are fit the same way (scripts/fit_shrinkage.py --hfa-grid): the value whose
+# projections leave home sides no residual, give or take a quarter of a point.
 # Football's margin and total share a width: the two teams' scores then move
 # independently, as they do against the close (correlation 0.01 in the NFL).
 TUNING = {
@@ -65,13 +67,15 @@ TUNING = {
     # the projected margin was 1.66 times too timid at four pseudo-games, right at a
     # half; scripts/fit_shrinkage.py).
     "cfb": SportTuning(
-        hfa=2.8, sigma=16.25, sigma_total=16.75, volume_stat="total_yards", pseudo_games=0.5
+        hfa=2.5, sigma=16.25, sigma_total=16.75, volume_stat="total_yards", pseudo_games=0.5
     ),
-    # Basketball: points alone, and a home edge that has shrunk to a few points.
-    "nba": SportTuning(hfa=2.5, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
+    # Basketball: points alone, and a home edge that has shrunk to a couple of points
+    # (home sides fell 0.44 a game short of 2.5 over 4,730 games, 2021-22 to 2024-25).
+    "nba": SportTuning(hfa=2.0, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
-    "cbb": SportTuning(hfa=3.5, sigma=12.0, sigma_total=17.0, first_half_share=0.47),
+    # (home sides fell 0.65 a game short of 3.5 over 15,460 games, 2022-23 to 2024-25).
+    "cbb": SportTuning(hfa=4.0, sigma=12.0, sigma_total=17.0, first_half_share=0.47),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead (through
     # the score grid's own win curve, empty nets and overtime included); the
