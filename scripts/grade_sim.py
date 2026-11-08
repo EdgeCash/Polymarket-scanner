@@ -37,6 +37,12 @@ HISTORY = ROOT / "tests" / "fixtures" / "history"
 # far finer than any line moves.
 ROUNDING = {"nhl": (0.05, 0.1)}
 DEFAULT_ROUNDING = (0.25, 0.5)
+# Football's key numbers by size of expected margin: the tables are one for every
+# spread unless margin_by_spread passes build_sim_tables.py's held-out check.
+SPREAD_BANDS = {
+    "nfl": ((0, 2.5), (2.5, 4), (4, 7.5), (7.5, 11), (11, 99)),
+    "cfb": ((0, 3.5), (3.5, 7.5), (7.5, 14), (14, 21), (21, 99)),
+}
 KEY_MARGINS = {
     "nfl": (1, 2, 3, 4, 6, 7, 10, 14),
     "cfb": (1, 2, 3, 4, 7, 10, 14, 17, 21),
@@ -72,6 +78,8 @@ def grade(sport: str, rows: list[dict]) -> dict:
     outside_m = outside_t = 0
     sq_m = sq_t = var_m = var_t = 0.0
     level_real = level_sim = 0.0
+    bands = SPREAD_BANDS.get(sport, ())
+    by_band = [[0, 0.0, 0.0, 0.0, 0.0] for _ in bands]  # games, sim 3, real 3, sim 7, real 7
     bins = [[0.0, 0.0, 0] for _ in range(10)]  # (chance sum, wins, games) by favourite chance
     brier = 0.0
     puck_real = puck_sim = 0.0
@@ -85,6 +93,13 @@ def grade(sport: str, rows: list[dict]) -> dict:
         home, away = int(float(row["home_final"])), int(float(row["away_final"]))
         actual_m, actual_t = home - away, home + away
         real_margin[abs(actual_m)] = real_margin.get(abs(actual_m), 0) + 1
+        for band, (lo, hi) in zip(by_band, bands, strict=True):
+            if lo <= abs(margin) < hi:
+                band[0] += 1
+                band[1] += g.margin.get(3, 0.0) + g.margin.get(-3, 0.0)
+                band[2] += abs(actual_m) == 3
+                band[3] += g.margin.get(7, 0.0) + g.margin.get(-7, 0.0)
+                band[4] += abs(actual_m) == 7
         for m, p in g.margin.items():
             sim_margin[abs(m)] = sim_margin.get(abs(m), 0.0) + p
         sq_m += (actual_m - margin) ** 2
@@ -152,6 +167,17 @@ def grade(sport: str, rows: list[dict]) -> dict:
         ],  # fmt: skip
         "brier": round(brier / n, 4),
     }
+    if bands:
+        out["by_spread"] = [
+            {
+                "band": f"{lo}-{hi}",
+                "games": n_b,
+                "three": {"sim": round(s3 / n_b, 4), "real": round(r3 / n_b, 4)},
+                "seven": {"sim": round(s7 / n_b, 4), "real": round(r7 / n_b, 4)},
+            }
+            for (lo, hi), (n_b, s3, r3, s7, r7) in zip(bands, by_band, strict=True)
+            if n_b
+        ]
     if sport == "nhl":
         out["win_by_two"] = {"sim": round(puck_sim / n, 4), "real": round(puck_real / n, 4)}
     return out
@@ -193,6 +219,12 @@ def report(card: dict) -> str:
         + ", ".join(f"{c['bin']} {c['sim']:.2f}->{c['real']:.2f}" for c in card["calibration"]),
         f"brier: {card['brier']}",
     ]
+    for band in card.get("by_spread", []):
+        lines.append(
+            f"  |spread| {band['band']} ({band['games']}): 3 {band['three']['sim'] * 100:.1f}% vs "
+            f"{band['three']['real'] * 100:.1f}%, 7 {band['seven']['sim'] * 100:.1f}% vs "
+            f"{band['seven']['real'] * 100:.1f}%"
+        )
     if "win_by_two" in card:
         lines.append(
             f"winner by 2+: {card['win_by_two']['sim'] * 100:.1f}% sim vs "

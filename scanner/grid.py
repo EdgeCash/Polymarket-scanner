@@ -73,6 +73,11 @@ class SportShape:
     # Hockey: the chance a side leading by one (two) late scores into the empty net,
     # turning the lead into two (three); the bell curves are the goals before that.
     empty_net: dict[int, float] = field(default_factory=dict)
+    # Football: the margin table moved by how big the expected margin is, as
+    # (|expected margin|, multiplier by |regulation margin|) at a few centres. A
+    # three-point favourite lands on 3 more often than a ten-point one; between two
+    # centres the multipliers are interpolated (in logs), so no price jumps.
+    margin_by_spread: tuple[tuple[float, dict[int, float]], ...] = ()
 
     @property
     def joint(self) -> bool:
@@ -91,7 +96,67 @@ def shape_for(sport: str) -> SportShape:
         margin_scale=float(table.get("margin_scale", 1.0)),
         total_scale=float(table.get("total_scale", 1.0)),
         empty_net={int(k): float(v) for k, v in (table.get("empty_net") or {}).items()},
+        margin_by_spread=tuple(
+            (float(row["centre"]), {int(k): float(v) for k, v in row["adjust"].items()})
+            for row in sorted(table.get("margin_by_spread") or [], key=lambda r: r["centre"])
+        ),
     )
+
+
+def spread_memberships(centres: list[float], expected: float) -> list[float]:
+    """How much each centre counts at an expected margin: the two either side of it
+    share it linearly, and beyond the last (first) centre that one takes it all."""
+    x = abs(expected)
+    weights = [0.0] * len(centres)
+    if x <= centres[0]:
+        weights[0] = 1.0
+    elif x >= centres[-1]:
+        weights[-1] = 1.0
+    else:
+        j = max(i for i, c in enumerate(centres) if c <= x)
+        t = (x - centres[j]) / (centres[j + 1] - centres[j])
+        weights[j], weights[j + 1] = 1.0 - t, t
+    return weights
+
+
+@lru_cache(maxsize=4096)
+def _margin_weights(sport: str, expected: float) -> dict[int, float]:
+    shape = shape_for(sport)
+    if not shape.margin_by_spread:
+        return shape.margin
+    shares = spread_memberships([c for c, _ in shape.margin_by_spread], expected)
+    keys = set(shape.margin)
+    for _, adjust in shape.margin_by_spread:
+        keys |= set(adjust)
+    out = {}
+    for k in keys:
+        log_adjust = sum(
+            share * math.log(adjust.get(k, 1.0))
+            for share, (_, adjust) in zip(shares, shape.margin_by_spread, strict=True)
+            if share
+        )
+        out[k] = shape.margin.get(k, 1.0) * math.exp(log_adjust)
+    return out
+
+
+def margin_weights(sport: str, expected: float) -> dict[int, float]:
+    """The regulation-margin table at an expected margin (the bell curve's centre)."""
+    return _margin_weights(sport, round(abs(float(expected)), 2))
+
+
+def reload(tables: dict | None = None) -> None:
+    """Swap in tables (the file's when None) and forget everything laid out from the old."""
+    global TABLES
+    TABLES = _load_tables() if tables is None else tables
+    for cached in (
+        shape_for,
+        _margin_weights,
+        overtime_outcomes,
+        _overtime_summary,
+        _grid,
+        _cells,
+    ):
+        cached.cache_clear()
 
 
 @dataclass(frozen=True)
@@ -200,7 +265,8 @@ def _separable(sport: str, mu: float, tau: float, sigma: float, sigma_total: flo
     shape = shape_for(sport)
     m_lo, m_hi, t_lo, t_hi = _bounds(mu, tau, sigma, sigma_total)
     phi_t = {t: _phi(t, tau, sigma_total) for t in range(t_lo, t_hi + 1)}
-    g = {m: _phi(m, mu, sigma) * shape.margin.get(abs(m), 1.0) for m in range(m_lo, m_hi + 1)}
+    weights = margin_weights(sport, mu)
+    g = {m: _phi(m, mu, sigma) * weights.get(abs(m), 1.0) for m in range(m_lo, m_hi + 1)}
     tail: dict[int, float] = {}  # φ(t) + φ(t + 2) + ...
     for t in range(t_hi, -1, -1):
         tail[t] = phi_t.get(t, 0.0) + tail.get(t + 2, 0.0)
@@ -244,7 +310,8 @@ def _regulation_cells(sport: str, mu: float, tau: float, sigma: float, sigma_tot
     """Every regulation score (home, away) and its chance, with the sport's tables."""
     shape = shape_for(sport)
     m_lo, m_hi, t_lo, t_hi = _bounds(mu, tau, sigma, sigma_total)
-    phi_m = {m: _phi(m, mu, sigma) * shape.margin.get(abs(m), 1.0) for m in range(m_lo, m_hi + 1)}
+    weights = margin_weights(sport, mu)
+    phi_m = {m: _phi(m, mu, sigma) * weights.get(abs(m), 1.0) for m in range(m_lo, m_hi + 1)}
     phi_t = {t: _phi(t, tau, sigma_total) for t in range(t_lo, t_hi + 1)}
     score = shape.score
     regulation: dict[tuple[int, int], float] = {}
@@ -264,7 +331,7 @@ def _regulation_cells(sport: str, mu: float, tau: float, sigma: float, sigma_tot
     if score or shape.empty_net:
         regulation = {
             (h, a): p
-            * (shape.margin.get(abs(h - a), 1.0) if shape.empty_net else 1.0)
+            * (weights.get(abs(h - a), 1.0) if shape.empty_net else 1.0)
             * score.get(h, 1.0)
             * score.get(a, 1.0)
             for (h, a), p in regulation.items()
