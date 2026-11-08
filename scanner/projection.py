@@ -51,16 +51,22 @@ class SportTuning:
 # The sigmas are how far real results land from an expectation, measured on history:
 # NFL against 4,297 closing lines (2010-2026, margin 13.0, total 13.2); the others
 # against this model's own ratings fit only on each season's earlier games, as the
-# scanner sees a game before it starts (tests/fixtures/history, fetch_history.py):
-# college football 16.5 and 16.7 on 4,528 games, the NBA 13.9 and 18.8 on 4,730,
-# college basketball 12.0 and 16.8 on 15,460, the NHL 2.6 and 2.3 on 5,030. The
-# model's own projections miss by at least as much as the market does, so none
-# sits below it.
+# scanner sees a game before it starts, shots and yards included where the model
+# uses them (tests/fixtures/history, fetch_history.py): college football 16.1 and
+# 16.8 on 4,528 games, the NBA 13.9 and 18.8 on 4,730, college basketball 12.0 and
+# 16.8 on 15,460, the NHL 2.55 and 2.30 on 5,030. The model's own projections miss
+# by at least as much as the market does, so none sits below it.
 # Football's margin and total share a width: the two teams' scores then move
 # independently, as they do against the close (correlation 0.01 in the NFL).
 TUNING = {
     "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=13.5, volume_stat="total_yards"),
-    "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=16.5, volume_stat="total_yards"),
+    # College: the yards half makes a performance steady enough that the ratings want
+    # far less shrinkage than the rest (fit on 4,528 games rated only on earlier ones:
+    # the projected margin was 1.66 times too timid at four pseudo-games, right at a
+    # half; scripts/fit_shrinkage.py).
+    "cfb": SportTuning(
+        hfa=2.8, sigma=16.25, sigma_total=16.75, volume_stat="total_yards", pseudo_games=0.5
+    ),
     # Basketball: points alone, and a home edge that has shrunk to a few points.
     "nba": SportTuning(hfa=2.5, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
@@ -72,8 +78,8 @@ TUNING = {
     # "first half" is the first period; gaps are in goals, so the buckets are finer.
     "nhl": SportTuning(
         hfa=0.2,
-        sigma=2.5,
-        sigma_total=2.4,
+        sigma=2.55,
+        sigma_total=2.3,
         volume_stat="shots",
         first_half_share=0.31,
         margin_from_moneyline=True,
