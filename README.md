@@ -441,16 +441,31 @@ model built from the log can hold its own against the book before any money
 follows it. `scanner/projection.py` is that model, kept plain enough to explain
 on the sheet: for every team, half of what it scored and half of what its yards
 say it should have scored (the league's points per yard times its yards), each
-adjusted for who it played, shrunk toward average while games are few (four
-pseudo-games of average), plus home field (1.8 points in the NFL, 2.8 in
-college). Two ratings per team come out, points above average on offence and
-points above average allowed on defence; a game's projection is the league
-average plus the two ratings that meet, with half the home edge on each side,
-and the win probability is the projected margin against the usual spread of
-results (13.5 points NFL, 16.5 college, the same for the total: real totals miss
-the NFL's closing number by 13.2). A first-half score is the projection
-times the league's first-half share. Turnover luck is mostly washed out by the
-yards half; rest, weather and injuries are not in it.
+adjusted for who it played, shrunk toward average while games are few (so many
+pseudo-games of average: four in most sports, a half in college football),
+plus home field (1.8 points in the NFL, 2.8 in college). Two ratings per team
+come out, points above average on offence and points above average allowed on
+defence; a game's projection is the league average plus the two ratings that
+meet, with half the home edge on each side, and the win probability is the
+projected margin against the usual spread of results (13.5 points NFL, 16.25
+college; totals 13.5 and 16.75: real totals miss the NFL's closing number by
+13.2, and the model's own college projections miss by 16.1 and 16.8 when they
+have seen only earlier games). A first-half score is the projection times the
+league's first-half share. Turnover luck is mostly washed out by the yards
+half; rest, weather and injuries are not in it.
+
+The shrinkage is fit per sport on history (`scripts/fit_shrinkage.py`): every
+game rated only on its season's earlier games, with the scanner's own
+half-score, half-volume performance, for each shrinkage in a grid, scored by
+how far the real margin moves per projected point (1 when the projection is as
+bold as it should be) and by its miss. The yards half makes a college
+performance steady enough that four pseudo-games left the projection 1.66
+times too timid; at a half the slope is 1.10 (0.98 early in a season), the
+margin miss falls from 16.9 to 16.1 and the Brier score from 0.196 to 0.187,
+for a total miss 1.8% wider. Hockey's shots do the same job: with them the
+miss is flat from 1.5 to 5 pseudo-games, so it keeps four. On goals alone it
+would have wanted sixteen, which is why a grading that leaves the shots out
+calls the hockey ratings overconfident when they are not.
 
 Beside the raw projection the sheet shows a blend with the book: the model's
 weight is games over games plus six, so with five games logged the blend is
@@ -526,7 +541,8 @@ differs:
   spread 14, the model's own miss on 4,730 games rated only on earlier ones;
   total spread 19). Hockey uses half goals and half what the
   shots say (the league's goals per shot times shots), with home ice 0.2, a
-  margin spread of 2.5 and a total spread of 2.4. The book's puck line is
+  margin spread of 2.55 and a total spread of 2.3 (the model's own misses on
+  5,030 games rated only on earlier ones, shots included). The book's puck line is
   always 1.5 whatever the matchup, so the margin the book expects is read off
   its moneyline: the margin at which the model's own score grid (empty nets,
   overtime and all) gives the book's vig-free win probability, at the book's
@@ -735,7 +751,7 @@ not. In-sample they look better (NFL games spread 2.5 to 4 land on 3 at 17.0%,
 the single table says 15.4%, the adjusted 16.7%), but fit on 2010-2019 and
 scored on 2020-2026 the log loss of the real final margins is 3.8276 against
 the single table's 3.8260; college football, fit on 2018-2022 and scored on
-2023-2025, 4.0473 against 4.0457. Most of what looks like spread dependence is
+2023-2025, 4.0265 against 4.0264. Most of what looks like spread dependence is
 era-to-era noise (an NFL margin of 7 ran 8.8%, 9.9%, 7.0% and 8.5% across
 2010-14, 2015-19, 2020-22 and 2023-26), so the tables stay single until a
 rerun of the check says otherwise. The check's result is recorded in the

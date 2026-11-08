@@ -27,7 +27,7 @@ from scanner.grid import margin_for_win, win_chance
 
 MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
-PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this)
+PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this), by default
 BOOK_PSEUDO_GAMES = 6.0  # blend: the model's weight is games / (games + this)
 VOLUME_SHARE = 0.5  # half of a performance is points, half volume-based points
 MIN_GAMES = 3  # below this the projection is marked thin
@@ -44,22 +44,29 @@ class SportTuning:
     first_half_share: float = 0.48  # used until the log has first-half (first-period) points
     margin_from_moneyline: bool = False  # read the book's margin off its moneyline, not its spread
     typical_total: float | None = None  # the total assumed when the book quotes none
+    pseudo_games: float = PSEUDO_GAMES  # how hard a team's ratings are shrunk toward average
     buckets: tuple[float, ...] = GAP_BUCKETS  # the scorecard's gap rows, in this sport's unit
 
 
 # The sigmas are how far real results land from an expectation, measured on history:
 # NFL against 4,297 closing lines (2010-2026, margin 13.0, total 13.2); the others
 # against this model's own ratings fit only on each season's earlier games, as the
-# scanner sees a game before it starts (tests/fixtures/history, fetch_history.py):
-# college football 16.5 and 16.7 on 4,528 games, the NBA 13.9 and 18.8 on 4,730,
-# college basketball 12.0 and 16.8 on 15,460, the NHL 2.6 and 2.3 on 5,030. The
-# model's own projections miss by at least as much as the market does, so none
-# sits below it.
+# scanner sees a game before it starts, shots and yards included where the model
+# uses them (tests/fixtures/history, fetch_history.py): college football 16.1 and
+# 16.8 on 4,528 games, the NBA 13.9 and 18.8 on 4,730, college basketball 12.0 and
+# 16.8 on 15,460, the NHL 2.55 and 2.30 on 5,030. The model's own projections miss
+# by at least as much as the market does, so none sits below it.
 # Football's margin and total share a width: the two teams' scores then move
 # independently, as they do against the close (correlation 0.01 in the NFL).
 TUNING = {
     "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=13.5, volume_stat="total_yards"),
-    "cfb": SportTuning(hfa=2.8, sigma=16.5, sigma_total=16.5, volume_stat="total_yards"),
+    # College: the yards half makes a performance steady enough that the ratings want
+    # far less shrinkage than the rest (fit on 4,528 games rated only on earlier ones:
+    # the projected margin was 1.66 times too timid at four pseudo-games, right at a
+    # half; scripts/fit_shrinkage.py).
+    "cfb": SportTuning(
+        hfa=2.8, sigma=16.25, sigma_total=16.75, volume_stat="total_yards", pseudo_games=0.5
+    ),
     # Basketball: points alone, and a home edge that has shrunk to a few points.
     "nba": SportTuning(hfa=2.5, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
@@ -71,8 +78,8 @@ TUNING = {
     # "first half" is the first period; gaps are in goals, so the buckets are finer.
     "nhl": SportTuning(
         hfa=0.2,
-        sigma=2.5,
-        sigma_total=2.4,
+        sigma=2.55,
+        sigma_total=2.3,
         volume_stat="shots",
         first_half_share=0.31,
         margin_from_moneyline=True,
@@ -201,11 +208,11 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
             # What the team scored, less the average, less how soft its opponents
             # were and less its home edge, over its games plus the pseudo-games.
             residual = sum(off - league - defense[opp] - h for opp, off, _, h in games)
-            new_offense[team] = residual / (len(games) + PSEUDO_GAMES)
+            new_offense[team] = residual / (len(games) + tuning.pseudo_games)
         new_defense = {}
         for team, games in entries.items():
             residual = sum(dfn - league - new_offense[opp] + h for opp, _, dfn, h in games)
-            new_defense[team] = residual / (len(games) + PSEUDO_GAMES)
+            new_defense[team] = residual / (len(games) + tuning.pseudo_games)
         offense, defense = new_offense, new_defense
 
     return Ratings(
