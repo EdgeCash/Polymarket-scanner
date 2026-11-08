@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import re
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -580,6 +582,18 @@ def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
     assert "<svg" in page and "book 41.5" in page and "model" in page
     assert "/card/2026-10-11/1'>Full simulation" in page and "Record by rank" not in page
     assert client.get("/card/2026-10-11").text == page
+    # Each pick shows the edge it was ranked by: its chance against what the price needs.
+    assert re.search(r"Edge \+\d+\.\d points: the model's \d+\.\d% against the 51\.2%", page)
+    # A pick locked before the card ranked by edge keeps its old words.
+    from scanner.web import _pick_block
+
+    old_pick = diary.card_pick("2026-10-11", 1)
+    old_pick["detail"] = {
+        k: v
+        for k, v in old_pick["detail"].items()
+        if k not in ("edge", "chance_no_push", "break_even")
+    }
+    assert "Conviction 0." in _pick_block(old_pick, settings, link=False)
 
     # The pick's own page re-runs the same simulation with every score and line.
     pick = client.get("/card/2026-10-11/1").text

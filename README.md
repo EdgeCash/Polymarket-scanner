@@ -656,12 +656,19 @@ next 24 hours:
   where the puck line never moves) and its total. The side is the one the
   model's raw number takes against the book's line at that moment, the same
   comparison the scorecard's gap rows grade.
-- Conviction is the gap in that sport's usual spread of results (`sigma` in
-  `projection.TUNING`), so a goal in hockey and six points in football compare,
-  times a trust weight for the sport: 1 until the sport has 20 closed lines,
-  then a half plus the share of its closing lines that moved the model's way.
-  Thin projections (a side with under 3 games) and games without a book line
-  are left out.
+- Each side's edge is the model's chance it comes in, read from the score grid
+  (key numbers, overtime and all, given the line does not push, since a push is
+  a refund), less the chance the book's price needs to break even (52.4% at
+  -110). Every market and sport is then on one scale, and half a point across
+  football's 3 counts for more than half a point across 11. The side with the
+  bigger edge is the game's. Conviction is the edge times a trust weight for the
+  sport: 1 until the sport has 20 closed lines, then a half plus the share of
+  its closing lines that moved the model's way. A side with no edge keeps its
+  edge unweighted, so it ranks below every side with one and a thin day still
+  fills its card. Thin projections (a side with under 3 games) and games
+  without a book line are left out. Until November 2026 the card ranked by the
+  gap in the sport's usual spread of results (`sigma` in `projection.TUNING`);
+  picks locked before then keep that conviction and say so on their page.
 - The top `CARD_PICKS` (5) are written to the diary (`cards`, `card_picks`)
   with the book's line and price at the lock, ranked, and never changed. A day
   with nothing eligible is left unlocked so a later pass can lock it; a card

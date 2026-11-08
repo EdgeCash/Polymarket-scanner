@@ -149,8 +149,8 @@ class Settings(BaseSettings):
     STAKE_KELLY_FRACTION: float = Field(0.25, gt=0, le=1)
     STAKE_MAX_SHARE: float = Field(0.05, gt=0, le=1)
     STAKE_GATE_GAMES: int = Field(50, ge=0)
-    # The daily card: the model's CARD_PICKS highest-conviction sides against the
-    # book, chosen by a fixed rule at CARD_LOCK_TIME in CARD_TZ, locked, graded at
+    # The daily card: the model's CARD_PICKS sides with the biggest edge over the
+    # book's price, chosen by a fixed rule at CARD_LOCK_TIME in CARD_TZ, locked, graded at
     # the final and shown on the public /card page with the whole record. Never sent.
     # Player lines: every leader's stat line for every upcoming game, as a whole
     # distribution, recorded and graded at the final. Never sent.

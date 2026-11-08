@@ -108,13 +108,19 @@ def card_report(diary: Diary, settings) -> str:
             when = datetime.fromisoformat(r["kickoff"]).astimezone(zone).strftime("%a %-I:%M %p")
             chance = r["detail"].get("chance")
             sim = "" if chance is None else f", sim {chance * 100:.0f}%"
+            edge = r["detail"].get("edge")
+            rank_by = (
+                f"conviction {r['conviction']:.2f}"
+                if edge is None
+                else f"edge {edge * 100:+.1f}, conviction {r['conviction'] * 100:+.1f}"
+            )
             result = r["outcome"] or "open"
             if r["units"] is not None:
                 result += f" {r['units']:+.2f}u"
             lines.append(
                 f"#{r['rank']} {r['sport'].upper()} {r['away']} at {r['home']} {when}: "
                 f"{r['side_label']} ({r['odds']:+d}), model {r['model_value']:.1f} v book "
-                f"{r['book_value']:.1f}, {r['z']:.2f} sd{sim}, conviction {r['conviction']:.2f} "
+                f"{r['book_value']:.1f}, {r['z']:.2f} sd{sim}, {rank_by} "
                 f"-> {result}"
             )
     s = diary.card_summary(picks=settings.CARD_PICKS)
