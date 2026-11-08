@@ -247,17 +247,22 @@ def _volumes(raw: Path, sport: str) -> dict[str, tuple[int | None, int | None]]:
     return out
 
 
-def rate_before(games: pd.DataFrame, sport: str, pseudo_games: float | None = None) -> pd.DataFrame:
+def rate_before(
+    games: pd.DataFrame,
+    sport: str,
+    pseudo_games: float | None = None,
+    hfa: float | None = None,
+) -> pd.DataFrame:
     """Each game's expected margin and total from ratings fit on its season's earlier days.
 
     The same model as ``projection.fit``: a performance is half the score and half
     what the volume stat (yards, shots) says at the league's rate so far, when the
     games carry one (``home_vol``, ``away_vol``); offence and defence above average,
-    shrunk by ``pseudo_games`` (the sport's own unless given), with the sport's fixed
-    home edge.
+    shrunk by ``pseudo_games``, with the home edge ``hfa`` (each the sport's own unless
+    given).
     """
     tuning = tuning_for(sport)
-    hfa = tuning.hfa
+    hfa = tuning.hfa if hfa is None else hfa
     pseudo = tuning.pseudo_games if pseudo_games is None else pseudo_games
     has_volume = "home_vol" in games and games.home_vol.notna().any()
     out = []

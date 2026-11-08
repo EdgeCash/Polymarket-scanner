@@ -533,7 +533,7 @@ def test_hockey_and_basketball_sheets_use_their_own_words():
     assert "<title>BKN at BOS</title>" in page and "<span>Tip-off</span>" in page
     assert "<td class='label'>Spread (BOS)</td>" in page and "<th>1st half</th>" in page
     assert "Points per 100 poss" in page and "Rebound margin" in page
-    assert "home court 2.5" in page and "points more than the book" in page
+    assert "home court 2" in page and "points more than the book" in page
     assert "Possessions are estimated" in page and "split by its spread" in page
     assert "<span>Market implied score</span><b>BKN 108.0 – BOS 115.5</b>" in page
     assert client.get("/matchup/nhl/999?token=phone-secret").status_code == 404
@@ -709,7 +709,7 @@ def test_college_basketball_sheets_say_tip_off_and_home_court():
     assert "<h2>CBB</h2>" in listing and "DUKE -30.5, total 150.5" in listing
     page = client.get(f"/matchup/cbb/{duke.game_id}?token=phone-secret").text
     assert "<title>ARMY at DUKE</title>" in page and "<span>Tip-off</span>" in page
-    assert "<th>1st half</th>" in page and "home court 3.5" in page
+    assert "<th>1st half</th>" in page and "home court 4" in page
     assert "Points per 100 poss" in page and "Division I games only" in page
     assert "Thin: fewer than 3 games" in page
     sim = client.get(f"/sim/cbb/{duke.game_id}?token=phone-secret").text

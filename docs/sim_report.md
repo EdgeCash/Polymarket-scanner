@@ -21,7 +21,8 @@ with the shape tables in `scanner/sim_tables.json` and the new widths.
 The ratings are the scanner's own model, fit as the scanner sees a game before
 it starts: half the score and, in college football and hockey, half what the
 yards or shots say (the NBA and college basketball use points alone, as the
-scanner does). An earlier grading predicted each game from folds of its whole
+scanner does), with each sport's shrinkage and home edge as fit on the same
+history (`scripts/fit_shrinkage.py`). An earlier grading predicted each game from folds of its whole
 season, later games included, which made college basketball look better than
 the scanner can be (an 11.2 miss where it is 12.0); another left the shots and
 yards out, which made hockey look overconfident when it is not (below).
@@ -35,9 +36,9 @@ yards out, which made hockey look overconfident when it is not (below).
 | NFL level after regulation | 2.7% | 5.9% | 6.0% |
 | NFL margin chance on the wrong numbers | 18.9% | 1.6% | |
 | **College football** margin exactly 3 | 5.0% | 10.6% | 10.6% |
-| College football margin exactly 7 | 4.3% | 8.6% | 8.6% |
+| College football margin exactly 7 | 4.3% | 8.9% | 8.6% |
 | College football level after regulation | 2.1% | 4.7% | 4.6% |
-| College football margin chance on the wrong numbers | 22.0% | 1.5% | |
+| College football margin chance on the wrong numbers | 22.0% | 1.6% | |
 | **NBA** one-point margin | 6.0% | 4.0% | 4.0% |
 | NBA level after regulation | 2.8% | 5.1% | 5.1% |
 | **College basketball** one-point margin | 6.2% | 4.5% | 4.5% |
@@ -56,9 +57,9 @@ Real results outside the grid's middle 90% (target 10%), margin / total:
 | Sport | Before | After |
 |---|---|---|
 | NFL | 9.7% / **17.5%** | 8.6% / 8.6% |
-| College football | 11.3% / **20.4%** | 9.4% / 8.9% |
-| NBA | **12.7%** / 7.9% | 9.2% / 8.8% |
-| College basketball | **11.6%** / 8.2% | 9.0% / 9.2% |
+| College football | 11.3% / **20.4%** | 9.5% / 9.0% |
+| NBA | **12.7%** / 7.9% | 9.3% / 8.8% |
+| College basketball | **11.6%** / 8.2% | 9.1% / 9.2% |
 | NHL | 10.1% / 6.2% | 6.2% / 6.2% |
 
 The NFL is graded against the close, which misses by 13.0 and 13.2; the
@@ -71,9 +72,9 @@ close on purpose. Hockey's widths are its own misses with shots in the ratings
 | Sport | 60-70% | 70-80% | 80-90% | 90-100% |
 |---|---|---|---|---|
 | NFL (vs the close) | 0.65 → 0.69 | 0.74 → 0.78 | 0.84 → 0.89 | |
-| College football | 0.65 → 0.66 | 0.75 → 0.79 | 0.85 → 0.87 | 0.94 → 0.96 |
-| NBA | 0.64 → 0.63 | 0.74 → 0.75 | 0.84 → 0.84 | 0.92 → 0.94 |
-| College basketball | 0.65 → 0.66 | 0.75 → 0.75 | 0.84 → 0.88 | 0.94 → 0.95 |
+| College football | 0.65 → 0.66 | 0.75 → 0.79 | 0.85 → 0.87 | 0.94 → 0.97 |
+| NBA | 0.65 → 0.62 | 0.74 → 0.75 | 0.84 → 0.85 | 0.92 → 0.95 |
+| College basketball | 0.65 → 0.66 | 0.75 → 0.74 | 0.84 → 0.87 | 0.94 → 0.95 |
 | NHL | 0.64 → 0.65 | 0.73 → 0.74 | | |
 
 Basketball and hockey are calibrated; college football's heavy favourites
@@ -85,22 +86,28 @@ margin 1.66 times too timid once the yards half was in; at a half the slope is
 1.10, the margin miss 16.1 instead of 16.9 and the Brier score 0.187 instead of
 0.196. Hockey's shots make its miss flat from 1.5 to 5 pseudo-games, so it
 keeps four; on goals alone it would have wanted sixteen, which is where the
-earlier report's hockey overconfidence came from. College football's intercept
-(real margin 0.6 points under the projection at an even game) says its home
-edge of 2.8 is a little high; the NFL is graded against the close, so its
-ratings are not tested here.
+earlier report's hockey overconfidence came from. The home edges are fit the same
+way: hockey's 0.2 holds, college football's is 2.5 (2.8 was a touch high once
+the empty-stadium 2020 season is set aside; 2.9 over 2023-2025 alone), the
+NBA's 2 (home sides fell 0.44 a game short of 2.5) and college basketball's 4
+(0.65 short of 3.5). The NFL is graded against the close, so its ratings are
+not tested here.
 
 ## Known limits
 
-- One table serves every spread. NFL games spread 2.5 to 4 land on 3 at 17.0%
-  against the grid's 15.4%, and games spread 7.5 to 11 at 11.0% against 12.8%.
-  Tables that move with the expected margin close that in-sample but do no
-  better on held-out seasons (NFL 2020-2026 log loss 3.8276 against 3.8260;
-  college 2023-2025 4.0265 against 4.0264), so they are built and checked
-  (`build_sim_tables.py --spread-only --holdout-from YEAR`) but not shipped.
-  The check's result lives in the tables under `source.spread_check` and
-  `tests/test_sim_history.py` rescores its fingerprint, so a stale record fails
-  the suite. `grade_sim.py` prints the key numbers by spread for each rerun.
+- The NFL's table is one for every spread: its games spread 2.5 to 4 land on
+  3 at 17.0% against the grid's 15.4%, and games spread 7.5 to 11 at 11.0%
+  against 12.8%, but a table that moves with the expected margin does no better
+  on held-out seasons (2020-2026 log loss 3.8276 against 3.8260), so it is
+  built and checked (`build_sim_tables.py --spread-only --holdout-from YEAR`)
+  but not shipped. College football's passes, barely, now that its ratings are
+  fit (2023-2025 log loss 4.02610 against 4.02624, adjustments fit on
+  2018-2022), so it ships; the gain is a hair and the adjustments are modest
+  (3 lands 11% more often than the table says in an even game, 11% less at a
+  15-point spread). Each check's result lives in the tables under
+  `source.spread_check` and `tests/test_sim_history.py` rescores its
+  fingerprint, so a stale record fails the suite. `grade_sim.py` prints the key
+  numbers by spread for each rerun.
 - nflverse has no quarter scores, so an NFL overtime game is taken as level at
   the lower final score (a loser's points in overtime are missed).
 - Player props were not graded: Polymarket US lists no per-game player markets.
