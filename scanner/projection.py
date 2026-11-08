@@ -27,7 +27,7 @@ from scanner.grid import margin_for_win, win_chance
 
 MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
-PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this)
+PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this), by default
 BOOK_PSEUDO_GAMES = 6.0  # blend: the model's weight is games / (games + this)
 VOLUME_SHARE = 0.5  # half of a performance is points, half volume-based points
 MIN_GAMES = 3  # below this the projection is marked thin
@@ -44,6 +44,7 @@ class SportTuning:
     first_half_share: float = 0.48  # used until the log has first-half (first-period) points
     margin_from_moneyline: bool = False  # read the book's margin off its moneyline, not its spread
     typical_total: float | None = None  # the total assumed when the book quotes none
+    pseudo_games: float = PSEUDO_GAMES  # how hard a team's ratings are shrunk toward average
     buckets: tuple[float, ...] = GAP_BUCKETS  # the scorecard's gap rows, in this sport's unit
 
 
@@ -201,11 +202,11 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
             # What the team scored, less the average, less how soft its opponents
             # were and less its home edge, over its games plus the pseudo-games.
             residual = sum(off - league - defense[opp] - h for opp, off, _, h in games)
-            new_offense[team] = residual / (len(games) + PSEUDO_GAMES)
+            new_offense[team] = residual / (len(games) + tuning.pseudo_games)
         new_defense = {}
         for team, games in entries.items():
             residual = sum(dfn - league - new_offense[opp] + h for opp, _, dfn, h in games)
-            new_defense[team] = residual / (len(games) + PSEUDO_GAMES)
+            new_defense[team] = residual / (len(games) + tuning.pseudo_games)
         offense, defense = new_offense, new_defense
 
     return Ratings(

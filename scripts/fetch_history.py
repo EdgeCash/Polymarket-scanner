@@ -5,9 +5,10 @@
 Writes one compact file per sport to ``tests/fixtures/history/<sport>.csv.gz``: each
 finished game with what was expected of it (the closing spread and total for
 the NFL; for the others, team ratings fit only on that season's earlier games,
-the way the scanner itself sees a game before it starts), its score at the end
-of regulation, its final score and whether it went to overtime. Hockey adds
-each side's empty-net goals in regulation and whether a shootout settled it.
+the way the scanner itself sees a game before it starts, shots and yards
+included where ``--volumes`` has fetched them), its score at the end of
+regulation, its final score and whether it went to overtime. Hockey adds each
+side's empty-net goals in regulation and whether a shootout settled it.
 
 Sources (raw responses are kept in ``--raw`` so a rerun need not refetch):
 - NFL: nflverse games.csv, regular season 2010 on, with closing lines.
@@ -34,7 +35,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scanner.projection import PSEUDO_GAMES, tuning_for  # noqa: E402
+from scanner.projection import VOLUME_SHARE, tuning_for  # noqa: E402
 
 OUT = ROOT / "tests" / "fixtures" / "history"
 NFL_URL = "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv"
@@ -181,13 +182,84 @@ def download(raw: Path, sports: list[str]) -> None:
                     time.sleep(0.15)
 
 
-def rate_before(games: pd.DataFrame, sport: str) -> pd.DataFrame:
+NHL_BOXSCORE = "https://api-web.nhle.com/v1/gamecenter/{game_id}/boxscore"
+CFB_SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event={game_id}"
+VOLUME_THREADS = 3
+VOLUME_PAUSE = 0.25
+
+
+def _cfb_volume(game_id: str) -> tuple[int | None, int | None]:
+    payload = json.loads(_get(CFB_SUMMARY.format(game_id=game_id)) or b"{}")
+    out: dict[str, int | None] = {"home": None, "away": None}
+    for team in (payload.get("boxscore") or {}).get("teams") or []:
+        for stat in team.get("statistics") or []:
+            if stat.get("name") == "totalYards":
+                try:
+                    out[team["homeAway"]] = int(stat["displayValue"])
+                except (KeyError, ValueError):
+                    pass
+    return out["home"], out["away"]
+
+
+def _nhl_volume(game_id: str) -> tuple[int | None, int | None]:
+    payload = json.loads(_get(NHL_BOXSCORE.format(game_id=game_id)) or b"{}")
+    return (payload.get("homeTeam") or {}).get("sog"), (payload.get("awayTeam") or {}).get("sog")
+
+
+def download_volumes(raw: Path, sports: list[str]) -> None:
+    """Each game's volume stat (shots on goal, total yards), the half of a performance the
+    scanner's ratings read beside the score. Kept in ``<sport>_volume.jsonl``, resumable."""
+    from concurrent.futures import ThreadPoolExecutor
+
+    for sport, fetch in (("cfb", _cfb_volume), ("nhl", _nhl_volume)):
+        if sport not in sports:
+            continue
+        source, target = raw / f"{sport}.jsonl", raw / f"{sport}_volume.jsonl"
+        ids = [str(json.loads(line)["id"]) for line in open(source)]
+        done = set()
+        if target.exists():
+            done = {str(json.loads(line)["id"]) for line in open(target)}
+        todo = [i for i in dict.fromkeys(ids) if i not in done]
+        print(f"{sport}: {len(todo)} games' volumes to fetch", flush=True)
+
+        def one(game_id: str, fetch=fetch):
+            home, away = fetch(game_id)
+            time.sleep(VOLUME_PAUSE)
+            return {"id": game_id, "home": home, "away": away}
+
+        with open(target, "a") as out, ThreadPoolExecutor(VOLUME_THREADS) as pool:
+            for n, row in enumerate(pool.map(one, todo), start=1):
+                out.write(json.dumps(row) + "\n")
+                if n % 500 == 0:
+                    out.flush()
+                    print(f"{sport}: {n}/{len(todo)}", flush=True)
+        print(f"{sport}: volumes done", flush=True)
+
+
+def _volumes(raw: Path, sport: str) -> dict[str, tuple[int | None, int | None]]:
+    path = raw / f"{sport}_volume.jsonl"
+    if not path.exists():
+        return {}
+    out = {}
+    for line in open(path):
+        row = json.loads(line)
+        out[str(row["id"])] = (row["home"], row["away"])
+    return out
+
+
+def rate_before(games: pd.DataFrame, sport: str, pseudo_games: float | None = None) -> pd.DataFrame:
     """Each game's expected margin and total from ratings fit on its season's earlier days.
 
-    The same model as ``projection.fit`` on points alone: offence and defence above
-    average, shrunk by PSEUDO_GAMES, with the sport's fixed home edge.
+    The same model as ``projection.fit``: a performance is half the score and half
+    what the volume stat (yards, shots) says at the league's rate so far, when the
+    games carry one (``home_vol``, ``away_vol``); offence and defence above average,
+    shrunk by ``pseudo_games`` (the sport's own unless given), with the sport's fixed
+    home edge.
     """
-    hfa = tuning_for(sport).hfa
+    tuning = tuning_for(sport)
+    hfa = tuning.hfa
+    pseudo = tuning.pseudo_games if pseudo_games is None else pseudo_games
+    has_volume = "home_vol" in games and games.home_vol.notna().any()
     out = []
     for _, season in games.groupby("season"):
         season = season.sort_values("date")
@@ -195,13 +267,22 @@ def rate_before(games: pd.DataFrame, sport: str) -> pd.DataFrame:
         index = {t: i for i, t in enumerate(teams)}
         n = len(teams)
         played: dict[str, int] = dict.fromkeys(teams, 0)
-        rows: list[tuple[int, int, float, float]] = []  # (offence team, defence team, h, pts)
+        # (offence team, defence team, h, points, volume or nan)
+        rows: list[tuple[int, int, float, float, float]] = []
         for _day, todays in season.groupby("date", sort=True):
             if rows:
                 off_i = np.array([r[0] for r in rows])
                 def_i = np.array([r[1] for r in rows])
                 h_term = np.array([r[2] for r in rows])
                 pts = np.array([r[3] for r in rows])
+                if has_volume:
+                    vol = np.array([r[4] for r in rows])
+                    known = ~np.isnan(vol) & (vol > 0)
+                    per_volume = pts[known].sum() / vol[known].sum() if known.any() else None
+                    if per_volume is not None:
+                        pts = np.where(
+                            known, (1 - VOLUME_SHARE) * pts + VOLUME_SHARE * per_volume * vol, pts
+                        )
                 league = pts.mean()
                 resid = pts - league - h_term
                 # Ridge normal equations for [offence; defence].
@@ -213,7 +294,7 @@ def rate_before(games: pd.DataFrame, sport: str) -> pd.DataFrame:
                 np.add.at(a, (n + def_i, off_i), 1.0)
                 np.add.at(b, off_i, resid)
                 np.add.at(b, n + def_i, resid)
-                a[np.diag_indices(2 * n)] += PSEUDO_GAMES
+                a[np.diag_indices(2 * n)] += pseudo
                 x = np.linalg.solve(a, b)
                 offence, defence = x[:n], x[n:]
                 for game in todays.itertuples():
@@ -227,8 +308,10 @@ def rate_before(games: pd.DataFrame, sport: str) -> pd.DataFrame:
             for game in todays.itertuples():
                 h = 0.0 if game.neutral else hfa / 2.0
                 hi, ai = index[game.home], index[game.away]
-                rows.append((hi, ai, h, float(game.home_final)))
-                rows.append((ai, hi, -h, float(game.away_final)))
+                home_vol = float(game.home_vol) if has_volume else float("nan")
+                away_vol = float(game.away_vol) if has_volume else float("nan")
+                rows.append((hi, ai, h, float(game.home_final), home_vol))
+                rows.append((ai, hi, -h, float(game.away_final), away_vol))
                 played[game.home] += 1
                 played[game.away] += 1
     expected = pd.DataFrame(out, columns=["idx", "exp_margin", "exp_total"]).set_index("idx")
@@ -270,29 +353,20 @@ def compact_espn(raw: Path, sport: str, periods: int) -> pd.DataFrame:
     return pd.DataFrame(rows).drop_duplicates("id")
 
 
-def build(raw: Path, sport: str) -> pd.DataFrame:
-    if sport == "nfl":
-        g = pd.read_csv(raw / "nfl_games.csv")
-        g = g[(g.game_type == "REG") & (g.season >= 2010) & g.result.notna()]
-        g = g[g.spread_line.notna() & g.total_line.notna()]
-        level = np.minimum(g.home_score, g.away_score)
-        ot = g.overtime.astype(int)
-        return pd.DataFrame(
-            {
-                "season": g.season,
-                "date": g.gameday,
-                "exp_margin": g.spread_line,  # positive: the home side favoured
-                "exp_total": g.total_line,
-                "exp_source": "close",
-                # nflverse has no quarter scores: an overtime game was level at the lower
-                # final score, which misses only a loser's points in overtime.
-                "home_reg": np.where(ot == 1, level, g.home_score),
-                "away_reg": np.where(ot == 1, level, g.away_score),
-                "home_final": g.home_score,
-                "away_final": g.away_score,
-                "ot": ot,
-            }
+def _fbs_pairs(raw: Path) -> set[str]:
+    divisions = pd.concat(
+        pd.read_csv(
+            raw / f"cfb_schedules_{y}.csv", usecols=["game_id", "home_division", "away_division"]
         )
+        for y in CFB_SEASONS
+    )
+    both = (divisions.home_division == "fbs") & (divisions.away_division == "fbs")
+    return set(divisions[both].game_id.astype(str))
+
+
+def load_games(raw: Path, sport: str) -> pd.DataFrame:
+    """Every game of a sport that is rated from history (not the NFL, which has lines),
+    with its volume stat attached where fetched."""
     if sport == "nhl":
         rows = []
         for line in open(raw / "nhl.jsonl"):
@@ -328,21 +402,49 @@ def build(raw: Path, sport: str) -> pd.DataFrame:
         periods = 4 if sport in ("cfb", "nba") else 2
         games = compact_espn(raw, sport, periods)
     games = games.reset_index(drop=True)
-    rated = rate_before(games, sport)
+    volumes = _volumes(raw, sport)
+    if volumes:
+        games["home_vol"] = pd.to_numeric(
+            [volumes.get(str(i), (None, None))[0] for i in games["id"]], errors="coerce"
+        )
+        games["away_vol"] = pd.to_numeric(
+            [volumes.get(str(i), (None, None))[1] for i in games["id"]], errors="coerce"
+        )
+    return games
+
+
+def graded_subset(raw: Path, sport: str, rated: pd.DataFrame) -> pd.DataFrame:
+    """The rated games that are graded: FBS against FBS in college football."""
     if sport == "cfb":
-        divisions = pd.concat(
-            pd.read_csv(
-                raw / f"cfb_schedules_{y}.csv",
-                usecols=["game_id", "home_division", "away_division"],
-            )
-            for y in CFB_SEASONS
+        return rated[rated["id"].astype(str).isin(_fbs_pairs(raw))]
+    return rated
+
+
+def build(raw: Path, sport: str) -> pd.DataFrame:
+    if sport == "nfl":
+        g = pd.read_csv(raw / "nfl_games.csv")
+        g = g[(g.game_type == "REG") & (g.season >= 2010) & g.result.notna()]
+        g = g[g.spread_line.notna() & g.total_line.notna()]
+        level = np.minimum(g.home_score, g.away_score)
+        ot = g.overtime.astype(int)
+        return pd.DataFrame(
+            {
+                "season": g.season,
+                "date": g.gameday,
+                "exp_margin": g.spread_line,  # positive: the home side favoured
+                "exp_total": g.total_line,
+                "exp_source": "close",
+                # nflverse has no quarter scores: an overtime game was level at the lower
+                # final score, which misses only a loser's points in overtime.
+                "home_reg": np.where(ot == 1, level, g.home_score),
+                "away_reg": np.where(ot == 1, level, g.away_score),
+                "home_final": g.home_score,
+                "away_final": g.away_score,
+                "ot": ot,
+            }
         )
-        fbs = set(
-            divisions[
-                (divisions.home_division == "fbs") & (divisions.away_division == "fbs")
-            ].game_id.astype(str)
-        )
-        rated = rated[rated["id"].astype(str).isin(fbs)]
+    games = load_games(raw, sport)
+    rated = graded_subset(raw, sport, rate_before(games, sport))
     rated = rated.assign(exp_source="ratings")
     keep = [
         "season", "date", "exp_margin", "exp_total", "exp_source",
@@ -358,9 +460,18 @@ def main() -> None:
     parser.add_argument("--raw", type=Path, required=True, help="where raw responses are kept")
     parser.add_argument("--sports", nargs="+", default=["nfl", "cfb", "nba", "cbb", "nhl"])
     parser.add_argument("--skip-download", action="store_true")
+    parser.add_argument(
+        "--volumes", action="store_true", help="also fetch each game's shots or yards (slow)"
+    )
+    parser.add_argument("--volumes-only", action="store_true")
     args = parser.parse_args()
+    if args.volumes_only:
+        download_volumes(args.raw, args.sports)
+        return
     if not args.skip_download:
         download(args.raw, args.sports)
+    if args.volumes:
+        download_volumes(args.raw, args.sports)
     OUT.mkdir(parents=True, exist_ok=True)
     for sport in args.sports:
         frame = build(args.raw, sport)
