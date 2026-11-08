@@ -43,7 +43,9 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="print the shadow report from the diary (and send it when --send is given)",
     )
-    parser.add_argument("--send", action="store_true", help="with --shadow-report: also send it")
+    parser.add_argument(
+        "--send", action="store_true", help="with --shadow-report or --monthly-check: send it too"
+    )
     parser.add_argument(
         "--gamelog-once",
         action="store_true",
@@ -59,6 +61,13 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="print the latest daily card and its record from the diary, and exit",
     )
+    parser.add_argument(
+        "--monthly-check",
+        action="store_true",
+        help="print the month's projections against the finals and the closing lines "
+        "(last full month, or --month YYYY-MM; sent too when --send is given)",
+    )
+    parser.add_argument("--month", default=None, help="with --monthly-check: the month, YYYY-MM")
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -116,6 +125,24 @@ def main(argv: list[str] | None = None) -> int:
         from scanner.report import card_report
 
         print(card_report(Diary(settings.DATABASE_PATH), settings))
+        return 0
+
+    if args.monthly_check:
+        from datetime import UTC, datetime
+
+        from scanner.diary import Diary
+        from scanner.monthly import month_bounds, report, summary
+        from scanner.notify import DryRunSender, build_sender
+
+        start, end, label = month_bounds(args.month, datetime.now(UTC), settings.TZ)
+        text = report(summary(Diary(settings.DATABASE_PATH), start, end, label), settings.TZ)
+        print(text)
+        if args.send:
+            sender = build_sender(settings)
+            if isinstance(sender, DryRunSender):
+                log.warning("Telegram is not configured; check printed only")
+                return 1
+            return 0 if sender.send(text) else 1
         return 0
 
     if args.pregame_once:

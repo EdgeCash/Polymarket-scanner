@@ -15,6 +15,7 @@ from collections import Counter
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from scanner.config import FOLLOW_UP_SECONDS
 from scanner.models import (
@@ -1221,6 +1222,31 @@ class Diary:
                 graded += 1
         return graded
 
+    def graded_projections_between(
+        self, start: datetime, end: datetime, sport: str | None = None
+    ) -> list[dict]:
+        """Projections graded for games that started in [start, end), each with the book's
+        line as the game finished (``close``, a BookLine dict, or None): the monthly check."""
+        where = ["p.outcome = 'graded'", "p.kickoff >= ?", "p.kickoff < ?"]
+        params: list = [_iso(start), _iso(end)]
+        if sport is not None:
+            where.append("p.sport = ?")
+            params.append(sport)
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT p.*, g.book AS close_book FROM projections p "
+                "LEFT JOIN football_games g ON g.sport = p.sport AND g.game_id = p.game_id "
+                f"WHERE {' AND '.join(where)} ORDER BY p.kickoff",
+                params,
+            ).fetchall()
+        out = []
+        for row in rows:
+            close_book = row["close_book"]
+            item = self._projection_row({k: row[k] for k in row.keys() if k != "close_book"})
+            item["close"] = json.loads(close_book) if close_book else None
+            out.append(item)
+        return out
+
     def projection_summary(self, since: datetime | None = None, sport: str | None = None) -> dict:
         """How the model has done against the final scores and the book."""
         from scanner.projection import summarise
@@ -2031,8 +2057,21 @@ class Diary:
 
     # -- scorecard ----------------------------------------------------------
 
-    def scorecard(self, since: datetime | None = None) -> dict:
+    def monthly_checks(self, now: datetime, tz: str) -> list[dict]:
+        """The last full month and the month so far, each set against the finals and the
+        closing lines (scanner.monthly)."""
+        from scanner.monthly import month_bounds, summary
+
+        start, end, label = month_bounds(None, now, tz)
+        months = [summary(self, start, end, label)]
+        local = now.astimezone(ZoneInfo(tz))
+        this_start, this_end, this_label = month_bounds(f"{local.year}-{local.month:02d}", now, tz)
+        months.append(summary(self, this_start, this_end, this_label))
+        return months
+
+    def scorecard(self, since: datetime | None = None, tz: str = "UTC") -> dict:
         """Every number on the scorecard page, split by alert type and league."""
+        now = datetime.now(UTC)
         with self._lock:
             if since is None:
                 rows = [dict(r) for r in self._conn.execute("SELECT * FROM alerts").fetchall()]
@@ -2048,7 +2087,7 @@ class Diary:
             subset = [r for r in rows if r["alert_type"] == alert_type]
             sections[alert_type] = self._summarise(subset)
         return {
-            "generated_at": _iso(datetime.now(UTC)),
+            "generated_at": _iso(now),
             "since": _iso(since) if since else None,
             "alerts_total": len(rows),
             "alerts_sent": sum(1 for r in rows if r["sent"]),
@@ -2058,6 +2097,7 @@ class Diary:
             "observations": self.observation_summary(since),
             "pregame": self.pregame_summary(since),
             "projections": self.projection_summary(since),
+            "monthly": self.monthly_checks(now, tz),
             "stakes": self.stake_summary(since),
             "card": self.card_summary(since),
             "players": self.player_projection_summary(since),

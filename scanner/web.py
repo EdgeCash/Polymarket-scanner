@@ -228,6 +228,7 @@ worse prices, and a few weeks is a small sample.</p>
 {_observation_section(card.get("observations") or {}, settings)}
 {_pregame_section(card.get("pregame") or {}, settings)}
 {_projection_section(card.get("projections") or {}, settings)}
+{_monthly_section(card.get("monthly") or [], settings)}
 {_stake_section(card.get("stakes") or {}, settings)}
 {_card_section(card.get("card") or {}, settings)}
 {_players_section(card.get("players") or {}, settings)}
@@ -424,6 +425,88 @@ def _projection_section(pj: dict, settings: Settings) -> str:
         "far from it. Nothing here is sent or placed.</p>"
     )
     return f"<h2>{html.escape(title)}</h2><table>{body}</table>{table}{note}"
+
+
+def _monthly_section(months: list[dict], settings: Settings) -> str:
+    """The model's month against the finals and the closing lines, sport by sport."""
+    title = "Monthly check (the model against the finals and the closing lines)"
+    if not settings.PROJECTION_ENABLED:
+        return "<h2>Monthly check</h2><p class='note'>off</p>"
+    if not any(m.get("games") for m in months):
+        return f"<h2>{html.escape(title)}</h2><p class='note'>nothing graded yet</p>"
+
+    def fmt(value, digits=1):
+        return "–" if value is None else f"{value:.{digits}f}"
+
+    def pct(value):
+        return "–" if value is None else f"{value * 100:.0f}%"
+
+    def record(r):
+        text = f"{r['wins']}-{r['losses']}-{r['pushes']}"
+        return text if r["rate"] is None else f"{text} ({r['rate'] * 100:.0f}%)"
+
+    def three(parts, digits=1):
+        return " / ".join(fmt(parts[k], digits) for k in ("model", "blend", "close"))
+
+    blocks = []
+    for month in months:
+        if not month.get("games"):
+            blocks.append(
+                f"<h3>{html.escape(month['month'])}</h3><p class='note'>nothing graded</p>"
+            )
+            continue
+        rows = []
+        for sport, part in month["sports"].items():
+            b, m, o, c = part["brier"], part["miss"], part["outside_middle_90"], part["clv"]
+            bins = "; ".join(
+                f"{x['bin']} {pct(x['chance'])} → won {pct(x['won'])} ({x['games']})"
+                for x in part["calibration"]
+                if x["games"]
+            )
+            markets = "; ".join(
+                f"{k.replace('_', ' ')} {record(v)}" for k, v in part["markets"].items()
+            )
+            rows.append(
+                f"<tr><th colspan='2'>{html.escape(sport.upper())}: {part['games']} games</th></tr>"
+            )
+            rows.extend(
+                f"<tr><th>{html.escape(k)}</th><td class='num'>{html.escape(v)}</td></tr>"
+                for k, v in (
+                    (
+                        "Brier: model / blend / close",
+                        three(b, 3),
+                    ),
+                    (
+                        "Margin miss: model / blend / close",
+                        three(m["margin"]),
+                    ),
+                    (
+                        "Total miss: model / blend / close",
+                        three(m["total"]),
+                    ),
+                    (
+                        "Outside the model's middle 90% (10% expected)",
+                        f"margin {pct(o['margin'])}, total {pct(o['total'])}",
+                    ),
+                    ("Favourites by model chance → won", bins or "none"),
+                    ("Model's side against the close", markets),
+                    ("Close moved the model's way", f"{pct(c['positive_share'])} of {c['closed']}"),
+                )  # fmt: skip
+            )
+        blocks.append(
+            f"<h3>{html.escape(month['month'])}: {month['games']} graded</h3>"
+            f"<table>{''.join(rows)}</table>"
+        )
+    note = (
+        "<p class='note'>The last full month and this month so far. Brier scores the win "
+        "chance, lower is better; the close's comes from its fair moneyline. A miss is the "
+        "average distance from the final. Ten percent of finals should fall outside the "
+        "model's middle 90%: more means its spread of results is too narrow, fewer too wide. "
+        "The market records count the side the model took against the closing line, settled "
+        "at the final. <code>python -m scanner --monthly-check</code> prints this; "
+        "<code>--send</code> sends it. Nothing here is placed.</p>"
+    )
+    return f"<h2>{html.escape(title)}</h2>{''.join(blocks)}{note}"
 
 
 def _stake_section(st: dict, settings: Settings) -> str:
@@ -2113,7 +2196,7 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
     ):
         if not authorised(token, x_status_token, scanner_token):
             return denied()
-        card = diary.scorecard()
+        card = diary.scorecard(tz=settings.TZ)
         if "application/json" in request.headers.get("accept", ""):
             page = JSONResponse(card)
         else:

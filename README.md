@@ -669,6 +669,24 @@ code exists; if Polymarket lists them later, the pre-game scan's pattern
 then the record on `/props`, the share of actuals above the median and inside
 the band, is what says whether the lines are worth anything.
 
+## The monthly check
+
+Once a month is long enough to say something about the model and short enough
+to catch a drift. `scanner/monthly.py` reads every projection graded in a
+calendar month back from the diary and sets it against what happened and
+against the line the book closed at (the book stored with the finished game):
+the Brier score of the model's win chance beside the close's fair moneyline,
+how often a side the model gave 60-70% went on to win (and each other 10%
+bin), how far the finals landed from the model's margin and total and from the
+close's, how many finals fell outside the model's own middle 90% (ten percent
+should: more means the sport's spread of results in `TUNING` is too narrow for
+the scanner's own projections, fewer too wide), the record of the side the
+model took in each market against the closing line (moneyline, spread, total,
+the puck line in hockey), and how often the close moved the model's way. The
+scorecard shows the last full month and the month so far, sport by sport;
+`python -m scanner --monthly-check [--month YYYY-MM]` prints a month and
+`--send` sends it to the phone. Nothing in it places anything.
+
 ## The daily card and the simulator
 
 The owner wants to publish research, not tips to tail blindly, and cares most

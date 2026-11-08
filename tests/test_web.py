@@ -412,8 +412,20 @@ def test_scorecard_shows_the_projection_model():
         "/scorecard?token=phone-secret", headers={"accept": "application/json"}
     ).json()
     assert data["projections"]["graded"] == 1
+    # The monthly check: the last full month and this month so far, against the close.
+    assert "Monthly check (the model against the finals and the closing lines)" in scorecard
+    months = data["monthly"]
+    assert len(months) == 2 and all(set(m) >= {"month", "games", "sports"} for m in months)
+    graded_month = next((m for m in months if m["games"]), None)
+    if graded_month:  # the fixture's October 2026 game, while that month is on the page
+        nfl = graded_month["sports"]["nfl"]
+        assert nfl["games"] == 1 and nfl["brier"]["model"] == pytest.approx(0.16)
+        assert "Brier: model / blend / close" in scorecard
+    else:
+        assert "nothing graded" in scorecard
     off = make_client(PROJECTION_ENABLED=False)[0].get("/scorecard?token=phone-secret").text
     assert "<h2>Projection model</h2><p class='note'>off</p>" in off
+    assert "<h2>Monthly check</h2><p class='note'>off</p>" in off
     assert "<h2>Stake suggestions</h2><p class='note'>off</p>" in off
 
 
