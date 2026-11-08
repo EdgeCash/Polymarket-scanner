@@ -726,8 +726,19 @@ Football before and after its tables, on 4,297 NFL games against the close
 | Level after regulation | 2.7% | 5.9% | 6.0% | 2.1% | 4.7% | 4.6% |
 | Margin chance on the wrong numbers | 18.9% | 1.6% | | 22.1% | 2.0% | |
 
-One table serves every spread; games spread 2.5 to 4 still land on 3 a point
-and a half more often than the grid says (17.0% against 15.4%).
+One table serves every spread. The grid can also move a sport's margin table
+with the size of the expected margin (`margin_by_spread`, interpolated between
+a few centres so no price jumps), and `build_sim_tables.py --spread-only
+--holdout-from YEAR` fits those adjustments on earlier seasons and keeps them
+only if they beat the single table on the seasons held out. So far they do
+not. In-sample they look better (NFL games spread 2.5 to 4 land on 3 at 17.0%,
+the single table says 15.4%, the adjusted 16.7%), but fit on 2010-2019 and
+scored on 2020-2026 the log loss of the real final margins is 3.8276 against
+the single table's 3.8260; college football, fit on 2018-2022 and scored on
+2023-2025, 4.0473 against 4.0457. Most of what looks like spread dependence is
+era-to-era noise (an NFL margin of 7 ran 8.8%, 9.9%, 7.0% and 8.5% across
+2010-14, 2015-19, 2020-22 and 2023-26), so the tables stay single until a
+rerun of the check says otherwise.
 
 Basketball's tables are its end of game: a tie after regulation, which late
 fouling and the last shot make twice as common as a bell curve says, and fewer

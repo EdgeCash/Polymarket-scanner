@@ -11,6 +11,10 @@ sport's entry in ``scanner/sim_tables.json``, which ``scanner.grid`` reads:
 - ``score`` (football): the same for one team's regulation score (17, 20, 24...).
 - ``margin_scale``, ``total_scale``: the bell curves' own widths as a share of
   the sport's, since piling chance onto a few numbers narrows the spread.
+- ``margin_by_spread`` (football): the margin table's multiplier at a few sizes
+  of expected margin, since a three-point favourite lands on 3 more often than a
+  ten-point one; fit after the rest, with each game shared between the two
+  sizes either side of its own as the grid interpolates.
 - ``overtime``: what an overtime adds to the winner and the loser, as counted.
 - ``overtime_edge``: how much of the regulation favourite's edge carries into
   overtime, from how often favourites won the overtimes that happened.
@@ -42,6 +46,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scanner import grid as grid_module  # noqa: E402
+from scanner.projection import tuning_for  # noqa: E402
 
 HISTORY = ROOT / "tests" / "fixtures" / "history"
 TABLES = ROOT / "scanner" / "sim_tables.json"
@@ -50,25 +55,38 @@ DAMP = 0.8  # each step goes this share of the way, in logs
 # Per sport: the margins and the team scores whose weights are fit (the rest stay one),
 # and how finely the expectations are rounded so games can share a grid.
 SPEC = {
-    "nfl": {"margins": 30, "scores": 50, "round_margin": 0.5, "round_total": 1.0},
-    "cfb": {"margins": 40, "scores": 63, "round_margin": 1.0, "round_total": 2.0},
+    "nfl": {
+        "margins": 30,
+        "scores": 50,
+        "round_margin": 0.5,
+        "round_total": 1.0,
+        "spread_centres": (0.0, 3.0, 6.5, 10.0, 14.0),
+        "spread_margins": 21,
+        "spread_keys": (3, 7),
+        "spread_pseudo": 100.0,
+    },
+    "cfb": {
+        "margins": 40,
+        "scores": 63,
+        "round_margin": 1.0,
+        "round_total": 2.0,
+        "spread_centres": (0.0, 4.0, 9.0, 15.0, 24.0),
+        "spread_margins": 24,
+        "spread_keys": (3, 7, 10, 14),
+        "spread_pseudo": 100.0,
+    },
     "nba": {"margins": 3, "scores": None, "round_margin": 0.5, "round_total": 1.0},
     "cbb": {"margins": 3, "scores": None, "round_margin": 0.5, "round_total": 1.0},
     "nhl": {"margins": 6, "scores": 9, "round_margin": 0.1, "round_total": 0.2, "empty_net": 3},
 }
 OVERTIME_COVER = 0.995  # the overtime outcomes kept, by share of overtimes
+SPREAD_PSEUDO = 40.0  # games of shrinkage toward no adjustment, per expected-margin centre
+SPREAD_ITERATIONS = 8
 
 
 def _set_tables(tables: dict) -> None:
-    grid_module.TABLES = tables
-    for cached in (
-        grid_module.shape_for,
-        grid_module.overtime_outcomes,
-        grid_module._overtime_summary,
-        grid_module._grid,
-        grid_module._cells,
-    ):
-        cached.cache_clear()
+    if grid_module.TABLES is not tables:
+        grid_module.reload(tables)
 
 
 def _lay_out(job):
@@ -126,9 +144,91 @@ def _empty_net_rates(games: pd.DataFrame, leads: int) -> dict[str, float]:
     return rates
 
 
-def fit(sport: str, iterations: int, workers: int) -> dict:
+def _fit_spread(sport, spec, entry, games, keys, items, weights, sigma, sigma_total, lay_out):
+    """Fit the margin table's adjustment at each expected-margin centre.
+
+    Each game counts toward the two centres either side of its expected margin as
+    the grid interpolates between them, so the fit and its use agree; the global
+    tables stay as they are, and the widths are kept matched.
+    """
+    centres = [float(c) for c in spec["spread_centres"]]
+    top = spec["spread_margins"]
+    pseudo = spec.get("spread_pseudo", SPREAD_PSEUDO)
+    n_games = len(games)
+    member = np.array([grid_module.spread_memberships(centres, m) for m, _ in items])
+    game_member = np.array([grid_module.spread_memberships(centres, m) for m in keys.m])
+    real = np.minimum((games.home_reg - games.away_reg).abs().to_numpy(), top + 1)
+    emp = np.array(
+        [
+            np.bincount(real, weights=game_member[:, j], minlength=top + 2)
+            for j in range(len(centres))
+        ]
+    )
+    fitted = spec.get("spread_keys") or range(top + 1)  # the margins allowed to move
+    adjust = [dict.fromkeys(fitted, 1.0) for _ in centres]
+    for step in range(SPREAD_ITERATIONS + 1):
+        entry["margin_by_spread"] = [
+            {"centre": c, "adjust": {str(k): v for k, v in a.items()}}
+            for c, a in zip(centres, adjust, strict=True)
+        ]
+        laid = lay_out()
+        pred = np.zeros_like(emp)
+        for row, w, share in zip(laid, weights, member, strict=True):
+            pred += w * np.outer(share, row[0][: top + 2])
+        pred_sd = math.sqrt(sum(w * r[2] for w, r in zip(weights, laid, strict=True)) / n_games)
+        pred_tsd = math.sqrt(sum(w * r[3] for w, r in zip(weights, laid, strict=True)) / n_games)
+        lines = []
+        for j, c in enumerate(centres):
+            size = emp[j].sum()
+            lines.append(
+                f"{c:g}: 3 {pred[j, 3] / size * 100:.1f}% v {emp[j, 3] / size * 100:.1f}%, "
+                f"7 {pred[j, 7] / size * 100:.1f}% v {emp[j, 7] / size * 100:.1f}% ({size:.0f})"
+            )
+        print(f"{sport} spread step {step}: sd {pred_sd:.2f} | " + " | ".join(lines), flush=True)
+        if step == SPREAD_ITERATIONS:
+            break
+        for j in range(len(centres)):
+            for k in fitted:
+                ratio = (emp[j, k] + pseudo) / (pred[j, k] + pseudo)
+                adjust[j][k] *= ratio**DAMP
+        entry["margin_scale"] *= (sigma / pred_sd) ** DAMP
+        entry["total_scale"] *= (sigma_total / pred_tsd) ** DAMP
+    entry["margin_by_spread"] = [
+        {"centre": c, "adjust": {str(k): round(v, 4) for k, v in a.items()}}
+        for c, a in zip(centres, adjust, strict=True)
+    ]
+
+
+def _load(sport: str) -> pd.DataFrame:
+    games = pd.read_csv(HISTORY / f"{sport}.csv.gz")
+    for column in ("home_reg", "away_reg", "home_final", "away_final", "ot"):
+        games[column] = games[column].astype(int)
+    return games
+
+
+def holdout_loss(sport: str, entry: dict, games: pd.DataFrame) -> float:
+    """Mean log loss of the real final margins under a sport's tables, at TUNING's widths."""
+    grid_module.reload({sport: entry})
+    tuning = tuning_for(sport)
+    total = 0.0
+    for row in games.itertuples():
+        g = grid_module.grid(sport, row.exp_margin, row.exp_total, tuning.sigma, tuning.sigma_total)
+        total -= math.log(max(g.margin.get(row.home_final - row.away_final, 0.0), 1e-12))
+    grid_module.reload()
+    return total / len(games)
+
+
+def fit(
+    sport: str,
+    iterations: int,
+    workers: int,
+    start: dict | None = None,
+    seasons_before: int | None = None,
+) -> dict:
     spec = SPEC[sport]
     games = pd.read_csv(HISTORY / f"{sport}.csv.gz")
+    if seasons_before is not None:
+        games = games[games.season < seasons_before].reset_index(drop=True)
     for column in ("home_reg", "away_reg", "home_final", "away_final", "ot"):
         games[column] = games[column].astype(int)
     if "home_en" in games:
@@ -172,18 +272,27 @@ def fit(sport: str, iterations: int, workers: int) -> dict:
         "overtime": _overtime_table(games),
         "overtime_edge": 1.0,
     }
+    if start is not None:  # refit only the spread stage, on top of the sport's tables
+        entry = {k: v for k, v in start.items() if k not in ("margin_by_spread", "source")}
+        entry["margin"] = {k: float(v) for k, v in entry.get("margin", {}).items()}
+        entry["score"] = {k: float(v) for k, v in entry.get("score", {}).items()}
+        iterations = -1
     if spec.get("empty_net"):
         entry["empty_net"] = _empty_net_rates(games, spec["empty_net"])
         print(f"{sport} empty net: {entry['empty_net']}", flush=True)
     chunks = max(1, math.ceil(len(items) / (workers * 4)))
+
+    def lay_out_all(pool) -> list:
+        tables = {sport: entry}
+        jobs = [
+            (tables, sport, sigma, sigma_total, margins, scores, items[i : i + chunks])
+            for i in range(0, len(items), chunks)
+        ]
+        return [row for part in pool.map(_lay_out, jobs) for row in part]
+
     with ProcessPoolExecutor(workers) as pool:
         for step in range(iterations + 1):
-            tables = {sport: entry}
-            jobs = [
-                (tables, sport, sigma, sigma_total, margins, scores, items[i : i + chunks])
-                for i in range(0, len(items), chunks)
-            ]
-            laid = [row for part in pool.map(_lay_out, jobs) for row in part]
+            laid = lay_out_all(pool)
             pred_margin = sum(w * r[0] for w, r in zip(weights, laid, strict=True))
             pred_sd = math.sqrt(sum(w * r[2] for w, r in zip(weights, laid, strict=True)) / n_games)
             pred_tsd = math.sqrt(
@@ -227,6 +336,9 @@ def fit(sport: str, iterations: int, workers: int) -> dict:
                     f"{len(favourite_won)}, regulation edge {expected + 0.5:.3f}: edge {edge:.3f}",
                     flush=True,
                 )
+        if spec.get("spread_centres"):
+            _fit_spread(sport, spec, entry, games, keys, items, weights, sigma, sigma_total,
+                        lambda: lay_out_all(pool))  # fmt: skip
     entry["margin"] = {k: round(v, 4) for k, v in entry["margin"].items()}
     entry["score"] = {k: round(v, 4) for k, v in entry["score"].items()}
     entry["margin_scale"] = round(entry["margin_scale"], 4)
@@ -250,9 +362,41 @@ def main() -> None:
     parser.add_argument("--iterations", type=int, default=12)
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--out", type=Path, default=TABLES, help="the tables file to update")
+    parser.add_argument(
+        "--spread-only",
+        action="store_true",
+        help="keep each sport's tables and fit only the expected-margin adjustments",
+    )
+    parser.add_argument(
+        "--holdout-from",
+        type=int,
+        default=None,
+        help="with --spread-only: fit on earlier seasons first, and keep the adjustments "
+        "only if they beat the plain table on this season and later",
+    )
     args = parser.parse_args()
     for sport in args.sports:
-        entry = fit(sport, args.iterations, args.workers)
+        start = None
+        if args.spread_only:
+            start = json.loads(args.out.read_text())[sport]
+            start = {k: v for k, v in start.items() if k != "margin_by_spread"}
+        if args.spread_only and args.holdout_from is not None:
+            held = _load(sport)
+            held = held[held.season >= args.holdout_from]
+            trial = fit(sport, args.iterations, args.workers, start, args.holdout_from)
+            plain, shaped = holdout_loss(sport, start, held), holdout_loss(sport, trial, held)
+            print(
+                f"{sport} held out {len(held)} games from {args.holdout_from}: log loss "
+                f"{plain:.5f} plain, {shaped:.5f} with the adjustments",
+                flush=True,
+            )
+            if shaped >= plain:
+                print(f"{sport}: the adjustments do not generalise; tables left plain", flush=True)
+                tables = json.loads(args.out.read_text())
+                tables[sport] = start
+                args.out.write_text(json.dumps(tables, indent=1, sort_keys=True) + "\n")
+                continue
+        entry = fit(sport, args.iterations, args.workers, start)
         tables = json.loads(args.out.read_text()) if args.out.exists() else {}
         tables[sport] = entry
         args.out.write_text(json.dumps(tables, indent=1, sort_keys=True) + "\n")

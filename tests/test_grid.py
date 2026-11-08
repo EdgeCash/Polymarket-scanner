@@ -15,27 +15,15 @@ CASES = [
 ]
 
 
-def _clear():
-    for cached in (
-        grid_module.shape_for,
-        grid_module.overtime_outcomes,
-        grid_module._overtime_summary,
-        grid_module._grid,
-        grid_module._cells,
-    ):
-        cached.cache_clear()
-
-
 @pytest.fixture
-def tables(monkeypatch):
+def tables():
     """Swap in a sport table for one test, and leave the real ones behind it."""
 
     def use(value: dict) -> None:
-        monkeypatch.setattr(grid_module, "TABLES", value)
-        _clear()
+        grid_module.reload(value)
 
     yield use
-    _clear()
+    grid_module.reload()
 
 
 def _mean(pmf):
@@ -130,3 +118,42 @@ def test_lines_split_into_above_on_and_below():
         sum(p for m, p in g.margin.items() if m > 2.5)
     )
     assert over(g, 44.0)["push"] == pytest.approx(g.total[44])
+
+
+def test_spread_memberships_share_a_margin_between_the_centres_either_side():
+    centres = [0.0, 3.0, 6.5, 10.0]
+    assert grid_module.spread_memberships(centres, 0.0) == [1.0, 0.0, 0.0, 0.0]
+    assert grid_module.spread_memberships(centres, -3.0) == [0.0, 1.0, 0.0, 0.0]
+    half = grid_module.spread_memberships(centres, 4.75)
+    assert half == pytest.approx([0.0, 0.5, 0.5, 0.0])
+    assert grid_module.spread_memberships(centres, 21.0) == [0.0, 0.0, 0.0, 1.0]
+
+
+def test_the_margin_table_can_move_with_the_expected_margin(tables):
+    base = {"margin": {"3": 2.0}}
+    tables({"nfl": base})
+    plain_short = grid("nfl", 3.0, 44.0, 13.5, 13.5)
+    plain_long = grid("nfl", 14.0, 44.0, 13.5, 13.5)
+    tables(
+        {
+            "nfl": {
+                **base,
+                "margin_by_spread": [
+                    {"centre": 0.0, "adjust": {"3": 1.0}},
+                    {"centre": 3.0, "adjust": {"3": 1.3}},
+                    {"centre": 14.0, "adjust": {"3": 1.0}},
+                ],
+            }
+        }
+    )
+    short = grid("nfl", 3.0, 44.0, 13.5, 13.5)
+    long = grid("nfl", 14.0, 44.0, 13.5, 13.5)
+    # A three-point favourite lands on 3 more; a fourteen-point one is left alone.
+    assert short.margin[3] > 1.15 * plain_short.margin[3]
+    assert long.margin[3] == pytest.approx(plain_long.margin[3], rel=1e-3)
+    assert _mean(short.margin) == pytest.approx(3.0, abs=1e-3)
+    # Between two centres the table is interpolated, so a price never jumps.
+    near = [grid("nfl", x, 44.0, 13.5, 13.5).margin[3] for x in (2.95, 3.0, 3.05)]
+    assert max(near) - min(near) < 0.002
+    assert grid_module.margin_weights("nfl", -3.0) == grid_module.margin_weights("nfl", 3.0)
+    assert grid_module.margin_weights("nfl", 8.5)[3] == pytest.approx(2.0 * 1.3 ** (1 - 5.5 / 11))
