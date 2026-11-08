@@ -46,7 +46,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scanner import grid as grid_module  # noqa: E402
-from scanner.projection import tuning_for  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from grade_sim import spread_check  # noqa: E402
 
 HISTORY = ROOT / "tests" / "fixtures" / "history"
 TABLES = ROOT / "scanner" / "sim_tables.json"
@@ -197,25 +199,6 @@ def _fit_spread(sport, spec, entry, games, keys, items, weights, sigma, sigma_to
         {"centre": c, "adjust": {str(k): round(v, 4) for k, v in a.items()}}
         for c, a in zip(centres, adjust, strict=True)
     ]
-
-
-def _load(sport: str) -> pd.DataFrame:
-    games = pd.read_csv(HISTORY / f"{sport}.csv.gz")
-    for column in ("home_reg", "away_reg", "home_final", "away_final", "ot"):
-        games[column] = games[column].astype(int)
-    return games
-
-
-def holdout_loss(sport: str, entry: dict, games: pd.DataFrame) -> float:
-    """Mean log loss of the real final margins under a sport's tables, at TUNING's widths."""
-    grid_module.reload({sport: entry})
-    tuning = tuning_for(sport)
-    total = 0.0
-    for row in games.itertuples():
-        g = grid_module.grid(sport, row.exp_margin, row.exp_total, tuning.sigma, tuning.sigma_total)
-        total -= math.log(max(g.margin.get(row.home_final - row.away_final, 0.0), 1e-12))
-    grid_module.reload()
-    return total / len(games)
 
 
 def fit(
@@ -381,21 +364,30 @@ def main() -> None:
             start = json.loads(args.out.read_text())[sport]
             start = {k: v for k, v in start.items() if k != "margin_by_spread"}
         if args.spread_only and args.holdout_from is not None:
-            held = _load(sport)
-            held = held[held.season >= args.holdout_from]
+            # Fit on the seasons before the holdout and score both tables on the rest:
+            # one function, shared with tests/test_sim_history.py, which recomputes
+            # what is recorded here and fails when it has gone stale.
             trial = fit(sport, args.iterations, args.workers, start, args.holdout_from)
-            plain, shaped = holdout_loss(sport, start, held), holdout_loss(sport, trial, held)
+            trial["source"]["fit_seasons"] = trial["source"].pop("seasons")
+            check = spread_check(sport, start, trial, args.holdout_from)
             print(
-                f"{sport} held out {len(held)} games from {args.holdout_from}: log loss "
-                f"{plain:.5f} plain, {shaped:.5f} with the adjustments",
+                f"{sport} held out {check['games']} games from {args.holdout_from}: log loss "
+                f"{check['plain']:.5f} plain, {check['shaped']:.5f} with the adjustments",
                 flush=True,
             )
-            if shaped >= plain:
+            if check["kept"]:
+                # Ship the adjustments as fit on the earlier seasons, so the held-out
+                # check stays a real one when the test reruns it.
+                entry = {**trial, "source": {**start.get("source", {}), **trial["source"]}}
+            else:
                 print(f"{sport}: the adjustments do not generalise; tables left plain", flush=True)
-                tables = json.loads(args.out.read_text())
-                tables[sport] = start
-                args.out.write_text(json.dumps(tables, indent=1, sort_keys=True) + "\n")
-                continue
+                entry = start
+            entry["source"] = {**entry.get("source", {}), "spread_check": check}
+            tables = json.loads(args.out.read_text())
+            tables[sport] = entry
+            args.out.write_text(json.dumps(tables, indent=1, sort_keys=True) + "\n")
+            print(f"wrote {sport} to {args.out}", flush=True)
+            continue
         entry = fit(sport, args.iterations, args.workers, start)
         tables = json.loads(args.out.read_text()) if args.out.exists() else {}
         tables[sport] = entry

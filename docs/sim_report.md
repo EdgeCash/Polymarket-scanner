@@ -87,7 +87,9 @@ best fit on the scanner's own graded record rather than here.
   on held-out seasons (NFL 2020-2026 log loss 3.8276 against 3.8260; college
   2023-2025 4.0473 against 4.0457), so they are built and checked
   (`build_sim_tables.py --spread-only --holdout-from YEAR`) but not shipped.
-  `grade_sim.py` prints the key numbers by spread for each rerun.
+  The check's result lives in the tables under `source.spread_check` and
+  `tests/test_sim_history.py` rescores its fingerprint, so a stale record fails
+  the suite. `grade_sim.py` prints the key numbers by spread for each rerun.
 - nflverse has no quarter scores, so an NFL overtime game is taken as level at
   the lower final score (a loser's points in overtime are missed).
 - Player props were not graded: Polymarket US lists no per-game player markets.

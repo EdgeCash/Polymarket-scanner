@@ -1370,6 +1370,18 @@
    "games": 4528,
    "margin_sd": 16.46,
    "seasons": "2018-2025",
+   "spread_check": {
+    "fingerprint": {
+     "games": 120,
+     "plain": 4.10526,
+     "shaped": 4.10667
+    },
+    "games": 1919,
+    "holdout_from": 2023,
+    "kept": false,
+    "plain": 4.04576,
+    "shaped": 4.04739
+   },
    "total_sd": 16.69
   },
   "total_scale": 0.9703
@@ -2087,6 +2099,18 @@
    "games": 4297,
    "margin_sd": 13.04,
    "seasons": "2010-2026",
+   "spread_check": {
+    "fingerprint": {
+     "games": 120,
+     "plain": 3.72948,
+     "shaped": 3.73224
+    },
+    "games": 1737,
+    "holdout_from": 2020,
+    "kept": false,
+    "plain": 3.82599,
+    "shaped": 3.82759
+   },
    "total_sd": 13.19
   },
   "total_scale": 1.058

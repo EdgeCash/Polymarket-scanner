@@ -738,7 +738,12 @@ the single table's 3.8260; college football, fit on 2018-2022 and scored on
 2023-2025, 4.0473 against 4.0457. Most of what looks like spread dependence is
 era-to-era noise (an NFL margin of 7 ran 8.8%, 9.9%, 7.0% and 8.5% across
 2010-14, 2015-19, 2020-22 and 2023-26), so the tables stay single until a
-rerun of the check says otherwise.
+rerun of the check says otherwise. The check's result is recorded in the
+sport's table (`source.spread_check`), and `tests/test_sim_history.py`
+rescores its fingerprint on a fixed sample of the held-out games with the grid,
+the widths and the tables as they stand: a change that leaves the record stale
+fails the suite until the check is rerun, and the shipped state must match the
+decision it reached.
 
 Basketball's tables are its end of game: a tie after regulation, which late
 fouling and the last shot make twice as common as a bell curve says, and fewer

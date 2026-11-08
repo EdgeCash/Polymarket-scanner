@@ -5,12 +5,20 @@ grid's rates are its average chances over a fixed, evenly spaced sample of the
 same games at their expected margin and total with the sport's ``TUNING``
 widths, which pins them closely without laying out thousands of grids. The
 full report card is ``python scripts/grade_sim.py``.
+
+Football's tables also carry the result of the held-out check on expected-margin
+adjustments (``source.spread_check``, from ``build_sim_tables.py --spread-only
+--holdout-from YEAR``). The test rescores its fingerprint with the grid, the widths
+and the tables as they stand, so a change that leaves the record stale fails here
+until the check is rerun.
 """
 
 from __future__ import annotations
 
 import csv
 import gzip
+import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -19,6 +27,7 @@ from scanner.grid import grid, regulation
 from scanner.projection import tuning_for
 
 HISTORY = Path(__file__).resolve().parent / "fixtures" / "history"
+ROOT = Path(__file__).resolve().parents[1]
 SAMPLE = 120
 
 # (margins checked, their tolerance in points of share, level-after-regulation
@@ -94,3 +103,36 @@ def test_regulation_is_the_grid_before_overtime():
     g = grid("nfl", 3.0, 44.0, tuning.sigma, tuning.sigma_total)
     assert sum(reg.values()) == pytest.approx(1.0)
     assert sum(p for (h, a), p in reg.items() if h == a) == pytest.approx(g.overtime)
+
+
+def _grade_sim():
+    """scripts/grade_sim.py, which holds the held-out check (stdlib only)."""
+    spec = importlib.util.spec_from_file_location("grade_sim", ROOT / "scripts" / "grade_sim.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize("sport", ["nfl", "cfb"])
+def test_the_held_out_check_on_spread_tables_is_recorded_and_still_holds(sport):
+    entry = json.loads((ROOT / "scanner" / "sim_tables.json").read_text())[sport]
+    check = (entry.get("source") or {}).get("spread_check")
+    rerun = (
+        f"rerun: python scripts/build_sim_tables.py --sports {sport} --spread-only "
+        f"--holdout-from YEAR"
+    )
+    assert check, f"{sport}: the held-out check on margin_by_spread has not been run ({rerun})"
+    # The decision the check reached is the state that shipped.
+    assert check["kept"] == (check["shaped"] < check["plain"])
+    assert ("margin_by_spread" in entry) == check["kept"], f"{sport}: tables disagree; {rerun}"
+    # And it was reached with the grid, the widths and the tables as they are now.
+    grade_sim = _grade_sim()
+    assert check["fingerprint"]["games"] == grade_sim.FINGERPRINT_SAMPLE
+    plain = grade_sim.without_spread(entry)
+    assert grade_sim.fingerprint(sport, plain, check["holdout_from"]) == pytest.approx(
+        check["fingerprint"]["plain"], abs=1e-4
+    ), f"{sport}: the plain table or the grid has changed since the check; {rerun}"
+    if check["kept"]:
+        assert grade_sim.fingerprint(sport, entry, check["holdout_from"]) == pytest.approx(
+            check["fingerprint"]["shaped"], abs=1e-4
+        ), f"{sport}: the adjustments have changed since the check; {rerun}"
