@@ -64,6 +64,81 @@ def load(sport: str, sample: int | None = None) -> list[dict]:
     return rows
 
 
+# -- the held-out check -----------------------------------------------------------------
+# Football's margin table can move with the size of the expected margin
+# (margin_by_spread). Whether that generalises is decided here, by one function the
+# table builder and tests/test_sim_history.py both call: the adjustments are fit on
+# the seasons before ``holdout_from`` and must lower the log loss of the real final
+# margins on the seasons from it. The result is recorded in the sport's table under
+# ``source.spread_check`` and the test recomputes it, so a change to the grid, the
+# widths or the base tables that leaves the record stale fails the suite.
+
+FINGERPRINT_SAMPLE = 120  # held-out games the test rescores, evenly spaced, to catch staleness
+
+
+def holdout_rows(sport: str, holdout_from: int, sample: int | None = None) -> list[dict]:
+    """The sport's games from ``holdout_from`` on; an evenly spaced sample of them if asked."""
+    rows = [r for r in load(sport) if int(r["season"]) >= holdout_from]
+    if sample and len(rows) > sample:
+        step = len(rows) / sample
+        rows = [rows[int(i * step)] for i in range(sample)]
+    return rows
+
+
+def margin_log_loss(sport: str, rows: list[dict], tables: dict) -> float:
+    """Mean log loss of the real final margins under ``tables``, at TUNING's widths.
+
+    Swaps the tables in for the scoring and the file's back afterwards.
+    """
+    from scanner import grid as grid_module
+
+    tuning = tuning_for(sport)
+    step_m, step_t = ROUNDING.get(sport, DEFAULT_ROUNDING)
+    grid_module.reload(tables)
+    try:
+        total = 0.0
+        for row in rows:
+            margin = round(float(row["exp_margin"]) / step_m) * step_m
+            expected_total = round(float(row["exp_total"]) / step_t) * step_t
+            g = grid(sport, margin, expected_total, tuning.sigma, tuning.sigma_total)
+            actual = int(float(row["home_final"])) - int(float(row["away_final"]))
+            total -= math.log(max(g.margin.get(actual, 0.0), 1e-12))
+    finally:
+        grid_module.reload()
+    return total / len(rows)
+
+
+def without_spread(entry: dict) -> dict:
+    """A sport's table with its expected-margin adjustments taken off."""
+    return {k: v for k, v in entry.items() if k != "margin_by_spread"}
+
+
+def fingerprint(sport: str, entry: dict, holdout_from: int) -> float:
+    """The log loss on a small fixed sample of held-out games: what the test rescores."""
+    rows = holdout_rows(sport, holdout_from, FINGERPRINT_SAMPLE)
+    return round(margin_log_loss(sport, rows, {sport: entry}), 5)
+
+
+def spread_check(sport: str, plain: dict, shaped: dict, holdout_from: int) -> dict:
+    """Score a sport's plain table against one with margin_by_spread on every held-out
+    game, and fingerprint both on the small sample the test rescores."""
+    rows = holdout_rows(sport, holdout_from)
+    plain_loss = margin_log_loss(sport, rows, {sport: plain})
+    shaped_loss = margin_log_loss(sport, rows, {sport: shaped})
+    return {
+        "holdout_from": holdout_from,
+        "games": len(rows),
+        "plain": round(plain_loss, 5),
+        "shaped": round(shaped_loss, 5),
+        "kept": shaped_loss < plain_loss,
+        "fingerprint": {
+            "games": FINGERPRINT_SAMPLE,
+            "plain": fingerprint(sport, plain, holdout_from),
+            "shaped": fingerprint(sport, shaped, holdout_from),
+        },
+    }
+
+
 def _cdf_position(pmf: dict[int, float], actual: int) -> tuple[float, float]:
     below = sum(p for v, p in pmf.items() if v < actual)
     return below, below + pmf.get(actual, 0.0)
