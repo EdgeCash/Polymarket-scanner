@@ -171,6 +171,10 @@ class Settings(BaseSettings):
         "", validation_alias=AliasChoices("GIT_COMMIT", "RAILWAY_GIT_COMMIT_SHA")
     )
 
+    # The running service's own public address (https://<domain>), for the monthly
+    # cron: it runs in its own container with no diary, so it asks this one to send.
+    SCANNER_URL: str | None = None
+
     # Secrets. Never logged, never shown.
     TELEGRAM_BOT_TOKEN: SecretStr | None = None
     TELEGRAM_CHAT_ID: SecretStr | None = None

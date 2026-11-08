@@ -303,6 +303,22 @@ on the iPad.
    Railway redeploy, confirm the message on the phone, then set it back to
    `false`. Do this on a weekday, never during a game window.
 
+6. The monthly check on the phone (optional). A Railway cron is a second
+   service from the same repo that runs on a schedule and exits, so: **New**
+   → **GitHub Repo** → the same repo again; in its **Settings** set
+   **Config-as-code** to `railway.cron.json` (the Dockerfile build, the start
+   command `python -m scanner --monthly-check --remote`, and the schedule
+   `30 13 1 * *`: 13:30 UTC on the 1st, which is 8:30 or 9:30 in the East);
+   in its **Variables** set `SCANNER_URL` to `https://<domain>` from step 4
+   and `STATUS_TOKEN` to the same phrase (a reference,
+   `${{scanner.STATUS_TOKEN}}`, keeps them in step). No volume: the cron has
+   no diary of its own, so it posts to the running service's `/monthly-check`,
+   which builds the last full month from its diary and sends it, then the cron
+   exits until next month. Railway schedules in UTC. To try it by hand, run
+   the cron service's **Deploy** once from its page, or
+   `python -m scanner --monthly-check --remote` anywhere with those two
+   variables set.
+
 Railway redeploys on every push to `main`, so merge only on a Tuesday or
 Wednesday. Logs are under the service's **Deployments** tab; the diary can be
 downloaded from the volume page if you ever want the raw file.
@@ -685,7 +701,10 @@ model took in each market against the closing line (moneyline, spread, total,
 the puck line in hockey), and how often the close moved the model's way. The
 scorecard shows the last full month and the month so far, sport by sport;
 `python -m scanner --monthly-check [--month YYYY-MM]` prints a month and
-`--send` sends it to the phone. Nothing in it places anything.
+`--send` sends it to the phone; `--remote` asks the running service to do
+both through its `POST /monthly-check` (token required), which is what the
+Railway cron in `railway.cron.json` does at 13:30 UTC on the 1st. Nothing in
+it places anything.
 
 ## The daily card and the simulator
 

@@ -68,6 +68,12 @@ def main(argv: list[str] | None = None) -> int:
         "(last full month, or --month YYYY-MM; sent too when --send is given)",
     )
     parser.add_argument("--month", default=None, help="with --monthly-check: the month, YYYY-MM")
+    parser.add_argument(
+        "--remote",
+        action="store_true",
+        help="with --monthly-check: ask the running service at SCANNER_URL to build and send "
+        "it (what the monthly cron does, having no diary of its own)",
+    )
     args = parser.parse_args(argv)
 
     settings = load_settings()
@@ -126,6 +132,31 @@ def main(argv: list[str] | None = None) -> int:
 
         print(card_report(Diary(settings.DATABASE_PATH), settings))
         return 0
+
+    if args.monthly_check and args.remote:
+        from scanner.monthly import send_remote
+
+        if not settings.SCANNER_URL or not settings.STATUS_TOKEN:
+            log.error("--remote needs SCANNER_URL and STATUS_TOKEN")
+            return 1
+        import httpx
+
+        try:
+            answer = send_remote(
+                settings.SCANNER_URL, settings.STATUS_TOKEN.get_secret_value(), args.month
+            )
+        except httpx.HTTPError as exc:
+            log.error(
+                "the service at %s did not take the monthly check: %s", settings.SCANNER_URL, exc
+            )
+            return 1
+        print(answer.get("text", ""))
+        print(
+            f"{answer.get('month')}: {answer.get('games')} graded, "
+            f"{'sent' if answer.get('sent') else 'not sent'}"
+            + (" (dry run: Telegram not configured there)" if answer.get("dry_run") else "")
+        )
+        return 0 if answer.get("sent") and not answer.get("dry_run") else 1
 
     if args.monthly_check:
         from datetime import UTC, datetime

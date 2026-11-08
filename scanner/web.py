@@ -2187,6 +2187,26 @@ def create_app(settings: Settings, diary: Diary, status: RuntimeStatus) -> FastA
             page = HTMLResponse(render_health(status, settings))
         return remember(page, request, token)
 
+    @app.post("/monthly-check")
+    def monthly_check(
+        request: Request,
+        month: str | None = Query(default=None),
+        token: str | None = Query(default=None),
+        x_status_token: str | None = Header(default=None),
+        scanner_token: str | None = Cookie(default=None),
+    ):
+        """Build the last full month's check (or ``month``, YYYY-MM) and send it to the
+        phone. The monthly cron calls this; it holds no diary of its own."""
+        if not authorised(token, x_status_token, scanner_token):
+            return denied()
+        from scanner.monthly import send_month
+        from scanner.notify import DryRunSender, build_sender
+
+        sender = build_sender(settings)
+        result = send_month(diary, settings, month, datetime.now(UTC), sender)
+        result["dry_run"] = isinstance(sender, DryRunSender)
+        return JSONResponse(result)
+
     @app.get("/scorecard", response_class=HTMLResponse)
     def scorecard(
         request: Request,
