@@ -1663,19 +1663,36 @@ class GameLog:
         is graded once the game's own record lands in the log.
         """
         from scanner.projection import fit, project
+        from scanner.rest import days_since_last
         from scanner.stakes import gate, suggest
 
-        ratings = fit(self.diary.football_games(sport, season), sport)
+        records = self.diary.football_games(sport, season)
+        ratings = fit(records, sport)
+        upcoming = self.diary.football_upcoming(sport)
+        # Every game on the season's schedule by team, played or to come, so each side's
+        # rest can be counted (a back-to-back moves basketball's and hockey's margins).
+        schedule: dict[str, list[datetime]] = {}
+        for record in records:
+            for team in (record.home.team_id, record.away.team_id):
+                schedule.setdefault(str(team), []).append(record.date)
+        for other in upcoming:
+            when = datetime.fromisoformat(other["date"])
+            for side in ("home", "away"):
+                schedule.setdefault(str(other["slate"][side]["team_id"]), []).append(when)
         stakes_on = self.settings.STAKE_ENABLED
         gate_open = (
             stakes_on and gate(self.diary.projection_summary(sport=sport), self.settings)["open"]
         )
-        for row in self.diary.football_upcoming(sport):
+        for row in upcoming:
             kickoff = datetime.fromisoformat(row["date"])
             if kickoff <= now:
                 continue
             slate = row["slate"]
             extra = row.get("extra") or {}
+            rest = {
+                side: days_since_last(kickoff, schedule.get(str(slate[side]["team_id"]), []))
+                for side in ("home", "away")
+            }
             book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
             projection = project(
                 ratings,
@@ -1688,6 +1705,7 @@ class GameLog:
                 {
                     "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
                     "weather": extra.get("weather"),
+                    "rest": rest,
                 },
             )
             if projection is None:

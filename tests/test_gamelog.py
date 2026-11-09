@@ -990,6 +990,10 @@ def test_a_daily_sport_reads_three_days_and_backfills_the_seasons_calendar():
     assert summary.projected == 1
     projection = diary.projection("nba", "up-1")["projection"]
     assert projection["sport"] == "nba" and projection["league"]["hfa"] == 2.0
+    # Each side's rest is counted from the schedule and moves basketball's margin.
+    rest = projection["raw"]["rest"]
+    assert set(rest) == {"home", "away", "margin"}
+    assert all(r is None or (isinstance(r, int) and r >= 1) for r in (rest["home"], rest["away"]))
     sheet = sheet_from_diary(diary, "nba", "up-1")
     assert sheet["sport"] == "nba" and sheet["home"]["abbreviation"] == "BOS"
     assert sheet["home"]["season"]["off_rating"] is not None and sheet["week"] is None
