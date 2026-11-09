@@ -1675,6 +1675,7 @@ class GameLog:
             if kickoff <= now:
                 continue
             slate = row["slate"]
+            extra = row.get("extra") or {}
             book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
             projection = project(
                 ratings,
@@ -1682,6 +1683,12 @@ class GameLog:
                 slate["away"]["team_id"],
                 bool(slate.get("neutral")),
                 book,
+                # The venue from the scoreboard (its indoor flag) with the summary's
+                # weather, as the sheet shows them: football's totals move for the wind.
+                {
+                    "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
+                    "weather": extra.get("weather"),
+                },
             )
             if projection is None:
                 continue

@@ -24,6 +24,7 @@ from statistics import NormalDist
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
 from scanner.grid import margin_for_win, win_chance
+from scanner.weather import total_adjustment
 
 MODEL_VERSION = "v1"
 ITERATIONS = 30  # rounds of opponent adjustment
@@ -249,15 +250,33 @@ def _book_parts(book: BookLine | None, sport: str) -> dict | None:
 
 
 def project(
-    ratings: Ratings, home_id: str, away_id: str, neutral: bool, book: BookLine | None
+    ratings: Ratings,
+    home_id: str,
+    away_id: str,
+    neutral: bool,
+    book: BookLine | None,
+    conditions: dict | None = None,
 ) -> dict | None:
-    """One game's projection, raw and blended with the book, or None without ratings."""
+    """One game's projection, raw and blended with the book, or None without ratings.
+
+    ``conditions`` is the game's ``venue`` and ``weather`` as the log has them; in
+    football the wind moves the raw total (scanner.weather), split evenly between
+    the sides, before the blend.
+    """
     home, away = ratings.team(home_id), ratings.team(away_id)
     if home is None or away is None:
         return None
     h = 0.0 if neutral else ratings.hfa / 2.0
     home_points = ratings.league_points + home["offense"] + away["defense"] + h
     away_points = ratings.league_points + away["offense"] + home["defense"] - h
+    weather = None
+    if conditions:
+        weather = total_adjustment(
+            ratings.sport, conditions.get("venue"), conditions.get("weather")
+        )
+    if weather:
+        home_points += weather["total"] / 2.0
+        away_points += weather["total"] / 2.0
     margin = home_points - away_points
     total = home_points + away_points
     games_used = min(home["games"], away["games"])
@@ -275,6 +294,8 @@ def project(
             "away": away_points * ratings.first_half_share,
         },
     }
+    if weather:
+        raw["weather"] = weather
     book_parts = _book_parts(book, ratings.sport)
 
     def blend_of(key: str) -> float:

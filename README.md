@@ -468,7 +468,26 @@ college; totals 13.5 and 16.75: real totals miss the NFL's closing number by
 13.2, and the model's own college projections miss by 16.1 and 16.8 when they
 have seen only earlier games). A first-half score is the projection times the
 league's first-half share. Turnover luck is mostly washed out by the yards
-half; rest, weather and injuries are not in it.
+half; rest and injuries are not in it, and of the weather only the wind is.
+
+The wind is the one condition that moves a total by more than noise, and the
+market prices only part of it. `scanner/weather.py` takes each mph of
+sustained wind off a football total at 0.27 points, linear from calm, with a
+dome or a closed roof as calm; the ratings already carry the average
+conditions they were fit in, so a game is adjusted by its effect less that
+average (a dome up about a point and a half, a six-mph day not at all, a
+twenty-mph gale down three and a half), split evenly between the sides before
+the blend, and the sheet's projection block says so. Fit by
+`scripts/fit_weather.py` on 3,314 NFL games (nflverse's stadium reports,
+2010-2026) against a weather-blind expected total from ratings fit only on
+each season's earlier games: the miss on 2020-2026 falls from 13.75 to 13.62
+with the wind in, cold adds nothing once it is, and the closing total still
+misses 0.16 a mph, so the market prices about forty percent of it. ESPN
+reports a gust, not a sustained wind, so sustained is taken as two thirds of
+the gust; college football takes the NFL's fit, the one source with the wind
+on record; and a game with no weather yet, or indoors with no indoor flag, is
+left as it is. Precipitation is reported but not fit, since no history carries
+it, so it is left out.
 
 The shrinkage is fit per sport on history (`scripts/fit_shrinkage.py`): every
 game rated only on its season's earlier games, with the scanner's own
