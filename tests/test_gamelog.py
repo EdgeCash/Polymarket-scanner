@@ -990,6 +990,10 @@ def test_a_daily_sport_reads_three_days_and_backfills_the_seasons_calendar():
     assert summary.projected == 1
     projection = diary.projection("nba", "up-1")["projection"]
     assert projection["sport"] == "nba" and projection["league"]["hfa"] == 2.0
+    # Each side's rest is counted from the schedule and moves basketball's margin.
+    rest = projection["raw"]["rest"]
+    assert set(rest) == {"home", "away", "margin"}
+    assert all(r is None or (isinstance(r, int) and r >= 1) for r in (rest["home"], rest["away"]))
     sheet = sheet_from_diary(diary, "nba", "up-1")
     assert sheet["sport"] == "nba" and sheet["home"]["abbreviation"] == "BOS"
     assert sheet["home"]["season"]["off_rating"] is not None and sheet["week"] is None
@@ -1242,3 +1246,19 @@ def test_refresh_writes_player_lines_for_upcoming_games_and_grades_them():
     quiet = Diary(":memory:")
     GameLog(off, quiet, feed=feed, now=lambda: NBA_NOW).refresh("nba", NBA_NOW, budget=40)
     assert quiet.player_projections("nba", "up-1") == []
+
+
+def test_the_projection_takes_the_upcoming_games_weather_from_its_extras():
+    import pytest
+
+    from scanner.weather import BASELINE, GUST_TO_WIND, WIND_PER_MPH
+
+    log, diary, feed = build()
+    add_upcoming(feed)
+    assert log.refresh("nfl", NOW, budget=10).projected == 1
+    raw = diary.projection("nfl", "upcoming-1")["projection"]["raw"]
+    # The summary's 5 mph gust, outdoors: a light day, so a touch above the baseline.
+    wind = 5 * GUST_TO_WIND
+    assert raw["weather"]["gust"] == 5.0 and raw["weather"]["wind"] == pytest.approx(wind, abs=0.05)
+    assert raw["weather"]["total"] == pytest.approx(WIND_PER_MPH * wind - BASELINE, abs=0.01)
+    assert raw["weather"]["indoors"] is False

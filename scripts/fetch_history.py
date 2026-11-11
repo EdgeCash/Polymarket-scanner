@@ -8,7 +8,9 @@ the NFL; for the others, team ratings fit only on that season's earlier games,
 the way the scanner itself sees a game before it starts, shots and yards
 included where ``--volumes`` has fetched them), its score at the end of
 regulation, its final score and whether it went to overtime. Hockey adds each
-side's empty-net goals in regulation and whether a shootout settled it.
+side's empty-net goals in regulation and whether a shootout settled it. In the
+NBA and the NHL the expected margin carries the scanner's back-to-back
+adjustment, counted from the season's schedule.
 
 Sources (raw responses are kept in ``--raw`` so a rerun need not refetch):
 - NFL: nflverse games.csv, regular season 2010 on, with closing lines.
@@ -27,8 +29,9 @@ import json
 import sys
 import time
 import urllib.request
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
@@ -105,6 +108,7 @@ def _espn_rows(payload: dict) -> list[dict]:
                 {
                     "id": event["id"],
                     "date": event["date"][:10],
+                    "start": event["date"],  # UTC; the local date decides a back-to-back
                     "season": event["season"]["year"],
                     "neutral": bool(comp.get("neutralSite")),
                     "home": side["home"],
@@ -425,6 +429,59 @@ def graded_subset(raw: Path, sport: str, rated: pd.DataFrame) -> pd.DataFrame:
     return rated
 
 
+EASTERN = ZoneInfo("America/New_York")
+
+
+def local_dates(raw: Path, sport: str) -> dict[str, str]:
+    """Each game's local (Eastern) date from its start time where the rows carry one; the
+    hockey rows are by local date already."""
+    out = {}
+    for line in open(raw / f"{sport}.jsonl"):
+        g = json.loads(line)
+        start = g.get("start")
+        if start:
+            moment = datetime.fromisoformat(start.replace("Z", "+00:00"))
+            out[str(g["id"])] = moment.astimezone(EASTERN).date().isoformat()
+        else:
+            out[str(g["id"])] = g["date"]
+    return out
+
+
+def with_rest(games: pd.DataFrame, dates: dict[str, str]) -> pd.DataFrame:
+    """Each side's days since its last game, counted over every game on the schedule."""
+    games = games.copy()
+    games["local"] = pd.to_datetime(
+        [dates.get(str(i), d) for i, d in zip(games["id"], games.date, strict=True)]
+    )
+    last: dict[tuple[int, str], pd.Timestamp] = {}
+    home_rest, away_rest = [], []
+    ordered = games.sort_values("local")
+    for row in ordered.itertuples():
+        for team, bucket in ((row.home, home_rest), (row.away, away_rest)):
+            key = (row.season, team)
+            previous = last.get(key)
+            bucket.append((row.local - previous).days if previous is not None else np.nan)
+            last[key] = row.local
+    games.loc[ordered.index, "home_rest"] = home_rest
+    games.loc[ordered.index, "away_rest"] = away_rest
+    return games
+
+
+def with_rest_adjustment(rated: pd.DataFrame, sport: str) -> pd.DataFrame:
+    """Move the expected margin for a back-to-back, as the scanner does (scanner.rest)."""
+    from scanner.rest import margin_adjustment
+
+    def shift(row) -> float:
+        home = None if pd.isna(row.home_rest) else int(row.home_rest)
+        away = None if pd.isna(row.away_rest) else int(row.away_rest)
+        adjustment = margin_adjustment(sport, home, away)
+        return adjustment["margin"] if adjustment else 0.0
+
+    rated = rated.copy()
+    rated["exp_margin"] = rated.exp_margin + rated.apply(shift, axis=1)
+    return rated
+
+
 def build(raw: Path, sport: str) -> pd.DataFrame:
     if sport == "nfl":
         g = pd.read_csv(raw / "nfl_games.csv")
@@ -449,7 +506,11 @@ def build(raw: Path, sport: str) -> pd.DataFrame:
             }
         )
     games = load_games(raw, sport)
+    if sport in ("nba", "nhl"):
+        games = with_rest(games, local_dates(raw, sport))
     rated = graded_subset(raw, sport, rate_before(games, sport))
+    if sport in ("nba", "nhl"):
+        rated = with_rest_adjustment(rated, sport)
     rated = rated.assign(exp_source="ratings")
     keep = [
         "season", "date", "exp_margin", "exp_total", "exp_source",

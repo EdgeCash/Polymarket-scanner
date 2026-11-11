@@ -30,8 +30,10 @@ from scanner.diary import Diary
 from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
 from scanner.players import SPORT_STATS, chance_over, simulate_player
 from scanner.projection import book_margin, tuning_for
+from scanner.rest import describe as describe_rest
 from scanner.simulate import chances, ladder, seed_for, simulate, svg_heatmap, svg_histogram
 from scanner.stakes import gate
+from scanner.weather import describe as describe_weather
 
 COOKIE = "scanner_token"
 COOKIE_MAX_AGE = 365 * 24 * 3600  # a year: the owner signs in once per device
@@ -1019,6 +1021,17 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
         f"class='left'>{html.escape(away)} {pts(half.get('away'))} – {html.escape(home)} "
         f"{pts(half.get('home'))}</td></tr>"
     )
+    if raw.get("weather"):
+        body += (
+            f"<tr><td class='label'>Weather</td><td colspan='4' class='left'>"
+            f"{html.escape(describe_weather(raw['weather']))} on the model's total</td></tr>"
+        )
+    rest_text = describe_rest(raw.get("rest"), home, away, profile.unit)
+    if rest_text:
+        body += (
+            f"<tr><td class='label'>Rest</td><td colspan='4' class='left'>"
+            f"{html.escape(rest_text)} on the model's margin</td></tr>"
+        )
     head = (
         "<tr><th class='label'></th><th>Model</th><th>Blend</th><th>Book</th>"
         "<th>Polymarket</th></tr>"

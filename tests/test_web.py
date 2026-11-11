@@ -283,7 +283,8 @@ def test_matchup_pages_render_from_the_diary():
     from scanner.projection import fit, project
 
     ratings = fit(diary.football_games("nfl"), "nfl")
-    projection = project(ratings, "5", "23", False, book)  # CLE at home to PIT
+    conditions = {"venue": {"indoor": False}, "weather": {"gust": 8}}
+    projection = project(ratings, "5", "23", False, book, conditions)  # CLE at home to PIT
     diary.upsert_projection("nfl", upcoming.game_id, at_time, "CLE", "PIT", projection, at_time)
     stake = {
         "market": "moneyline",
@@ -351,6 +352,9 @@ def test_matchup_pages_render_from_the_diary():
     assert "capped at 5% of a $1,000 bankroll" in shown and "nothing is placed" in shown
     assert "1 and 1 games used, blend 14% model" in page
     assert "61°F, 10% rain, gusts 8 mph" in page
+    # The wind's effect on the model's total sits in the projection block.
+    assert "<td class='label'>Weather</td>" in page
+    assert "wind 5 mph (gusts 8): total +0.2 on the model's total" in page
     assert "<td class='label'>Points</td>" in page and "<h2>Defense</h2>" in page
     assert "vs PIT 27-24" in page  # CLE's last result, from the log
     assert "Nothing on this page is a recommendation" in page

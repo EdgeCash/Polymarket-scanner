@@ -468,7 +468,43 @@ college; totals 13.5 and 16.75: real totals miss the NFL's closing number by
 13.2, and the model's own college projections miss by 16.1 and 16.8 when they
 have seen only earlier games). A first-half score is the projection times the
 league's first-half share. Turnover luck is mostly washed out by the yards
-half; rest, weather and injuries are not in it.
+half; injuries are not in it, of the weather only the wind is, and of rest only
+the back-to-back.
+
+The wind is the one condition that moves a total by more than noise, and the
+market prices only part of it. `scanner/weather.py` takes each mph of
+sustained wind off a football total at 0.27 points, linear from calm, with a
+dome or a closed roof as calm; the ratings already carry the average
+conditions they were fit in, so a game is adjusted by its effect less that
+average (a dome up about a point and a half, a six-mph day not at all, a
+twenty-mph gale down three and a half), split evenly between the sides before
+the blend, and the sheet's projection block says so. Fit by
+`scripts/fit_weather.py` on 3,314 NFL games (nflverse's stadium reports,
+2010-2026) against a weather-blind expected total from ratings fit only on
+each season's earlier games: the miss on 2020-2026 falls from 13.75 to 13.62
+with the wind in, cold adds nothing once it is, and the closing total still
+misses 0.16 a mph, so the market prices about forty percent of it. ESPN
+reports a gust, not a sustained wind, so sustained is taken as two thirds of
+the gust; college football takes the NFL's fit, the one source with the wind
+on record; and a game with no weather yet, or indoors with no indoor flag, is
+left as it is. Precipitation is reported but not fit, since no history carries
+it, so it is left out.
+
+A side that played the day before gives up ground, and the schedule says so
+before the market has to. `scanner/rest.py` moves the raw margin toward the
+rested side when the other is on a back-to-back: 2.5 points in the NBA, 0.45
+goals in the NHL, fit by `scripts/fit_rest.py` against a rest-blind expected
+margin from ratings fit only on each season's earlier games (4,661 NBA games
+and 4,947 NHL games, 2021-22 to 2024-25, held out on 2024-25: the NBA's margin
+miss falls from 14.22 to 14.13, hockey's from 2.563 to 2.553). The two sides'
+coefficients cannot be told apart (NBA home -2.8, away +2.4), so one serves
+both; long rest adds nothing; the totals do not move; both sides tired is a
+wash. A back-to-back is a game on the day after the side's last one by the
+Eastern date (a 7 pm tip is the next day in UTC), counted from every game on
+the season's schedule in the log, played or still to come, so a side whose
+game yesterday is not yet stored still shows as tired. The sheet's projection
+block names the tired side. The history files carry the same adjustment, so
+the widths and tables describe what the scanner projects.
 
 The shrinkage is fit per sport on history (`scripts/fit_shrinkage.py`): every
 game rated only on its season's earlier games, with the scanner's own
