@@ -13,10 +13,13 @@ side's empty-net goals in regulation and whether a shootout settled it. In the
 NBA and the NHL the expected margin carries the scanner's back-to-back
 adjustment, counted from the season's schedule.
 
-``--spreads`` also fetches each college basketball game's book line, open and
-close, from ESPN's game summary (slow: one request a game), and writes
-``tests/fixtures/history/cbb_lines.csv.gz``: every rated game with its book
-margin beside the model's and each side's games so far. That is what
+``--spreads`` also fetches each game's book line, open and close, from ESPN's
+game summary (slow: one request a game; college basketball, the NBA and college
+football, whose summary also carries the yards) and writes
+``tests/fixtures/history/<sport>_lines.csv.gz``: every rated game with its
+book margin beside the model's and each side's games so far. The NFL's comes
+from nflverse's closing lines with the ratings fit on points alone (the
+scanner also reads yards, which nflverse does not carry). That is what
 ``scripts/grade_gaps.py`` grades, the question being who is right when the
 model and the book sit far apart.
 
@@ -197,6 +200,11 @@ def download(raw: Path, sports: list[str]) -> None:
 NHL_BOXSCORE = "https://api-web.nhle.com/v1/gamecenter/{game_id}/boxscore"
 CFB_SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event={game_id}"
 CBB_SUMMARY = "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/summary?event={game_id}"
+SUMMARY = {
+    "cbb": CBB_SUMMARY,
+    "nba": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event={game_id}",
+    "cfb": CFB_SUMMARY,
+}
 VOLUME_THREADS = 3
 VOLUME_PAUSE = 0.25
 
@@ -237,42 +245,58 @@ def parse_lines(payload: dict) -> dict:
     return out
 
 
-def _cbb_lines(game_id: str) -> dict:
-    payload = json.loads(_get(CBB_SUMMARY.format(game_id=game_id)) or b"{}")
-    return parse_lines(payload)
+def _summary_lines(sport: str, game_id: str) -> dict:
+    payload = json.loads(_get(SUMMARY[sport].format(game_id=game_id)) or b"{}")
+    lines = parse_lines(payload)
+    if sport == "cfb":  # the same page carries the yards the ratings read
+        lines["home_vol"], lines["away_vol"] = _yards(payload)
+    return lines
+
+
+def _yards(payload: dict) -> tuple[int | None, int | None]:
+    out: dict[str, int | None] = {"home": None, "away": None}
+    for team in (payload.get("boxscore") or {}).get("teams") or []:
+        for stat in team.get("statistics") or []:
+            if stat.get("name") == "totalYards":
+                try:
+                    out[team["homeAway"]] = int(stat["displayValue"])
+                except (KeyError, ValueError):
+                    pass
+    return out["home"], out["away"]
 
 
 def download_spreads(raw: Path, sports: list[str]) -> None:
-    """Each college basketball game's book line, open and close, from its summary page.
-    Kept in ``cbb_lines.jsonl``, resumable."""
+    """Each game's book line, open and close, from its ESPN summary page, for the sports
+    with one (SUMMARY). Kept in ``<sport>_lines.jsonl``, resumable."""
     from concurrent.futures import ThreadPoolExecutor
 
-    if "cbb" not in sports:
-        return
-    source, target = raw / "cbb.jsonl", raw / "cbb_lines.jsonl"
-    ids = [str(json.loads(line)["id"]) for line in open(source)]
-    done = set()
-    if target.exists():
-        done = {str(json.loads(line)["id"]) for line in open(target)}
-    todo = [i for i in dict.fromkeys(ids) if i not in done]
-    print(f"cbb: {len(todo)} games' lines to fetch", flush=True)
+    for sport in sports:
+        if sport not in SUMMARY:
+            continue
+        source, target = raw / f"{sport}.jsonl", raw / f"{sport}_lines.jsonl"
+        ids = [str(json.loads(line)["id"]) for line in open(source)]
+        done = set()
+        if target.exists():
+            done = {str(json.loads(line)["id"]) for line in open(target)}
+        todo = [i for i in dict.fromkeys(ids) if i not in done]
+        print(f"{sport}: {len(todo)} games' lines to fetch", flush=True)
 
-    def one(game_id: str) -> dict:
-        lines = _cbb_lines(game_id)
-        time.sleep(VOLUME_PAUSE)
-        return {"id": game_id, **lines}
+        def one(game_id: str, sport=sport) -> dict:
+            lines = _summary_lines(sport, game_id)
+            time.sleep(VOLUME_PAUSE)
+            return {"id": game_id, **lines}
 
-    with open(target, "a") as out, ThreadPoolExecutor(VOLUME_THREADS) as pool:
-        for n, row in enumerate(pool.map(one, todo), start=1):
-            out.write(json.dumps(row) + "\n")
-            if n % 500 == 0:
-                out.flush()
-                print(f"cbb: {n}/{len(todo)}", flush=True)
-    print("cbb: lines done", flush=True)
+        with open(target, "a") as out, ThreadPoolExecutor(VOLUME_THREADS) as pool:
+            for n, row in enumerate(pool.map(one, todo), start=1):
+                out.write(json.dumps(row) + "\n")
+                if n % 500 == 0:
+                    out.flush()
+                    print(f"{sport}: {n}/{len(todo)}", flush=True)
+        print(f"{sport}: lines done", flush=True)
 
 
-def _lines(raw: Path) -> dict[str, dict]:
-    path = raw / "cbb_lines.jsonl"
+def _lines(raw: Path, sport: str = "cbb") -> dict[str, dict]:
+    path = raw / f"{sport}_lines.jsonl"
     if not path.exists():
         return {}
     return {str(row["id"]): row for row in map(json.loads, open(path))}
@@ -328,12 +352,15 @@ def download_volumes(raw: Path, sports: list[str]) -> None:
 
 def _volumes(raw: Path, sport: str) -> dict[str, tuple[int | None, int | None]]:
     path = raw / f"{sport}_volume.jsonl"
-    if not path.exists():
-        return {}
     out = {}
-    for line in open(path):
-        row = json.loads(line)
-        out[str(row["id"])] = (row["home"], row["away"])
+    if path.exists():
+        for line in open(path):
+            row = json.loads(line)
+            out[str(row["id"])] = (row["home"], row["away"])
+    elif sport == "cfb":  # the lines fetch keeps the yards from the same summary page
+        for game_id, row in _lines(raw, sport).items():
+            if row.get("home_vol") is not None:
+                out[game_id] = (row["home_vol"], row["away_vol"])
     return out
 
 
@@ -611,22 +638,56 @@ def build(raw: Path, sport: str) -> pd.DataFrame:
     return rated[keep].round({"exp_margin": 2, "exp_total": 2})
 
 
-LINES_OUT = OUT / "cbb_lines.csv.gz"
+def lines_out(sport: str) -> Path:
+    return OUT / f"{sport}_lines.csv.gz"
 
 
-def build_lines(raw: Path) -> pd.DataFrame:
-    """Every rated college basketball game that has a book line: the model's margin and
-    total (ratings on earlier games, as the scanner's raw projection), the book's at the
-    close and, where ESPN kept it, the open, each side's games so far, and the final.
-    Margins are the home side's, positive when favoured, as ``exp_margin`` is."""
-    games = load_games(raw, "cbb")
-    rated = rate_before(games, "cbb")
-    lines = _lines(raw)
-    rows = rated[rated["id"].astype(str).isin(lines)].copy()
-    for column in ("spread_open", "spread_close", "total_open", "total_close"):
-        rows[column] = pd.to_numeric(
-            [lines[str(i)].get(column) for i in rows["id"]], errors="coerce"
-        )
+def _nfl_games(raw: Path) -> pd.DataFrame:
+    """nflverse's regular-season games from 2010 as the rating frame, closing lines beside:
+    ``spread_close`` is the home side's handicap (negative when favoured), as ESPN's is."""
+    g = pd.read_csv(raw / "nfl_games.csv")
+    g = g[(g.game_type == "REG") & (g.season >= 2010) & g.result.notna()]
+    g = g[g.spread_line.notna()]
+    return pd.DataFrame(
+        {
+            "id": g.game_id.astype(str),
+            "season": g.season.astype(int),
+            "date": g.gameday,
+            "neutral": g.location.ne("Home"),
+            "home": g.home_team,
+            "away": g.away_team,
+            "home_reg": g.home_score.astype(int),
+            "away_reg": g.away_score.astype(int),
+            "home_final": g.home_score.astype(int),
+            "away_final": g.away_score.astype(int),
+            "ot": g.overtime.fillna(0).astype(int),
+            "spread_close": -g.spread_line,
+            "spread_open": float("nan"),
+            "total_close": g.total_line,
+            "total_open": float("nan"),
+        }
+    ).reset_index(drop=True)
+
+
+def build_lines(raw: Path, sport: str = "cbb") -> pd.DataFrame:
+    """Every rated game of a sport that has a book line: the model's margin and total
+    (ratings on earlier games, as the scanner's raw projection), the book's at the close
+    and, where ESPN kept it, the open, each side's games so far, and the final. Margins
+    are the home side's, positive when favoured, as ``exp_margin`` is."""
+    if sport == "nfl":
+        games = _nfl_games(raw)
+        rows = rate_before(games, "nfl")
+    else:
+        games = load_games(raw, sport)
+        rated = rate_before(games, sport)
+        if sport == "cfb":
+            rated = graded_subset(raw, sport, rated)
+        lines = _lines(raw, sport)
+        rows = rated[rated["id"].astype(str).isin(lines)].copy()
+        for column in ("spread_open", "spread_close", "total_open", "total_close"):
+            rows[column] = pd.to_numeric(
+                [lines[str(i)].get(column) for i in rows["id"]], errors="coerce"
+            )
     rows = rows[rows.spread_close.notna()]
     out = pd.DataFrame(
         {
@@ -670,9 +731,11 @@ def main() -> None:
         return
     if args.spreads_only:
         download_spreads(args.raw, args.sports)
-        lines = build_lines(args.raw)
-        lines.to_csv(LINES_OUT, index=False)
-        print("cbb lines", len(lines), "games", flush=True)
+        for sport in args.sports:
+            if sport in SUMMARY or sport == "nfl":
+                lines = build_lines(args.raw, sport)
+                lines.to_csv(lines_out(sport), index=False)
+                print(sport, "lines", len(lines), "games", flush=True)
         return
     if not args.skip_download:
         download(args.raw, args.sports)
@@ -680,9 +743,11 @@ def main() -> None:
         download_volumes(args.raw, args.sports)
     if args.spreads:
         download_spreads(args.raw, args.sports)
-        lines = build_lines(args.raw)
-        lines.to_csv(LINES_OUT, index=False)
-        print("cbb lines", len(lines), "games", flush=True)
+        for sport in args.sports:
+            if sport in SUMMARY or sport == "nfl":
+                lines = build_lines(args.raw, sport)
+                lines.to_csv(lines_out(sport), index=False)
+                print(sport, "lines", len(lines), "games", flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
     for sport in args.sports:
         frame = build(args.raw, sport)

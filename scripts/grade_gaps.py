@@ -1,11 +1,13 @@
 """Who is right when the model and the book sit far apart: the gap report, re-runnable.
 
-    python scripts/grade_gaps.py [--lines FILE] [--json OUT] [--sample N]
+    python scripts/grade_gaps.py [--sports cbb nba cfb nfl] [--json OUT] [--sample N]
 
-Every college basketball game in ``tests/fixtures/history/cbb_lines.csv.gz``
+Every game in ``tests/fixtures/history/<sport>_lines.csv.gz``
 (``fetch_history.py --spreads``) carries the raw model's margin from ratings fit
 only on that season's earlier games, the book's closing margin (and the open
-where ESPN kept it), each side's games so far and the final. The blend is laid
+where ESPN kept it), each side's games so far and the final. The NFL's ratings
+are on points alone, nflverse carrying no yards, so its raw model is a touch
+rougher than the scanner's. The blend is laid
 over it as the scanner does (``projection.BOOK_PSEUDO_GAMES``: the model's
 weight is games over games plus six). Then, by how far the raw model sat from
 the book:
@@ -40,15 +42,31 @@ from scanner.config import CARD_BIG_LINE_GAMES, CARD_BIG_LINE_SIGMAS  # noqa: E4
 from scanner.grid import cover, grid, without_push  # noqa: E402
 from scanner.projection import BOOK_PSEUDO_GAMES, tuning_for  # noqa: E402
 
-LINES = ROOT / "tests" / "fixtures" / "history" / "cbb_lines.csv.gz"
-SPORT = "cbb"
-GAP_BANDS = ((0, 5), (5, 10), (10, 15), (15, 20), (20, 25), (25, 30), (30, 99))
-SPREAD_BANDS = ((0, 12), (12, 24), (24, 30), (30, 99))
-EARLY_DAYS = 17  # the first weeks of a season, where the ratings have the least behind them
+HISTORY = ROOT / "tests" / "fixtures" / "history"
+SPORTS = ("cbb", "nba", "cfb", "nfl")
+GAP_BANDS = {
+    "cbb": ((0, 5), (5, 10), (10, 15), (15, 20), (20, 25), (25, 30), (30, 99)),
+    "nba": ((0, 3), (3, 6), (6, 9), (9, 12), (12, 15), (15, 99)),
+    "cfb": ((0, 5), (5, 10), (10, 15), (15, 20), (20, 25), (25, 30), (30, 99)),
+    "nfl": ((0, 3), (3, 6), (6, 9), (9, 12), (12, 15), (15, 99)),
+}
+SPREAD_BANDS = {
+    "cbb": ((0, 12), (12, 24), (24, 30), (30, 99)),
+    "nba": ((0, 7), (7, 14), (14, 99)),
+    "cfb": ((0, 16), (16, 32.5), (32.5, 40), (40, 99)),
+    "nfl": ((0, 7), (7, 14), (14, 99)),
+}
+# The first weeks of a season, where the ratings have the least behind them.
+EARLY_DAYS = {"cbb": 17, "nba": 14, "cfb": 21, "nfl": 21}
 ROUNDING = (0.25, 0.5)  # expectations are rounded this finely so nearby games share a grid
+SPORT = "cbb"  # the sport being graded; set by grade()
 
 
-def load(path: Path = LINES, sample: int | None = None) -> list[dict]:
+def lines_path(sport: str) -> Path:
+    return HISTORY / f"{sport}_lines.csv.gz"
+
+
+def load(path: Path, sample: int | None = None, sport: str = "cbb") -> list[dict]:
     with gzip.open(path, "rt") as handle:
         rows = list(csv.DictReader(handle))
     out = []
@@ -77,7 +95,7 @@ def load(path: Path = LINES, sample: int | None = None) -> list[dict]:
     for game in out:
         first[game["season"]] = min(first.get(game["season"], game["date"]), game["date"])
     for game in out:
-        game["early"] = _days_between(first[game["season"]], game["date"]) < EARLY_DAYS
+        game["early"] = _days_between(first[game["season"]], game["date"]) < EARLY_DAYS[sport]
     if sample:
         step = max(1, len(out) // sample)
         out = out[::step][:sample]
@@ -201,11 +219,13 @@ def _calibration(games: list[dict], key: str) -> dict:
     return out
 
 
-def grade(games: list[dict]) -> dict:
+def grade(games: list[dict], sport: str = "cbb") -> dict:
+    global SPORT
+    SPORT = sport
     sigma = tuning_for(SPORT).sigma
     big = CARD_BIG_LINE_SIGMAS * sigma
     by_gap = {}
-    for low, high in GAP_BANDS:
+    for low, high in GAP_BANDS[sport]:
         part = [g for g in games if low <= abs(g["exp_margin"] - g["book_margin"]) < high]
         by_gap[f"{low}-{high}"] = {
             "games": len(part),
@@ -221,7 +241,7 @@ def grade(games: list[dict]) -> dict:
         }
     big_games = [g for g in games if abs(g["book_margin"]) >= big]
     by_spread = {}
-    for low, high in SPREAD_BANDS:
+    for low, high in SPREAD_BANDS[sport]:
         part = [g for g in games if low <= abs(g["book_margin"]) < high]
         by_spread[f"{low}-{high}"] = {
             "underdog": _dog_record(part),
@@ -231,6 +251,7 @@ def grade(games: list[dict]) -> dict:
     few = [g for g in big_games if min(g["home_games"], g["away_games"]) < CARD_BIG_LINE_GAMES]
     many = [g for g in big_games if min(g["home_games"], g["away_games"]) >= CARD_BIG_LINE_GAMES]
     return {
+        "sport": sport,
         "games": len(games),
         "seasons": sorted({g["season"] for g in games}),
         "rmse": {
@@ -291,7 +312,7 @@ def _num(value: float | None, digits: int = 1) -> str:
 
 def report(result: dict) -> str:
     lines = [
-        f"College basketball, {result['games']} games with a closing spread, seasons "
+        f"## {result['sport'].upper()}: {result['games']} games with a closing spread, seasons "
         f"{', '.join(str(s) for s in result['seasons'])}.",
         f"Margin miss: model {_num(result['rmse']['model'])}, blend "
         f"{_num(result['rmse']['blend'])}, close {_num(result['rmse']['close'])}.",
@@ -352,14 +373,22 @@ def report(result: dict) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--lines", type=Path, default=LINES)
+    parser.add_argument("--sports", nargs="+", default=list(SPORTS))
+    parser.add_argument("--lines", type=Path, default=None, help="a lines file, one sport")
     parser.add_argument("--json", type=Path, default=None)
     parser.add_argument("--sample", type=int, default=None)
     args = parser.parse_args()
-    result = grade(load(args.lines, args.sample))
-    print(report(result))
+    results = {}
+    for sport in args.sports:
+        path = args.lines or lines_path(sport)
+        if not path.exists():
+            print(f"## {sport.upper()}: no lines file at {path}\n")
+            continue
+        results[sport] = grade(load(path, args.sample, sport), sport)
+        print(report(results[sport]))
+        print()
     if args.json:
-        args.json.write_text(json.dumps(result, indent=1))
+        args.json.write_text(json.dumps(results, indent=1))
 
 
 if __name__ == "__main__":
