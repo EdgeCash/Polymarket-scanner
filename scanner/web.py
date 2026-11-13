@@ -22,6 +22,8 @@ from scanner.card import (
     MARKET_MONEYLINE,
     MARKET_SPREAD,
     MARKET_TOTAL,
+    basis_of,
+    basis_word,
     card_date_for,
     lock_moment,
 )
@@ -1457,6 +1459,20 @@ def _value_text(pick: dict, value: float | None) -> str:
     return f"{pick['home']} {-value:+.1f}"
 
 
+def _raw_beside(pick: dict) -> str:
+    """For a pick ranked on the blend, the raw model's own number and the blend's weight."""
+    if basis_of(pick) != "blend":
+        return ""
+    detail = pick.get("detail") or {}
+    raw = (detail.get("projection") or {}).get("raw") or {}
+    value = raw.get("total" if pick["market"] == MARKET_TOTAL else "margin")
+    if value is None:
+        return ""
+    weight = detail.get("blend_weight")
+    share = "" if weight is None else f", {weight * 100:.0f}% model"
+    return f" (model {_value_text(pick, value)}{share})"
+
+
 def _result_chip(pick: dict) -> str:
     outcome = pick.get("outcome")
     if outcome is None:
@@ -1480,7 +1496,7 @@ def _pick_picture(pick: dict) -> str:
             mean=pick["model_value"],
             side_above=pick["side"] == "over",
             line_label=f"book {pick['book_value']:g}",
-            mean_label=f"model {pick['model_value']:.1f}",
+            mean_label=f"{basis_word(pick)} {pick['model_value']:.1f}",
             axis_label=f"Total {unit}",
         )
     return svg_histogram(
@@ -1489,7 +1505,7 @@ def _pick_picture(pick: dict) -> str:
         mean=pick["model_value"],
         side_above=pick["side"] == "home",
         line_label=f"book {home} {-pick['book_value']:+.1f}",
-        mean_label=f"model {home} {-pick['model_value']:+.1f}",
+        mean_label=f"{basis_word(pick)} {home} {-pick['model_value']:+.1f}",
         axis_label=f"Margin ({home}, {unit})",
     )
 
@@ -1548,7 +1564,8 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
         f"{_result_chip(pick)}"
     )
     numbers = (
-        f"Model {html.escape(_value_text(pick, pick['model_value']))} · book "
+        f"{basis_word(pick).capitalize()} {html.escape(_value_text(pick, pick['model_value']))}"
+        f"{html.escape(_raw_beside(pick))} · book "
         f"{html.escape(_value_text(pick, pick['book_value']))} · {abs(pick['gap']):.1f} {unit} "
         f"apart, {pick['z']:.2f} of a game's spread."
     )
@@ -1556,7 +1573,8 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
     if edge is not None:
         # Ranked by edge: the grid's chance given no push, less what the price needs.
         conviction = (
-            f"Edge {edge * 100:+.1f} points: the model's {detail['chance_no_push'] * 100:.1f}% "
+            f"Edge {edge * 100:+.1f} points: the {basis_word(pick)}'s "
+            f"{detail['chance_no_push'] * 100:.1f}% "
             f"against the {detail['break_even'] * 100:.1f}% the price needs; conviction "
             f"{pick['conviction'] * 100:+.1f} with trust {pick['trust']:.2f} "
             f"({html.escape(trust_text)}).{final}"
@@ -1693,7 +1711,9 @@ def render_card(
 def _sim_sections(sport: str, home: str, away: str, projection: dict, sim: dict, pick) -> str:
     """The full picture of one simulated game: margins, totals, every score, every line."""
     unit = LOGS[sport].unit if sport in LOGS else "points"
-    raw, book = projection.get("raw") or {}, projection.get("book") or {}
+    source = str(sim.get("source") or "raw")  # the view the picture was laid out from
+    word = "blend" if source == "blend" else "model"
+    raw, book = projection.get(source) or {}, projection.get("book") or {}
     market = pick["market"] if pick else None
     side = pick["side"] if pick else None
     margin_side = None if market not in (MARKET_SPREAD, MARKET_MONEYLINE) else side == "home"
@@ -1706,7 +1726,7 @@ def _sim_sections(sport: str, home: str, away: str, projection: dict, sim: dict,
         mean=raw.get("margin"),
         side_above=margin_side,
         line_label="" if book_margin is None else f"book {home} {-book_margin:+.1f}",
-        mean_label=f"model {home} {-raw['margin']:+.1f}" if raw.get("margin") is not None else "",
+        mean_label=f"{word} {home} {-raw['margin']:+.1f}" if raw.get("margin") is not None else "",
         axis_label=f"Margin ({home}, {unit})",
     )
     total_svg = svg_histogram(
@@ -1715,7 +1735,7 @@ def _sim_sections(sport: str, home: str, away: str, projection: dict, sim: dict,
         mean=raw.get("total"),
         side_above=total_side,
         line_label="" if book_total is None else f"book {book_total:g}",
-        mean_label=f"model {raw['total']:.1f}" if raw.get("total") is not None else "",
+        mean_label=f"{word} {raw['total']:.1f}" if raw.get("total") is not None else "",
         axis_label=f"Total {unit}",
     )
     draws = sim["draws"]

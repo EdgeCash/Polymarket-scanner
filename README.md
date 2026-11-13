@@ -44,8 +44,9 @@ scanner/
   grid.py          every final score's exact chance: the one source of odds
   simulate.py      the grid as 100,000 games per pick, as pictures
 tests/             pytest suite; fixtures/ holds saved API responses
-scripts/           smoke_live.py (by hand), train_winprob.py, and the simulator's
-                   fetch_history.py, build_sim_tables.py and grade_sim.py
+scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
+                   fetch_history.py, build_sim_tables.py and grade_sim.py, and
+                   grade_gaps.py (who is right when model and book sit far apart)
 docs/              winprob_report.md
 ```
 
@@ -641,6 +642,23 @@ the others on the same scale; with 360 teams and few games each, its early
 gaps from the book are noisy, which the per-sport trust weight and the record
 by sport are there to show.
 
+The first ten days of the 2026-27 season showed why the card no longer ranks
+on the raw model. Its ratings are a residual over games plus four pseudo-games
+with no preseason prior, so after three games a side keeps 43% of what it has
+shown and the opponent adjustment has little to work with: over 15,460 games
+of history the raw model's biggest projected margin in a season's first ten
+days is 26 points, while 3% of real margins in those days are 40 or more. The
+book's 44.5 on Duke against SIUE came from a prior the model has not got; the
+raw model said 12.5, the grid turned that into "SIUE +44.5 covers 99.6%", and
+the card's edge in probability points put five such underdogs above every
+real NBA or NFL edge on the board, while the college closing lines had moved
+the model's way in 11% of 283 games. `scripts/grade_gaps.py` grades the
+question on three seasons of closing spreads (`fetch_history.py --spreads`,
+`tests/fixtures/history/cbb_lines.csv.gz`): the raw model's side, the blend's
+side and the underdog against the close, by how far the model sat from the
+book and by the size of the spread, with what the grid gave each side against
+how often it came in (`docs/sim_report.md`).
+
 ## Player lines
 
 Every summary the log fetches also carries each player's line, and from
@@ -752,9 +770,12 @@ next 24 hours:
 
 - One side per game, the stronger of its spread (the moneyline in hockey,
   where the puck line never moves) and its total. The side is the one the
-  model's raw number takes against the book's line at that moment, the same
-  comparison the scorecard's gap rows grade.
-- Each side's edge is the model's chance it comes in, read from the score grid
+  blended projection takes against the book's line at that moment: the raw
+  model's number weighted by games over games plus six, the book's by the rest
+  (`projection.BOOK_PSEUDO_GAMES`), as the stake suggestions already use. The
+  raw model's own number is kept beside each pick, and the scorecard's gap rows
+  still grade the raw model.
+- Each side's edge is the blend's chance it comes in, read from the score grid
   (key numbers, overtime and all, given the line does not push, since a push is
   a refund), less the chance the book's price needs to break even (52.4% at
   -110). Every market and sport is then on one scale, and half a point across
@@ -764,9 +785,13 @@ next 24 hours:
   its closing lines that moved the model's way. A side with no edge keeps its
   edge unweighted, so it ranks below every side with one and a thin day still
   fills its card. Thin projections (a side with under 3 games) and games
-  without a book line are left out. Until November 2026 the card ranked by the
-  gap in the sport's usual spread of results (`sigma` in `projection.TUNING`);
-  picks locked before then keep that conviction and say so on their page.
+  without a book line are left out, and so is a spread two of the sport's
+  standard deviations or more from level (24 points in college basketball, 28
+  in the NBA; `CARD_BIG_LINE_SIGMAS`) until both sides have 8 games behind
+  their ratings (`CARD_BIG_LINE_GAMES`); the game's total is still on offer.
+  Until November 2026 the card ranked by the gap in the sport's usual spread of
+  results (`sigma` in `projection.TUNING`); then, for ten days, by the raw
+  model's edge; picks locked before then keep their numbers and say so.
 - The top `CARD_PICKS` (5) are written to the diary (`cards`, `card_picks`)
   with the book's line and price at the lock, ranked, and never changed. A day
   with nothing eligible is left unlocked so a later pass can lock it; a card

@@ -595,11 +595,13 @@ def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
     assert '<span class="rank">#1</span>' in page and "Over 41.5" in page and "(-105)" in page
     assert "WSH +3.5" in page and "<span class='chip open'>open</span>" in page
     assert "In 100,000 simulated games Over 41.5 lands" in page and "the price says 51%" in page
-    assert "<svg" in page and "book 41.5" in page and "model" in page
+    assert "<svg" in page and "book 41.5" in page and "blend 51.0" in page
+    # The blend is what the pick is ranked and drawn on; the raw model sits beside it.
+    assert "Blend 51.0 (model 51.0, 100% model) · book 41.5 · " in page
     assert "/card/2026-10-11/1'>Full simulation" in page and "Record by rank" not in page
     assert client.get("/card/2026-10-11").text == page
     # Each pick shows the edge it was ranked by: its chance against what the price needs.
-    assert re.search(r"Edge \+\d+\.\d points: the model's \d+\.\d% against the 51\.2%", page)
+    assert re.search(r"Edge \+\d+\.\d points: the blend's \d+\.\d% against the 51\.2%", page)
     # A pick locked before the card ranked by edge keeps its old words.
     from scanner.web import _pick_block
 
@@ -610,10 +612,14 @@ def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
         if k not in ("edge", "chance_no_push", "break_even")
     }
     assert "Conviction 0." in _pick_block(old_pick, settings, link=False)
+    # A pick locked when the card ranked on the raw model says so.
+    old_pick["detail"] = {k: v for k, v in old_pick["detail"].items() if k != "basis"}
+    assert "Model 51.0 · book 41.5" in _pick_block(old_pick, settings, link=False)
 
     # The pick's own page re-runs the same simulation with every score and line.
     pick = client.get("/card/2026-10-11/1").text
     assert "<h1>Pick #1, 2026-10-11</h1>" in pick and "Likeliest finals" in pick
+    assert "blend 51.0" in pick  # the picture is the blend's, as the ranking was
     assert "Every score" in pick and "CLE score" in pick and "Spread at other lines" in pick
     assert "Total at other lines" in pick and "<td>41.5</td>" in pick
     assert "Full simulation" not in pick

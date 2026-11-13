@@ -47,9 +47,13 @@ def test_the_pick_image_carries_the_call_the_numbers_and_the_histogram():
     svg = pick_svg(diary.card_pick("2026-10-11", 1), settings)
     assert ">PIT at CLE<" in svg and ">Over 41.5<" in svg and ">(-105)<" in svg
     assert ">WIN +0.95u<" in svg and ">Final PIT 24, CLE 27<" in svg
-    assert ">Model 51.0, book 41.5<" in svg and "0.70 of a game&#x27;s spread<" in svg
+    assert ">Blend 51.0, book 41.5<" in svg and "0.70 of a game&#x27;s spread<" in svg
     assert "of 100,000 simulated games<" in svg and ">The price says 51%<" in svg
-    assert "<svg x='520' y='130'" in svg and "book 41.5" in svg and "model 51.0" in svg
+    assert "<svg x='520' y='130'" in svg and "book 41.5" in svg and "blend 51.0" in svg
+    old = diary.card_pick("2026-10-11", 1)
+    old["detail"] = {k: v for k, v in old["detail"].items() if k != "basis"}
+    old_svg = pick_svg(old, settings)
+    assert ">Model 51.0, book 41.5<" in old_svg and "model 51.0" in old_svg
     assert "width='100%'" not in svg
     open_pick = pick_svg(diary.card_pick("2026-10-11", 2), settings)
     assert ">WSH +3.5<" in open_pick and "WIN" not in open_pick and "Final" not in open_pick

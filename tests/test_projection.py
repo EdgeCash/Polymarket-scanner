@@ -214,8 +214,10 @@ def test_summarise_buckets_by_how_far_the_model_sat_from_the_book():
     assert out["ats"]["2"] == {"wins": 1, "losses": 1, "pushes": 0}
     assert out["ats"]["3"] == {"wins": 1, "losses": 0, "pushes": 0}
     assert out["ats"]["5"] == {"wins": 1, "losses": 0, "pushes": 0}
+    assert out["ats"]["15"] == {"wins": 0, "losses": 0, "pushes": 0}
     assert out["ou"]["1"] == {"wins": 1, "losses": 0, "pushes": 1}
     assert out["ou"]["5"] == {"wins": 0, "losses": 0, "pushes": 0}
+    assert out["ou"]["25"] == {"wins": 0, "losses": 0, "pushes": 0}
     assert out["clv"] == {
         "margin": pytest.approx(0.5 / 3),
         "total": None,
@@ -288,7 +290,8 @@ def test_hockey_fits_on_shots_as_the_volume_half_with_finer_gap_buckets():
     assert g["ats"] is not None and g["clv"]["margin"] is not None
     s = summarise([g], "nhl")
     assert s["buckets"] == ["0.25", "0.5", "0.75", "1"] and set(s["ats"]) == set(s["buckets"])
-    assert summarise([], "nfl")["buckets"] == ["1", "2", "3", "5"] == summarise([])["buckets"]
+    wide = ["1", "2", "3", "5", "15", "25"]
+    assert summarise([], "nfl")["buckets"] == wide == summarise([])["buckets"]
     assert fit([], "nba").first_half_share == 0.5 and fit([], "nba").hfa == 2.0
 
 

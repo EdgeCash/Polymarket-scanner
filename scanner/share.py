@@ -11,6 +11,7 @@ from __future__ import annotations
 import html
 from datetime import datetime
 
+from scanner.card import basis_word
 from scanner.config import Settings
 from scanner.simulate import svg_histogram
 
@@ -186,7 +187,7 @@ def pick_svg(pick: dict, settings: Settings) -> str:
         parts.append(_text(MARGIN + len(result[0]) * 22 * 0.62 + 36, y + 2, final, 20, fill=DIM))
     unit = "goals" if pick["sport"] == "nhl" else "points"
     lines = [
-        f"Model {_value_text(pick, pick['model_value'])}, book "
+        f"{basis_word(pick).capitalize()} {_value_text(pick, pick['model_value'])}, book "
         f"{_value_text(pick, pick['book_value'])}",
         f"{abs(pick['gap']):.1f} {unit} apart, {pick['z']:.2f} of a game's spread",
     ]
@@ -203,7 +204,8 @@ def pick_svg(pick: dict, settings: Settings) -> str:
             hist = svg_histogram(
                 sim["total"]["hist"], line=pick["book_value"], mean=pick["model_value"],
                 side_above=pick["side"] == "over", line_label=f"book {pick['book_value']:g}",
-                mean_label=f"model {pick['model_value']:.1f}", axis_label=f"Total {unit}",
+                mean_label=f"{basis_word(pick)} {pick['model_value']:.1f}",
+                axis_label=f"Total {unit}",
                 muted="#334155", text=INK,
             )  # fmt: skip
         else:
@@ -211,7 +213,7 @@ def pick_svg(pick: dict, settings: Settings) -> str:
                 sim["margin"]["hist"], line=pick["book_value"], mean=pick["model_value"],
                 side_above=pick["side"] == "home",
                 line_label=f"book {pick['home']} {-pick['book_value']:+.1f}",
-                mean_label=f"model {pick['home']} {-pick['model_value']:+.1f}",
+                mean_label=f"{basis_word(pick)} {pick['home']} {-pick['model_value']:+.1f}",
                 axis_label=f"Margin ({pick['home']}, {unit})", muted="#334155", text=INK,
             )  # fmt: skip
         if hist:

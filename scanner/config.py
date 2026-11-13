@@ -68,6 +68,11 @@ GAMELOG_SPORT_KEYS = ("nfl", "cfb", "nba", "nhl", "cbb")  # sports with a game l
 SIM_DRAWS = 100_000  # simulated games behind each card pick's picture
 CARD_WINDOW_HOURS = 24.0  # a card covers the games that start within a day of its lock
 CARD_TRUST_MIN_CLOSED = 20  # closed lines a sport needs before its record weighs the ranking
+# A spread this many of the sport's standard deviations from level (24 points in college
+# basketball, 28 in the NBA) stays off the card until both sides have this many games
+# behind their ratings: those are the games the book's prior knows best and the ratings least.
+CARD_BIG_LINE_SIGMAS = 2.0
+CARD_BIG_LINE_GAMES = 8
 CARD_LATE_MINUTES = 30.0  # a card locked later than this after its time is marked late
 PLAYER_MIN_GAMES = 2  # games a player needs before his line is projected
 PLAYER_REFRESH_MINUTES = 60.0  # how often a game's player lines are projected again

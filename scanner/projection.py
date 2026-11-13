@@ -33,7 +33,10 @@ PSEUDO_GAMES = 4.0  # shrinkage: a rating is its residual sum over (games + this
 BOOK_PSEUDO_GAMES = 6.0  # blend: the model's weight is games / (games + this)
 VOLUME_SHARE = 0.5  # half of a performance is points, half volume-based points
 MIN_GAMES = 3  # below this the projection is marked thin
-GAP_BUCKETS = (1.0, 2.0, 3.0, 5.0)  # the scorecard's "model differs from the book by" rows
+# The scorecard's "model differs from the book by" rows. The two wide ones exist for
+# the big-spread games of early college basketball, where the raw model sits 20 to 30
+# points inside the book's number: they are the only rows that can say who was right.
+GAP_BUCKETS = (1.0, 2.0, 3.0, 5.0, 15.0, 25.0)
 MONEYLINE_CLAMP = 0.02  # a book win probability is kept this far from 0 and 1 before inverting
 
 

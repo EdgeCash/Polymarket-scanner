@@ -1,7 +1,7 @@
 """The daily card: the model's few highest-conviction sides, chosen by rule, locked, graded.
 
 Once a day, at a fixed time, every projected game in the next day is ranked by
-its edge: the model's chance that the side comes in, from the same score grid
+its edge: the blend's chance that the side comes in, from the same score grid
 the simulation pages draw (key numbers, overtime and all, and given the line
 does not push, since a push is a refund), less the chance the book's price
 needs to break even (52.4% at -110). That puts every market and every sport on
@@ -12,6 +12,18 @@ of its spread (moneyline in hockey) and its total; the top few make the card.
 The lines are the book's at that moment; nothing is chosen by hand and nothing
 is changed afterwards. Each pick is settled at the final and the whole record,
 rank by rank, is public on the card page.
+
+The blend, not the raw model, because early in a season the raw ratings are
+shrunk hard toward average and carry no prior: in November a team that has
+played three games keeps less than half of what it has shown, so the raw model
+cannot say Duke by 40 and every big spread on the board looks like a huge
+underdog edge to it. The blend leans on the book's number while games are few
+(scanner.projection), which is also what the stake suggestions already use.
+A spread two of the sport's standard deviations or more from level (24 points
+in college basketball) is left off the card until both sides have
+CARD_BIG_LINE_GAMES games behind them: those are the games where the book's
+prior counts for most and the ratings for least (scripts/grade_gaps.py grades
+the question on history).
 
 Conviction is not accuracy. The biggest edge over the book is as likely a
 missing quarterback as an edge, which is why the ranking also leans on the
@@ -28,6 +40,8 @@ from zoneinfo import ZoneInfo
 
 from scanner.books import BookLine
 from scanner.config import (
+    CARD_BIG_LINE_GAMES,
+    CARD_BIG_LINE_SIGMAS,
     CARD_LATE_MINUTES,
     CARD_TRUST_MIN_CLOSED,
     CARD_WINDOW_HOURS,
@@ -40,8 +54,20 @@ from scanner.simulate import pick_chance, seed_for, simulate
 from scanner.stakes import OUTCOME_PUSH, settle
 
 MARKET_SPREAD, MARKET_TOTAL, MARKET_MONEYLINE = "spread", "total", "moneyline"
+BASIS = "blend"  # which of the projection's views the card ranks and draws
 STANDARD_ODDS = -110  # the usual price on a spread or total when the book quotes none
 OUTCOME_NOT_GRADED = "not_graded"
+
+
+def basis_of(pick: dict) -> str:
+    """Which view a stored pick's numbers are: ``blend`` (BASIS) or, for a pick locked
+    before the card ranked on the blend, ``raw``."""
+    return str((pick.get("detail") or {}).get("basis") or "raw")
+
+
+def basis_word(pick: dict) -> str:
+    """How the pages name a pick's numbers: "blend" or "model"."""
+    return "blend" if basis_of(pick) == BASIS else "model"
 
 
 def payout(odds: int | None) -> float:
@@ -115,19 +141,20 @@ class Candidate:
 
 def side_chance(
     sport: str,
-    raw: dict,
+    view: dict,
     sigma: float,
     sigma_total: float,
     market: str,
     side: str,
     line: float | None,
 ) -> float:
-    """The model's chance a side comes in, from the score grid, given no push.
+    """The chance a side comes in from ``view``'s margin and total (the projection's
+    raw or blend part), from the score grid, given no push.
 
     The plain bell curve stands in when the grid cannot be laid out (a projection
     without a total, say).
     """
-    margin, total = raw.get("margin"), raw.get("total")
+    margin, total = view.get("margin"), view.get("total")
     g = grid(sport, margin, total, sigma, sigma_total) if None not in (margin, total) else None
     if market == MARKET_MONEYLINE:
         p_home = g.home_win if g is not None else win_probability(margin, sigma)
@@ -165,9 +192,27 @@ def _label(market: str, side: str, line: float | None, home: str, away: str) -> 
     return f"{team} {handicap:+g}"
 
 
+def big_line(book_margin: float | None, sigma: float, projection: dict) -> bool:
+    """Whether a book margin is too far from level for the ratings behind ``projection``.
+
+    True when the margin is CARD_BIG_LINE_SIGMAS of the sport's spread or more and
+    either side has fewer than CARD_BIG_LINE_GAMES games behind its rating (none
+    known counts as none played).
+    """
+    if book_margin is None or abs(book_margin) < CARD_BIG_LINE_SIGMAS * sigma:
+        return False
+    used = projection.get("games_used") or {}
+    games = min(int(used.get("home") or 0), int(used.get("away") or 0))
+    return games < CARD_BIG_LINE_GAMES
+
+
 def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[Candidate]:
-    """A game's possible picks: its margin side and its total side, where the book has a line."""
-    raw, book_parts = projection.get("raw") or {}, projection.get("book") or {}
+    """A game's possible picks: its margin side and its total side, where the book has a line.
+
+    The numbers are the projection's BASIS view (the blend); a spread the ratings
+    are not yet entitled to argue with (``big_line``) yields no margin side.
+    """
+    view, book_parts = projection.get(BASIS) or {}, projection.get("book") or {}
     if projection.get("thin") or not book_parts:
         return []
     tuning = tuning_for(sport)
@@ -177,11 +222,16 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
     game_id = str(projection.get("game_id") or "")
 
     def chance_of(market: str, side: str, line: float | None) -> float:
-        return side_chance(sport, raw, sigma, sigma_total, market, side, line)
+        return side_chance(sport, view, sigma, sigma_total, market, side, line)
 
     out = []
-    margin, book_margin = raw.get("margin"), book_parts.get("margin")
-    if margin is not None and book_margin is not None and margin != book_margin:
+    margin, book_margin = view.get("margin"), book_parts.get("margin")
+    if (
+        margin is not None
+        and book_margin is not None
+        and margin != book_margin
+        and not big_line(book_margin, sigma, projection)
+    ):
         gap = margin - book_margin
         side = "home" if gap > 0 else "away"
         if tuning.margin_from_moneyline:
@@ -223,7 +273,7 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                     chance_of,
                 )  # fmt: skip
             )
-    total, book_total = raw.get("total"), book_parts.get("total")
+    total, book_total = view.get("total"), book_parts.get("total")
     if total is not None and book_total is not None and total != book_total:
         gap = total - book_total
         side = "over" if gap > 0 else "under"
@@ -254,8 +304,9 @@ def choose(
     """Rank every game's strongest side by conviction and keep the top ``picks``.
 
     A side's conviction is its edge times its sport's trust. A side with no edge
-    (the price asks for more than the model gives) keeps its edge unweighted, so
-    it ranks below every side with one and a thin day still fills its card.
+    (the price asks for more than the blend gives) keeps its edge unweighted, so
+    it ranks below every side with one and a thin day still fills its card. The
+    edge, the chance and the picture are all the blend's (BASIS).
 
     Each entry of ``games`` is a dict with ``sport``, ``game_id``, ``kickoff``
     (aware), ``home`` and ``away`` (the slate's team dicts), ``book`` (a BookLine
@@ -278,8 +329,9 @@ def choose(
         projection = game["projection"]
         stamp = str(game.get("updated_at") or kickoff.isoformat())
         seed = seed_for(best.sport, best.game_id, stamp)
-        sim = simulate(projection, best.sport, draws=draws, seed=seed)
+        sim = simulate(projection, best.sport, draws=draws, seed=seed, source=BASIS)
         chance = pick_chance(sim, best.market, best.side, best.line) if sim else None
+        blend = projection.get("blend") or {}
         out.append(
             {
                 "rank": rank,
@@ -307,6 +359,9 @@ def choose(
                     "away_team": away,
                     "neutral": bool(projection.get("neutral")),
                     "trust": trust,
+                    # The pick's numbers are the blend's; the raw model's own is kept beside.
+                    "basis": BASIS,
+                    "blend_weight": blend.get("weight"),
                     "projection": {
                         k: projection.get(k)
                         for k in (

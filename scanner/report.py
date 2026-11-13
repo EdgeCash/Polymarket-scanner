@@ -6,6 +6,7 @@ from collections import Counter
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
+from scanner.card import basis_word
 from scanner.diary import Diary
 
 
@@ -119,8 +120,8 @@ def card_report(diary: Diary, settings) -> str:
                 result += f" {r['units']:+.2f}u"
             lines.append(
                 f"#{r['rank']} {r['sport'].upper()} {r['away']} at {r['home']} {when}: "
-                f"{r['side_label']} ({r['odds']:+d}), model {r['model_value']:.1f} v book "
-                f"{r['book_value']:.1f}, {r['z']:.2f} sd{sim}, {rank_by} "
+                f"{r['side_label']} ({r['odds']:+d}), {basis_word(r)} {r['model_value']:.1f} "
+                f"v book {r['book_value']:.1f}, {r['z']:.2f} sd{sim}, {rank_by} "
                 f"-> {result}"
             )
     s = diary.card_summary(picks=settings.CARD_PICKS)
