@@ -109,3 +109,67 @@ not tested here.
 - nflverse has no quarter scores, so an NFL overtime game is taken as level at
   the lower final score (a loser's points in overtime are missed).
 - Player props were not graded: Polymarket US lists no per-game player markets.
+
+## The gap against the close: who is right when the model and the book disagree
+
+November 2026. Re-run with `python scripts/grade_gaps.py`; `tests/test_gap_history.py`
+holds the numbers.
+
+The grids above are calibrated against the model's own projections, which says
+nothing about beating the book. The daily card ranks sides by the model's chance
+against the book's price, so the question that matters is whether a side the
+model takes against the closing spread covers more often than the price needs
+(52.4% at -110). `scripts/fetch_history.py --spreads` attaches each game's
+closing line (`tests/fixtures/history/<sport>_lines.csv.gz`: college basketball
+from ESPN's game summaries, which keep lines for 2022-23 only; the NFL from
+nflverse, 2010 on, rated on points alone since nflverse carries no yards) and
+`scripts/grade_gaps.py` grades the raw model's side, the blend's side (the
+scanner's own blend, the model weighted by games over games plus six) and the
+underdog against the close.
+
+Ratings fit only on each season's earlier games, both sides with three or more.
+
+### The model's side against the close, by how far the raw model sat from it
+
+| Sport | Gap | Games | Model's side covered | Grid gave it | Blend's grid gave it |
+|---|---|---|---|---|---|
+| College basketball | 0-5 | 4,077 | 50.7% | 56.5% | 54.6% |
+| College basketball | 5-10 | 796 | 52.1% | 71.6% | 63.3% |
+| College basketball | 10-15 | 181 | 62.4% | 83.8% | 69.2% |
+| College basketball | 15-20 | 40 | 56.4% | 92.0% | 74.9% |
+| College basketball | 20+ | 16 | 75.0% | 97-100% | 78-90% |
+| NFL | 0-3 | 2,226 | 50.8% | 54.2% | 52.5% |
+| NFL | 3-6 | 1,008 | 48.4% | 62.7% | 57.3% |
+| NFL | 6-9 | 213 | 50.0% | 71.7% | 62.7% |
+| NFL | 9-12 | 35 | 38.2% | 78.0% | 66.6% |
+
+The raw model's side is a coin toss in the NFL at every gap, and in college
+basketball up to ten points from the close; the 10-15 band's 62% is 181 games
+of one season, and well short of the 84% the grid gave it. A side the grid gives
+70-80% comes in 53% of the time in college basketball (466 sides) and 50% in the
+NFL (191). The blend's chances sit nearer the truth (56% for its 70-80% in
+college basketball, 54% in the NFL) and reach those bins a third as often. The
+close misses the final margin by less than the raw model in both sports (11.2
+against 11.7 in college basketball, 13.0 against 13.5 in the NFL), with the blend
+between.
+
+### Big spreads
+
+College basketball spreads of 24 or more (two of the sport's spread; 87 games):
+the underdog covered 49.4%, the raw model's side, nearly always the dog, 52.9%.
+With under eight games a side (42 games) the model's side covered 47.6% and the
+raw model missed those margins by 16.8 points to the close's 12.5 and the
+blend's 13.1; from eight games (45) it covered 57.8%, a difference well inside
+noise. Early-season spreads of 30 or more: the dog covered 3 of 10. Nothing here
+says a big college underdog is worth more than its price, and the raw model's
+number on those games is the worst of the three, which is the card's big-line
+gate (`CARD_BIG_LINE_SIGMAS`, `CARD_BIG_LINE_GAMES`) and why it ranks on the
+blend.
+
+### What this means for the card
+
+Edge on the card is the blend's chance less the price's break-even. On this
+history that chance is still too generous once it passes 60%, so an edge of ten
+points or more is not ten points; the record by rank and the closing-line share
+on the card page are the live test. The NFL card record (1-5 at the time of
+writing) is what a coin toss at -110 looks like over six picks.

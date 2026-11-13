@@ -32,6 +32,40 @@ def nfl(gaps):
     return gaps.grade(gaps.load(gaps.lines_path("nfl"), sport="nfl"), "nfl")
 
 
+@pytest.fixture(scope="module")
+def cbb(gaps):
+    return gaps.grade(gaps.load(gaps.lines_path("cbb"), sport="cbb"), "cbb")
+
+
+def test_big_college_underdogs_are_no_better_than_a_coin_toss_against_the_close(cbb):
+    # 5,110 games of 2022-23 with a closing spread (ESPN keeps no lines for the two
+    # seasons after). Spreads of 24 or more: the dog covers half the time, and the raw
+    # model's side, which is nearly always the dog, no better; with under eight games
+    # a side it covers under half, and the raw model misses those margins by 16.8 to
+    # the close's 12.5. That is the card's big-line gate and why it ranks on the blend.
+    assert cbb["games"] > 5000 and cbb["big_line"] == 24.0
+    big = cbb["big_spreads"]
+    assert big["all"]["games"] > 80 and big["all"]["cover"] == pytest.approx(0.49, abs=0.05)
+    few = big["under_8_games"]
+    assert few["games"] > 35 and few["model_side"]["cover"] < 0.52
+    assert few["rmse_model"] > few["rmse_close"] + 3 and few["rmse_blend"] < few["rmse_close"] + 1
+    # Up to ten points from the close the model's side is a coin toss while the grid
+    # gave it 57-72%; from ten to fifteen it covered 62% of 181 games, one season's
+    # worth, still far under the grid's 84%. The blend's chances sit nearer the truth.
+    for band, cover, gave in (
+        ("0-5", 0.507, 0.565),
+        ("5-10", 0.521, 0.716),
+        ("10-15", 0.624, 0.838),
+    ):
+        part = cbb["by_gap"][band]
+        assert part["model_side"]["cover"] == pytest.approx(cover, abs=0.03)
+        assert part["grid_gave_model_side"] == pytest.approx(gave, abs=0.03)
+        assert part["grid_gave_blend_side"] < part["grid_gave_model_side"] - 0.015
+    model, blend = cbb["calibration"]["model"]["70-80"], cbb["calibration"]["blend"]["70-80"]
+    assert model["came_in"] == pytest.approx(0.53, abs=0.05) and model["games"] > 400
+    assert blend["came_in"] > model["came_in"] and blend["games"] < model["games"] / 2
+
+
 def test_the_nfl_model_s_side_against_the_close_is_a_coin_toss_whatever_the_gap(nfl):
     # 3,495 games, 2010 on, ratings on points fit on each season's earlier games: the raw
     # model's side covers the close about half the time in every band, under the 52.4% a
