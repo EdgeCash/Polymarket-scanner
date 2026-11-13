@@ -120,9 +120,10 @@ nothing about beating the book. The daily card ranks sides by the model's chance
 against the book's price, so the question that matters is whether a side the
 model takes against the closing spread covers more often than the price needs
 (52.4% at -110). `scripts/fetch_history.py --spreads` attaches each game's
-closing line (`tests/fixtures/history/<sport>_lines.csv.gz`: college basketball
-from ESPN's game summaries, which keep lines for 2022-23 only; the NFL from
-nflverse, 2010 on, rated on points alone since nflverse carries no yards) and
+closing line (`tests/fixtures/history/<sport>_lines.csv.gz`: college basketball,
+the NBA and college football from ESPN's game summaries, which keep lines for
+some seasons only, 5,110, 2,365 and 2,691 games; the NFL from nflverse, 2010 on,
+3,495 games, rated on points alone since nflverse carries no yards) and
 `scripts/grade_gaps.py` grades the raw model's side, the blend's side (the
 scanner's own blend, the model weighted by games over games plus six) and the
 underdog against the close.
@@ -138,20 +139,29 @@ Ratings fit only on each season's earlier games, both sides with three or more.
 | College basketball | 10-15 | 181 | 62.4% | 83.8% | 69.2% |
 | College basketball | 15-20 | 40 | 56.4% | 92.0% | 74.9% |
 | College basketball | 20+ | 16 | 75.0% | 97-100% | 78-90% |
+| NBA | 0-3 | 1,311 | 47.9% | 53.8% | 53.1% |
+| NBA | 3-6 | 713 | 51.3% | 61.5% | 59.3% |
+| NBA | 6-9 | 251 | 47.5% | 69.2% | 65.5% |
+| NBA | 9-15 | 88 | 58.6% | 78.0% | 72.6% |
+| College football | 0-5 | 1,856 | 49.3% | 55.6% | 53.0% |
+| College football | 5-10 | 675 | 48.3% | 66.3% | 58.2% |
+| College football | 10-15 | 135 | 51.9% | 76.4% | 62.0% |
+| College football | 15+ | 25 | 48.0% | 85-96% | 64-75% |
 | NFL | 0-3 | 2,226 | 50.8% | 54.2% | 52.5% |
 | NFL | 3-6 | 1,008 | 48.4% | 62.7% | 57.3% |
 | NFL | 6-9 | 213 | 50.0% | 71.7% | 62.7% |
 | NFL | 9-12 | 35 | 38.2% | 78.0% | 66.6% |
 
-The raw model's side is a coin toss in the NFL at every gap, and in college
-basketball up to ten points from the close; the 10-15 band's 62% is 181 games
-of one season, and well short of the 84% the grid gave it. A side the grid gives
-70-80% comes in 53% of the time in college basketball (466 sides) and 50% in the
-NFL (191). The blend's chances sit nearer the truth (56% for its 70-80% in
-college basketball, 54% in the NFL) and reach those bins a third as often. The
-close misses the final margin by less than the raw model in both sports (11.2
-against 11.7 in college basketball, 13.0 against 13.5 in the NFL), with the blend
-between.
+The raw model's side is a coin toss in every sport up to ten points from the
+close, and in the NFL and college football at every gap; college basketball's
+10-15 band (62% of 181 games) and the NBA's 9-15 (59% of 88) are one or two
+seasons' worth and well short of what the grid gave them. A side the grid gives
+70-80% comes in 53% of the time in college basketball (466 sides), 51% in the
+NBA (159), 49% in college football (225) and 50% in the NFL (191). The blend's
+chances sit nearer the truth and reach those bins a third as often or less. The
+close misses the final margin by less than the raw model in every sport (11.2
+against 11.7 in college basketball, 13.0 against 13.7 in the NBA, 15.4 against
+16.3 in college football, 13.0 against 13.5 in the NFL), with the blend between.
 
 ### Big spreads
 
@@ -164,7 +174,10 @@ noise. Early-season spreads of 30 or more: the dog covered 3 of 10. Nothing here
 says a big college underdog is worth more than its price, and the raw model's
 number on those games is the worst of the three, which is the card's big-line
 gate (`CARD_BIG_LINE_SIGMAS`, `CARD_BIG_LINE_GAMES`) and why it ranks on the
-blend.
+blend. College football says the same more loudly: spreads of 32.5 or more with
+under eight games a side (39 games), the underdog covered 39.5% and the raw model
+missed those margins by 21.2 points to the close's 15.9. No NBA spread reaches
+28.
 
 ### What this means for the card
 

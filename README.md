@@ -653,11 +653,15 @@ raw model said 12.5, the grid turned that into "SIUE +44.5 covers 99.6%", and
 the card's edge in probability points put five such underdogs above every
 real NBA or NFL edge on the board, while the college closing lines had moved
 the model's way in 11% of 283 games. `scripts/grade_gaps.py` grades the
-question on three seasons of closing spreads (`fetch_history.py --spreads`,
-`tests/fixtures/history/cbb_lines.csv.gz`): the raw model's side, the blend's
-side and the underdog against the close, by how far the model sat from the
-book and by the size of the spread, with what the grid gave each side against
-how often it came in (`docs/sim_report.md`).
+question on history with closing spreads (`fetch_history.py --spreads`,
+`tests/fixtures/history/<sport>_lines.csv.gz`: a season of college basketball,
+two of the NBA, six of college football from ESPN's summaries, and the NFL
+from nflverse since 2010): the raw model's side, the blend's side and the
+underdog against the close, by how far the model sat from the book and by the
+size of the spread, with what the grid gave each side against how often it
+came in. In every sport the raw model's side is a coin toss against the close
+up to ten points apart while the grid gave it 55-75%, and a big underdog is no
+better than its price (`docs/sim_report.md`).
 
 ## Player lines
 

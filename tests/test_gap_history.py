@@ -66,6 +66,36 @@ def test_big_college_underdogs_are_no_better_than_a_coin_toss_against_the_close(
     assert blend["came_in"] > model["came_in"] and blend["games"] < model["games"] / 2
 
 
+@pytest.fixture(scope="module")
+def nba(gaps):
+    return gaps.grade(gaps.load(gaps.lines_path("nba"), sport="nba"), "nba")
+
+
+@pytest.fixture(scope="module")
+def cfb(gaps):
+    return gaps.grade(gaps.load(gaps.lines_path("cfb"), sport="cfb"), "cfb")
+
+
+def test_the_nba_and_college_football_say_the_same(nba, cfb):
+    # Up to ten points from the close the raw model's side is a coin toss in both,
+    # while the grid gave it 54-76%; the close misses the margin by less than the
+    # raw model, the blend between.
+    for result, bands in ((nba, ("0-3", "3-6", "6-9")), (cfb, ("0-5", "5-10", "10-15"))):
+        assert result["games"] > 2000
+        for band in bands:
+            part = result["by_gap"][band]
+            assert 0.45 < part["model_side"]["cover"] < 0.55
+            assert part["grid_gave_model_side"] > part["model_side"]["cover"] + 0.04
+        rmse = result["rmse"]
+        assert rmse["close"] < rmse["blend"] < rmse["model"]
+    # Football's big spreads with few games a side: the dog covered under 40% of 39
+    # games, the raw model missing those margins by five points more than the close.
+    few = cfb["big_spreads"]["under_8_games"]
+    assert few["games"] > 30 and few["cover"] < 0.45
+    assert few["rmse_model"] > few["rmse_close"] + 4
+    assert cfb["big_line"] == 32.5 and nba["big_spreads"]["all"]["games"] == 0
+
+
 def test_the_nfl_model_s_side_against_the_close_is_a_coin_toss_whatever_the_gap(nfl):
     # 3,495 games, 2010 on, ratings on points fit on each season's earlier games: the raw
     # model's side covers the close about half the time in every band, under the 52.4% a
