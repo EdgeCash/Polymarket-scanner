@@ -196,3 +196,42 @@ above) and `current.py` (the 17 November games with and without a prior). The
 replication reproduces the scanner's own numbers for those games to within a
 tenth of a point (Alabama -3.1, Vanderbilt -21.1, Miami -20.3, Providence -4.8,
 SMU -6.0 against the card's -5.5).
+
+## What was done (18 November 2026)
+
+Steps 1 to 4 above are in, plus the player lines, in the same change as this
+note. In order:
+
+- **Prior.** `scanner/priors.json` (built by `scripts/build_priors.py`) holds
+  last season's final ratings by ESPN team id; `projection.fit` shrinks toward
+  a share of them (college basketball 0.9 at four games, college football 0.8
+  at three, the NBA 0.6 at six, hockey 0.5 at eight, the NFL 0.4 at four), fit
+  by `scripts/fit_priors.py` on the 2024-25 and 2025-26 seasons. A team the
+  file does not know starts about 25 points below average in the college
+  sports, where that is what a visitor from outside the division plays like.
+- **Uncertainty.** Each projection carries its own spread: the sport's average
+  miss split into the game's noise (from the book's miss) and the model's
+  settled error, plus the variance a few games leave, so `league.sigma` is 14
+  for a college game between four-game sides and 12 by mid-season. The grid,
+  the card and the pictures read it.
+- **Blend.** Precision-weighted: the book's error variance over the two
+  together. The model carries 6-13% in college basketball, 8% in the NBA, 6% in
+  hockey, 3-4% in the NFL, 7-8% in college football. The blend's win chance
+  comes from its own margin through the grid.
+- **Card.** Priced from the blend at the blend's spread; trust is twice the
+  share of moved closing lines that moved the model's way, with no floor; a
+  raw number more than one game's spread from the book rules its side out.
+  Run through the scanner's own code on 17 November, the five college picks
+  come out with edges of -0.1 to -2.2 points instead of +43 to +45, and Alabama
+  at -15.8 (model) and -24.9 (blend) against the book's -25.5 instead of -3.1.
+- **Player lines.** Football rates are shrunk toward the role's rate (each
+  team's leaders), which took 10 to 60 yards of bias out of the yardage lines;
+  a projected rout trims the heavy-minutes players' time in basketball; the
+  dispersions were refit by maximum likelihood per sport on 41,000 graded
+  lines from a walk-forward over 2025-26 box scores (`scripts/fit_players.py`).
+
+Not done, and worth doing next: a real-line backtest of the card rule once
+historical closing lines are reachable; a roster-aware prior (returning
+minutes, transfers) for the college sports; and fitting the blend's weights by
+regression on the diary's own graded record once a season of it exists, which
+is also where the assumed book numbers in `TUNING` should be checked.

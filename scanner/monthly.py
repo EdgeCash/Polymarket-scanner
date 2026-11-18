@@ -197,7 +197,12 @@ def check(rows: list[dict], sport: str) -> dict:
             "margin": _mean(clv_margin),
             "total": _mean(clv_total),
             "closed": len(closed),
-            "positive_share": (sum(1 for v in closed if v > 0) / len(closed)) if closed else None,
+            "moved": sum(1 for v in closed if v != 0),
+            "positive_share": (
+                (sum(1 for v in closed if v > 0) / sum(1 for v in closed if v != 0))
+                if any(v != 0 for v in closed)
+                else None
+            ),
         },
     }
 
@@ -269,8 +274,8 @@ def report(month: dict, tz: str) -> str:
         )
         clv = "–" if c["margin"] is None else f"{c['margin']:+.2f}"
         lines.append(
-            f"  Closing line moved the model's way {_pct(c['positive_share'])} of {c['closed']} "
-            f"(mean {clv})"
+            f"  Closing line moved the model's way {_pct(c['positive_share'])} of the "
+            f"{c.get('moved', c['closed'])} that moved, {c['closed']} closed (mean {clv})"
         )
     return "\n".join(lines)
 

@@ -30,8 +30,8 @@ def probabilities(projection: dict, sport: str, polymarket: dict) -> dict[str, d
     blend = projection.get("blend") or {}
     league = projection.get("league") or {}
     tuning = TUNING.get(sport, TUNING["cfb"])
-    sigma = float(league.get("sigma") or tuning.sigma)
-    sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
+    sigma = float(blend.get("sigma") or league.get("sigma") or tuning.sigma)
+    sigma_total = float(blend.get("sigma_total") or league.get("sigma_total") or tuning.sigma_total)
     out: dict[str, dict[str, float]] = {}
     p_home = blend.get("home_win")
     if p_home is not None and (

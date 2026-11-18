@@ -1,0 +1,4239 @@
+{
+ "cbb": {
+  "built": "2026-11-18",
+  "games": 6195,
+  "league_points": 75.05,
+  "season": 2026,
+  "strangers": 361,
+  "teams": {
+   "103": {
+    "abbr": null,
+    "defense": -10.43,
+    "games": 31,
+    "name": null,
+    "offense": -0.218
+   },
+   "104": {
+    "abbr": null,
+    "defense": -2.626,
+    "games": 34,
+    "name": null,
+    "offense": 3.842
+   },
+   "107": {
+    "abbr": null,
+    "defense": -4.046,
+    "games": 33,
+    "name": null,
+    "offense": -3.1
+   },
+   "108": {
+    "abbr": null,
+    "defense": -12.183,
+    "games": 29,
+    "name": null,
+    "offense": -0.228
+   },
+   "111": {
+    "abbr": null,
+    "defense": 1.874,
+    "games": 31,
+    "name": null,
+    "offense": 5.935
+   },
+   "112358": {
+    "abbr": null,
+    "defense": -5.563,
+    "games": 34,
+    "name": null,
+    "offense": 3.225
+   },
+   "113": {
+    "abbr": null,
+    "defense": -1.91,
+    "games": 33,
+    "name": null,
+    "offense": 8.973
+   },
+   "116": {
+    "abbr": null,
+    "defense": -5.286,
+    "games": 32,
+    "name": null,
+    "offense": -1.674
+   },
+   "119": {
+    "abbr": null,
+    "defense": -12.689,
+    "games": 34,
+    "name": null,
+    "offense": -0.778
+   },
+   "12": {
+    "abbr": null,
+    "defense": -15.096,
+    "games": 34,
+    "name": null,
+    "offense": 18.312
+   },
+   "120": {
+    "abbr": null,
+    "defense": -6.532,
+    "games": 33,
+    "name": null,
+    "offense": 3.285
+   },
+   "127": {
+    "abbr": null,
+    "defense": -15.496,
+    "games": 32,
+    "name": null,
+    "offense": 11.414
+   },
+   "13": {
+    "abbr": null,
+    "defense": 4.654,
+    "games": 33,
+    "name": null,
+    "offense": 11.436
+   },
+   "130": {
+    "abbr": null,
+    "defense": -14.797,
+    "games": 34,
+    "name": null,
+    "offense": 20.399
+   },
+   "135": {
+    "abbr": null,
+    "defense": -13.192,
+    "games": 32,
+    "name": null,
+    "offense": 2.284
+   },
+   "139": {
+    "abbr": null,
+    "defense": -8.971,
+    "games": 33,
+    "name": null,
+    "offense": 16.977
+   },
+   "140": {
+    "abbr": null,
+    "defense": 2.38,
+    "games": 31,
+    "name": null,
+    "offense": -2.526
+   },
+   "142": {
+    "abbr": null,
+    "defense": -8.886,
+    "games": 32,
+    "name": null,
+    "offense": 9.739
+   },
+   "145": {
+    "abbr": null,
+    "defense": -9.525,
+    "games": 35,
+    "name": null,
+    "offense": 6.522
+   },
+   "147": {
+    "abbr": null,
+    "defense": -8.591,
+    "games": 32,
+    "name": null,
+    "offense": 5.534
+   },
+   "149": {
+    "abbr": null,
+    "defense": -5.636,
+    "games": 34,
+    "name": null,
+    "offense": 5.165
+   },
+   "150": {
+    "abbr": null,
+    "defense": -20.418,
+    "games": 34,
+    "name": null,
+    "offense": 15.042
+   },
+   "151": {
+    "abbr": null,
+    "defense": -2.155,
+    "games": 31,
+    "name": null,
+    "offense": 1.519
+   },
+   "152": {
+    "abbr": null,
+    "defense": -6.352,
+    "games": 33,
+    "name": null,
+    "offense": 16.089
+   },
+   "153": {
+    "abbr": null,
+    "defense": -11.422,
+    "games": 32,
+    "name": null,
+    "offense": 12.452
+   },
+   "154": {
+    "abbr": null,
+    "defense": -6.686,
+    "games": 33,
+    "name": null,
+    "offense": 10.798
+   },
+   "155": {
+    "abbr": null,
+    "defense": -2.297,
+    "games": 35,
+    "name": null,
+    "offense": 4.13
+   },
+   "156": {
+    "abbr": null,
+    "defense": -7.406,
+    "games": 32,
+    "name": null,
+    "offense": 7.851
+   },
+   "158": {
+    "abbr": null,
+    "defense": -16.015,
+    "games": 32,
+    "name": null,
+    "offense": 9.665
+   },
+   "159": {
+    "abbr": null,
+    "defense": -1.602,
+    "games": 27,
+    "name": null,
+    "offense": 5.41
+   },
+   "16": {
+    "abbr": null,
+    "defense": 1.572,
+    "games": 31,
+    "name": null,
+    "offense": 7.169
+   },
+   "160": {
+    "abbr": null,
+    "defense": -1.683,
+    "games": 30,
+    "name": null,
+    "offense": -0.974
+   },
+   "161": {
+    "abbr": null,
+    "defense": -5.125,
+    "games": 32,
+    "name": null,
+    "offense": -3.081
+   },
+   "163": {
+    "abbr": null,
+    "defense": -7.74,
+    "games": 29,
+    "name": null,
+    "offense": -1.129
+   },
+   "164": {
+    "abbr": null,
+    "defense": -6.058,
+    "games": 33,
+    "name": null,
+    "offense": 4.192
+   },
+   "166": {
+    "abbr": null,
+    "defense": -6.585,
+    "games": 32,
+    "name": null,
+    "offense": 4.739
+   },
+   "167": {
+    "abbr": null,
+    "defense": -8.822,
+    "games": 33,
+    "name": null,
+    "offense": 11.352
+   },
+   "171": {
+    "abbr": null,
+    "defense": -6.756,
+    "games": 28,
+    "name": null,
+    "offense": 5.614
+   },
+   "172": {
+    "abbr": null,
+    "defense": 4.363,
+    "games": 28,
+    "name": null,
+    "offense": 18.16
+   },
+   "179": {
+    "abbr": null,
+    "defense": -4.363,
+    "games": 34,
+    "name": null,
+    "offense": 7.674
+   },
+   "183": {
+    "abbr": null,
+    "defense": -7.167,
+    "games": 32,
+    "name": null,
+    "offense": 8.45
+   },
+   "189": {
+    "abbr": null,
+    "defense": -7.938,
+    "games": 32,
+    "name": null,
+    "offense": 7.593
+   },
+   "193": {
+    "abbr": null,
+    "defense": -3.457,
+    "games": 32,
+    "name": null,
+    "offense": 16.443
+   },
+   "194": {
+    "abbr": null,
+    "defense": -9.971,
+    "games": 33,
+    "name": null,
+    "offense": 13.153
+   },
+   "195": {
+    "abbr": null,
+    "defense": -1.656,
+    "games": 32,
+    "name": null,
+    "offense": 6.644
+   },
+   "197": {
+    "abbr": null,
+    "defense": -0.893,
+    "games": 33,
+    "name": null,
+    "offense": 15.711
+   },
+   "198": {
+    "abbr": null,
+    "defense": -2.593,
+    "games": 33,
+    "name": null,
+    "offense": 1.006
+   },
+   "2": {
+    "abbr": null,
+    "defense": -6.956,
+    "games": 33,
+    "name": null,
+    "offense": 14.347
+   },
+   "2000": {
+    "abbr": null,
+    "defense": -6.522,
+    "games": 33,
+    "name": null,
+    "offense": -0.267
+   },
+   "2005": {
+    "abbr": null,
+    "defense": -1.789,
+    "games": 32,
+    "name": null,
+    "offense": -6.831
+   },
+   "2006": {
+    "abbr": null,
+    "defense": -5.761,
+    "games": 34,
+    "name": null,
+    "offense": 15.519
+   },
+   "201": {
+    "abbr": null,
+    "defense": -7.611,
+    "games": 34,
+    "name": null,
+    "offense": 12.498
+   },
+   "2010": {
+    "abbr": null,
+    "defense": -3.055,
+    "games": 33,
+    "name": null,
+    "offense": -2.352
+   },
+   "2011": {
+    "abbr": null,
+    "defense": 0.212,
+    "games": 32,
+    "name": null,
+    "offense": -0.174
+   },
+   "2016": {
+    "abbr": null,
+    "defense": 1.688,
+    "games": 32,
+    "name": null,
+    "offense": -4.383
+   },
+   "202": {
+    "abbr": null,
+    "defense": -6.14,
+    "games": 33,
+    "name": null,
+    "offense": 14.642
+   },
+   "2026": {
+    "abbr": null,
+    "defense": -11.527,
+    "games": 32,
+    "name": null,
+    "offense": -1.243
+   },
+   "2029": {
+    "abbr": null,
+    "defense": 2.799,
+    "games": 32,
+    "name": null,
+    "offense": 3.163
+   },
+   "2031": {
+    "abbr": null,
+    "defense": -3.065,
+    "games": 32,
+    "name": null,
+    "offense": 0.577
+   },
+   "2032": {
+    "abbr": null,
+    "defense": -1.367,
+    "games": 32,
+    "name": null,
+    "offense": 11.752
+   },
+   "204": {
+    "abbr": null,
+    "defense": -6.1,
+    "games": 33,
+    "name": null,
+    "offense": 2.75
+   },
+   "2046": {
+    "abbr": null,
+    "defense": -5.602,
+    "games": 31,
+    "name": null,
+    "offense": 7.251
+   },
+   "2050": {
+    "abbr": null,
+    "defense": -9.741,
+    "games": 31,
+    "name": null,
+    "offense": -4.284
+   },
+   "2057": {
+    "abbr": null,
+    "defense": -5.627,
+    "games": 32,
+    "name": null,
+    "offense": 13.699
+   },
+   "2065": {
+    "abbr": null,
+    "defense": -1.162,
+    "games": 32,
+    "name": null,
+    "offense": 2.985
+   },
+   "2066": {
+    "abbr": null,
+    "defense": 0.515,
+    "games": 31,
+    "name": null,
+    "offense": -3.103
+   },
+   "2083": {
+    "abbr": null,
+    "defense": -1.987,
+    "games": 33,
+    "name": null,
+    "offense": -2.586
+   },
+   "2084": {
+    "abbr": null,
+    "defense": -2.959,
+    "games": 32,
+    "name": null,
+    "offense": 6.833
+   },
+   "2086": {
+    "abbr": null,
+    "defense": -4.54,
+    "games": 32,
+    "name": null,
+    "offense": 10.932
+   },
+   "2097": {
+    "abbr": null,
+    "defense": -0.964,
+    "games": 34,
+    "name": null,
+    "offense": 8.784
+   },
+   "2099": {
+    "abbr": null,
+    "defense": -5.428,
+    "games": 31,
+    "name": null,
+    "offense": -7.247
+   },
+   "21": {
+    "abbr": null,
+    "defense": -10.317,
+    "games": 33,
+    "name": null,
+    "offense": 9.504
+   },
+   "2110": {
+    "abbr": null,
+    "defense": -5.212,
+    "games": 34,
+    "name": null,
+    "offense": 6.878
+   },
+   "2115": {
+    "abbr": null,
+    "defense": -3.907,
+    "games": 30,
+    "name": null,
+    "offense": 1.475
+   },
+   "2116": {
+    "abbr": null,
+    "defense": -4.753,
+    "games": 32,
+    "name": null,
+    "offense": 13.347
+   },
+   "2117": {
+    "abbr": null,
+    "defense": -3.106,
+    "games": 31,
+    "name": null,
+    "offense": 2.57
+   },
+   "2127": {
+    "abbr": null,
+    "defense": 1.143,
+    "games": 32,
+    "name": null,
+    "offense": 9.703
+   },
+   "213": {
+    "abbr": null,
+    "defense": -3.011,
+    "games": 32,
+    "name": null,
+    "offense": 6.651
+   },
+   "2130": {
+    "abbr": null,
+    "defense": -1.559,
+    "games": 32,
+    "name": null,
+    "offense": -2.643
+   },
+   "2132": {
+    "abbr": null,
+    "defense": -14.84,
+    "games": 33,
+    "name": null,
+    "offense": 5.396
+   },
+   "2142": {
+    "abbr": null,
+    "defense": -2.88,
+    "games": 33,
+    "name": null,
+    "offense": 5.289
+   },
+   "2154": {
+    "abbr": null,
+    "defense": 3.475,
+    "games": 31,
+    "name": null,
+    "offense": -5.168
+   },
+   "2166": {
+    "abbr": null,
+    "defense": -10.772,
+    "games": 33,
+    "name": null,
+    "offense": 2.514
+   },
+   "2168": {
+    "abbr": null,
+    "defense": -11.185,
+    "games": 34,
+    "name": null,
+    "offense": 5.452
+   },
+   "2169": {
+    "abbr": null,
+    "defense": -4.569,
+    "games": 31,
+    "name": null,
+    "offense": -10.84
+   },
+   "2172": {
+    "abbr": null,
+    "defense": 2.4,
+    "games": 32,
+    "name": null,
+    "offense": 10.682
+   },
+   "2174": {
+    "abbr": null,
+    "defense": -2.837,
+    "games": 32,
+    "name": null,
+    "offense": 5.382
+   },
+   "218": {
+    "abbr": null,
+    "defense": -6.799,
+    "games": 32,
+    "name": null,
+    "offense": 3.714
+   },
+   "2181": {
+    "abbr": null,
+    "defense": -4.451,
+    "games": 34,
+    "name": null,
+    "offense": 5.866
+   },
+   "2182": {
+    "abbr": null,
+    "defense": -10.463,
+    "games": 33,
+    "name": null,
+    "offense": -2.312
+   },
+   "2184": {
+    "abbr": null,
+    "defense": -4.069,
+    "games": 33,
+    "name": null,
+    "offense": 8.434
+   },
+   "219": {
+    "abbr": null,
+    "defense": -5.655,
+    "games": 29,
+    "name": null,
+    "offense": 6.545
+   },
+   "2193": {
+    "abbr": null,
+    "defense": -8.598,
+    "games": 34,
+    "name": null,
+    "offense": 5.173
+   },
+   "2197": {
+    "abbr": null,
+    "defense": -6.437,
+    "games": 33,
+    "name": null,
+    "offense": -3.105
+   },
+   "2198": {
+    "abbr": null,
+    "defense": 1.193,
+    "games": 32,
+    "name": null,
+    "offense": 6.966
+   },
+   "2199": {
+    "abbr": null,
+    "defense": -7.57,
+    "games": 31,
+    "name": null,
+    "offense": -0.108
+   },
+   "221": {
+    "abbr": null,
+    "defense": -10.664,
+    "games": 33,
+    "name": null,
+    "offense": 3.233
+   },
+   "2210": {
+    "abbr": null,
+    "defense": -1.263,
+    "games": 32,
+    "name": null,
+    "offense": 6.923
+   },
+   "2217": {
+    "abbr": null,
+    "defense": -3.445,
+    "games": 34,
+    "name": null,
+    "offense": 3.147
+   },
+   "222": {
+    "abbr": null,
+    "defense": -11.887,
+    "games": 32,
+    "name": null,
+    "offense": 8.722
+   },
+   "2226": {
+    "abbr": null,
+    "defense": -4.74,
+    "games": 33,
+    "name": null,
+    "offense": 8.538
+   },
+   "2229": {
+    "abbr": null,
+    "defense": -0.638,
+    "games": 32,
+    "name": null,
+    "offense": 9.797
+   },
+   "2230": {
+    "abbr": null,
+    "defense": -11.891,
+    "games": 32,
+    "name": null,
+    "offense": -0.51
+   },
+   "2239": {
+    "abbr": null,
+    "defense": 0.764,
+    "games": 34,
+    "name": null,
+    "offense": 10.149
+   },
+   "2241": {
+    "abbr": null,
+    "defense": 4.808,
+    "games": 33,
+    "name": null,
+    "offense": -2.393
+   },
+   "2244": {
+    "abbr": null,
+    "defense": -12.434,
+    "games": 32,
+    "name": null,
+    "offense": 2.972
+   },
+   "2247": {
+    "abbr": null,
+    "defense": -3.694,
+    "games": 32,
+    "name": null,
+    "offense": -0.537
+   },
+   "225": {
+    "abbr": null,
+    "defense": -7.262,
+    "games": 27,
+    "name": null,
+    "offense": -1.014
+   },
+   "2250": {
+    "abbr": null,
+    "defense": -15.282,
+    "games": 33,
+    "name": null,
+    "offense": 15.081
+   },
+   "2253": {
+    "abbr": null,
+    "defense": -11.739,
+    "games": 32,
+    "name": null,
+    "offense": 5.856
+   },
+   "2261": {
+    "abbr": null,
+    "defense": -6.35,
+    "games": 32,
+    "name": null,
+    "offense": -0.356
+   },
+   "227": {
+    "abbr": null,
+    "defense": -10.738,
+    "games": 32,
+    "name": null,
+    "offense": 1.181
+   },
+   "2272": {
+    "abbr": null,
+    "defense": -5.742,
+    "games": 34,
+    "name": null,
+    "offense": 15.984
+   },
+   "2275": {
+    "abbr": null,
+    "defense": -11.789,
+    "games": 34,
+    "name": null,
+    "offense": 5.857
+   },
+   "2277": {
+    "abbr": null,
+    "defense": -5.327,
+    "games": 32,
+    "name": null,
+    "offense": -2.95
+   },
+   "228": {
+    "abbr": null,
+    "defense": -15.738,
+    "games": 34,
+    "name": null,
+    "offense": 6.237
+   },
+   "2287": {
+    "abbr": null,
+    "defense": -11.301,
+    "games": 32,
+    "name": null,
+    "offense": 5.398
+   },
+   "2294": {
+    "abbr": null,
+    "defense": -15.515,
+    "games": 33,
+    "name": null,
+    "offense": 7.921
+   },
+   "2296": {
+    "abbr": null,
+    "defense": 5.066,
+    "games": 33,
+    "name": null,
+    "offense": -0.685
+   },
+   "23": {
+    "abbr": null,
+    "defense": -2.38,
+    "games": 33,
+    "name": null,
+    "offense": 2.813
+   },
+   "2305": {
+    "abbr": null,
+    "defense": -14.377,
+    "games": 33,
+    "name": null,
+    "offense": 10.362
+   },
+   "2306": {
+    "abbr": null,
+    "defense": -1.62,
+    "games": 32,
+    "name": null,
+    "offense": 11.711
+   },
+   "2309": {
+    "abbr": null,
+    "defense": -1.154,
+    "games": 33,
+    "name": null,
+    "offense": 12.097
+   },
+   "231": {
+    "abbr": null,
+    "defense": -7.91,
+    "games": 34,
+    "name": null,
+    "offense": 3.483
+   },
+   "232": {
+    "abbr": null,
+    "defense": -5.857,
+    "games": 32,
+    "name": null,
+    "offense": 4.937
+   },
+   "2320": {
+    "abbr": null,
+    "defense": -7.885,
+    "games": 31,
+    "name": null,
+    "offense": -0.342
+   },
+   "2325": {
+    "abbr": null,
+    "defense": -6.25,
+    "games": 32,
+    "name": null,
+    "offense": -0.245
+   },
+   "2329": {
+    "abbr": null,
+    "defense": -2.323,
+    "games": 34,
+    "name": null,
+    "offense": 2.16
+   },
+   "233": {
+    "abbr": null,
+    "defense": 1.518,
+    "games": 32,
+    "name": null,
+    "offense": 6.548
+   },
+   "2330": {
+    "abbr": null,
+    "defense": -2.208,
+    "games": 32,
+    "name": null,
+    "offense": 2.435
+   },
+   "2335": {
+    "abbr": null,
+    "defense": -7.634,
+    "games": 32,
+    "name": null,
+    "offense": 6.654
+   },
+   "2344": {
+    "abbr": null,
+    "defense": -2.659,
+    "games": 32,
+    "name": null,
+    "offense": 4.585
+   },
+   "2348": {
+    "abbr": null,
+    "defense": -12.607,
+    "games": 34,
+    "name": null,
+    "offense": -2.13
+   },
+   "2349": {
+    "abbr": null,
+    "defense": 0.2,
+    "games": 33,
+    "name": null,
+    "offense": 3.941
+   },
+   "235": {
+    "abbr": null,
+    "defense": -5.408,
+    "games": 32,
+    "name": null,
+    "offense": 5.863
+   },
+   "2350": {
+    "abbr": null,
+    "defense": -3.898,
+    "games": 33,
+    "name": null,
+    "offense": -0.864
+   },
+   "2351": {
+    "abbr": null,
+    "defense": -7.377,
+    "games": 32,
+    "name": null,
+    "offense": 3.269
+   },
+   "2352": {
+    "abbr": null,
+    "defense": 1.143,
+    "games": 32,
+    "name": null,
+    "offense": 3.454
+   },
+   "236": {
+    "abbr": null,
+    "defense": -2.83,
+    "games": 32,
+    "name": null,
+    "offense": 3.26
+   },
+   "2363": {
+    "abbr": null,
+    "defense": 3.051,
+    "games": 32,
+    "name": null,
+    "offense": 3.139
+   },
+   "2368": {
+    "abbr": null,
+    "defense": -11.573,
+    "games": 31,
+    "name": null,
+    "offense": -1.586
+   },
+   "2377": {
+    "abbr": null,
+    "defense": -10.588,
+    "games": 33,
+    "name": null,
+    "offense": 8.939
+   },
+   "2378": {
+    "abbr": null,
+    "defense": -7.61,
+    "games": 32,
+    "name": null,
+    "offense": 3.384
+   },
+   "2379": {
+    "abbr": null,
+    "defense": -6.112,
+    "games": 32,
+    "name": null,
+    "offense": -7.449
+   },
+   "238": {
+    "abbr": null,
+    "defense": -10.117,
+    "games": 34,
+    "name": null,
+    "offense": 17.542
+   },
+   "2382": {
+    "abbr": null,
+    "defense": -2.962,
+    "games": 32,
+    "name": null,
+    "offense": 9.989
+   },
+   "2385": {
+    "abbr": null,
+    "defense": -7.535,
+    "games": 34,
+    "name": null,
+    "offense": -1.68
+   },
+   "239": {
+    "abbr": null,
+    "defense": -6.029,
+    "games": 32,
+    "name": null,
+    "offense": 13.975
+   },
+   "2390": {
+    "abbr": null,
+    "defense": -10.795,
+    "games": 33,
+    "name": null,
+    "offense": 12.485
+   },
+   "2393": {
+    "abbr": null,
+    "defense": -7.004,
+    "games": 32,
+    "name": null,
+    "offense": 5.386
+   },
+   "24": {
+    "abbr": null,
+    "defense": -9.148,
+    "games": 32,
+    "name": null,
+    "offense": 8.311
+   },
+   "2400": {
+    "abbr": null,
+    "defense": 4.385,
+    "games": 33,
+    "name": null,
+    "offense": -8.712
+   },
+   "2405": {
+    "abbr": null,
+    "defense": -7.07,
+    "games": 34,
+    "name": null,
+    "offense": 3.278
+   },
+   "2413": {
+    "abbr": null,
+    "defense": -2.737,
+    "games": 33,
+    "name": null,
+    "offense": 3.358
+   },
+   "2415": {
+    "abbr": null,
+    "defense": 4.791,
+    "games": 30,
+    "name": null,
+    "offense": 1.596
+   },
+   "242": {
+    "abbr": null,
+    "defense": -4.113,
+    "games": 31,
+    "name": null,
+    "offense": 2.412
+   },
+   "2426": {
+    "abbr": null,
+    "defense": -10.658,
+    "games": 33,
+    "name": null,
+    "offense": 1.98
+   },
+   "2427": {
+    "abbr": null,
+    "defense": -7.344,
+    "games": 32,
+    "name": null,
+    "offense": 0.106
+   },
+   "2428": {
+    "abbr": null,
+    "defense": 0.457,
+    "games": 32,
+    "name": null,
+    "offense": -0.844
+   },
+   "2429": {
+    "abbr": null,
+    "defense": -5.46,
+    "games": 34,
+    "name": null,
+    "offense": 3.306
+   },
+   "2430": {
+    "abbr": null,
+    "defense": 1.245,
+    "games": 34,
+    "name": null,
+    "offense": 5.067
+   },
+   "2433": {
+    "abbr": null,
+    "defense": 5.761,
+    "games": 32,
+    "name": null,
+    "offense": 2.172
+   },
+   "2437": {
+    "abbr": null,
+    "defense": -3.452,
+    "games": 33,
+    "name": null,
+    "offense": 3.453
+   },
+   "2439": {
+    "abbr": null,
+    "defense": -1.86,
+    "games": 33,
+    "name": null,
+    "offense": 10.63
+   },
+   "2440": {
+    "abbr": null,
+    "defense": -8.754,
+    "games": 34,
+    "name": null,
+    "offense": 7.497
+   },
+   "2441": {
+    "abbr": null,
+    "defense": -8.789,
+    "games": 31,
+    "name": null,
+    "offense": -5.758
+   },
+   "2443": {
+    "abbr": null,
+    "defense": -1.015,
+    "games": 33,
+    "name": null,
+    "offense": 6.676
+   },
+   "2447": {
+    "abbr": null,
+    "defense": -3.086,
+    "games": 33,
+    "name": null,
+    "offense": 3.11
+   },
+   "2448": {
+    "abbr": null,
+    "defense": -0.462,
+    "games": 30,
+    "name": null,
+    "offense": 3.512
+   },
+   "2449": {
+    "abbr": null,
+    "defense": -8.763,
+    "games": 34,
+    "name": null,
+    "offense": 7.779
+   },
+   "245": {
+    "abbr": null,
+    "defense": -4.7,
+    "games": 32,
+    "name": null,
+    "offense": 17.13
+   },
+   "2450": {
+    "abbr": null,
+    "defense": -0.734,
+    "games": 32,
+    "name": null,
+    "offense": 2.386
+   },
+   "2453": {
+    "abbr": null,
+    "defense": -2.006,
+    "games": 30,
+    "name": null,
+    "offense": -2.84
+   },
+   "2454": {
+    "abbr": null,
+    "defense": 7.444,
+    "games": 32,
+    "name": null,
+    "offense": 7.3
+   },
+   "2458": {
+    "abbr": null,
+    "defense": -3.121,
+    "games": 32,
+    "name": null,
+    "offense": 10.076
+   },
+   "2459": {
+    "abbr": null,
+    "defense": -2.76,
+    "games": 30,
+    "name": null,
+    "offense": -2.047
+   },
+   "2460": {
+    "abbr": null,
+    "defense": -18.233,
+    "games": 35,
+    "name": null,
+    "offense": 0.566
+   },
+   "2463": {
+    "abbr": null,
+    "defense": 0.789,
+    "games": 34,
+    "name": null,
+    "offense": 10.097
+   },
+   "2464": {
+    "abbr": null,
+    "defense": -3.973,
+    "games": 32,
+    "name": null,
+    "offense": -0.662
+   },
+   "2466": {
+    "abbr": null,
+    "defense": -5.153,
+    "games": 32,
+    "name": null,
+    "offense": -1.522
+   },
+   "2473": {
+    "abbr": null,
+    "defense": -0.007,
+    "games": 32,
+    "name": null,
+    "offense": 12.08
+   },
+   "248": {
+    "abbr": null,
+    "defense": -20.617,
+    "games": 34,
+    "name": null,
+    "offense": 9.213
+   },
+   "2483": {
+    "abbr": null,
+    "defense": -8.964,
+    "games": 32,
+    "name": null,
+    "offense": 4.139
+   },
+   "249": {
+    "abbr": null,
+    "defense": -11.777,
+    "games": 33,
+    "name": null,
+    "offense": 0.121
+   },
+   "2492": {
+    "abbr": null,
+    "defense": -0.538,
+    "games": 32,
+    "name": null,
+    "offense": 2.194
+   },
+   "25": {
+    "abbr": null,
+    "defense": -8.409,
+    "games": 32,
+    "name": null,
+    "offense": 8.364
+   },
+   "250": {
+    "abbr": null,
+    "defense": -12.546,
+    "games": 32,
+    "name": null,
+    "offense": -0.79
+   },
+   "2501": {
+    "abbr": null,
+    "defense": -2.376,
+    "games": 34,
+    "name": null,
+    "offense": 4.209
+   },
+   "2502": {
+    "abbr": null,
+    "defense": -8.901,
+    "games": 31,
+    "name": null,
+    "offense": 3.781
+   },
+   "2504": {
+    "abbr": null,
+    "defense": 0.065,
+    "games": 35,
+    "name": null,
+    "offense": 2.913
+   },
+   "2506": {
+    "abbr": null,
+    "defense": -7.401,
+    "games": 33,
+    "name": null,
+    "offense": -0.323
+   },
+   "2507": {
+    "abbr": null,
+    "defense": 1.713,
+    "games": 33,
+    "name": null,
+    "offense": 17.553
+   },
+   "2509": {
+    "abbr": null,
+    "defense": -14.006,
+    "games": 35,
+    "name": null,
+    "offense": 14.884
+   },
+   "251": {
+    "abbr": null,
+    "defense": -7.418,
+    "games": 32,
+    "name": null,
+    "offense": 14.116
+   },
+   "2511": {
+    "abbr": null,
+    "defense": 2.284,
+    "games": 34,
+    "name": null,
+    "offense": 11.805
+   },
+   "2514": {
+    "abbr": null,
+    "defense": -3.542,
+    "games": 32,
+    "name": null,
+    "offense": 5.067
+   },
+   "2515": {
+    "abbr": null,
+    "defense": 0.395,
+    "games": 32,
+    "name": null,
+    "offense": 7.891
+   },
+   "252": {
+    "abbr": null,
+    "defense": -7.345,
+    "games": 34,
+    "name": null,
+    "offense": 17.356
+   },
+   "2520": {
+    "abbr": null,
+    "defense": -0.88,
+    "games": 29,
+    "name": null,
+    "offense": -5.65
+   },
+   "2523": {
+    "abbr": null,
+    "defense": -7.978,
+    "games": 33,
+    "name": null,
+    "offense": 4.572
+   },
+   "2529": {
+    "abbr": null,
+    "defense": 0.85,
+    "games": 33,
+    "name": null,
+    "offense": 4.808
+   },
+   "253": {
+    "abbr": null,
+    "defense": 1.486,
+    "games": 32,
+    "name": null,
+    "offense": 6.118
+   },
+   "2534": {
+    "abbr": null,
+    "defense": -4.856,
+    "games": 33,
+    "name": null,
+    "offense": 10.984
+   },
+   "2535": {
+    "abbr": null,
+    "defense": -3.549,
+    "games": 32,
+    "name": null,
+    "offense": 5.754
+   },
+   "2539": {
+    "abbr": null,
+    "defense": -6.74,
+    "games": 33,
+    "name": null,
+    "offense": 5.414
+   },
+   "254": {
+    "abbr": null,
+    "defense": -4.674,
+    "games": 32,
+    "name": null,
+    "offense": 6.463
+   },
+   "2540": {
+    "abbr": null,
+    "defense": -6.181,
+    "games": 32,
+    "name": null,
+    "offense": 5.121
+   },
+   "2541": {
+    "abbr": null,
+    "defense": -7.594,
+    "games": 34,
+    "name": null,
+    "offense": 14.884
+   },
+   "2545": {
+    "abbr": null,
+    "defense": -7.154,
+    "games": 31,
+    "name": null,
+    "offense": -3.609
+   },
+   "2546": {
+    "abbr": null,
+    "defense": -6.105,
+    "games": 33,
+    "name": null,
+    "offense": 3.277
+   },
+   "2547": {
+    "abbr": null,
+    "defense": -12.333,
+    "games": 33,
+    "name": null,
+    "offense": 1.39
+   },
+   "2550": {
+    "abbr": null,
+    "defense": -16.367,
+    "games": 33,
+    "name": null,
+    "offense": 1.996
+   },
+   "256": {
+    "abbr": null,
+    "defense": -4.68,
+    "games": 33,
+    "name": null,
+    "offense": 3.651
+   },
+   "2561": {
+    "abbr": null,
+    "defense": -9.027,
+    "games": 34,
+    "name": null,
+    "offense": 0.703
+   },
+   "2565": {
+    "abbr": null,
+    "defense": -10.715,
+    "games": 32,
+    "name": null,
+    "offense": -1.995
+   },
+   "2567": {
+    "abbr": null,
+    "defense": -6.92,
+    "games": 33,
+    "name": null,
+    "offense": 15.118
+   },
+   "2569": {
+    "abbr": null,
+    "defense": 1.513,
+    "games": 32,
+    "name": null,
+    "offense": -4.774
+   },
+   "257": {
+    "abbr": null,
+    "defense": -5.14,
+    "games": 32,
+    "name": null,
+    "offense": 6.26
+   },
+   "2571": {
+    "abbr": null,
+    "defense": -5.812,
+    "games": 32,
+    "name": null,
+    "offense": 4.6
+   },
+   "2572": {
+    "abbr": null,
+    "defense": -4.416,
+    "games": 35,
+    "name": null,
+    "offense": 3.967
+   },
+   "2579": {
+    "abbr": null,
+    "defense": -7.96,
+    "games": 32,
+    "name": null,
+    "offense": 5.373
+   },
+   "258": {
+    "abbr": null,
+    "defense": -14.11,
+    "games": 34,
+    "name": null,
+    "offense": 12.16
+   },
+   "2582": {
+    "abbr": null,
+    "defense": 0.837,
+    "games": 34,
+    "name": null,
+    "offense": 5.531
+   },
+   "259": {
+    "abbr": null,
+    "defense": -7.776,
+    "games": 32,
+    "name": null,
+    "offense": 10.728
+   },
+   "2598": {
+    "abbr": null,
+    "defense": 3.848,
+    "games": 31,
+    "name": null,
+    "offense": 0.994
+   },
+   "2599": {
+    "abbr": null,
+    "defense": -12.497,
+    "games": 34,
+    "name": null,
+    "offense": 13.24
+   },
+   "26": {
+    "abbr": null,
+    "defense": -11.88,
+    "games": 34,
+    "name": null,
+    "offense": 10.137
+   },
+   "2603": {
+    "abbr": null,
+    "defense": -8.173,
+    "games": 33,
+    "name": null,
+    "offense": 4.158
+   },
+   "2608": {
+    "abbr": null,
+    "defense": -15.676,
+    "games": 32,
+    "name": null,
+    "offense": 9.032
+   },
+   "261": {
+    "abbr": null,
+    "defense": -6.354,
+    "games": 34,
+    "name": null,
+    "offense": 2.185
+   },
+   "2612": {
+    "abbr": null,
+    "defense": -6.915,
+    "games": 29,
+    "name": null,
+    "offense": 0.16
+   },
+   "2617": {
+    "abbr": null,
+    "defense": -10.528,
+    "games": 33,
+    "name": null,
+    "offense": 5.761
+   },
+   "2619": {
+    "abbr": null,
+    "defense": -6.079,
+    "games": 32,
+    "name": null,
+    "offense": 2.033
+   },
+   "2623": {
+    "abbr": null,
+    "defense": -5.725,
+    "games": 34,
+    "name": null,
+    "offense": 4.311
+   },
+   "2627": {
+    "abbr": null,
+    "defense": -4.245,
+    "games": 32,
+    "name": null,
+    "offense": 4.366
+   },
+   "2628": {
+    "abbr": null,
+    "defense": -11.029,
+    "games": 33,
+    "name": null,
+    "offense": 9.185
+   },
+   "2630": {
+    "abbr": null,
+    "defense": -12.9,
+    "games": 33,
+    "name": null,
+    "offense": -3.029
+   },
+   "2633": {
+    "abbr": null,
+    "defense": -16.26,
+    "games": 33,
+    "name": null,
+    "offense": 10.134
+   },
+   "2634": {
+    "abbr": null,
+    "defense": -2.66,
+    "games": 32,
+    "name": null,
+    "offense": 8.97
+   },
+   "2635": {
+    "abbr": null,
+    "defense": -2.45,
+    "games": 31,
+    "name": null,
+    "offense": 1.151
+   },
+   "2636": {
+    "abbr": null,
+    "defense": 0.96,
+    "games": 30,
+    "name": null,
+    "offense": -1.461
+   },
+   "2638": {
+    "abbr": null,
+    "defense": -6.974,
+    "games": 31,
+    "name": null,
+    "offense": -0.668
+   },
+   "264": {
+    "abbr": null,
+    "defense": -9.713,
+    "games": 33,
+    "name": null,
+    "offense": 8.943
+   },
+   "2640": {
+    "abbr": null,
+    "defense": 1.307,
+    "games": 30,
+    "name": null,
+    "offense": 1.185
+   },
+   "2641": {
+    "abbr": null,
+    "defense": -12.628,
+    "games": 32,
+    "name": null,
+    "offense": 13.105
+   },
+   "2643": {
+    "abbr": null,
+    "defense": -1.106,
+    "games": 33,
+    "name": null,
+    "offense": -1.704
+   },
+   "2649": {
+    "abbr": null,
+    "defense": -4.989,
+    "games": 34,
+    "name": null,
+    "offense": 9.362
+   },
+   "265": {
+    "abbr": null,
+    "defense": -3.541,
+    "games": 32,
+    "name": null,
+    "offense": 7.21
+   },
+   "2653": {
+    "abbr": null,
+    "defense": -6.116,
+    "games": 33,
+    "name": null,
+    "offense": 7.681
+   },
+   "2655": {
+    "abbr": null,
+    "defense": -3.679,
+    "games": 33,
+    "name": null,
+    "offense": 2.686
+   },
+   "2670": {
+    "abbr": null,
+    "defense": -8.367,
+    "games": 34,
+    "name": null,
+    "offense": 12.62
+   },
+   "2674": {
+    "abbr": null,
+    "defense": -7.975,
+    "games": 33,
+    "name": null,
+    "offense": 2.606
+   },
+   "2678": {
+    "abbr": null,
+    "defense": 1.234,
+    "games": 32,
+    "name": null,
+    "offense": -1.775
+   },
+   "2681": {
+    "abbr": null,
+    "defense": -3.284,
+    "games": 31,
+    "name": null,
+    "offense": 0.847
+   },
+   "269": {
+    "abbr": null,
+    "defense": -6.776,
+    "games": 32,
+    "name": null,
+    "offense": 7.288
+   },
+   "2692": {
+    "abbr": null,
+    "defense": -1.9,
+    "games": 32,
+    "name": null,
+    "offense": 8.428
+   },
+   "2698": {
+    "abbr": null,
+    "defense": -0.631,
+    "games": 32,
+    "name": null,
+    "offense": 2.822
+   },
+   "27": {
+    "abbr": null,
+    "defense": -2.68,
+    "games": 32,
+    "name": null,
+    "offense": 1.741
+   },
+   "270": {
+    "abbr": null,
+    "defense": -2.21,
+    "games": 32,
+    "name": null,
+    "offense": 4.039
+   },
+   "2710": {
+    "abbr": null,
+    "defense": 0.242,
+    "games": 31,
+    "name": null,
+    "offense": -5.512
+   },
+   "2711": {
+    "abbr": null,
+    "defense": -0.901,
+    "games": 31,
+    "name": null,
+    "offense": 4.168
+   },
+   "2717": {
+    "abbr": null,
+    "defense": -2.324,
+    "games": 31,
+    "name": null,
+    "offense": 6.095
+   },
+   "2724": {
+    "abbr": null,
+    "defense": -9.673,
+    "games": 33,
+    "name": null,
+    "offense": 7.245
+   },
+   "2729": {
+    "abbr": null,
+    "defense": -1.556,
+    "games": 32,
+    "name": null,
+    "offense": 11.49
+   },
+   "2737": {
+    "abbr": null,
+    "defense": -3.884,
+    "games": 34,
+    "name": null,
+    "offense": 10.284
+   },
+   "2739": {
+    "abbr": null,
+    "defense": -6.422,
+    "games": 33,
+    "name": null,
+    "offense": 2.668
+   },
+   "2747": {
+    "abbr": null,
+    "defense": -1.655,
+    "games": 32,
+    "name": null,
+    "offense": 5.571
+   },
+   "275": {
+    "abbr": null,
+    "defense": -7.346,
+    "games": 34,
+    "name": null,
+    "offense": 16.138
+   },
+   "2750": {
+    "abbr": null,
+    "defense": -7.269,
+    "games": 34,
+    "name": null,
+    "offense": 7.104
+   },
+   "2751": {
+    "abbr": null,
+    "defense": -7.838,
+    "games": 32,
+    "name": null,
+    "offense": 6.823
+   },
+   "2752": {
+    "abbr": null,
+    "defense": -1.388,
+    "games": 33,
+    "name": null,
+    "offense": 11.324
+   },
+   "2754": {
+    "abbr": null,
+    "defense": -6.596,
+    "games": 32,
+    "name": null,
+    "offense": 4.332
+   },
+   "2755": {
+    "abbr": null,
+    "defense": -5.918,
+    "games": 33,
+    "name": null,
+    "offense": -2.912
+   },
+   "276": {
+    "abbr": null,
+    "defense": -1.524,
+    "games": 32,
+    "name": null,
+    "offense": 9.148
+   },
+   "277": {
+    "abbr": null,
+    "defense": -16.933,
+    "games": 32,
+    "name": null,
+    "offense": 0.66
+   },
+   "2771": {
+    "abbr": null,
+    "defense": -10.051,
+    "games": 34,
+    "name": null,
+    "offense": -0.626
+   },
+   "278": {
+    "abbr": null,
+    "defense": -7.627,
+    "games": 32,
+    "name": null,
+    "offense": 3.258
+   },
+   "279": {
+    "abbr": null,
+    "defense": -11.061,
+    "games": 33,
+    "name": null,
+    "offense": 2.565
+   },
+   "28": {
+    "abbr": null,
+    "defense": -9.307,
+    "games": 34,
+    "name": null,
+    "offense": 3.247
+   },
+   "2803": {
+    "abbr": null,
+    "defense": -3.689,
+    "games": 31,
+    "name": null,
+    "offense": -4.85
+   },
+   "2815": {
+    "abbr": null,
+    "defense": -3.342,
+    "games": 33,
+    "name": null,
+    "offense": 6.1
+   },
+   "282": {
+    "abbr": null,
+    "defense": -4.179,
+    "games": 32,
+    "name": null,
+    "offense": 4.953
+   },
+   "2837": {
+    "abbr": null,
+    "defense": -3.289,
+    "games": 32,
+    "name": null,
+    "offense": 0.214
+   },
+   "284": {
+    "abbr": null,
+    "defense": -6.814,
+    "games": 33,
+    "name": null,
+    "offense": -4.653
+   },
+   "2856": {
+    "abbr": null,
+    "defense": -11.339,
+    "games": 33,
+    "name": null,
+    "offense": 2.652
+   },
+   "2870": {
+    "abbr": null,
+    "defense": -3.548,
+    "games": 32,
+    "name": null,
+    "offense": 4.933
+   },
+   "288": {
+    "abbr": null,
+    "defense": -3.976,
+    "games": 32,
+    "name": null,
+    "offense": 6.573
+   },
+   "2885": {
+    "abbr": null,
+    "defense": -2.984,
+    "games": 33,
+    "name": null,
+    "offense": -2.565
+   },
+   "290": {
+    "abbr": null,
+    "defense": 1.702,
+    "games": 37,
+    "name": null,
+    "offense": 8.99
+   },
+   "2900": {
+    "abbr": null,
+    "defense": -6.89,
+    "games": 33,
+    "name": null,
+    "offense": 9.816
+   },
+   "2908": {
+    "abbr": null,
+    "defense": -4.719,
+    "games": 32,
+    "name": null,
+    "offense": 1.445
+   },
+   "2916": {
+    "abbr": null,
+    "defense": -3.134,
+    "games": 31,
+    "name": null,
+    "offense": 3.787
+   },
+   "292": {
+    "abbr": null,
+    "defense": -7.733,
+    "games": 33,
+    "name": null,
+    "offense": 5.481
+   },
+   "2934": {
+    "abbr": null,
+    "defense": 2.702,
+    "games": 32,
+    "name": null,
+    "offense": 1.185
+   },
+   "294": {
+    "abbr": null,
+    "defense": -6.563,
+    "games": 32,
+    "name": null,
+    "offense": -0.732
+   },
+   "295": {
+    "abbr": null,
+    "defense": -1.878,
+    "games": 33,
+    "name": null,
+    "offense": 4.654
+   },
+   "299": {
+    "abbr": null,
+    "defense": -2.072,
+    "games": 32,
+    "name": null,
+    "offense": 2.856
+   },
+   "30": {
+    "abbr": null,
+    "defense": -4.421,
+    "games": 32,
+    "name": null,
+    "offense": 10.785
+   },
+   "300": {
+    "abbr": null,
+    "defense": -10.934,
+    "games": 34,
+    "name": null,
+    "offense": 4.115
+   },
+   "301": {
+    "abbr": null,
+    "defense": -0.933,
+    "games": 33,
+    "name": null,
+    "offense": 4.578
+   },
+   "302": {
+    "abbr": null,
+    "defense": -4.567,
+    "games": 33,
+    "name": null,
+    "offense": 5.512
+   },
+   "304": {
+    "abbr": null,
+    "defense": -3.939,
+    "games": 33,
+    "name": null,
+    "offense": 3.313
+   },
+   "305": {
+    "abbr": null,
+    "defense": -11.644,
+    "games": 32,
+    "name": null,
+    "offense": 1.233
+   },
+   "3084": {
+    "abbr": null,
+    "defense": -8.664,
+    "games": 33,
+    "name": null,
+    "offense": 8.891
+   },
+   "309": {
+    "abbr": null,
+    "defense": -7.531,
+    "games": 33,
+    "name": null,
+    "offense": -6.228
+   },
+   "3101": {
+    "abbr": null,
+    "defense": -3.161,
+    "games": 34,
+    "name": null,
+    "offense": 6.076
+   },
+   "311": {
+    "abbr": null,
+    "defense": -7.821,
+    "games": 32,
+    "name": null,
+    "offense": -7.878
+   },
+   "314": {
+    "abbr": null,
+    "defense": -2.17,
+    "games": 32,
+    "name": null,
+    "offense": 3.909
+   },
+   "315": {
+    "abbr": null,
+    "defense": -5.284,
+    "games": 30,
+    "name": null,
+    "offense": -6.578
+   },
+   "322": {
+    "abbr": null,
+    "defense": -2.494,
+    "games": 32,
+    "name": null,
+    "offense": -1.301
+   },
+   "3229": {
+    "abbr": null,
+    "defense": 39.712,
+    "games": 10,
+    "name": null,
+    "offense": -11.349
+   },
+   "324": {
+    "abbr": null,
+    "defense": -5.799,
+    "games": 32,
+    "name": null,
+    "offense": 1.071
+   },
+   "325": {
+    "abbr": null,
+    "defense": 4.947,
+    "games": 33,
+    "name": null,
+    "offense": 7.296
+   },
+   "326": {
+    "abbr": null,
+    "defense": -6.01,
+    "games": 32,
+    "name": null,
+    "offense": 1.055
+   },
+   "328": {
+    "abbr": null,
+    "defense": -10.435,
+    "games": 34,
+    "name": null,
+    "offense": 13.476
+   },
+   "331": {
+    "abbr": null,
+    "defense": -2.041,
+    "games": 33,
+    "name": null,
+    "offense": 7.839
+   },
+   "333": {
+    "abbr": null,
+    "defense": -2.947,
+    "games": 32,
+    "name": null,
+    "offense": 23.398
+   },
+   "338": {
+    "abbr": null,
+    "defense": -2.307,
+    "games": 34,
+    "name": null,
+    "offense": 11.761
+   },
+   "339": {
+    "abbr": null,
+    "defense": -3.452,
+    "games": 32,
+    "name": null,
+    "offense": -0.852
+   },
+   "344": {
+    "abbr": null,
+    "defense": -3.495,
+    "games": 32,
+    "name": null,
+    "offense": 8.607
+   },
+   "349": {
+    "abbr": null,
+    "defense": 0.314,
+    "games": 32,
+    "name": null,
+    "offense": 0.495
+   },
+   "350": {
+    "abbr": null,
+    "defense": -10.337,
+    "games": 32,
+    "name": null,
+    "offense": 4.589
+   },
+   "356": {
+    "abbr": null,
+    "defense": -12.906,
+    "games": 32,
+    "name": null,
+    "offense": 16.898
+   },
+   "357": {
+    "abbr": null,
+    "defense": -9.764,
+    "games": 33,
+    "name": null,
+    "offense": 0.999
+   },
+   "36": {
+    "abbr": null,
+    "defense": -9.73,
+    "games": 33,
+    "name": null,
+    "offense": 5.811
+   },
+   "38": {
+    "abbr": null,
+    "defense": -3.982,
+    "games": 32,
+    "name": null,
+    "offense": 11.504
+   },
+   "399": {
+    "abbr": null,
+    "defense": -3.575,
+    "games": 32,
+    "name": null,
+    "offense": 0.538
+   },
+   "41": {
+    "abbr": null,
+    "defense": -17.365,
+    "games": 34,
+    "name": null,
+    "offense": 9.644
+   },
+   "43": {
+    "abbr": null,
+    "defense": -8.539,
+    "games": 30,
+    "name": null,
+    "offense": 10.97
+   },
+   "44": {
+    "abbr": null,
+    "defense": -5.113,
+    "games": 32,
+    "name": null,
+    "offense": 2.612
+   },
+   "45": {
+    "abbr": null,
+    "defense": -5.585,
+    "games": 33,
+    "name": null,
+    "offense": 12.606
+   },
+   "46": {
+    "abbr": null,
+    "defense": -8.319,
+    "games": 34,
+    "name": null,
+    "offense": 6.2
+   },
+   "47": {
+    "abbr": null,
+    "defense": -5.95,
+    "games": 33,
+    "name": null,
+    "offense": 4.267
+   },
+   "48": {
+    "abbr": null,
+    "defense": -5.145,
+    "games": 31,
+    "name": null,
+    "offense": -1.73
+   },
+   "5": {
+    "abbr": null,
+    "defense": -5.703,
+    "games": 32,
+    "name": null,
+    "offense": 7.912
+   },
+   "50": {
+    "abbr": null,
+    "defense": -3.005,
+    "games": 31,
+    "name": null,
+    "offense": -2.994
+   },
+   "52": {
+    "abbr": null,
+    "defense": -4.797,
+    "games": 33,
+    "name": null,
+    "offense": 12.342
+   },
+   "526": {
+    "abbr": null,
+    "defense": -3.399,
+    "games": 34,
+    "name": null,
+    "offense": 3.757
+   },
+   "55": {
+    "abbr": null,
+    "defense": -9.522,
+    "games": 32,
+    "name": null,
+    "offense": 1.489
+   },
+   "56": {
+    "abbr": null,
+    "defense": -0.205,
+    "games": 33,
+    "name": null,
+    "offense": 1.323
+   },
+   "57": {
+    "abbr": null,
+    "defense": -13.985,
+    "games": 33,
+    "name": null,
+    "offense": 17.796
+   },
+   "58": {
+    "abbr": null,
+    "defense": -5.439,
+    "games": 33,
+    "name": null,
+    "offense": 16.555
+   },
+   "59": {
+    "abbr": null,
+    "defense": -3.423,
+    "games": 31,
+    "name": null,
+    "offense": 5.829
+   },
+   "6": {
+    "abbr": null,
+    "defense": -7.529,
+    "games": 32,
+    "name": null,
+    "offense": 2.572
+   },
+   "61": {
+    "abbr": null,
+    "defense": -4.507,
+    "games": 32,
+    "name": null,
+    "offense": 19.992
+   },
+   "62": {
+    "abbr": null,
+    "defense": -8.749,
+    "games": 32,
+    "name": null,
+    "offense": 6.288
+   },
+   "66": {
+    "abbr": null,
+    "defense": -16.977,
+    "games": 34,
+    "name": null,
+    "offense": 13.943
+   },
+   "68": {
+    "abbr": null,
+    "defense": -8.297,
+    "games": 32,
+    "name": null,
+    "offense": 8.959
+   },
+   "70": {
+    "abbr": null,
+    "defense": -7.482,
+    "games": 35,
+    "name": null,
+    "offense": 6.169
+   },
+   "71": {
+    "abbr": null,
+    "defense": -5.29,
+    "games": 33,
+    "name": null,
+    "offense": 8.802
+   },
+   "77": {
+    "abbr": null,
+    "defense": -10.75,
+    "games": 34,
+    "name": null,
+    "offense": 6.266
+   },
+   "79": {
+    "abbr": null,
+    "defense": -10.065,
+    "games": 32,
+    "name": null,
+    "offense": 4.106
+   },
+   "8": {
+    "abbr": null,
+    "defense": -5.535,
+    "games": 34,
+    "name": null,
+    "offense": 21.049
+   },
+   "82": {
+    "abbr": null,
+    "defense": -9.797,
+    "games": 34,
+    "name": null,
+    "offense": 5.695
+   },
+   "84": {
+    "abbr": null,
+    "defense": -10.052,
+    "games": 32,
+    "name": null,
+    "offense": 10.987
+   },
+   "85": {
+    "abbr": null,
+    "defense": 7.363,
+    "games": 32,
+    "name": null,
+    "offense": 10.605
+   },
+   "87": {
+    "abbr": null,
+    "defense": -6.95,
+    "games": 31,
+    "name": null,
+    "offense": 7.462
+   },
+   "88": {
+    "abbr": null,
+    "defense": -3.084,
+    "games": 30,
+    "name": null,
+    "offense": -2.182
+   },
+   "9": {
+    "abbr": null,
+    "defense": -6.367,
+    "games": 33,
+    "name": null,
+    "offense": 8.995
+   },
+   "91": {
+    "abbr": null,
+    "defense": 1.368,
+    "games": 32,
+    "name": null,
+    "offense": 6.609
+   },
+   "93": {
+    "abbr": null,
+    "defense": -0.263,
+    "games": 32,
+    "name": null,
+    "offense": 13.835
+   },
+   "94": {
+    "abbr": null,
+    "defense": -2.806,
+    "games": 34,
+    "name": null,
+    "offense": 9.73
+   },
+   "96": {
+    "abbr": null,
+    "defense": -11.497,
+    "games": 34,
+    "name": null,
+    "offense": 12.66
+   },
+   "97": {
+    "abbr": null,
+    "defense": -10.763,
+    "games": 33,
+    "name": null,
+    "offense": 16.877
+   },
+   "98": {
+    "abbr": null,
+    "defense": -4.464,
+    "games": 32,
+    "name": null,
+    "offense": 8.116
+   },
+   "99": {
+    "abbr": null,
+    "defense": -5.912,
+    "games": 32,
+    "name": null,
+    "offense": 11.963
+   }
+  },
+  "unknown": {
+   "defense": 13.6,
+   "offense": -13.6
+  }
+ },
+ "cfb": {
+  "built": "2026-11-18",
+  "games": 888,
+  "league_points": 26.475,
+  "season": 2025,
+  "strangers": 94,
+  "teams": {
+   "103": {
+    "abbr": "BC",
+    "defense": 1.68,
+    "games": 12,
+    "name": null,
+    "offense": 1.428
+   },
+   "113": {
+    "abbr": "MASS",
+    "defense": 11.581,
+    "games": 12,
+    "name": null,
+    "offense": -11.458
+   },
+   "12": {
+    "abbr": "ARIZ",
+    "defense": -9.06,
+    "games": 12,
+    "name": null,
+    "offense": 7.837
+   },
+   "120": {
+    "abbr": "MD",
+    "defense": -3.359,
+    "games": 12,
+    "name": null,
+    "offense": 0.774
+   },
+   "127": {
+    "abbr": "MSU",
+    "defense": -1.386,
+    "games": 12,
+    "name": null,
+    "offense": 3.644
+   },
+   "130": {
+    "abbr": "MICH",
+    "defense": -10.009,
+    "games": 12,
+    "name": null,
+    "offense": 7.277
+   },
+   "135": {
+    "abbr": "MINN",
+    "defense": -4.816,
+    "games": 12,
+    "name": null,
+    "offense": 1.106
+   },
+   "142": {
+    "abbr": "MIZ",
+    "defense": -9.97,
+    "games": 12,
+    "name": null,
+    "offense": 7.534
+   },
+   "145": {
+    "abbr": "MISS",
+    "defense": -7.362,
+    "games": 12,
+    "name": null,
+    "offense": 14.065
+   },
+   "150": {
+    "abbr": "DUKE",
+    "defense": -1.081,
+    "games": 13,
+    "name": null,
+    "offense": 9.942
+   },
+   "151": {
+    "abbr": "ECU",
+    "defense": -6.626,
+    "games": 12,
+    "name": null,
+    "offense": 6.195
+   },
+   "152": {
+    "abbr": "NCSU",
+    "defense": -2.557,
+    "games": 12,
+    "name": null,
+    "offense": 7.212
+   },
+   "153": {
+    "abbr": "UNC",
+    "defense": -3.243,
+    "games": 12,
+    "name": null,
+    "offense": -4.285
+   },
+   "154": {
+    "abbr": "WAKE",
+    "defense": -7.101,
+    "games": 12,
+    "name": null,
+    "offense": 1.937
+   },
+   "158": {
+    "abbr": "NEB",
+    "defense": -5.596,
+    "games": 12,
+    "name": null,
+    "offense": 5.773
+   },
+   "164": {
+    "abbr": "RUTG",
+    "defense": 0.476,
+    "games": 12,
+    "name": null,
+    "offense": 7.191
+   },
+   "166": {
+    "abbr": "NMSU",
+    "defense": 1.089,
+    "games": 12,
+    "name": null,
+    "offense": -4.81
+   },
+   "167": {
+    "abbr": "UNM",
+    "defense": -4.763,
+    "games": 12,
+    "name": null,
+    "offense": 2.504
+   },
+   "183": {
+    "abbr": "SYR",
+    "defense": 1.322,
+    "games": 12,
+    "name": null,
+    "offense": -2.499
+   },
+   "189": {
+    "abbr": "BGSU",
+    "defense": -0.976,
+    "games": 12,
+    "name": null,
+    "offense": -5.624
+   },
+   "193": {
+    "abbr": "M-OH",
+    "defense": -2.606,
+    "games": 13,
+    "name": null,
+    "offense": 0.423
+   },
+   "194": {
+    "abbr": "OSU",
+    "defense": -20.018,
+    "games": 13,
+    "name": null,
+    "offense": 11.831
+   },
+   "195": {
+    "abbr": "OHIO",
+    "defense": -1.714,
+    "games": 12,
+    "name": null,
+    "offense": 2.076
+   },
+   "197": {
+    "abbr": "OKST",
+    "defense": 1.494,
+    "games": 12,
+    "name": null,
+    "offense": -6.609
+   },
+   "2": {
+    "abbr": "AUB",
+    "defense": -10.131,
+    "games": 12,
+    "name": null,
+    "offense": 3.8
+   },
+   "2005": {
+    "abbr": "AFA",
+    "defense": 2.152,
+    "games": 12,
+    "name": null,
+    "offense": 4.157
+   },
+   "2006": {
+    "abbr": "AKR",
+    "defense": 3.526,
+    "games": 12,
+    "name": null,
+    "offense": -4.49
+   },
+   "201": {
+    "abbr": "OU",
+    "defense": -15.254,
+    "games": 12,
+    "name": null,
+    "offense": 4.879
+   },
+   "202": {
+    "abbr": "TLSA",
+    "defense": 1.795,
+    "games": 12,
+    "name": null,
+    "offense": -2.241
+   },
+   "2026": {
+    "abbr": "APP",
+    "defense": 3.407,
+    "games": 12,
+    "name": null,
+    "offense": -1.404
+   },
+   "2032": {
+    "abbr": "ARST",
+    "defense": -0.551,
+    "games": 12,
+    "name": null,
+    "offense": -2.984
+   },
+   "204": {
+    "abbr": "ORST",
+    "defense": 1.198,
+    "games": 12,
+    "name": null,
+    "offense": -4.015
+   },
+   "2050": {
+    "abbr": "BALL",
+    "defense": 2.647,
+    "games": 12,
+    "name": null,
+    "offense": -7.85
+   },
+   "2084": {
+    "abbr": "BUFF",
+    "defense": -0.171,
+    "games": 12,
+    "name": null,
+    "offense": -3.629
+   },
+   "21": {
+    "abbr": "SDSU",
+    "defense": -10.664,
+    "games": 12,
+    "name": null,
+    "offense": 0.239
+   },
+   "2116": {
+    "abbr": "UCF",
+    "defense": -5.468,
+    "games": 12,
+    "name": null,
+    "offense": 0.244
+   },
+   "2117": {
+    "abbr": "CMU",
+    "defense": -2.268,
+    "games": 12,
+    "name": null,
+    "offense": -2.624
+   },
+   "213": {
+    "abbr": "PSU",
+    "defense": -8.48,
+    "games": 12,
+    "name": null,
+    "offense": 9.766
+   },
+   "2132": {
+    "abbr": "CIN",
+    "defense": -4.173,
+    "games": 12,
+    "name": null,
+    "offense": 6.829
+   },
+   "218": {
+    "abbr": "TEM",
+    "defense": 1.329,
+    "games": 12,
+    "name": null,
+    "offense": 2.576
+   },
+   "2199": {
+    "abbr": "EMU",
+    "defense": 4.219,
+    "games": 12,
+    "name": null,
+    "offense": -1.578
+   },
+   "221": {
+    "abbr": "PITT",
+    "defense": -4.225,
+    "games": 12,
+    "name": null,
+    "offense": 9.978
+   },
+   "2226": {
+    "abbr": "FAU",
+    "defense": 6.248,
+    "games": 12,
+    "name": null,
+    "offense": 3.633
+   },
+   "2229": {
+    "abbr": "FIU",
+    "defense": 0.354,
+    "games": 12,
+    "name": null,
+    "offense": 1.014
+   },
+   "2247": {
+    "abbr": "GAST",
+    "defense": 6.665,
+    "games": 12,
+    "name": null,
+    "offense": -5.008
+   },
+   "228": {
+    "abbr": "CLEM",
+    "defense": -7.398,
+    "games": 12,
+    "name": null,
+    "offense": 4.989
+   },
+   "2294": {
+    "abbr": "IOWA",
+    "defense": -13.905,
+    "games": 12,
+    "name": null,
+    "offense": 6.564
+   },
+   "23": {
+    "abbr": "SJSU",
+    "defense": 5.014,
+    "games": 12,
+    "name": null,
+    "offense": -1.037
+   },
+   "2305": {
+    "abbr": "KU",
+    "defense": -3.408,
+    "games": 12,
+    "name": null,
+    "offense": 5.659
+   },
+   "2306": {
+    "abbr": "KSU",
+    "defense": -4.093,
+    "games": 12,
+    "name": null,
+    "offense": 6.654
+   },
+   "2309": {
+    "abbr": "KENT",
+    "defense": 6.899,
+    "games": 12,
+    "name": null,
+    "offense": -1.649
+   },
+   "2335": {
+    "abbr": "LIB",
+    "defense": 0.139,
+    "games": 12,
+    "name": null,
+    "offense": -0.266
+   },
+   "2348": {
+    "abbr": "LT",
+    "defense": -3.5,
+    "games": 12,
+    "name": null,
+    "offense": 0.824
+   },
+   "235": {
+    "abbr": "MEM",
+    "defense": -5.275,
+    "games": 12,
+    "name": null,
+    "offense": 6.917
+   },
+   "238": {
+    "abbr": "VAN",
+    "defense": -6.462,
+    "games": 12,
+    "name": null,
+    "offense": 15.779
+   },
+   "239": {
+    "abbr": "BAY",
+    "defense": 2.125,
+    "games": 12,
+    "name": null,
+    "offense": 8.298
+   },
+   "2390": {
+    "abbr": "MIA",
+    "defense": -15.031,
+    "games": 12,
+    "name": null,
+    "offense": 9.943
+   },
+   "2393": {
+    "abbr": "MTSU",
+    "defense": 4.548,
+    "games": 12,
+    "name": null,
+    "offense": -3.473
+   },
+   "24": {
+    "abbr": "STAN",
+    "defense": -2.655,
+    "games": 12,
+    "name": null,
+    "offense": -1.941
+   },
+   "242": {
+    "abbr": "RICE",
+    "defense": 1.16,
+    "games": 12,
+    "name": null,
+    "offense": -6.098
+   },
+   "2426": {
+    "abbr": "NAVY",
+    "defense": -3.942,
+    "games": 12,
+    "name": null,
+    "offense": 4.421
+   },
+   "2429": {
+    "abbr": "CLT",
+    "defense": 5.075,
+    "games": 12,
+    "name": null,
+    "offense": -8.213
+   },
+   "2433": {
+    "abbr": "ULM",
+    "defense": 4.243,
+    "games": 12,
+    "name": null,
+    "offense": -8.174
+   },
+   "2439": {
+    "abbr": "UNLV",
+    "defense": 1.763,
+    "games": 13,
+    "name": null,
+    "offense": 9.486
+   },
+   "2440": {
+    "abbr": "NEV",
+    "defense": -0.636,
+    "games": 12,
+    "name": null,
+    "offense": -5.231
+   },
+   "245": {
+    "abbr": "TA&M",
+    "defense": -8.106,
+    "games": 12,
+    "name": null,
+    "offense": 13.481
+   },
+   "2459": {
+    "abbr": "NIU",
+    "defense": -1.036,
+    "games": 12,
+    "name": null,
+    "offense": -7.1
+   },
+   "248": {
+    "abbr": "HOU",
+    "defense": -5.318,
+    "games": 12,
+    "name": null,
+    "offense": 4.503
+   },
+   "2483": {
+    "abbr": "ORE",
+    "defense": -13.587,
+    "games": 12,
+    "name": null,
+    "offense": 14.866
+   },
+   "249": {
+    "abbr": "UNT",
+    "defense": -1.632,
+    "games": 13,
+    "name": null,
+    "offense": 17.252
+   },
+   "25": {
+    "abbr": "CAL",
+    "defense": -1.168,
+    "games": 12,
+    "name": null,
+    "offense": 1.521
+   },
+   "2509": {
+    "abbr": "PUR",
+    "defense": -1.25,
+    "games": 12,
+    "name": null,
+    "offense": -0.34
+   },
+   "251": {
+    "abbr": "TEX",
+    "defense": -10.343,
+    "games": 12,
+    "name": null,
+    "offense": 6.982
+   },
+   "252": {
+    "abbr": "BYU",
+    "defense": -11.248,
+    "games": 13,
+    "name": null,
+    "offense": 9.911
+   },
+   "2534": {
+    "abbr": "SHSU",
+    "defense": 8.84,
+    "games": 12,
+    "name": null,
+    "offense": -7.399
+   },
+   "254": {
+    "abbr": "UTAH",
+    "defense": -9.928,
+    "games": 12,
+    "name": null,
+    "offense": 15.97
+   },
+   "256": {
+    "abbr": "JMU",
+    "defense": -9.82,
+    "games": 13,
+    "name": null,
+    "offense": 8.62
+   },
+   "2567": {
+    "abbr": "SMU",
+    "defense": -7.22,
+    "games": 12,
+    "name": null,
+    "offense": 7.439
+   },
+   "2572": {
+    "abbr": "USM",
+    "defense": 0.806,
+    "games": 12,
+    "name": null,
+    "offense": 1.503
+   },
+   "2579": {
+    "abbr": "SC",
+    "defense": -8.499,
+    "games": 12,
+    "name": null,
+    "offense": 1.599
+   },
+   "258": {
+    "abbr": "UVA",
+    "defense": -7.495,
+    "games": 13,
+    "name": null,
+    "offense": 6.789
+   },
+   "259": {
+    "abbr": "VT",
+    "defense": -1.314,
+    "games": 12,
+    "name": null,
+    "offense": 0.435
+   },
+   "26": {
+    "abbr": "UCLA",
+    "defense": -1.369,
+    "games": 12,
+    "name": null,
+    "offense": -0.456
+   },
+   "2623": {
+    "abbr": "MOST",
+    "defense": 0.928,
+    "games": 12,
+    "name": null,
+    "offense": -0.785
+   },
+   "2628": {
+    "abbr": "TCU",
+    "defense": -4.031,
+    "games": 12,
+    "name": null,
+    "offense": 7.049
+   },
+   "2633": {
+    "abbr": "TENN",
+    "defense": -1.59,
+    "games": 12,
+    "name": null,
+    "offense": 15.202
+   },
+   "2636": {
+    "abbr": "UTSA",
+    "defense": -0.519,
+    "games": 12,
+    "name": null,
+    "offense": 7.595
+   },
+   "2638": {
+    "abbr": "UTEP",
+    "defense": 4.231,
+    "games": 12,
+    "name": null,
+    "offense": -3.533
+   },
+   "264": {
+    "abbr": "WASH",
+    "defense": -8.663,
+    "games": 12,
+    "name": null,
+    "offense": 10.548
+   },
+   "2641": {
+    "abbr": "TTU",
+    "defense": -16.124,
+    "games": 13,
+    "name": null,
+    "offense": 16.568
+   },
+   "2649": {
+    "abbr": "TOL",
+    "defense": -9.99,
+    "games": 12,
+    "name": null,
+    "offense": 4.893
+   },
+   "265": {
+    "abbr": "WSU",
+    "defense": -8.955,
+    "games": 12,
+    "name": null,
+    "offense": -0.075
+   },
+   "2653": {
+    "abbr": "TROY",
+    "defense": -2.364,
+    "games": 13,
+    "name": null,
+    "offense": -1.357
+   },
+   "2655": {
+    "abbr": "TULN",
+    "defense": -6.879,
+    "games": 13,
+    "name": null,
+    "offense": 3.542
+   },
+   "2711": {
+    "abbr": "WMU",
+    "defense": -7.452,
+    "games": 13,
+    "name": null,
+    "offense": -2.18
+   },
+   "275": {
+    "abbr": "WIS",
+    "defense": -10.212,
+    "games": 12,
+    "name": null,
+    "offense": -4.153
+   },
+   "2751": {
+    "abbr": "WYO",
+    "defense": -6.133,
+    "games": 12,
+    "name": null,
+    "offense": -8.176
+   },
+   "276": {
+    "abbr": "MRSH",
+    "defense": 2.137,
+    "games": 12,
+    "name": null,
+    "offense": 3.004
+   },
+   "277": {
+    "abbr": "WVU",
+    "defense": -1.006,
+    "games": 12,
+    "name": null,
+    "offense": 0.607
+   },
+   "278": {
+    "abbr": "FRES",
+    "defense": -5.116,
+    "games": 12,
+    "name": null,
+    "offense": 0.495
+   },
+   "290": {
+    "abbr": "GASO",
+    "defense": 5.665,
+    "games": 12,
+    "name": null,
+    "offense": 1.674
+   },
+   "295": {
+    "abbr": "ODU",
+    "defense": -6.916,
+    "games": 12,
+    "name": null,
+    "offense": 4.967
+   },
+   "30": {
+    "abbr": "USC",
+    "defense": -7.792,
+    "games": 12,
+    "name": null,
+    "offense": 13.264
+   },
+   "309": {
+    "abbr": "UL",
+    "defense": 3.085,
+    "games": 12,
+    "name": null,
+    "offense": 0.442
+   },
+   "324": {
+    "abbr": "CCU",
+    "defense": 5.974,
+    "games": 12,
+    "name": null,
+    "offense": -1.878
+   },
+   "326": {
+    "abbr": "TXST",
+    "defense": 3.466,
+    "games": 12,
+    "name": null,
+    "offense": 8.386
+   },
+   "328": {
+    "abbr": "USU",
+    "defense": -0.99,
+    "games": 12,
+    "name": null,
+    "offense": 5.622
+   },
+   "333": {
+    "abbr": "ALA",
+    "defense": -11.732,
+    "games": 13,
+    "name": null,
+    "offense": 10.52
+   },
+   "338": {
+    "abbr": "KENN",
+    "defense": -2.036,
+    "games": 13,
+    "name": null,
+    "offense": 2.942
+   },
+   "344": {
+    "abbr": "MSST",
+    "defense": -2.32,
+    "games": 12,
+    "name": null,
+    "offense": 7.514
+   },
+   "349": {
+    "abbr": "ARMY",
+    "defense": -7.154,
+    "games": 12,
+    "name": null,
+    "offense": -2.918
+   },
+   "356": {
+    "abbr": "ILL",
+    "defense": -6.827,
+    "games": 12,
+    "name": null,
+    "offense": 7.759
+   },
+   "36": {
+    "abbr": "CSU",
+    "defense": 1.67,
+    "games": 12,
+    "name": null,
+    "offense": -3.4
+   },
+   "38": {
+    "abbr": "COLO",
+    "defense": -0.649,
+    "games": 12,
+    "name": null,
+    "offense": -0.201
+   },
+   "41": {
+    "abbr": "CONN",
+    "defense": -0.464,
+    "games": 12,
+    "name": null,
+    "offense": 6.508
+   },
+   "48": {
+    "abbr": "DEL",
+    "defense": 5.605,
+    "games": 12,
+    "name": null,
+    "offense": 2.33
+   },
+   "5": {
+    "abbr": "UAB",
+    "defense": 6.014,
+    "games": 12,
+    "name": null,
+    "offense": 0.299
+   },
+   "52": {
+    "abbr": "FSU",
+    "defense": -6.852,
+    "games": 12,
+    "name": null,
+    "offense": 8.984
+   },
+   "55": {
+    "abbr": "JVST",
+    "defense": 0.038,
+    "games": 13,
+    "name": null,
+    "offense": 0.471
+   },
+   "57": {
+    "abbr": "FLA",
+    "defense": -9.147,
+    "games": 12,
+    "name": null,
+    "offense": 1.621
+   },
+   "58": {
+    "abbr": "USF",
+    "defense": -5.551,
+    "games": 12,
+    "name": null,
+    "offense": 15.329
+   },
+   "59": {
+    "abbr": "GT",
+    "defense": -4.434,
+    "games": 12,
+    "name": null,
+    "offense": 7.159
+   },
+   "6": {
+    "abbr": "USA",
+    "defense": 2.665,
+    "games": 12,
+    "name": null,
+    "offense": -0.858
+   },
+   "61": {
+    "abbr": "UGA",
+    "defense": -13.755,
+    "games": 13,
+    "name": null,
+    "offense": 9.16
+   },
+   "62": {
+    "abbr": "HAW",
+    "defense": -2.184,
+    "games": 12,
+    "name": null,
+    "offense": 2.205
+   },
+   "66": {
+    "abbr": "ISU",
+    "defense": -8.106,
+    "games": 12,
+    "name": null,
+    "offense": 4.333
+   },
+   "68": {
+    "abbr": "BOIS",
+    "defense": -6.413,
+    "games": 13,
+    "name": null,
+    "offense": 5.75
+   },
+   "77": {
+    "abbr": "NU",
+    "defense": -8.013,
+    "games": 12,
+    "name": null,
+    "offense": 0.325
+   },
+   "8": {
+    "abbr": "ARK",
+    "defense": 0.493,
+    "games": 12,
+    "name": null,
+    "offense": 10.76
+   },
+   "84": {
+    "abbr": "IU",
+    "defense": -17.074,
+    "games": 13,
+    "name": null,
+    "offense": 18.585
+   },
+   "87": {
+    "abbr": "ND",
+    "defense": -12.547,
+    "games": 12,
+    "name": null,
+    "offense": 16.591
+   },
+   "9": {
+    "abbr": "ASU",
+    "defense": -8.633,
+    "games": 12,
+    "name": null,
+    "offense": 1.707
+   },
+   "96": {
+    "abbr": "UK",
+    "defense": -5.208,
+    "games": 12,
+    "name": null,
+    "offense": 2.298
+   },
+   "97": {
+    "abbr": "LOU",
+    "defense": -7.299,
+    "games": 12,
+    "name": null,
+    "offense": 6.534
+   },
+   "98": {
+    "abbr": "WKU",
+    "defense": -1.402,
+    "games": 12,
+    "name": null,
+    "offense": 2.567
+   },
+   "99": {
+    "abbr": "LSU",
+    "defense": -12.149,
+    "games": 12,
+    "name": null,
+    "offense": 1.036
+   }
+  },
+  "unknown": {
+   "defense": 12.548,
+   "offense": -12.548
+  }
+ },
+ "nba": {
+  "built": "2026-11-18",
+  "games": 1235,
+  "league_points": 115.363,
+  "season": 2026,
+  "strangers": 3,
+  "teams": {
+   "1": {
+    "abbr": "ATL",
+    "defense": 0.739,
+    "games": 82,
+    "name": null,
+    "offense": 3.069
+   },
+   "10": {
+    "abbr": "HOU",
+    "defense": -5.442,
+    "games": 82,
+    "name": null,
+    "offense": -0.689
+   },
+   "11": {
+    "abbr": "IND",
+    "defense": 4.784,
+    "games": 82,
+    "name": null,
+    "offense": -2.673
+   },
+   "12": {
+    "abbr": "LAC",
+    "defense": -2.808,
+    "games": 82,
+    "name": null,
+    "offense": -1.87
+   },
+   "13": {
+    "abbr": "LAL",
+    "defense": -0.855,
+    "games": 82,
+    "name": null,
+    "offense": 0.785
+   },
+   "14": {
+    "abbr": "MIA",
+    "defense": 3.172,
+    "games": 82,
+    "name": null,
+    "offense": 5.471
+   },
+   "15": {
+    "abbr": "MIL",
+    "defense": 1.324,
+    "games": 82,
+    "name": null,
+    "offense": -4.65
+   },
+   "16": {
+    "abbr": "MIN",
+    "defense": -0.827,
+    "games": 82,
+    "name": null,
+    "offense": 2.176
+   },
+   "17": {
+    "abbr": "BKN",
+    "defense": 0.181,
+    "games": 82,
+    "name": null,
+    "offense": -9.286
+   },
+   "18": {
+    "abbr": "NY",
+    "defense": -5.08,
+    "games": 83,
+    "name": null,
+    "offense": 1.002
+   },
+   "19": {
+    "abbr": "ORL",
+    "defense": -0.503,
+    "games": 82,
+    "name": null,
+    "offense": 0.264
+   },
+   "2": {
+    "abbr": "BOS",
+    "defense": -8.028,
+    "games": 82,
+    "name": null,
+    "offense": -0.824
+   },
+   "20": {
+    "abbr": "PHI",
+    "defense": 0.775,
+    "games": 82,
+    "name": null,
+    "offense": 0.517
+   },
+   "21": {
+    "abbr": "PHX",
+    "defense": -4.465,
+    "games": 82,
+    "name": null,
+    "offense": -2.774
+   },
+   "22": {
+    "abbr": "POR",
+    "defense": 0.151,
+    "games": 82,
+    "name": null,
+    "offense": -0.131
+   },
+   "23": {
+    "abbr": "SAC",
+    "defense": 5.128,
+    "games": 82,
+    "name": null,
+    "offense": -4.237
+   },
+   "24": {
+    "abbr": "SA",
+    "defense": -3.73,
+    "games": 83,
+    "name": null,
+    "offense": 4.221
+   },
+   "25": {
+    "abbr": "OKC",
+    "defense": -7.51,
+    "games": 82,
+    "name": null,
+    "offense": 3.236
+   },
+   "26": {
+    "abbr": "UTAH",
+    "defense": 10.258,
+    "games": 82,
+    "name": null,
+    "offense": 2.392
+   },
+   "27": {
+    "abbr": "WSH",
+    "defense": 9.176,
+    "games": 82,
+    "name": null,
+    "offense": -2.167
+   },
+   "28": {
+    "abbr": "TOR",
+    "defense": -3.479,
+    "games": 82,
+    "name": null,
+    "offense": -0.782
+   },
+   "29": {
+    "abbr": "MEM",
+    "defense": 4.912,
+    "games": 82,
+    "name": null,
+    "offense": -0.787
+   },
+   "3": {
+    "abbr": "NO",
+    "defense": 4.381,
+    "games": 82,
+    "name": null,
+    "offense": 0.214
+   },
+   "30": {
+    "abbr": "CHA",
+    "defense": -4.177,
+    "games": 82,
+    "name": null,
+    "offense": 0.209
+   },
+   "4": {
+    "abbr": "CHI",
+    "defense": 6.034,
+    "games": 82,
+    "name": null,
+    "offense": 1.068
+   },
+   "5": {
+    "abbr": "CLE",
+    "defense": 0.099,
+    "games": 82,
+    "name": null,
+    "offense": 3.795
+   },
+   "6": {
+    "abbr": "DAL",
+    "defense": 3.924,
+    "games": 82,
+    "name": null,
+    "offense": -1.311
+   },
+   "7": {
+    "abbr": "DEN",
+    "defense": 1.539,
+    "games": 82,
+    "name": null,
+    "offense": 6.392
+   },
+   "8": {
+    "abbr": "DET",
+    "defense": -5.482,
+    "games": 82,
+    "name": null,
+    "offense": 1.908
+   },
+   "9": {
+    "abbr": "GS",
+    "defense": -0.508,
+    "games": 82,
+    "name": null,
+    "offense": -0.854
+   }
+  },
+  "unknown": {
+   "defense": 4.008,
+   "offense": -4.008
+  }
+ },
+ "nfl": {
+  "built": "2026-11-18",
+  "games": 272,
+  "league_points": 23.013,
+  "season": 2025,
+  "strangers": 0,
+  "teams": {
+   "1": {
+    "abbr": "ATL",
+    "defense": 0.702,
+    "games": 17,
+    "name": null,
+    "offense": -1.914
+   },
+   "10": {
+    "abbr": "TEN",
+    "defense": 3.635,
+    "games": 17,
+    "name": null,
+    "offense": -3.939
+   },
+   "11": {
+    "abbr": "IND",
+    "defense": 0.91,
+    "games": 17,
+    "name": null,
+    "offense": 5.118
+   },
+   "12": {
+    "abbr": "KC",
+    "defense": -3.313,
+    "games": 17,
+    "name": null,
+    "offense": -1.674
+   },
+   "13": {
+    "abbr": "LV",
+    "defense": 2.141,
+    "games": 17,
+    "name": null,
+    "offense": -7.291
+   },
+   "14": {
+    "abbr": "LAR",
+    "defense": -3.193,
+    "games": 17,
+    "name": null,
+    "offense": 7.482
+   },
+   "15": {
+    "abbr": "MIA",
+    "defense": 2.096,
+    "games": 17,
+    "name": null,
+    "offense": -3.134
+   },
+   "16": {
+    "abbr": "MIN",
+    "defense": -3.615,
+    "games": 17,
+    "name": null,
+    "offense": -3.066
+   },
+   "17": {
+    "abbr": "NE",
+    "defense": -1.88,
+    "games": 17,
+    "name": null,
+    "offense": 3.609
+   },
+   "18": {
+    "abbr": "NO",
+    "defense": -0.483,
+    "games": 17,
+    "name": null,
+    "offense": -4.86
+   },
+   "19": {
+    "abbr": "NYG",
+    "defense": 2.642,
+    "games": 17,
+    "name": null,
+    "offense": -0.541
+   },
+   "2": {
+    "abbr": "BUF",
+    "defense": 0.07,
+    "games": 17,
+    "name": null,
+    "offense": 4.496
+   },
+   "20": {
+    "abbr": "NYJ",
+    "defense": 5.698,
+    "games": 17,
+    "name": null,
+    "offense": -5.176
+   },
+   "21": {
+    "abbr": "PHI",
+    "defense": -3.995,
+    "games": 17,
+    "name": null,
+    "offense": -1.465
+   },
+   "22": {
+    "abbr": "ARI",
+    "defense": 3.342,
+    "games": 17,
+    "name": null,
+    "offense": -1.094
+   },
+   "23": {
+    "abbr": "PIT",
+    "defense": -0.466,
+    "games": 17,
+    "name": null,
+    "offense": -0.104
+   },
+   "24": {
+    "abbr": "LAC",
+    "defense": -1.794,
+    "games": 17,
+    "name": null,
+    "offense": -0.91
+   },
+   "25": {
+    "abbr": "SF",
+    "defense": -1.863,
+    "games": 17,
+    "name": null,
+    "offense": 3.083
+   },
+   "26": {
+    "abbr": "SEA",
+    "defense": -5.785,
+    "games": 17,
+    "name": null,
+    "offense": 5.332
+   },
+   "27": {
+    "abbr": "TB",
+    "defense": 1.176,
+    "games": 17,
+    "name": null,
+    "offense": 0.112
+   },
+   "28": {
+    "abbr": "WSH",
+    "defense": 3.259,
+    "games": 17,
+    "name": null,
+    "offense": -1.904
+   },
+   "29": {
+    "abbr": "CAR",
+    "defense": -1.137,
+    "games": 17,
+    "name": null,
+    "offense": -4.4
+   },
+   "3": {
+    "abbr": "CHI",
+    "defense": 1.785,
+    "games": 17,
+    "name": null,
+    "offense": 2.351
+   },
+   "30": {
+    "abbr": "JAX",
+    "defense": -2.96,
+    "games": 17,
+    "name": null,
+    "offense": 4.722
+   },
+   "33": {
+    "abbr": "BAL",
+    "defense": 0.489,
+    "games": 17,
+    "name": null,
+    "offense": 1.689
+   },
+   "34": {
+    "abbr": "HOU",
+    "defense": -6.227,
+    "games": 17,
+    "name": null,
+    "offense": 1.088
+   },
+   "4": {
+    "abbr": "CIN",
+    "defense": 5.556,
+    "games": 17,
+    "name": null,
+    "offense": 1.175
+   },
+   "5": {
+    "abbr": "CLE",
+    "defense": -0.67,
+    "games": 17,
+    "name": null,
+    "offense": -6.893
+   },
+   "6": {
+    "abbr": "DAL",
+    "defense": 7.575,
+    "games": 17,
+    "name": null,
+    "offense": 4.077
+   },
+   "7": {
+    "abbr": "DEN",
+    "defense": -3.223,
+    "games": 17,
+    "name": null,
+    "offense": -0.03
+   },
+   "8": {
+    "abbr": "DET",
+    "defense": 1.134,
+    "games": 17,
+    "name": null,
+    "offense": 4.658
+   },
+   "9": {
+    "abbr": "GB",
+    "defense": -1.606,
+    "games": 17,
+    "name": null,
+    "offense": -0.595
+   }
+  },
+  "unknown": {
+   "defense": 3.062,
+   "offense": -3.062
+  }
+ },
+ "nhl": {
+  "built": "2026-11-18",
+  "games": 1312,
+  "league_points": 3.127,
+  "season": 2026,
+  "strangers": 0,
+  "teams": {
+   "1": {
+    "abbr": "BOS",
+    "defense": -0.1,
+    "games": 82,
+    "name": null,
+    "offense": 0.2
+   },
+   "10": {
+    "abbr": "MTL",
+    "defense": -0.026,
+    "games": 82,
+    "name": null,
+    "offense": 0.33
+   },
+   "11": {
+    "abbr": "NJ",
+    "defense": -0.066,
+    "games": 82,
+    "name": null,
+    "offense": -0.3
+   },
+   "12": {
+    "abbr": "NYI",
+    "defense": -0.205,
+    "games": 82,
+    "name": null,
+    "offense": -0.268
+   },
+   "124292": {
+    "abbr": "SEA",
+    "defense": 0.087,
+    "games": 82,
+    "name": null,
+    "offense": -0.384
+   },
+   "129764": {
+    "abbr": "UTA",
+    "defense": -0.171,
+    "games": 82,
+    "name": null,
+    "offense": 0.127
+   },
+   "13": {
+    "abbr": "NYR",
+    "defense": -0.109,
+    "games": 82,
+    "name": null,
+    "offense": -0.206
+   },
+   "14": {
+    "abbr": "OTT",
+    "defense": -0.136,
+    "games": 82,
+    "name": null,
+    "offense": 0.257
+   },
+   "15": {
+    "abbr": "PHI",
+    "defense": -0.186,
+    "games": 82,
+    "name": null,
+    "offense": -0.065
+   },
+   "16": {
+    "abbr": "PIT",
+    "defense": 0.138,
+    "games": 82,
+    "name": null,
+    "offense": 0.459
+   },
+   "17": {
+    "abbr": "COL",
+    "defense": -0.601,
+    "games": 82,
+    "name": null,
+    "offense": 0.516
+   },
+   "18": {
+    "abbr": "SJ",
+    "defense": 0.445,
+    "games": 82,
+    "name": null,
+    "offense": -0.075
+   },
+   "19": {
+    "abbr": "STL",
+    "defense": 0.032,
+    "games": 82,
+    "name": null,
+    "offense": -0.312
+   },
+   "2": {
+    "abbr": "BUF",
+    "defense": -0.198,
+    "games": 82,
+    "name": null,
+    "offense": 0.377
+   },
+   "20": {
+    "abbr": "TB",
+    "defense": -0.315,
+    "games": 82,
+    "name": null,
+    "offense": 0.403
+   },
+   "21": {
+    "abbr": "TOR",
+    "defense": 0.48,
+    "games": 82,
+    "name": null,
+    "offense": -0.01
+   },
+   "22": {
+    "abbr": "VAN",
+    "defense": 0.715,
+    "games": 82,
+    "name": null,
+    "offense": -0.479
+   },
+   "23": {
+    "abbr": "WSH",
+    "defense": -0.152,
+    "games": 82,
+    "name": null,
+    "offense": 0.092
+   },
+   "25": {
+    "abbr": "ANA",
+    "defense": 0.423,
+    "games": 82,
+    "name": null,
+    "offense": 0.187
+   },
+   "26": {
+    "abbr": "FLA",
+    "defense": 0.202,
+    "games": 82,
+    "name": null,
+    "offense": -0.042
+   },
+   "27": {
+    "abbr": "NSH",
+    "defense": 0.164,
+    "games": 82,
+    "name": null,
+    "offense": -0.109
+   },
+   "28": {
+    "abbr": "WPG",
+    "defense": 0.049,
+    "games": 82,
+    "name": null,
+    "offense": -0.302
+   },
+   "29": {
+    "abbr": "CBJ",
+    "defense": -0.065,
+    "games": 82,
+    "name": null,
+    "offense": -0.026
+   },
+   "3": {
+    "abbr": "CGY",
+    "defense": 0.028,
+    "games": 82,
+    "name": null,
+    "offense": -0.55
+   },
+   "30": {
+    "abbr": "MIN",
+    "defense": -0.169,
+    "games": 82,
+    "name": null,
+    "offense": 0.174
+   },
+   "37": {
+    "abbr": "VGK",
+    "defense": -0.042,
+    "games": 82,
+    "name": null,
+    "offense": 0.082
+   },
+   "4": {
+    "abbr": "CHI",
+    "defense": 0.226,
+    "games": 82,
+    "name": null,
+    "offense": -0.519
+   },
+   "5": {
+    "abbr": "DET",
+    "defense": -0.015,
+    "games": 82,
+    "name": null,
+    "offense": -0.174
+   },
+   "6": {
+    "abbr": "EDM",
+    "defense": 0.195,
+    "games": 82,
+    "name": null,
+    "offense": 0.286
+   },
+   "7": {
+    "abbr": "CAR",
+    "defense": -0.194,
+    "games": 82,
+    "name": null,
+    "offense": 0.479
+   },
+   "8": {
+    "abbr": "LA",
+    "defense": -0.095,
+    "games": 82,
+    "name": null,
+    "offense": -0.403
+   },
+   "9": {
+    "abbr": "DAL",
+    "defense": -0.337,
+    "games": 82,
+    "name": null,
+    "offense": 0.256
+   }
+  },
+  "unknown": {
+   "defense": 0.259,
+   "offense": -0.259
+  }
+ }
+}

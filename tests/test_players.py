@@ -299,3 +299,80 @@ def test_hockey_and_football_lines_use_their_own_exposure():
     assert rodgers["params"]["exposure_mu"] == 1.0 and rodgers["params"]["exposure_sd"] == 0.0
     assert 220 < rodgers["mean"] < 320 and rodgers["p10"] < 299 < rodgers["p90"]
     assert all(r["mean"] > 0 for r in stats["rec_yards"])
+
+
+def test_football_rates_are_shrunk_toward_the_role_not_everyone_who_touched_the_ball():
+    from scanner.players import PlayerSeason, _role_players
+
+    def passer(player_id, team, yards_by_game):
+        season = PlayerSeason(player_id, player_id, team, team, None)
+        season.games = [
+            {"game_id": f"g{i}", "stats": {"pass_yards": y}} for i, y in enumerate(yards_by_game)
+        ]
+        return season
+
+    by_id = {
+        "qb1": passer("qb1", "A", [300, 320]),
+        "backup1": passer("backup1", "A", [12]),  # a kneel-down drive
+        "qb2": passer("qb2", "B", [250, 230]),
+        "trick": passer("trick", "B", [40]),  # a receiver's one throw
+    }
+    roles = _role_players(by_id, "nfl")
+    assert roles["pass_yards"] == {"qb1", "qb2"}  # one passer a team: the leader
+    rates = league_rates(by_id, "nfl")
+    assert rates[""]["pass_yards"] == pytest.approx((620 + 480) / 4)
+    # With the backups in, the rate would have been dragged to 167 a game.
+    rate, league = rate_for(by_id["qb1"], "pass_yards", "nfl", rates)
+    assert league == pytest.approx(275) and rate == pytest.approx((620 + 2 * 275) / (2 + 2))
+
+
+def test_a_projected_rout_trims_the_heavy_minutes_players_playing_time():
+    from scanner.players import BLOWOUT_MAX, blowout_factor, dispersion_for
+
+    close = {"blend": {"margin": 2.0}, "raw": {"margin": 9.0}}
+    rout = {"blend": {"margin": 13.0}, "raw": {"margin": 3.0}}
+    # The blend's margin counts, not the raw model's; within three points nothing moves.
+    assert blowout_factor("nba", close, 36.0) == 1.0
+    assert blowout_factor("nba", rout, 36.0) == pytest.approx(1.0 - 0.004 * 10.0)
+    assert blowout_factor("nba", {"raw": {"margin": -13.0}}, 36.0) == pytest.approx(0.96)
+    # The bench keeps its minutes (it gets more, if anything); a rout is capped.
+    assert blowout_factor("nba", rout, 20.0) == 1.0
+    assert blowout_factor("cbb", {"blend": {"margin": 40.0}}, 30.0) == pytest.approx(
+        1 - BLOWOUT_MAX
+    )
+    # Football has no playing time to trim; no projection, no change.
+    assert blowout_factor("nfl", rout, 1.0) == 1.0 and blowout_factor("nba", None, 36.0) == 1.0
+    # Each sport's own dispersion where it was fit, the shared dial elsewhere.
+    assert dispersion_for("cbb", "points") == 4.0 and dispersion_for("nba", "points") == 6.0
+    assert dispersion_for("nhl", "goals") == DISPERSION["goals"]
+    assert dispersion_for("nfl", "rec_yards") == 1.0
+
+
+def test_the_lines_carry_the_rout_factor_and_the_sports_dispersion():
+    diary, record = nba_diary(2)
+    slate = {
+        "game_id": "x",
+        "home": {"team_id": record.home.team_id, "abbreviation": record.home.abbreviation},
+        "away": {"team_id": record.away.team_id, "abbreviation": record.away.abbreviation},
+    }
+    rows = diary.player_games("nba")
+    averages = team_averages(diary.football_games("nba"), "nba")
+    projection = {
+        "raw": {"home": 110.0, "away": 100.0, "margin": 10.0, "total": 210.0},
+        "blend": {"home": 112.0, "away": 97.0, "margin": 15.0, "total": 209.0},
+        "league": {"points": 105.0},
+    }
+    lines = project_game("nba", slate, NOW, projection, rows, averages, NOW)
+    points = [line for line in lines if line["stat"] == "points"]
+    assert points and all(line["params"]["k"] == 6.0 for line in points)
+    # The men at 60% of the game or more lose 4.8% of their minutes at a 15-point blend
+    # margin (the stored playing time is after the trim); the rest keep theirs.
+    heavy = [line for line in points if line["params"]["blowout"] < 1.0]
+    assert heavy and all(
+        line["params"]["blowout"] == pytest.approx(1 - 0.004 * 12) for line in heavy
+    )
+    assert all(
+        line["params"]["exposure_mu"] / line["params"]["blowout"] >= 0.6 * 48 for line in heavy
+    )
+    light = [line for line in points if line["params"]["blowout"] == 1.0]
+    assert light and all(line["params"]["exposure_mu"] < 0.6 * 48 for line in light)

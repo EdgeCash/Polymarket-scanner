@@ -81,7 +81,8 @@ def test_the_check_scores_the_month_against_the_finals_and_the_close():
     # Every final sat inside the model's middle 90% here.
     assert out["outside_middle_90"] == {"margin": 0.0, "total": 0.0, "games": 4}
     # The close was the projection's book line, so the line never moved.
-    assert out["clv"]["closed"] == 4 and out["clv"]["positive_share"] == 0.0
+    assert out["clv"]["closed"] == 4 and out["clv"]["moved"] == 0
+    assert out["clv"]["positive_share"] is None  # nothing moved, so nothing to share
 
 
 def test_a_wild_final_lands_outside_the_middle_90_and_hockey_has_a_puck_line():

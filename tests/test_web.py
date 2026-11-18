@@ -350,7 +350,11 @@ def test_matchup_pages_render_from_the_diary():
     assert "<td class='label'>CLE<br><span class='note'>moneyline</span></td>" in shown
     assert "<td class='l3'>$50</td><td>50.0c</td><td>62.0%</td><td>+10.3c</td>" in shown
     assert "capped at 5% of a $1,000 bankroll" in shown and "nothing is placed" in shown
-    assert "1 and 1 games used, blend 14% model" in page
+    from scanner.projection import uncertainty
+
+    assert (
+        f"1 and 1 games used, blend {uncertainty('nfl', 1, 1)['weight'] * 100:.0f}% model" in page
+    )
     assert "61°F, 10% rain, gusts 8 mph" in page
     # The wind's effect on the model's total sits in the projection block.
     assert "<td class='label'>Weather</td>" in page
@@ -599,7 +603,8 @@ def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
     assert "/card/2026-10-11/1'>Full simulation" in page and "Record by rank" not in page
     assert client.get("/card/2026-10-11").text == page
     # Each pick shows the edge it was ranked by: its chance against what the price needs.
-    assert re.search(r"Edge \+\d+\.\d points: the model's \d+\.\d% against the 51\.2%", page)
+    assert re.search(r"Edge [-+]\d+\.\d points: the model's \d+\.\d% against the 51\.2%", page)
+    assert "Blend " in page and "(model alone " in page
     # A pick locked before the card ranked by edge keeps its old words.
     from scanner.web import _pick_block
 
@@ -609,7 +614,7 @@ def test_the_daily_card_is_public_and_shows_the_picks_and_the_record():
         for k, v in old_pick["detail"].items()
         if k not in ("edge", "chance_no_push", "break_even")
     }
-    assert "Conviction 0." in _pick_block(old_pick, settings, link=False)
+    assert re.search(r"Conviction -?0\.", _pick_block(old_pick, settings, link=False))
 
     # The pick's own page re-runs the same simulation with every score and line.
     pick = client.get("/card/2026-10-11/1").text

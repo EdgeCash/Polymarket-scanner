@@ -367,8 +367,8 @@ def _projection_rows(part: dict, sport: str) -> list[tuple[str, str]]:
         )
     clv = part["clv"]
     moved = (
-        f"{_signed(clv['margin'], 2)} {unit} avg, {_pct(clv['positive_share'])} of "
-        f"{clv['closed']} closed"
+        f"{_signed(clv['margin'], 2)} {unit} avg, {_pct(clv['positive_share'])} of the "
+        f"{clv.get('moved', clv['closed'])} that moved ({clv['closed']} closed)"
     )
     rows.append(("Line moved the model's way", moved))
     return rows
@@ -492,7 +492,11 @@ def _monthly_section(months: list[dict], settings: Settings) -> str:
                     ),
                     ("Favourites by model chance → won", bins or "none"),
                     ("Model's side against the close", markets),
-                    ("Close moved the model's way", f"{pct(c['positive_share'])} of {c['closed']}"),
+                    (
+                        "Close moved the model's way",
+                        f"{pct(c['positive_share'])} of the {c.get('moved', c['closed'])} "
+                        "that moved",
+                    ),
                 )  # fmt: skip
             )
         blocks.append(
@@ -1523,9 +1527,13 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
     )
     trust = detail.get("trust") or {}
     trust_text = (
-        f"closing lines {trust['positive_share'] * 100:.0f}% the model's way over {trust['closed']}"
+        f"closing lines {trust['positive_share'] * 100:.0f}% the model's way over "
+        f"{trust.get('moved', trust.get('closed', 0))} that moved"
         if trust.get("weighted")
-        else f"closing-line record not yet weighed, {trust.get('closed', 0)} closed"
+        else (
+            "closing-line record not yet weighed, "
+            f"{trust.get('moved', trust.get('closed', 0))} moved"
+        )
     )
     final = ""
     if pick.get("final_home") is not None:
@@ -1547,10 +1555,18 @@ def _pick_block(pick: dict, settings: Settings, link: bool) -> str:
         f"{html.escape(pick['side_label'])} <span class='odds'>({_odds(pick['odds'])})</span> "
         f"{_result_chip(pick)}"
     )
+    raw_value = (detail.get("projection") or {}).get("raw") or {}
+    raw_number = raw_value.get("total" if pick["market"] == MARKET_TOTAL else "margin")
+    model_label = "Blend" if detail.get("blended") else "Model"
     numbers = (
-        f"Model {html.escape(_value_text(pick, pick['model_value']))} · book "
-        f"{html.escape(_value_text(pick, pick['book_value']))} · {abs(pick['gap']):.1f} {unit} "
-        f"apart, {pick['z']:.2f} of a game's spread."
+        f"{model_label} {html.escape(_value_text(pick, pick['model_value']))}"
+        + (
+            f" (model alone {html.escape(_value_text(pick, raw_number))})"
+            if detail.get("blended") and raw_number is not None
+            else ""
+        )
+        + f" · book {html.escape(_value_text(pick, pick['book_value']))} · "
+        f"{abs(pick['gap']):.1f} {unit} apart, {pick['z']:.2f} of a game's spread."
     )
     edge = detail.get("edge")
     if edge is not None:

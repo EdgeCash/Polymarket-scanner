@@ -53,10 +53,13 @@ EXPOSURE: dict[str, str | None] = {
 EXPOSURE_CAP = {"nba": 48.0, "cbb": 40.0, "nhl": 65 * 60.0}
 EXPOSURE_FLOOR_SD = {"nba": 4.0, "cbb": 4.0, "nhl": 120.0}
 # Shrinkage: how much league-average play is added to a player's own before
-# his rate is trusted, in exposure units (or games, for football).
-# Football shrinks harder: the leaders are picked by projected mean, and with a
-# game or two of per-game rates the biggest estimates are the luckiest ones.
-PRIOR_EXPOSURE = {"nba": 72.0, "cbb": 60.0, "nhl": 3600.0, "nfl": 4.0, "cfb": 4.0}
+# his rate is trusted, in exposure units (or games, for football). Fit on a sample
+# of 2025-26 box scores (scripts/fit_players.py): basketball's miss is flat from
+# half to double these; hockey's falls a little with more; football's falls as the
+# prior lightens now that it is shrunk toward its role's rate rather than toward
+# every man who touched the ball (two games: the college passing miss 77 yards
+# against 80 at four, the NFL's 59 against 60).
+PRIOR_EXPOSURE = {"nba": 72.0, "cbb": 60.0, "nhl": 7200.0, "nfl": 2.0, "cfb": 2.0}
 # The negative binomial's dispersion per stat: variance = mean + mean² / k.
 # Smaller is wider. Set by hand, then moved to what the first days of grading
 # showed (7 November 2026, 3,400 lines): basketball and hockey counting stats
@@ -77,6 +80,33 @@ DISPERSION: dict[str, float] = {
     "receptions": 8.0,
     "pass_td": 4.0,
 }
+# Where a sport's own grading disagrees with the shared dial, its own number wins
+# (fit by maximum likelihood on a sample of 2025-26 box scores, scripts/fit_players.py).
+DISPERSION_BY_SPORT: dict[str, dict[str, float]] = {
+    # Basketball's counting stats were too wide (87-93% inside the 80% band), its points
+    # too narrow in the tails; college more so, where foul trouble and routs cut minutes.
+    "nba": {"points": 6.0, "rebounds": 20.0, "assists": 20.0, "three_made": 20.0},
+    "cbb": {"points": 4.0, "rebounds": 8.0, "assists": 8.0},
+    "nhl": {"shots": 10.0, "assists": 20.0, "saves": 14.0},
+    # Football yards are nearly as wide as they are long: a receiver's game swings by
+    # about his average, so the bands at k of 2 held 70% instead of 80%.
+    "nfl": {
+        "pass_yards": 8.0, "rush_yards": 1.5, "rec_yards": 1.0, "receptions": 10.0, "pass_td": 30.0,
+    },
+    "cfb": {
+        "pass_yards": 3.0, "rush_yards": 1.5, "rec_yards": 1.0, "receptions": 6.0, "pass_td": 30.0,
+    },
+}  # fmt: skip
+# A projected blowout costs the men who play most some of their minutes: in the
+# sample, basketball's top-half players by playing time played 3-7% less when the
+# projected margin passed nine, and the bench more. The expected playing time of a
+# player at or above BLOWOUT_SHARE of the game comes down BLOWOUT_RATE for every
+# point of the game's expected margin beyond BLOWOUT_FROM, up to BLOWOUT_MAX; the
+# margin is the blend's, since the book's line is the better blowout forecast.
+BLOWOUT_FROM = 3.0
+BLOWOUT_RATE = 0.004
+BLOWOUT_MAX = 0.08
+BLOWOUT_SHARE = 0.6
 # Which game-level factor scales a stat: the team's projected scoring against its
 # average (opponent and pace together), or the game's pace alone.
 TEAM_SCALED = {
@@ -147,9 +177,31 @@ def seasons(rows: list[dict], sport: str) -> dict[str, PlayerSeason]:
     return out
 
 
+def _role_players(seasons_by_id: dict[str, PlayerSeason], sport: str) -> dict[str, set[str]]:
+    """Per stat, the players in the role the lines are for: each team's leaders by the
+    stat, as many as the sport projects a side. Football's box scores carry no playing
+    time or position, so without this a starting quarterback would be shrunk toward
+    the rate of every man who threw a pass, backups and trick plays included, and
+    the sample showed the lines running 10 to 60 yards light."""
+    out: dict[str, set[str]] = {}
+    by_team: dict[str, list[PlayerSeason]] = {}
+    for season in seasons_by_id.values():
+        by_team.setdefault(season.team_id, []).append(season)
+    for stat, count in SPORT_STATS[sport].items():
+        chosen = out.setdefault(stat, set())
+        for squad in by_team.values():
+            ranked = sorted((s for s in squad if s.total(stat) > 0), key=lambda s: -s.total(stat))
+            chosen.update(s.player_id for s in ranked[:count])
+    return out
+
+
 def league_rates(seasons_by_id: dict[str, PlayerSeason], sport: str) -> dict[str, dict[str, float]]:
-    """Per-position (and overall, under "") rates per exposure unit for each projected stat."""
+    """Per-position (and overall, under "") rates per exposure unit for each projected stat.
+
+    Per game (football), the rate is the role's: each team's leaders in the stat.
+    """
     exposure = EXPOSURE[sport]
+    roles = _role_players(seasons_by_id, sport) if exposure is None else {}
     totals: dict[str, dict[str, list[float]]] = {}
     for season in seasons_by_id.values():
         for position in ("", season.position or ""):
@@ -160,8 +212,8 @@ def league_rates(seasons_by_id: dict[str, PlayerSeason], sport: str) -> dict[str
                 if stat != "saves" and (season.position or "") == GOALIE and sport == "nhl":
                     continue
                 made = season.total(stat)
-                if exposure is None and made <= 0:
-                    continue  # per game: the league rate is among the men who record the stat
+                if exposure is None and (made <= 0 or season.player_id not in roles[stat]):
+                    continue  # per game: the league rate is the role's
                 sums = bucket.setdefault(stat, [0.0, 0.0])
                 sums[0] += made
                 sums[1] += season.exposure_total(exposure)
@@ -171,6 +223,23 @@ def league_rates(seasons_by_id: dict[str, PlayerSeason], sport: str) -> dict[str
             stat: (made / played) if played > 0 else 0.0 for stat, (made, played) in stats.items()
         }
     return out
+
+
+def dispersion_for(sport: str, stat: str) -> float:
+    return DISPERSION_BY_SPORT.get(sport, {}).get(stat, DISPERSION[stat])
+
+
+def blowout_factor(sport: str, projection: dict | None, exposure_mu: float) -> float:
+    """How much of his usual playing time a heavy-minutes player keeps in a projected rout."""
+    if sport not in EXPOSURE_CAP or projection is None:
+        return 1.0
+    if exposure_mu < BLOWOUT_SHARE * EXPOSURE_CAP[sport]:
+        return 1.0
+    part = projection.get("blend") or projection.get("raw") or {}
+    margin = part.get("margin")
+    if margin is None:
+        return 1.0
+    return 1.0 - min(BLOWOUT_RATE * max(abs(float(margin)) - BLOWOUT_FROM, 0.0), BLOWOUT_MAX)
 
 
 def _weighted_recent(values: list[float]) -> float:
@@ -396,6 +465,8 @@ def project_game(
             mu, sd = exposure_projection(season, sport)
             if mu <= 0:
                 continue
+            rout = blowout_factor(sport, projection, mu)
+            mu *= rout
             for stat in stats:
                 if (stat == "saves") != is_goalie:
                     continue
@@ -415,9 +486,10 @@ def project_game(
                     "exposure_sd": sd,
                     "exposure_cap": cap,
                     "factor": factor,
-                    "k": DISPERSION[stat],
+                    "k": dispersion_for(sport, stat),
                     "games": len(season.games),
                     "prior": PRIOR_EXPOSURE[sport],
+                    "blowout": rout,
                 }
                 pmf = distribution(params)
                 summary = summarise_pmf(pmf)
