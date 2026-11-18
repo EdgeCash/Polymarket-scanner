@@ -13,8 +13,10 @@ from scanner.projection import (
     TUNING,
     fit,
     grade,
+    home_win_chance,
     project,
     summarise,
+    uncertainty,
     win_probability,
 )
 
@@ -108,11 +110,22 @@ def test_project_adds_home_field_and_blends_with_the_book():
     assert neutral["raw"]["margin"] == pytest.approx(raw["margin"] - ratings.hfa)
     assert neutral["neutral"] and neutral["book"] is None and neutral["gap"] is None
     assert neutral["blend"]["margin"] == pytest.approx(neutral["raw"]["margin"])  # nothing to blend
-    weight = 18 / (18 + BOOK_PSEUDO_GAMES)
+    # The blend weighs the model by how far it can be trusted against the book: the
+    # book's error variance over the two together (inverse-variance weighting), so the
+    # NFL's four-game ratings carry a few percent, and the blend's spread is narrower.
+    unc = uncertainty("nfl", 18, 18)
+    weight = unc["weight"]
+    assert p["uncertainty"] == unc and 0.0 < weight < 0.1
     assert blend["weight"] == pytest.approx(weight)
     assert blend["margin"] == pytest.approx(weight * raw["margin"] + (1 - weight) * 7.5)
     assert blend["total"] == pytest.approx(weight * raw["total"] + (1 - weight) * 46.5)
     assert blend["home"] - blend["away"] == pytest.approx(blend["margin"])
+    assert (
+        p["league"]["sigma"] == pytest.approx(unc["sigma"]) and p["league"]["sigma_sport"] == 13.5
+    )
+    assert blend["sigma"] == pytest.approx(unc["sigma_blend"])
+    assert blend["sigma"] < p["league"]["sigma"]
+    assert 0.6 < blend["home_win"] < 0.8
     assert p["book"] == {
         "margin": 7.5,
         "total": 46.5,
@@ -127,14 +140,62 @@ def test_project_adds_home_field_and_blends_with_the_book():
     spread_only = BookLine("DraftKings", None, None, None, None, None, None, -7.5, -110, -110)
     q = project(ratings, "A", "D", False, spread_only)
     assert q["blend"]["total"] == pytest.approx(q["raw"]["total"]) and q["gap"]["total"] is None
-    assert q["book"]["home_win"] is None and q["blend"]["home_win"] == q["raw"]["home_win"]
+    # The blend's win chance follows its own margin through the grid, moneyline or not.
+    assert q["book"]["home_win"] is None
+    b = q["blend"]
+    assert b["home_win"] == pytest.approx(
+        home_win_chance("nfl", b["margin"], b["total"], b["sigma"], b["sigma_total"])
+    )
 
 
 def test_a_projection_from_one_game_is_thin_and_leans_on_the_book():
     ratings = fit([record("g", "A", "B", 24, 20)], "nfl")
     p = project(ratings, "A", "B", False, None)
     assert p["thin"] and p["games_used"] == {"home": 1, "away": 1}
-    assert p["blend"]["weight"] == pytest.approx(1 / (1 + BOOK_PSEUDO_GAMES))
+    # One game leaves the ratings less sure than eighteen: a wider spread, less weight.
+    settled = project(fit(season(), "nfl"), "A", "B", False, None)
+    assert p["blend"]["weight"] < settled["blend"]["weight"]
+    assert p["league"]["sigma"] > settled["league"]["sigma"] > 13.5
+    # Without a book there is nothing to blend: the blend is the model at its own spread.
+    assert (
+        p["blend"]["margin"] == p["raw"]["margin"] and p["blend"]["sigma"] == p["league"]["sigma"]
+    )
+
+
+def test_a_sport_without_uncertainty_numbers_keeps_the_fixed_weight_blend(monkeypatch):
+    plain = TUNING["nfl"].__class__(hfa=1.8, sigma=13.5, sigma_total=13.5)
+    monkeypatch.setitem(TUNING, "plain", plain)
+    assert plain.book_sigma is None and uncertainty("plain", 3, 3) is None
+    assert BOOK_PSEUDO_GAMES == 6.0
+
+
+def test_fit_shrinks_toward_last_seasons_rating_when_a_prior_is_given():
+    priors = {
+        "season": 2025,
+        "teams": {
+            "A": {"offense": 6.0, "defense": -6.0},
+            "B": {"offense": 2.0, "defense": -2.0},
+            "C": {"offense": -2.0, "defense": 2.0},
+            "D": {"offense": -6.0, "defense": 6.0},
+        },
+        "unknown": {"offense": -5.0, "defense": 5.0},
+    }
+    r = TUNING["nfl"].prior_weight
+    # No games yet: every team sits at its share of last season, and a game can be
+    # projected (thin) from the priors alone.
+    empty = fit([], "nfl", priors)
+    assert empty.prior_season == 2025 and empty.prior_teams == 4
+    assert empty.offense["A"] == pytest.approx(r * 6.0) and empty.games["A"] == 0
+    p = project(empty, "A", "D", False, None)
+    assert p is not None and p["thin"] and p["raw"]["margin"] > 0
+    # With one game, the rating moves from the prior toward what the game said, not
+    # toward average; a side the prior does not know starts at the default.
+    one = fit([record("g", "D", "A", 30, 10)], "nfl", priors)
+    assert one.offense["D"] > empty.offense["D"] and one.offense["A"] < empty.offense["A"]
+    stranger = fit([record("g", "A", "B", 24, 20)], "nfl", {**priors, "teams": {}})
+    assert stranger.prior_teams == 0 and stranger.defense["A"] > 0  # from the default
+    # And without a prior the ratings start at zero, as before.
+    assert fit([], "nfl").prior_season is None
 
 
 def test_win_probability_is_a_normal_cdf_of_the_margin():
@@ -216,11 +277,13 @@ def test_summarise_buckets_by_how_far_the_model_sat_from_the_book():
     assert out["ats"]["5"] == {"wins": 1, "losses": 0, "pushes": 0}
     assert out["ou"]["1"] == {"wins": 1, "losses": 0, "pushes": 1}
     assert out["ou"]["5"] == {"wins": 0, "losses": 0, "pushes": 0}
+    # The share counts the lines that moved: one of the two, not one of three.
     assert out["clv"] == {
         "margin": pytest.approx(0.5 / 3),
         "total": None,
         "closed": 3,
-        "positive_share": pytest.approx(1 / 3),
+        "moved": 2,
+        "positive_share": pytest.approx(0.5),
     }
     empty = summarise([])
     assert empty["graded"] == 0 and empty["margin_error"]["raw"] is None

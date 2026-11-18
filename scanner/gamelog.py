@@ -1662,12 +1662,13 @@ class GameLog:
         A projection keeps updating as games come in until kickoff, then locks; it
         is graded once the game's own record lands in the log.
         """
+        from scanner.priors import priors_for
         from scanner.projection import fit, project
         from scanner.rest import days_since_last
         from scanner.stakes import gate, suggest
 
         records = self.diary.football_games(sport, season)
-        ratings = fit(records, sport)
+        ratings = fit(records, sport, priors_for(sport, season))
         upcoming = self.diary.football_upcoming(sport)
         # Every game on the season's schedule by team, played or to come, so each side's
         # rest can be counted (a back-to-back moves basketball's and hockey's margins).

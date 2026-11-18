@@ -35,7 +35,7 @@ def test_the_card_image_lists_every_pick_with_its_result_and_the_record():
     assert ">Record 1-0-0, +0.95 units over 1 days<" in svg
     assert ">#1<" in svg and ">#2<" in svg and ">NFL<" in svg
     assert ">PIT at CLE · Sun 1:00 PM ET<" in svg and ">Over 41.5  (-105)<" in svg
-    assert ">WSH +3.5  (-110)<" in svg and ">WIN +0.95u<" in svg and ">sim " in svg
+    assert ">WSH +3.5  (-125)<" in svg and ">WIN +0.95u<" in svg and ">sim " in svg
     assert "Chosen by rule at 10:00 AM ET" in svg and "<image" not in svg
     png = to_png(svg)
     assert png_size(png) == (WIDTH * 2, HEIGHT * 2)
@@ -47,9 +47,12 @@ def test_the_pick_image_carries_the_call_the_numbers_and_the_histogram():
     svg = pick_svg(diary.card_pick("2026-10-11", 1), settings)
     assert ">PIT at CLE<" in svg and ">Over 41.5<" in svg and ">(-105)<" in svg
     assert ">WIN +0.95u<" in svg and ">Final PIT 24, CLE 27<" in svg
-    assert ">Model 51.0, book 41.5<" in svg and "0.70 of a game&#x27;s spread<" in svg
+    pick = diary.card_pick("2026-10-11", 1)
+    blend = f"{pick['model_value']:.1f}"
+    assert f">Blend {blend}, book 41.5, model alone 51.0<" in svg
+    assert f"{pick['z']:.2f} of a game&#x27;s spread<" in svg and 0.5 < pick["z"] < 0.7
     assert "of 100,000 simulated games<" in svg and ">The price says 51%<" in svg
-    assert "<svg x='520' y='130'" in svg and "book 41.5" in svg and "model 51.0" in svg
+    assert "<svg x='520' y='130'" in svg and "book 41.5" in svg and f"blend {blend}" in svg
     assert "width='100%'" not in svg
     open_pick = pick_svg(diary.card_pick("2026-10-11", 2), settings)
     assert ">WSH +3.5<" in open_pick and "WIN" not in open_pick and "Final" not in open_pick

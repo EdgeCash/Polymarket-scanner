@@ -73,8 +73,10 @@ def simulate(
         return None
     league = projection.get("league") or {}
     tuning = tuning_for(sport)
-    sigma = float(league.get("sigma") or tuning.sigma)
-    sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
+    # Each view has its own spread: the model's is the sport's average miss widened to
+    # what the ratings' own uncertainty allows, the blend's the narrower one it earns.
+    sigma = float(part.get("sigma") or league.get("sigma") or tuning.sigma)
+    sigma_total = float(part.get("sigma_total") or league.get("sigma_total") or tuning.sigma_total)
     g = grid(sport, margin_mean, total_mean, sigma, sigma_total)
     if g is None:
         return None

@@ -46,8 +46,18 @@ class SportTuning:
     first_half_share: float = 0.48  # used until the log has first-half (first-period) points
     margin_from_moneyline: bool = False  # read the book's margin off its moneyline, not its spread
     typical_total: float | None = None  # the total assumed when the book quotes none
-    pseudo_games: float = PSEUDO_GAMES  # how hard a team's ratings are shrunk toward average
+    pseudo_games: float = PSEUDO_GAMES  # how hard a team's ratings are shrunk toward its prior
     buckets: tuple[float, ...] = GAP_BUCKETS  # the scorecard's gap rows, in this sport's unit
+    # The prior: a team starts the season at this share of its last-season rating (0: at
+    # average, as before), and the pseudo-games above say how many games of play it is worth.
+    prior_weight: float = 0.0
+    # The uncertainty: how widely one team-game performance scatters about the ratings
+    # (so a rating from n games has a variance of about performance_sd² / (n + pseudo));
+    # the book's own miss on the final margin, and how far its line sits from the truth.
+    # Together they give each game's predictive spread and the model's weight in the blend.
+    performance_sd: float = 0.0
+    book_sigma: float | None = None
+    book_error: float | None = None
 
 
 # The sigmas are how far real results land from an expectation, measured on history:
@@ -62,22 +72,76 @@ class SportTuning:
 # projections leave home sides no residual, give or take a quarter of a point.
 # Football's margin and total share a width: the two teams' scores then move
 # independently, as they do against the close (correlation 0.01 in the NFL).
+# The prior and the uncertainty numbers are fit on ESPN history (scripts/fit_priors.py,
+# the 2024-25 and 2025-26 seasons, each game rated as the scanner sees it): the share of
+# last season's rating a team starts from and the games it is worth, by the smallest
+# miss; the scatter of one performance about the ratings from how the squared miss grows
+# with 1/(games + pseudo). College basketball: 0.9 of last season at four games cuts the
+# first six weeks' miss from 14.0 to 12.9 (12.3 to 11.8 over the season); college
+# football 0.8 at three, 16.8 to 15.8 early; the NBA 0.6 at six, 13.2 to 12.9 early;
+# hockey 0.5, 2.46 to 2.42; the NFL's one test season preferred no prior (12.90 against
+# 13.02 at a half), so it keeps a light one. The book's miss on the final margin and its
+# own error about the truth are taken from the literature (closing spreads: college
+# basketball about 10.5, the NBA 12.5, the NFL 13.0, college football about 16, hockey
+# 2.45 goals; the line within a point or three of the truth), and they set how much of
+# the model's miss is noise and how much is the model.
 TUNING = {
-    "nfl": SportTuning(hfa=1.8, sigma=13.5, sigma_total=13.5, volume_stat="total_yards"),
+    "nfl": SportTuning(
+        hfa=1.8,
+        sigma=13.5,
+        sigma_total=13.5,
+        volume_stat="total_yards",
+        prior_weight=0.4,
+        performance_sd=7.4,
+        book_sigma=13.0,
+        book_error=1.5,
+    ),
     # College: the yards half makes a performance steady enough that the ratings want
     # far less shrinkage than the rest (fit on 4,528 games rated only on earlier ones:
-    # the projected margin was 1.66 times too timid at four pseudo-games, right at a
-    # half; scripts/fit_shrinkage.py).
+    # the projected margin was 1.66 times too timid at four pseudo-games toward average,
+    # right at a half; scripts/fit_shrinkage.py). Toward last season's rating three
+    # games is right (scripts/fit_priors.py).
     "cfb": SportTuning(
-        hfa=2.5, sigma=16.25, sigma_total=16.75, volume_stat="total_yards", pseudo_games=0.5
+        hfa=2.5,
+        sigma=16.25,
+        sigma_total=16.75,
+        volume_stat="total_yards",
+        pseudo_games=3.0,
+        prior_weight=0.8,
+        performance_sd=6.4,
+        book_sigma=15.8,
+        book_error=2.5,
     ),
     # Basketball: points alone, and a home edge that has shrunk to a couple of points
     # (home sides fell 0.44 a game short of 2.5 over 4,730 games, 2021-22 to 2024-25).
-    "nba": SportTuning(hfa=2.0, sigma=14.0, sigma_total=19.0, first_half_share=0.5),
+    # The NBA's early-season miss is no wider than its late one (resting and tanking
+    # widen the spring), so no per-game widening is fit.
+    "nba": SportTuning(
+        hfa=2.0,
+        sigma=14.0,
+        sigma_total=19.0,
+        first_half_share=0.5,
+        pseudo_games=6.0,
+        prior_weight=0.6,
+        performance_sd=0.0,
+        book_sigma=12.5,
+        book_error=2.0,
+    ),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
     # (home sides fell 0.65 a game short of 3.5 over 15,460 games, 2022-23 to 2024-25).
-    "cbb": SportTuning(hfa=4.0, sigma=12.0, sigma_total=17.0, first_half_share=0.47),
+    # With 360 teams and four games each in November, the prior is what keeps a 25-point
+    # favourite from reading as a 3-point one.
+    "cbb": SportTuning(
+        hfa=4.0,
+        sigma=12.0,
+        sigma_total=17.0,
+        first_half_share=0.47,
+        prior_weight=0.9,
+        performance_sd=11.65,
+        book_sigma=10.5,
+        book_error=2.5,
+    ),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead (through
     # the score grid's own win curve, empty nets and overtime included); the
@@ -91,12 +155,69 @@ TUNING = {
         margin_from_moneyline=True,
         typical_total=6.2,
         buckets=(0.25, 0.5, 0.75, 1.0),
+        pseudo_games=8.0,
+        prior_weight=0.5,
+        performance_sd=0.0,
+        book_sigma=2.45,
+        book_error=0.3,
     ),
 }
 
 
 def tuning_for(sport: str | None) -> SportTuning:
     return TUNING.get(sport or "", TUNING["cfb"])
+
+
+# Games a side has typically played when the sport's ``sigma`` was measured: the average
+# miss already carries the rating uncertainty of a mid-season side, which is taken out
+# before each game's own is put back.
+TYPICAL_GAMES = {"nfl": 8.0, "cfb": 6.0, "nba": 40.0, "cbb": 15.0, "nhl": 40.0}
+
+
+def projection_variance(tuning: SportTuning, games_home: float, games_away: float) -> float:
+    """The variance of a projected margin (or total) from the ratings' own uncertainty."""
+    k = tuning.pseudo_games
+    s2 = tuning.performance_sd**2
+    return 2.0 * s2 * (1.0 / (games_home + k) + 1.0 / (games_away + k))
+
+
+def uncertainty(sport: str, games_home: float, games_away: float) -> dict | None:
+    """How far a game's projection can be trusted, and how to weigh it against the book.
+
+    The sport's ``sigma`` is the model's average miss; the book's miss is the game's own
+    noise plus the book's small error about the truth, so the model's settled rating
+    error is what its miss carries beyond that noise. A game's projection adds the
+    variance its two sides' game counts leave, so the model's error variance is the
+    settled part plus that, less what a typical mid-season game already had in the
+    average. The predictive spread is the noise plus the model's error; the blend's
+    weight on the model is the book's error variance over the two together
+    (inverse-variance weighting); the blend's own spread follows. None for a sport
+    whose book numbers are not set, which keeps the old fixed-weight blend.
+    """
+    tuning = tuning_for(sport)
+    if tuning.book_sigma is None or tuning.book_error is None:
+        return None
+    book_var = tuning.book_error**2
+    noise = max(tuning.book_sigma**2 - book_var, 1.0)
+    typical = TYPICAL_GAMES.get(sport, 10.0)
+    settled = max(
+        tuning.sigma**2 - noise - projection_variance(tuning, typical, typical),
+        0.25 * noise,
+    )
+    var_proj = projection_variance(tuning, games_home, games_away)
+    v_model = settled + var_proj
+    weight = book_var / (book_var + v_model)
+    sigma = math.sqrt(noise + v_model)
+    sigma_blend = math.sqrt(noise + weight**2 * v_model + (1.0 - weight) ** 2 * book_var)
+    return {
+        "noise": math.sqrt(noise),
+        "rating_sd": math.sqrt(settled),
+        "projection_sd": math.sqrt(var_proj),
+        "model_sd": math.sqrt(v_model),
+        "sigma": sigma,
+        "weight": weight,
+        "sigma_blend": sigma_blend,
+    }
 
 
 @dataclass
@@ -116,6 +237,8 @@ class Ratings:
     defense: dict[str, float] = field(default_factory=dict)  # points above average allowed
     games: dict[str, int] = field(default_factory=dict)
     names: dict[str, str] = field(default_factory=dict)
+    prior_season: int | None = None  # the season the prior came from, when one was used
+    prior_teams: int = 0  # how many teams had their own prior (the rest took the default)
 
     def team(self, team_id: str) -> dict | None:
         if team_id not in self.games:
@@ -161,10 +284,32 @@ def book_margin(book: BookLine | None, sport: str) -> float | None:
     return tuning.sigma * NormalDist().inv_cdf(p_home) if margin is None else margin
 
 
-def fit(records: list[GameRecord], sport: str) -> Ratings:
-    """Fit offence and defence ratings from finished games (any number, even none)."""
+def prior_means(priors: dict | None, tuning: SportTuning) -> tuple[dict, tuple[float, float]]:
+    """Each team's prior offence and defence, scaled by the sport's prior weight, and the
+    default for a team the prior does not know (a newcomer, or a visitor from outside)."""
+    r = tuning.prior_weight
+    if not priors or r <= 0:
+        return {}, (0.0, 0.0)
+    teams = {
+        str(team): (r * float(v.get("offense") or 0.0), r * float(v.get("defense") or 0.0))
+        for team, v in (priors.get("teams") or {}).items()
+    }
+    unknown = priors.get("unknown") or {}
+    default = (r * float(unknown.get("offense") or 0.0), r * float(unknown.get("defense") or 0.0))
+    return teams, default
+
+
+def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ratings:
+    """Fit offence and defence ratings from finished games (any number, even none).
+
+    ``priors`` is the sport's prior for the season (``scanner.priors.priors_for``):
+    last season's final ratings by team, and a default for a team it does not know.
+    With one, a team's ratings are shrunk toward its share of last season's instead
+    of toward average, and a team yet to play is rated at its prior alone.
+    """
     tuning = tuning_for(sport)
     season = records[-1].season if records else None
+    prior_by_team, prior_default = prior_means(priors, tuning)
     points_sum = volume_sum = 0.0
     half_sum = half_total = 0.0
     for record in records:
@@ -206,19 +351,27 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
         performances.extend((perf["home"], perf["away"]))
     league = sum(performances) / len(performances) if performances else 0.0
 
-    offense = dict.fromkeys(entries, 0.0)
-    defense = dict.fromkeys(entries, 0.0)
+    if prior_by_team:
+        # A team with a prior and no games yet is rated at its prior alone.
+        for team in prior_by_team:
+            entries.setdefault(team, [])
+            names.setdefault(team, priors["teams"][team].get("name") or team)
+    k = tuning.pseudo_games
+    prior_of = {team: prior_by_team.get(team, prior_default) for team in entries}
+    offense = {team: prior_of[team][0] for team in entries}
+    defense = {team: prior_of[team][1] for team in entries}
     for _ in range(ITERATIONS):
         new_offense = {}
         for team, games in entries.items():
             # What the team scored, less the average, less how soft its opponents
-            # were and less its home edge, over its games plus the pseudo-games.
+            # were and less its home edge, over its games plus the pseudo-games,
+            # which hold the team at its prior (average, without one).
             residual = sum(off - league - defense[opp] - h for opp, off, _, h in games)
-            new_offense[team] = residual / (len(games) + tuning.pseudo_games)
+            new_offense[team] = (residual + k * prior_of[team][0]) / (len(games) + k)
         new_defense = {}
         for team, games in entries.items():
             residual = sum(dfn - league - new_offense[opp] + h for opp, _, dfn, h in games)
-            new_defense[team] = residual / (len(games) + tuning.pseudo_games)
+            new_defense[team] = (residual + k * prior_of[team][1]) / (len(games) + k)
         offense, defense = new_offense, new_defense
 
     return Ratings(
@@ -235,6 +388,8 @@ def fit(records: list[GameRecord], sport: str) -> Ratings:
         defense=defense,
         games={team: len(games) for team, games in entries.items()},
         names=names,
+        prior_season=(priors or {}).get("season") if prior_by_team else None,
+        prior_teams=sum(1 for team in entries if team in prior_by_team),
     )
 
 
@@ -290,15 +445,21 @@ def project(
     margin = home_points - away_points
     total = home_points + away_points
     games_used = min(home["games"], away["games"])
-    weight = games_used / (games_used + BOOK_PSEUDO_GAMES)
+    unc = uncertainty(ratings.sport, home["games"], away["games"])
+    sigma, sigma_total = ratings.sigma, ratings.sigma_total
+    if unc is not None:
+        # The sport's average miss, widened or narrowed to what this game's ratings allow.
+        sigma = unc["sigma"]
+        sigma_total = ratings.sigma_total * unc["sigma"] / ratings.sigma
+        weight = unc["weight"]
+    else:
+        weight = games_used / (games_used + BOOK_PSEUDO_GAMES)
     raw = {
         "home": home_points,
         "away": away_points,
         "margin": margin,
         "total": total,
-        "home_win": home_win_chance(
-            ratings.sport, margin, total, ratings.sigma, ratings.sigma_total
-        ),
+        "home_win": home_win_chance(ratings.sport, margin, total, sigma, sigma_total),
         "first_half": {
             "home": home_points * ratings.first_half_share,
             "away": away_points * ratings.first_half_share,
@@ -315,14 +476,34 @@ def project(
         return raw[key] if book_value is None else weight * raw[key] + (1 - weight) * book_value
 
     blend_margin, blend_total = blend_of("margin"), blend_of("total")
+    blended = bool(book_parts) and any(
+        book_parts.get(key) is not None for key in ("margin", "total")
+    )
+    if unc is not None and blended:
+        sigma_blend = unc["sigma_blend"]
+        sigma_total_blend = ratings.sigma_total * sigma_blend / ratings.sigma
+    else:
+        sigma_blend, sigma_total_blend = sigma, sigma_total
     blend = {
         "weight": weight,
         "home": (blend_total + blend_margin) / 2.0,
         "away": (blend_total - blend_margin) / 2.0,
         "margin": blend_margin,
         "total": blend_total,
-        "home_win": blend_of("home_win"),
+        # The blend's win chance comes from its own margin through the grid, not from
+        # averaging two probabilities, unless the book gave only a moneyline.
+        "home_win": (
+            home_win_chance(
+                ratings.sport, blend_margin, blend_total, sigma_blend, sigma_total_blend
+            )
+            if blended or unc is None
+            else blend_of("home_win")
+        ),
+        "sigma": sigma_blend,
+        "sigma_total": sigma_total_blend,
     }
+    if unc is not None and not blended and book_parts and book_parts.get("home_win") is not None:
+        blend["home_win"] = blend_of("home_win")
     gap = None
     if book_parts:
         gap = {
@@ -341,12 +522,15 @@ def project(
         "league": {
             "points": ratings.league_points,
             "hfa": ratings.hfa,
-            "sigma": ratings.sigma,
-            "sigma_total": ratings.sigma_total,
+            "sigma": sigma,
+            "sigma_total": sigma_total,
+            "sigma_sport": ratings.sigma,
             "points_per_volume": ratings.points_per_volume,
             "first_half_share": ratings.first_half_share,
             "games": ratings.games_fitted,
+            "prior_season": ratings.prior_season,
         },
+        "uncertainty": unc,
         "neutral": bool(neutral),
         "raw": raw,
         "blend": blend,
@@ -447,6 +631,7 @@ def summarise(grades: list[dict], sport: str | None = None) -> dict:
     clv_margin = [(g.get("clv") or {}).get("margin") for g in grades]
     clv_total = [(g.get("clv") or {}).get("total") for g in grades]
     closed = [v for v in clv_margin if v is not None]
+    moved = [v for v in closed if v != 0]
     return {
         "graded": len(grades),
         "buckets": [f"{b:g}" for b in buckets],
@@ -459,6 +644,10 @@ def summarise(grades: list[dict], sport: str | None = None) -> dict:
             "margin": _mean(clv_margin),
             "total": _mean(clv_total),
             "closed": len(closed),
-            "positive_share": (sum(1 for v in closed if v > 0) / len(closed)) if closed else None,
+            # The share that moved the model's way, among the lines that moved at all: a
+            # line that never moved says nothing, and counting it against the model made
+            # the share read low on quiet lines.
+            "moved": len(moved),
+            "positive_share": (sum(1 for v in moved if v > 0) / len(moved)) if moved else None,
         },
     }

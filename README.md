@@ -39,13 +39,16 @@ scanner/
   loop.py          the scan loop and game-window scheduler  (milestone 8)
   report.py        the shadow weekend report                (milestone 8)
   projection.py    the projection model, graded against the book
+  priors.py        last season's ratings, the prior each team starts from
+  priors.json      those ratings by sport and ESPN team id (scripts/build_priors.py)
   stakes.py        what the model would stake (recorded, never placed)
   card.py          the daily card: five picks by rule, locked, graded, public
   grid.py          every final score's exact chance: the one source of odds
   simulate.py      the grid as 100,000 games per pick, as pictures
 tests/             pytest suite; fixtures/ holds saved API responses
-scripts/           smoke_live.py (by hand), train_winprob.py, and the simulator's
-                   fetch_history.py, build_sim_tables.py and grade_sim.py
+scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
+                   fetch_history.py, build_sim_tables.py and grade_sim.py, and the
+                   model's build_priors.py, fit_priors.py and fit_players.py
 docs/              winprob_report.md
 ```
 
@@ -457,9 +460,10 @@ model built from the log can hold its own against the book before any money
 follows it. `scanner/projection.py` is that model, kept plain enough to explain
 on the sheet: for every team, half of what it scored and half of what its yards
 say it should have scored (the league's points per yard times its yards), each
-adjusted for who it played, shrunk toward average while games are few (so many
-pseudo-games of average: four in most sports, a half in college football),
-plus home field (1.8 points in the NFL, 2.5 in college). Two ratings per team
+adjusted for who it played, shrunk toward its share of last season's rating
+while games are few (so many pseudo-games of the prior: four in most sports,
+three in college football), plus home field (1.8 points in the NFL, 2.5 in
+college). Two ratings per team
 come out, points above average on offence and points above average allowed on
 defence; a game's projection is the league average plus the two ratings that
 meet, with half the home edge on each side, and the win probability is the
@@ -528,12 +532,51 @@ give or take a quarter of a point either way). The NBA's 2.5 left home sides
 them 0.65 short over 15,460, so it is 4. The NFL's 1.8 is not fit here, since
 its history is graded against the close rather than the ratings.
 
-Beside the raw projection the sheet shows a blend with the book: the model's
-weight is games over games plus six, so with five games logged the blend is
-under half model and it drifts toward the model as the season goes. The gap
-between the raw model and the book is written out in points, and the inputs
-(both teams' ratings, the league average, home field, games used) sit under the
-table so the owner can see why.
+The prior is last season. `scanner/priors.json` holds every team's final
+offence and defence rating from the season before (`scripts/build_priors.py`,
+from ESPN's scoreboards, points only, by ESPN team id), and `projection.fit`
+shrinks a team toward a share of it instead of toward average: 0.9 in college
+basketball, 0.8 in college football, 0.6 in the NBA, 0.5 in hockey and 0.4 in
+the NFL, worth the pseudo-games above. A team the file does not know (a
+newcomer, or a visitor from outside the division) starts where the season's
+strangers finished, about 25 points below average in both college sports. Fit
+on the 2024-25 and 2025-26 seasons with each game rated as the scanner sees
+it (`scripts/fit_priors.py`): the prior takes college basketball's miss over
+the first six weeks from 14.0 to 12.9 points and over the season from 12.3 to
+11.8, college football's early miss from 16.8 to 15.8, the NBA's from 13.2 to
+12.9 and hockey's from 2.46 to 2.42; the NFL's one test season preferred no
+prior at all (12.90 against 13.02 at a half), so it keeps a light one. Before
+the prior, every team opened the season at average and with four games was
+rated at half of what its results said, which read a 25-point favourite as a
+3-point one and sent the daily card after 25-point underdogs; the review that
+found it is in [`docs/card_review_nov2026.md`](docs/card_review_nov2026.md).
+
+Each game's projection also says how far it can be trusted. The sport's
+spread of results (`sigma`) is the model's average miss; the book's miss on
+the same games (closing spreads: about 10.5 in college basketball, 12.5 in the
+NBA, 13.0 in the NFL, 16 in college football, 2.45 goals in hockey) is the
+game's own noise plus the book's small error about the truth, so what the
+model's miss carries beyond that noise is its settled rating error, and a game
+whose sides have played a handful of games adds the variance those few games
+leave (`performance_sd` over games plus pseudo-games, fit on the same
+history). The projection's `league.sigma` is the sport's spread widened to
+that game (14 points for a college game between four-game sides, 12 by
+mid-season), and the grid, the card and the pictures all read it, so a
+four-game rating cannot claim a 97% cover.
+
+Beside the raw projection the sheet shows a blend with the book, weighed by
+precision: the model's weight is the book's error variance over the book's and
+the model's together (`projection.uncertainty`), which comes out at 6-13% in
+college basketball from November to March, 8% in the NBA, 6% in hockey, 3-4%
+in the NFL and 7-8% in college football. That is the honest answer: the
+closing line is the best single forecast in every sport, a flat-start model
+with a month of games is not close, and the research behind the review found
+no public model that beats it by more than a point or two. The blend's own
+spread is narrower than the model's, its win chance comes from its own margin
+through the grid, and the gap between the raw model and the book is still
+written out in points, with the inputs (both teams' ratings, the league
+average, home field, games used) under the table so the owner can see why.
+Until November 2026 the blend's weight was games over games plus six.
 
 Every projection is written to the diary (`projections`) when a game comes into
 the 48-hour window, updated each pass until kickoff, then locked and graded once
@@ -665,17 +708,22 @@ every upcoming game, as a whole distribution rather than one number. A
 player's rate for a stat is what he has produced per minute (per second on
 the ice in hockey; per game in football, whose box scores give no playing
 time), shrunk toward the league rate for his position while his games are few
-(72 minutes of league-average play in the NBA, four games in football, where
-the leaders are picked by projected mean and the biggest early estimates are
-the luckiest ones). His
-playing time is projected from his last five games, most recent weighted
-most, with a spread from his last ten (floored at four minutes). The game
-projection says how his team's scoring should differ from its average against
-this opponent at this pace, and that scales scoring stats (points, assists,
-threes, shots, goals, yards, receptions); rebounds scale by the pace alone; a
-goalie's saves by the other side's scoring. The stat is a negative binomial
-around that mean, with a dispersion per stat (`DISPERSION`) that gives a
-25-point scorer the 15-to-35 range real games show, mixed over the
+(72 minutes of league-average play in the NBA, two hours in hockey, two games
+in football). In football the league rate is the role's, each team's leaders
+in the stat, as many as a side gets lines for: shrunk toward every man who
+threw a pass, backups and trick plays included, the lines ran 10 to 60 yards
+light. His playing time is projected from his last five games, most recent
+weighted most, with a spread from his last ten (floored at four minutes), and
+in basketball a projected rout trims it for the men who play most (0.4% a
+point of the blend's margin beyond three, up to 8%: in the sample the top half
+by minutes played 3-7% less once the margin passed nine, and the bench more).
+The game projection says how his team's scoring should differ from its
+average against this opponent at this pace, and that scales scoring stats
+(points, assists, threes, shots, goals, yards, receptions); rebounds scale by
+the pace alone; a goalie's saves by the other side's scoring. The stat is a
+negative binomial around that mean, with a dispersion per stat (`DISPERSION`,
+and each sport's own in `DISPERSION_BY_SPORT` where its grading differs) that
+gives a 25-point scorer the 15-to-35 range real games show, mixed over the
 uncertainty in his minutes. The distribution is computed exactly for the
 diary, which makes every player of every game affordable each pass, and drawn
 100,000 times for the pages from the same parameters.
@@ -754,19 +802,28 @@ next 24 hours:
   where the puck line never moves) and its total. The side is the one the
   model's raw number takes against the book's line at that moment, the same
   comparison the scorecard's gap rows grade.
-- Each side's edge is the model's chance it comes in, read from the score grid
-  (key numbers, overtime and all, given the line does not push, since a push is
-  a refund), less the chance the book's price needs to break even (52.4% at
-  -110). Every market and sport is then on one scale, and half a point across
-  football's 3 counts for more than half a point across 11. The side with the
-  bigger edge is the game's. Conviction is the edge times a trust weight for the
-  sport: 1 until the sport has 20 closed lines, then a half plus the share of
-  its closing lines that moved the model's way. A side with no edge keeps its
-  edge unweighted, so it ranks below every side with one and a thin day still
-  fills its card. Thin projections (a side with under 3 games) and games
-  without a book line are left out. Until November 2026 the card ranked by the
-  gap in the sport's usual spread of results (`sigma` in `projection.TUNING`);
-  picks locked before then keep that conviction and say so on their page.
+- Each side's edge is the blend's chance it comes in, read from the score grid
+  (key numbers, overtime and all, at the blend's own spread, given the line
+  does not push, since a push is a refund), less the chance the book's price
+  needs to break even (52.4% at -110). Every market and sport is then on one
+  scale, and half a point across football's 3 counts for more than half a
+  point across 11. The side with the bigger edge is the game's. Conviction is
+  the edge times a trust weight for the sport: 1 until the sport has 20 closing
+  lines that moved, then twice the share of moved lines that moved the model's
+  way (1 when the market comes the model's way half the time, which is what no
+  information gets; up to 1.5; down to nothing, with no floor, since a sport
+  the market moves against nine times in ten has earned no place). A raw
+  number more than one game's spread from the book rules its side out: the
+  biggest disagreements are the model's errors, and history shows the final
+  landing on the line. A side with no edge keeps its edge unweighted, so it
+  ranks below every side with one and a thin day still fills its card. Thin
+  projections (a side with under 3 games) and games without a book line are
+  left out. Until 18 November 2026 the card priced each side from the raw
+  model at the sport's average spread, with trust floored at a half, which
+  made it a search for the games where the model was most wrong (every pick a
+  25-to-42-point underdog claimed at 95-98%, graded a coin flip); before
+  November it ranked by the gap in the sport's usual spread of results. Picks
+  locked under either rule keep their conviction and say so on their page.
 - The top `CARD_PICKS` (5) are written to the diary (`cards`, `card_picks`)
   with the book's line and price at the lock, ranked, and never changed. A day
   with nothing eligible is left unlocked so a later pass can lock it; a card

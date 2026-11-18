@@ -42,6 +42,11 @@ from scanner.stakes import OUTCOME_PUSH, settle
 MARKET_SPREAD, MARKET_TOTAL, MARKET_MONEYLINE = "spread", "total", "moneyline"
 STANDARD_ODDS = -110  # the usual price on a spread or total when the book quotes none
 OUTCOME_NOT_GRADED = "not_graded"
+TRUST_CAP = 1.5  # a sport's trust runs from 0 (lines never move its way) to this
+# A side whose raw number sits further than this many of the sport's spreads from the
+# book is a flag, not a pick: the biggest disagreements are the model's errors (a missing
+# player, a rating from four games), and history shows the final landing on the line.
+MAX_GAP_SIGMAS = 1.0
 
 
 def payout(odds: int | None) -> float:
@@ -84,17 +89,21 @@ def window_for(day: date, now: datetime, settings: Settings) -> tuple[datetime, 
 def trust_for(record: dict | None) -> dict:
     """How much a sport's ranking is weighted by its closing-line record so far.
 
-    Until the sport has CARD_TRUST_MIN_CLOSED closed lines every sport weighs the
-    same. After that the weight is a half plus the share of lines that moved the
-    model's way: 1.0 when the market agrees with the model half the time, more
-    when it agrees more often, less when it does not.
+    Until the sport has CARD_TRUST_MIN_CLOSED lines that moved, every sport weighs
+    the same. After that the weight is twice the share of moved lines that moved
+    the model's way: 1.0 when the market comes the model's way half the time (what
+    no information gets), up to TRUST_CAP when it does so more often, and down to
+    nothing when it never does. There is no floor: a sport the market moves
+    against nine times in ten has earned no place on the card.
     """
     clv = (record or {}).get("clv") or {}
     closed = int(clv.get("closed") or 0)
+    moved = int(clv.get("moved") or 0)
     share = clv.get("positive_share")
-    if closed < CARD_TRUST_MIN_CLOSED or share is None:
-        return {"trust": 1.0, "closed": closed, "positive_share": share, "weighted": False}
-    return {"trust": 0.5 + share, "closed": closed, "positive_share": share, "weighted": True}
+    out = {"closed": closed, "moved": moved, "positive_share": share}
+    if moved < CARD_TRUST_MIN_CLOSED or share is None:
+        return {"trust": 1.0, **out, "weighted": False}
+    return {"trust": min(2.0 * share, TRUST_CAP), **out, "weighted": True}
 
 
 @dataclass(frozen=True, slots=True)
@@ -105,11 +114,11 @@ class Candidate:
     side: str
     line: float | None
     odds: int | None
-    model_value: float
+    model_value: float  # the blend's number, the one the side is priced from
     book_value: float
-    gap: float  # signed: model minus book
-    z: float  # the gap in that sport's spread of results
-    chance: float  # the model's chance the side comes in, given the line does not push
+    gap: float  # signed: the raw model minus the book
+    z: float  # the raw gap in that game's spread of results
+    chance: float  # the blend's chance the side comes in, given the line does not push
     edge: float  # that chance less the chance the price needs to break even
 
 
@@ -166,24 +175,41 @@ def _label(market: str, side: str, line: float | None, home: str, away: str) -> 
 
 
 def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[Candidate]:
-    """A game's possible picks: its margin side and its total side, where the book has a line."""
+    """A game's possible picks: its margin side and its total side, where the book has a line.
+
+    A side is priced from the blend (the model weighed against the book by how far
+    each can be trusted) with the blend's own spread, so the edge is what the model
+    adds to the price, not the whole distance between a four-game rating and the
+    line. The raw gap still says which way the model leans, and a raw gap beyond
+    MAX_GAP_SIGMAS of the game's spread rules the side out.
+    """
     raw, book_parts = projection.get("raw") or {}, projection.get("book") or {}
+    blend = projection.get("blend") or raw
     if projection.get("thin") or not book_parts:
         return []
     tuning = tuning_for(sport)
     league = projection.get("league") or {}
     sigma = float(league.get("sigma") or tuning.sigma)
     sigma_total = float(league.get("sigma_total") or tuning.sigma_total)
+    sigma_blend = float(blend.get("sigma") or sigma)
+    sigma_total_blend = float(blend.get("sigma_total") or sigma_total)
     game_id = str(projection.get("game_id") or "")
 
     def chance_of(market: str, side: str, line: float | None) -> float:
-        return side_chance(sport, raw, sigma, sigma_total, market, side, line)
+        return side_chance(sport, blend, sigma_blend, sigma_total_blend, market, side, line)
 
     out = []
-    margin, book_margin = raw.get("margin"), book_parts.get("margin")
-    if margin is not None and book_margin is not None and margin != book_margin:
-        gap = margin - book_margin
-        side = "home" if gap > 0 else "away"
+    margin, book_margin = blend.get("margin"), book_parts.get("margin")
+    raw_margin = raw.get("margin", margin)
+    if (
+        margin is not None
+        and book_margin is not None
+        and margin != book_margin
+        and raw_margin is not None
+        and abs(raw_margin - book_margin) <= MAX_GAP_SIGMAS * sigma
+    ):
+        gap = raw_margin - book_margin
+        side = "home" if margin > book_margin else "away"
         if tuning.margin_from_moneyline:
             odds = None
             if book is not None:
@@ -223,10 +249,17 @@ def candidates_for(sport: str, projection: dict, book: BookLine | None) -> list[
                     chance_of,
                 )  # fmt: skip
             )
-    total, book_total = raw.get("total"), book_parts.get("total")
-    if total is not None and book_total is not None and total != book_total:
-        gap = total - book_total
-        side = "over" if gap > 0 else "under"
+    total, book_total = blend.get("total"), book_parts.get("total")
+    raw_total = raw.get("total", total)
+    if (
+        total is not None
+        and book_total is not None
+        and total != book_total
+        and raw_total is not None
+        and abs(raw_total - book_total) <= MAX_GAP_SIGMAS * sigma_total
+    ):
+        gap = raw_total - book_total
+        side = "over" if total > book_total else "under"
         odds = None
         if book is not None:
             odds = book.over_odds if side == "over" else book.under_odds
@@ -278,7 +311,7 @@ def choose(
         projection = game["projection"]
         stamp = str(game.get("updated_at") or kickoff.isoformat())
         seed = seed_for(best.sport, best.game_id, stamp)
-        sim = simulate(projection, best.sport, draws=draws, seed=seed)
+        sim = simulate(projection, best.sport, draws=draws, seed=seed, source="blend")
         chance = pick_chance(sim, best.market, best.side, best.line) if sim else None
         out.append(
             {
@@ -323,6 +356,8 @@ def choose(
                     },
                     "sim": sim,
                     "chance": chance,
+                    # The side was priced from the blend; the picture is the blend's too.
+                    "blended": True,
                     # What the ranking used: the chance given no push and its edge.
                     "chance_no_push": best.chance,
                     "break_even": break_even(best.odds),

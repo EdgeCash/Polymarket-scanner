@@ -185,11 +185,20 @@ def pick_svg(pick: dict, settings: Settings) -> str:
         final = f"Final {pick['away']} {pick['final_away']}, {pick['home']} {pick['final_home']}"
         parts.append(_text(MARGIN + len(result[0]) * 22 * 0.62 + 36, y + 2, final, 20, fill=DIM))
     unit = "goals" if pick["sport"] == "nhl" else "points"
+    blended = bool(detail.get("blended"))
+    raw_part = (detail.get("projection") or {}).get("raw") or {}
+    raw_number = raw_part.get("total" if pick["market"] == "total" else "margin")
+    first = (
+        f"Blend {_value_text(pick, pick['model_value'])}, book "
+        f"{_value_text(pick, pick['book_value'])}"
+    )
+    if blended and raw_number is not None:
+        first += f", model alone {_value_text(pick, raw_number)}"
     lines = [
-        f"Model {_value_text(pick, pick['model_value'])}, book "
-        f"{_value_text(pick, pick['book_value'])}",
+        first if blended else first.replace("Blend", "Model", 1),
         f"{abs(pick['gap']):.1f} {unit} apart, {pick['z']:.2f} of a game's spread",
     ]
+    mean_word = "blend" if blended else "model"
     chance = detail.get("chance")
     if chance is not None and sim.get("draws"):
         lines.append(f"Hits in {chance * 100:.0f}% of {sim['draws']:,} simulated games")
@@ -203,7 +212,7 @@ def pick_svg(pick: dict, settings: Settings) -> str:
             hist = svg_histogram(
                 sim["total"]["hist"], line=pick["book_value"], mean=pick["model_value"],
                 side_above=pick["side"] == "over", line_label=f"book {pick['book_value']:g}",
-                mean_label=f"model {pick['model_value']:.1f}", axis_label=f"Total {unit}",
+                mean_label=f"{mean_word} {pick['model_value']:.1f}", axis_label=f"Total {unit}",
                 muted="#334155", text=INK,
             )  # fmt: skip
         else:
@@ -211,7 +220,7 @@ def pick_svg(pick: dict, settings: Settings) -> str:
                 sim["margin"]["hist"], line=pick["book_value"], mean=pick["model_value"],
                 side_above=pick["side"] == "home",
                 line_label=f"book {pick['home']} {-pick['book_value']:+.1f}",
-                mean_label=f"model {pick['home']} {-pick['model_value']:+.1f}",
+                mean_label=f"{mean_word} {pick['home']} {-pick['model_value']:+.1f}",
                 axis_label=f"Margin ({pick['home']}, {unit})", muted="#334155", text=INK,
             )  # fmt: skip
         if hist:

@@ -35,14 +35,27 @@ from tests.test_web import replace_slate
 
 SETTINGS = load_settings(GAMELOG_SPORTS="nfl,cfb", CARD_PICKS=5)
 BOOK = BookLine("DraftKings", -150, 130, None, 41.5, -105, -115, -2.5, -110, -110)
-NFL = {
-    "model": "v1",
-    "thin": False,
-    "raw": {"margin": 6.0, "total": 48.0, "home_win": 0.67},
-    "blend": {"margin": 4.0, "total": 45.0, "home_win": 0.6},
-    "book": {"margin": 2.5, "total": 41.5, "home_win": 0.58},
-    "league": {"sigma": 13.5, "sigma_total": 10.5},
-}
+BOOK_PARTS = {"margin": 2.5, "total": 41.5, "home_win": 0.58}
+
+
+def proj(margin, total, home_win=0.6, book=BOOK_PARTS, weight=0.3, sigma=13.5, sigma_total=10.5):
+    """A projection whose blend sits between the model and the book, as the real ones do."""
+    raw = {"margin": margin, "total": total, "home_win": home_win}
+    blend = {}
+    for key, value in raw.items():
+        line = None if book is None else book.get(key)
+        blend[key] = value if line is None else weight * value + (1 - weight) * line
+    return {
+        "model": "v1",
+        "thin": False,
+        "raw": raw,
+        "blend": {**blend, "weight": weight, "sigma": sigma, "sigma_total": sigma_total},
+        "book": book,
+        "league": {"sigma": sigma, "sigma_total": sigma_total},
+    }
+
+
+NFL = proj(6.0, 48.0, 0.67)  # the blend: margin 3.55, total 43.45
 HOME = {"team_id": "5", "abbreviation": "CLE", "name": "Browns"}
 AWAY = {"team_id": "23", "abbreviation": "PIT", "name": "Steelers"}
 
@@ -71,13 +84,30 @@ def test_the_card_locks_at_ten_eastern_and_covers_the_next_day():
         load_settings(CARD_TZ="Mars/Olympus")
 
 
-def test_trust_waits_for_twenty_closed_lines_then_follows_the_closing_line_record():
-    assert trust_for(None) == {"trust": 1.0, "closed": 0, "positive_share": None, "weighted": False}
-    few = {"clv": {"closed": 19, "positive_share": 0.9}}
+def test_trust_waits_for_twenty_moved_lines_then_follows_the_closing_line_record():
+    assert trust_for(None) == {
+        "trust": 1.0, "closed": 0, "moved": 0, "positive_share": None, "weighted": False,
+    }  # fmt: skip
+    few = {"clv": {"closed": 30, "moved": 19, "positive_share": 0.9}}
     assert trust_for(few)["trust"] == 1.0 and not trust_for(few)["weighted"]
-    enough = trust_for({"clv": {"closed": 20, "positive_share": 0.6}})
-    assert enough == {"trust": 1.1, "closed": 20, "positive_share": 0.6, "weighted": True}
-    assert trust_for({"clv": {"closed": 40, "positive_share": 0.3}})["trust"] == pytest.approx(0.8)
+    enough = trust_for({"clv": {"closed": 25, "moved": 20, "positive_share": 0.6}})
+    assert enough == {
+        "trust": pytest.approx(1.2),
+        "closed": 25,
+        "moved": 20,
+        "positive_share": 0.6,
+        "weighted": True,
+    }
+    # No floor: a sport the market moves against nine times in ten keeps a fifth of its
+    # edge, one it never moves toward nothing; the cap is a half above even.
+    assert trust_for({"clv": {"closed": 40, "moved": 40, "positive_share": 0.3}})[
+        "trust"
+    ] == pytest.approx(0.6)
+    assert trust_for({"clv": {"closed": 449, "moved": 300, "positive_share": 0.11}})[
+        "trust"
+    ] == pytest.approx(0.22)
+    assert trust_for({"clv": {"closed": 40, "moved": 40, "positive_share": 0.0}})["trust"] == 0.0
+    assert trust_for({"clv": {"closed": 40, "moved": 40, "positive_share": 0.9}})["trust"] == 1.5
 
 
 def test_candidates_take_the_stronger_side_of_each_market_at_the_books_price():
@@ -87,29 +117,41 @@ def test_candidates_take_the_stronger_side_of_each_market_at_the_books_price():
     assert (spread.sport, spread.game_id, spread.market, spread.side, spread.line) == (
         "nfl", "g1", MARKET_SPREAD, "home", -2.5,
     )  # fmt: skip
-    assert (spread.odds, spread.model_value, spread.book_value, spread.gap) == (-110, 6.0, 2.5, 3.5)
+    # The side is priced from the blend; the gap and z are the raw model's distance.
+    blend_margin = NFL["blend"]["margin"]
+    assert (spread.odds, spread.model_value, spread.book_value, spread.gap) == (
+        -110, pytest.approx(blend_margin), 2.5, 3.5,
+    )  # fmt: skip
     assert spread.z == pytest.approx(3.5 / 13.5)
-    # The chance comes from the score grid at the model's numbers; the edge is that
-    # chance less what the price needs to break even (52.4% at -110).
-    g = grid("nfl", 6.0, 48.0, 13.5, 10.5)
+    # The chance comes from the score grid at the blend's numbers and its spread; the
+    # edge is that chance less what the price needs to break even (52.4% at -110).
+    g = grid("nfl", blend_margin, NFL["blend"]["total"], 13.5, 10.5)
     assert spread.chance == pytest.approx(cover(g, -2.5)["above"] / (1 - cover(g, -2.5)["push"]))
     assert spread.edge == pytest.approx(spread.chance - 110 / 210)
     assert break_even(-110) == pytest.approx(110 / 210) and break_even(150) == pytest.approx(0.4)
     assert total.side == "over" and total.line == 41.5 and total.odds == -105
     assert total.z == pytest.approx(6.5 / 10.5)
     # The model below the book: the away side and the under, at their own prices.
-    low = {**NFL, "raw": {"margin": -1.0, "total": 38.0, "home_win": 0.4}}
+    low = proj(-1.0, 38.0, 0.4)
     away, under = candidates_for("nfl", low, BOOK)
     assert away.side == "away" and away.gap == -3.5 and under.side == "under" and under.odds == -115
+    # A raw number more than a game's spread from the book is a flag, not a pick: the
+    # side is left out while the other market stays.
+    wild = proj(2.5 + 14.0, 48.0)
+    assert [c.market for c in candidates_for("nfl", wild, BOOK)] == [MARKET_TOTAL]
+    assert candidates_for("nfl", proj(2.5 + 14.0, 41.5 + 11.0), BOOK) == []
+    # Without the blend's own spread the game's serves.
+    bare = {**NFL, "blend": {k: v for k, v in NFL["blend"].items() if k != "sigma"}}
+    assert candidates_for("nfl", bare, BOOK)[0].chance == pytest.approx(spread.chance)
     # Without the book's prices the usual -110 applies; without its line there is no candidate.
     assert [c.odds for c in candidates_for("nfl", NFL, None)] == [None, None]
     assert payout(None) == pytest.approx(100 / 110) and payout(-150) == pytest.approx(2 / 3)
     assert payout(130) == 1.3
-    no_total = {**NFL, "book": {"margin": 2.5, "total": None, "home_win": 0.58}}
+    no_total = proj(6.0, 48.0, book={"margin": 2.5, "total": None, "home_win": 0.58})
     assert [c.market for c in candidates_for("nfl", no_total, BOOK)] == [MARKET_SPREAD]
     assert candidates_for("nfl", {**NFL, "thin": True}, BOOK) == []
     assert candidates_for("nfl", {**NFL, "book": None}, BOOK) == []
-    same = {**NFL, "raw": {"margin": 2.5, "total": 41.5, "home_win": 0.58}}
+    same = proj(2.5, 41.5, 0.58)
     assert candidates_for("nfl", same, BOOK) == []
 
 
@@ -149,21 +191,23 @@ def game(game_id, projection, hours=3, book=BOOK, home=HOME, away=AWAY, sport="n
 
 
 def test_choose_ranks_one_side_per_game_by_edge_and_keeps_the_top_few():
-    mild = {**NFL, "raw": {"margin": 3.5, "total": 43.0, "home_win": 0.6}}  # 1 point, 1.5 points
+    mild = proj(3.0, 45.0)  # half a point, 3.5 points off the book
+    dog = proj(-6.0, 41.5, 0.3)  # the blend has PIT by 0.05: a small edge on PIT +2.5
     games = [
-        game("a", NFL),  # the over 41.5 at -105: 71.9% against 51.2%
-        game("b", mild, hours=9),  # the over again, a small edge
+        game("a", NFL),  # the over 41.5 at -105: the blend's 43.45
+        game("b", mild, hours=9),  # the over again, a smaller edge
         game("c", {**NFL, "thin": True}),  # never
-        game("d", {**NFL, "raw": {"margin": -6.0, "total": 41.5, "home_win": 0.3}}, hours=1),
+        game("d", dog, hours=1),
     ]
     trust = {"nfl": {"trust": 1.0, "closed": 3, "positive_share": None, "weighted": False}}
     picks = choose(games, trust, picks=5, draws=2_000)
-    # PIT +2.5 is 8.5 points off the book, the over only 6.5, but the over's cheaper
-    # price (-105 against -110) leaves it the bigger edge.
-    assert [(p["rank"], p["game_id"], p["market"], p["side_label"]) for p in picks] == [
-        (1, "a", MARKET_TOTAL, "Over 41.5"),
-        (2, "d", MARKET_SPREAD, "PIT +2.5"),
-        (3, "b", MARKET_TOTAL, "Over 41.5"),
+    # One side per game, the thin game left out, ranked by the blend's edge: the over
+    # at its cheaper price (-105) first, PIT +2.5 on the blend's hair of a margin next.
+    assert [(p["rank"], p["game_id"]) for p in picks] == [(1, "a"), (2, "d"), (3, "b")]
+    assert [(p["market"], p["side_label"]) for p in picks] == [
+        (MARKET_TOTAL, "Over 41.5"),
+        (MARKET_SPREAD, "PIT +2.5"),
+        (MARKET_TOTAL, "Over 41.5"),
     ]
     top, second = picks[:2]
     detail = second["detail"]
@@ -171,10 +215,12 @@ def test_choose_ranks_one_side_per_game_by_edge_and_keeps_the_top_few():
     assert detail["edge"] == pytest.approx(detail["chance_no_push"] - detail["break_even"])
     assert top["conviction"] > second["conviction"] > picks[2]["conviction"] > 0
     assert second["odds"] == -110 and second["price"] == pytest.approx(100 / 110)
-    assert second["line"] == -2.5 and second["model_value"] == -6.0
+    assert second["line"] == -2.5 and second["model_value"] == pytest.approx(dog["blend"]["margin"])
+    assert second["gap"] == -8.5 and second["z"] == pytest.approx(8.5 / 13.5)
     assert second["book_value"] == 2.5 and second["home"] == "CLE" and second["away"] == "PIT"
     assert detail["home_team"] == HOME and detail["sim"]["draws"] == 2_000
-    assert 0.6 < detail["chance"] < 0.8  # PIT +2.5 when the model has PIT by 6
+    assert detail["sim"]["source"] == "blend" and detail["blended"]
+    assert 0.5 < detail["chance"] < 0.65  # PIT +2.5 when the blend has PIT by a hair
     assert detail["projection"]["raw"]["margin"] == -6.0 and detail["trust"] == trust["nfl"]
     assert top["odds"] == -105
     # A sport's trust scales its conviction; a tie in conviction goes to the earlier game.
@@ -187,8 +233,8 @@ def test_choose_ranks_one_side_per_game_by_edge_and_keeps_the_top_few():
 
 def test_the_edge_knows_football_s_key_numbers_and_the_price():
     # The same one-point gap from the book: across 3 it buys far more than across 11.
-    key = {**NFL, "raw": {"margin": 3.5, "total": 41.5}, "book": {"margin": 2.5, "total": 41.5}}
-    flat = {**NFL, "raw": {"margin": 11.5, "total": 41.5}, "book": {"margin": 10.5, "total": 41.5}}
+    key = proj(3.5, 41.5, book={"margin": 2.5, "total": 41.5}, weight=1.0)
+    flat = proj(11.5, 41.5, book={"margin": 10.5, "total": 41.5}, weight=1.0)
     flat_book = replace(BOOK, home_spread=-10.5)
     across_three = candidates_for("nfl", key, BOOK)[0]
     across_eleven = candidates_for("nfl", flat, flat_book)[0]
@@ -300,7 +346,11 @@ def seeded_diary():
     projection = {**project(ratings, "5", "23", False, BOOK), "thin": False}
     diary.upsert_projection("nfl", first.game_id, kickoff, "CLE", "PIT", projection, t0)
     later = kickoff + timedelta(hours=3)
-    second_book = replace(BOOK, total=48.5, home_spread=3.5)
+    # Dearer prices on the second game leave it no edge, so it ranks below the first.
+    second_book = replace(
+        BOOK, total=48.5, home_spread=3.5, home_spread_odds=-125, away_spread_odds=-125,
+        over_odds=-125, under_odds=-125,
+    )  # fmt: skip
     second = replace_slate(games[1], completed=False, date=later, book=second_book)
     diary.store_football_upcoming(second, t0)
     swapped = {**project(ratings, "23", "5", False, second_book), "thin": False}
@@ -330,6 +380,7 @@ def test_the_card_locks_once_when_due_and_is_graded_from_the_log():
     assert top["side_label"] == "Over 41.5" and top["odds"] == -105
     assert top["outcome"] is None and top["detail"]["sim"]["draws"] == 100_000
     assert other["game_id"] == second.game_id and other["side_label"] == "WSH +3.5"
+    assert other["detail"]["edge"] < top["detail"]["edge"]  # the dearer price ranks last
     assert diary.card_pick("2026-10-11", 2)["rank"] == 2
     assert diary.card_pick("2026-10-11", 3) is None and diary.card("2026-10-10") is None
     assert diary.card_exists("2026-10-11") and diary.latest_card_date() == "2026-10-11"
