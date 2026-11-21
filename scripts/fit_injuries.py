@@ -133,7 +133,7 @@ def lost_units(sport: str, record: GameRecord, side: TeamRef, rows_so_far: list[
         {
             "player_id": pid,
             "name": context.names.get(pid, pid),
-            "position": context.positions.get(pid),
+            "position": context.positions.get(pid) or _position_from_lines(sport, context, pid),
             "status": "out",
         }
         for pid in missing
@@ -143,6 +143,22 @@ def lost_units(sport: str, record: GameRecord, side: TeamRef, rows_so_far: list[
         for feature, units in entry["units"].items():
             totals[feature] += units * entry["played_share"]
     return dict(totals)
+
+
+def _position_from_lines(sport: str, context: SideContext, player_id: str) -> str | None:
+    """Football's box scores carry no positions: a man who threw is a quarterback, one who
+    ran or caught a back or receiver (valued by his yards, as the scanner values them)."""
+    if sport not in ("nfl", "cfb"):
+        return None
+    lines = context.lines.get(player_id, [])
+    if any(float(r["stats"].get("pass_att") or 0) >= 5 for r in lines):
+        return "QB"
+    if any(
+        float(r["stats"].get("rush_yards") or 0) or float(r["stats"].get("rec_yards") or 0)
+        for r in lines
+    ):
+        return "WR"
+    return None
 
 
 def build_table(sport: str, records: list[GameRecord]) -> list[dict]:

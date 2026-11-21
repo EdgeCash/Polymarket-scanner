@@ -143,11 +143,14 @@ def test_a_basketball_absentee_costs_his_production_above_a_replacement_scaled_b
     tatum = out["jayson_tatum"]
     assert tatum["units"] == {"production": pytest.approx(37.5 - rule.replacement)}
     assert tatum["weight"] == 1.0 and tatum["played_share"] == 1.0
-    assert tatum["cost"] == pytest.approx(rule.coefficients["production"] * (37.5 - 8.0), abs=0.01)
+    assert tatum["cost"] == pytest.approx(
+        rule.coefficients["production"] * (37.5 - rule.replacement), abs=0.01
+    )
     assert out["role_player"]["cost"] == 0.0  # a replacement replaces him
     part = out["part_timer"]
     assert part["played_share"] == 0.2 and part["weight"] == 0.45
-    assert part["cost"] == pytest.approx(0.45 * 0.2 * 0.15 * (20 + 2.8 + 3 - 8), abs=0.01)
+    coefficient = rule.coefficients["production"]
+    assert part["cost"] == pytest.approx(0.45 * 0.2 * coefficient * (20 + 2.8 + 3 - 8), abs=0.01)
     # The list is sorted by cost, the costliest first.
     assert [e["player_id"] for e in absentees("nba", report, context)][0] == "jayson_tatum"
     # A man on the roster's injured list but not in the report is counted too, and a

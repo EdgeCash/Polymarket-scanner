@@ -22,12 +22,22 @@ is already priced in: his worth is scaled by the share of the side's recent
 games he played. The sum, times the sport's coefficient a unit, comes off the
 side's projected points; the margin moves, the total does not.
 
-The coefficients are set by hand from what lines move when a star sits (a
-top-five NBA player about five points, a starting quarterback four to five,
-a starting goalie a quarter of a goal), until scripts/fit_injuries.py has
-enough seasons of box scores to fit them; the diary records every adjustment
-beside the projection's miss with and without it, so the scorecard says
-whether they earn their place. Nothing here is sent or placed.
+The coefficients are fit by scripts/fit_injuries.py on the 2024-25 seasons of
+box scores (scripts/fetch_box_scores.py), where an absence is a man who played
+his side's previous game and not this one, valued exactly as this module values
+him the day before, against an absence-blind expected margin from ratings fit
+on the season's earlier games, held out on the last 30% of each season. A unit
+of basketball production costs 0.13 points (1,182 NBA games; the held-out miss
+falls from 14.12 to 13.99); a unit of hockey production 0.23 goals and the
+starting goalie's absence 0.07 (1,259 games, 2.617 to 2.608; the goalie's
+number describes a backup's routine start, the only kind history shows); the
+starting quarterback 6.0 points (224 games, 43 absences, 13.54 to 13.31). What
+history cannot show keeps a hand-set prior: a back's or receiver's yards (the
+box score names no positions, and every yard-earner's absence counted together
+showed nothing) and the other starters on the depth chart, which has no past.
+The diary records every adjustment beside the projection's miss with and
+without it, so the scorecard says whether they earn their place. Nothing here
+is sent or placed.
 """
 
 from __future__ import annotations
@@ -66,14 +76,14 @@ class SportRule:
 
 
 RULES: dict[str, SportRule] = {
-    "nba": SportRule("points", 12.0, 8.0, {"production": 0.15}),
-    "cbb": SportRule("points", 12.0, 6.0, {"production": 0.12}),
-    "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.25, "goalie": 0.25}),
+    "nba": SportRule("points", 12.0, 8.0, {"production": 0.13}),
+    "cbb": SportRule("points", 12.0, 6.0, {"production": 0.12}),  # the NBA's, by hand
+    "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.23, "goalie": 0.07}),
     "nfl": SportRule(
-        "points", 14.0, 0.0, {"quarterback": 4.5, "skill_yards": 0.012, "starters": 0.4}
+        "points", 14.0, 0.0, {"quarterback": 6.0, "skill_yards": 0.012, "starters": 0.4}
     ),
-    "cfb": SportRule(
-        "points", 14.0, 0.0, {"quarterback": 4.5, "skill_yards": 0.012, "starters": 0.4}
+    "cfb": SportRule(  # the NFL's; college publishes no report, so nothing moves
+        "points", 14.0, 0.0, {"quarterback": 6.0, "skill_yards": 0.012, "starters": 0.4}
     ),
 }
 SPORTS = tuple(RULES)

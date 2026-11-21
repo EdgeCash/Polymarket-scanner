@@ -1352,9 +1352,12 @@ def test_the_injury_report_moves_the_projection_and_drops_the_man_from_the_lines
     assert [e["name"] for e in report["home"]][-1] == "Bo Nix" and len(report["away"]) == 4
     projection = diary.projection("nfl", "upcoming-1")["projection"]
     listed = projection["raw"]["injuries"]
+    from scanner.injuries import RULES
+
+    quarterback = RULES["nfl"].coefficients["quarterback"]
     nix_cost = next(e for e in listed["home"] if e["name"] == "Bo Nix")
-    assert nix_cost["status"] == "out" and nix_cost["cost"] == 4.5  # the starting quarterback
-    assert listed["home_loss"] == 4.5 and listed["margin"] == -4.5
+    assert nix_cost["status"] == "out" and nix_cost["cost"] == quarterback  # the starter
+    assert listed["home_loss"] == quarterback and listed["margin"] == -quarterback
     # Visitors listed questionable or doubtful with no lines and no depth chart rank cost nothing.
     assert listed["away_loss"] == 0.0
     sheet = sheet_from_diary(diary, "nfl", "upcoming-1")
@@ -1364,7 +1367,7 @@ def test_the_injury_report_moves_the_projection_and_drops_the_man_from_the_lines
     add_upcoming(plain_feed)
     plain_log.refresh("nfl", NOW, budget=0)
     plain = plain_diary.projection("nfl", "upcoming-1")["projection"]["raw"]
-    assert projection["raw"]["margin"] == pytest.approx(plain["margin"] - 4.5)
+    assert projection["raw"]["margin"] == pytest.approx(plain["margin"] - quarterback)
     assert "injuries" in plain  # the roster's injured list is read even without a report
     assert plain["injuries"]["margin"] == 0.0
     off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nfl", INJURIES_ENABLED=False)

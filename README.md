@@ -542,14 +542,22 @@ has never seen costs nothing. Worth times chance times share, summed and
 capped (12 points in basketball, 1.5 goals, 14 points in football), comes off
 the side's projected score before the blend; the margin moves, the total
 moves with it, and the sheet's projection block names the men and the cost,
-with the whole report in its own block. The coefficients a unit (0.15 points
-of margin in the NBA, 0.12 in college, 0.25 goals a unit and 0.25 for the
-starting goalie in the NHL, 4.5 points for a quarterback, 0.012 a yard and 0.4
-a starter in football) are set by hand from what lines move when a star sits,
-until `scripts/fit_injuries.py` has fitted them on seasons of box scores
-(`scripts/fetch_box_scores.py` gathers those); every graded projection records
-its miss with and without the adjustment, and the scorecard shows both, so the
-report has to earn its place. The player lines read the same list: a man at
+with the whole report in its own block. The coefficients a unit are fit by
+`scripts/fit_injuries.py` on the 2024-25 seasons of box scores that
+`scripts/fetch_box_scores.py` gathers: an absence in history is a man who
+played his side's previous game and not this one, valued as the scanner values
+him the day before, regressed against an absence-blind expected margin from
+ratings fit on the season's earlier games and held out on the last 30% of each
+season. A unit of basketball production costs 0.13 points of margin (1,182 NBA
+games; the held-out miss falls from 14.12 to 13.99; college takes 0.12 by
+hand), a unit of hockey production 0.23 goals and the starting goalie's absence
+0.07 (1,259 games, 2.617 to 2.608; history only shows a backup's routine start,
+not an injured starter), and the starting quarterback 6.0 points (224 games, 43
+absences, 13.54 to 13.31). A back's or receiver's yards keep a hand-set 0.012 a
+yard (the box score names no positions, and every yard-earner's absence counted
+together showed nothing) and the other starters 0.4 a head (the depth chart has
+no past). Every graded projection records its miss with and without the
+adjustment, and the scorecard shows both, so the report has to earn its place. The player lines read the same list: a man at
 least 0.75 likely out gets no line, and in the sports with playing time his
 minutes go to the men who stay in proportion to their own; a man in doubt
 keeps his line, marked with the chance (`availability` in its parameters).
