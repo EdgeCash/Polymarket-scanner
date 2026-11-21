@@ -1,0 +1,777 @@
+{
+ "team": {
+  "id": "7",
+  "abbreviation": "DEN"
+ },
+ "athletes": [
+  {
+   "position": "offense",
+   "items": [
+    {
+     "id": "4383440",
+     "firstName": "Nate",
+     "lastName": "Adkins",
+     "fullName": "Nate Adkins",
+     "displayName": "Nate Adkins",
+     "shortName": "N. Adkins",
+     "weight": 252.0,
+     "displayWeight": "252 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 27,
+     "dateOfBirth": "1999-07-09T07:00Z",
+     "slug": "nate-adkins",
+     "jersey": "45",
+     "position": {
+      "id": "7",
+      "name": "Tight End",
+      "displayName": "Tight End",
+      "abbreviation": "TE",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 4
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "5159802",
+     "firstName": "Dallen",
+     "lastName": "Bentley",
+     "fullName": "Dallen Bentley",
+     "displayName": "Dallen Bentley",
+     "shortName": "D. Bentley",
+     "weight": 253.0,
+     "displayWeight": "253 lbs",
+     "height": 76.0,
+     "displayHeight": "6' 4\"",
+     "age": 25,
+     "dateOfBirth": "2000-12-31T08:00Z",
+     "slug": "dallen-bentley",
+     "jersey": "89",
+     "position": {
+      "id": "7",
+      "name": "Tight End",
+      "displayName": "Tight End",
+      "abbreviation": "TE",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4702555",
+     "firstName": "Jonah",
+     "lastName": "Coleman",
+     "fullName": "Jonah Coleman",
+     "displayName": "Jonah Coleman",
+     "shortName": "J. Coleman",
+     "weight": 220.0,
+     "displayWeight": "220 lbs",
+     "height": 68.0,
+     "displayHeight": "5' 8\"",
+     "age": 23,
+     "dateOfBirth": "2003-08-20T07:00Z",
+     "slug": "jonah-coleman",
+     "jersey": "20",
+     "position": {
+      "id": "9",
+      "name": "Running Back",
+      "displayName": "Running Back",
+      "abbreviation": "RB",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4241985",
+     "firstName": "J.K.",
+     "lastName": "Dobbins",
+     "fullName": "J.K. Dobbins",
+     "displayName": "J.K. Dobbins",
+     "shortName": "J.K. Dobbins",
+     "weight": 212.0,
+     "displayWeight": "212 lbs",
+     "height": 70.0,
+     "displayHeight": "5' 10\"",
+     "age": 27,
+     "dateOfBirth": "1998-12-17T08:00Z",
+     "debutYear": 2020,
+     "slug": "jk-dobbins",
+     "jersey": "27",
+     "position": {
+      "id": "9",
+      "name": "Running Back",
+      "displayName": "Running Back",
+      "abbreviation": "RB",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 7
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4241820",
+     "firstName": "Sam",
+     "lastName": "Ehlinger",
+     "fullName": "Sam Ehlinger",
+     "displayName": "Sam Ehlinger",
+     "shortName": "S. Ehlinger",
+     "weight": 222.0,
+     "displayWeight": "222 lbs",
+     "height": 73.0,
+     "displayHeight": "6' 1\"",
+     "age": 28,
+     "dateOfBirth": "1998-09-30T07:00Z",
+     "slug": "sam-ehlinger",
+     "jersey": "4",
+     "position": {
+      "id": "8",
+      "name": "Quarterback",
+      "displayName": "Quarterback",
+      "abbreviation": "QB",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 6
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "3051876",
+     "firstName": "Evan",
+     "lastName": "Engram",
+     "fullName": "Evan Engram",
+     "displayName": "Evan Engram",
+     "shortName": "E. Engram",
+     "weight": 240.0,
+     "displayWeight": "240 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 32,
+     "dateOfBirth": "1994-09-02T07:00Z",
+     "debutYear": 2017,
+     "slug": "evan-engram",
+     "jersey": "1",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "7",
+      "name": "Tight End",
+      "displayName": "Tight End",
+      "abbreviation": "TE",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 10
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "defense",
+   "items": [
+    {
+     "id": "4429193",
+     "firstName": "Kris",
+     "lastName": "Abrams-Draine",
+     "fullName": "Kris Abrams-Draine",
+     "displayName": "Kris Abrams-Draine",
+     "shortName": "K. Abrams-Draine",
+     "weight": 178.0,
+     "displayWeight": "178 lbs",
+     "height": 71.0,
+     "displayHeight": "5' 11\"",
+     "age": 25,
+     "dateOfBirth": "2001-10-04T07:00Z",
+     "slug": "kris-abrams-draine",
+     "jersey": "31",
+     "position": {
+      "id": "29",
+      "name": "Cornerback",
+      "displayName": "Cornerback",
+      "abbreviation": "CB",
+      "leaf": true,
+      "parent": {
+       "id": "35",
+       "name": "Defensive Back",
+       "displayName": "Defensive Back",
+       "abbreviation": "DB",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 3
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "3915282",
+     "firstName": "Zach",
+     "lastName": "Allen",
+     "fullName": "Zach Allen",
+     "displayName": "Zach Allen",
+     "shortName": "Z. Allen",
+     "weight": 285.0,
+     "displayWeight": "285 lbs",
+     "height": 77.0,
+     "displayHeight": "6' 5\"",
+     "age": 29,
+     "dateOfBirth": "1997-08-20T07:00Z",
+     "debutYear": 2019,
+     "slug": "zach-allen",
+     "jersey": "99",
+     "position": {
+      "id": "31",
+      "name": "Defensive End",
+      "displayName": "Defensive End",
+      "abbreviation": "DE",
+      "leaf": true,
+      "parent": {
+       "id": "71",
+       "name": "Defense",
+       "displayName": "Defense",
+       "abbreviation": "DEF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 8
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4257240",
+     "firstName": "Tycen",
+     "lastName": "Anderson",
+     "fullName": "Tycen Anderson",
+     "displayName": "Tycen Anderson",
+     "shortName": "T. Anderson",
+     "weight": 210.0,
+     "displayWeight": "210 lbs",
+     "height": 74.0,
+     "displayHeight": "6' 2\"",
+     "age": 27,
+     "dateOfBirth": "1999-06-13T07:00Z",
+     "slug": "tycen-anderson",
+     "jersey": "6",
+     "position": {
+      "id": "36",
+      "name": "Safety",
+      "displayName": "Safety",
+      "abbreviation": "S",
+      "leaf": true,
+      "parent": {
+       "id": "35",
+       "name": "Defensive Back",
+       "displayName": "Defensive Back",
+       "abbreviation": "DB",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 5
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "5082398",
+     "firstName": "Brent",
+     "lastName": "Austin",
+     "fullName": "Brent Austin",
+     "displayName": "Brent Austin",
+     "shortName": "B. Austin",
+     "weight": 180.0,
+     "displayWeight": "180 lbs",
+     "height": 71.0,
+     "displayHeight": "5' 11\"",
+     "age": 22,
+     "dateOfBirth": "2003-12-19T08:00Z",
+     "slug": "brent-austin",
+     "jersey": "33",
+     "position": {
+      "id": "29",
+      "name": "Cornerback",
+      "displayName": "Cornerback",
+      "abbreviation": "CB",
+      "leaf": true,
+      "parent": {
+       "id": "35",
+       "name": "Defensive Back",
+       "displayName": "Defensive Back",
+       "abbreviation": "DB",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "specialTeam",
+   "items": []
+  },
+  {
+   "position": "injuredReserveOrOut",
+   "items": [
+    {
+     "id": "4362748",
+     "firstName": "Tyler",
+     "lastName": "Badie",
+     "fullName": "Tyler Badie",
+     "displayName": "Tyler Badie",
+     "shortName": "T. Badie",
+     "weight": 197.0,
+     "displayWeight": "197 lbs",
+     "height": 68.0,
+     "displayHeight": "5' 8\"",
+     "age": 26,
+     "dateOfBirth": "2000-02-07T08:00Z",
+     "slug": "tyler-badie",
+     "jersey": "28",
+     "position": {
+      "id": "9",
+      "name": "Running Back",
+      "displayName": "Running Back",
+      "abbreviation": "RB",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [
+      {
+       "status": "Injured Reserve",
+       "date": "2026-10-24T23:25Z"
+      }
+     ],
+     "experience": {
+      "years": 3
+     },
+     "status": {
+      "id": "13",
+      "name": "Day-To-Day",
+      "type": "day-to-day",
+      "abbreviation": "Day-To-Day"
+     }
+    },
+    {
+     "id": "4428241",
+     "firstName": "Levelle",
+     "lastName": "Bailey",
+     "fullName": "Levelle Bailey",
+     "displayName": "Levelle Bailey",
+     "shortName": "L. Bailey",
+     "weight": 225.0,
+     "displayWeight": "225 lbs",
+     "height": 74.0,
+     "displayHeight": "6' 2\"",
+     "age": 25,
+     "dateOfBirth": "2000-12-04T08:00Z",
+     "slug": "levelle-bailey",
+     "jersey": "56",
+     "position": {
+      "id": "30",
+      "name": "Linebacker",
+      "displayName": "Linebacker",
+      "abbreviation": "LB",
+      "leaf": true,
+      "parent": {
+       "id": "71",
+       "name": "Defense",
+       "displayName": "Defense",
+       "abbreviation": "DEF",
+       "leaf": false
+      }
+     },
+     "injuries": [
+      {
+       "status": "Injured Reserve",
+       "date": "2026-08-22T00:29Z"
+      }
+     ],
+     "experience": {
+      "years": 2
+     },
+     "status": {
+      "id": "13",
+      "name": "Day-To-Day",
+      "type": "day-to-day",
+      "abbreviation": "Day-To-Day"
+     }
+    },
+    {
+     "id": "4600981",
+     "firstName": "Pat",
+     "lastName": "Bryant",
+     "fullName": "Pat Bryant",
+     "displayName": "Pat Bryant",
+     "shortName": "P. Bryant",
+     "weight": 204.0,
+     "displayWeight": "204 lbs",
+     "height": 74.0,
+     "displayHeight": "6' 2\"",
+     "age": 23,
+     "dateOfBirth": "2002-12-10T08:00Z",
+     "slug": "pat-bryant",
+     "jersey": "13",
+     "position": {
+      "id": "1",
+      "name": "Wide Receiver",
+      "displayName": "Wide Receiver",
+      "abbreviation": "WR",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 2
+     },
+     "status": {
+      "id": "13",
+      "name": "Day-To-Day",
+      "type": "day-to-day",
+      "abbreviation": "Day-To-Day"
+     }
+    },
+    {
+     "id": "4361691",
+     "firstName": "Frank",
+     "lastName": "Crum",
+     "fullName": "Frank Crum",
+     "displayName": "Frank Crum",
+     "shortName": "F. Crum",
+     "weight": 315.0,
+     "displayWeight": "315 lbs",
+     "height": 79.0,
+     "displayHeight": "6' 7\"",
+     "age": 26,
+     "dateOfBirth": "2000-05-14T07:00Z",
+     "slug": "frank-crum",
+     "jersey": "73",
+     "position": {
+      "id": "46",
+      "name": "Offensive Tackle",
+      "displayName": "Offensive Tackle",
+      "abbreviation": "OT",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [
+      {
+       "status": "Injured Reserve",
+       "date": "2026-08-31T23:20Z"
+      }
+     ],
+     "experience": {
+      "years": 3
+     },
+     "status": {
+      "id": "13",
+      "name": "Day-To-Day",
+      "type": "day-to-day",
+      "abbreviation": "Day-To-Day"
+     }
+    }
+   ]
+  },
+  {
+   "position": "suspended",
+   "items": []
+  },
+  {
+   "position": "practiceSquad",
+   "items": [
+    {
+     "id": "5144941",
+     "firstName": "David Ebuka",
+     "lastName": "Agoha",
+     "fullName": "David Ebuka Agoha",
+     "displayName": "David Ebuka Agoha",
+     "shortName": "D. Agoha",
+     "weight": 252.0,
+     "displayWeight": "252 lbs",
+     "height": 76.0,
+     "displayHeight": "6' 4\"",
+     "age": 25,
+     "dateOfBirth": "2001-05-18T07:00Z",
+     "slug": "david-ebuka-agoha",
+     "position": {
+      "id": "31",
+      "name": "Defensive End",
+      "displayName": "Defensive End",
+      "abbreviation": "DE",
+      "leaf": true,
+      "parent": {
+       "id": "71",
+       "name": "Defense",
+       "displayName": "Defense",
+       "abbreviation": "DEF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 1
+     },
+     "status": {
+      "id": "29",
+      "name": "Practice Squad",
+      "type": "practice-squad",
+      "abbreviation": "Practice Squad"
+     }
+    },
+    {
+     "id": "4034704",
+     "firstName": "Michael",
+     "lastName": "Bandy",
+     "fullName": "Michael Bandy",
+     "displayName": "Michael Bandy",
+     "shortName": "M. Bandy",
+     "weight": 190.0,
+     "displayWeight": "190 lbs",
+     "height": 70.0,
+     "displayHeight": "5' 10\"",
+     "age": 28,
+     "dateOfBirth": "1997-12-05T08:00Z",
+     "slug": "michael-bandy",
+     "jersey": "83",
+     "position": {
+      "id": "1",
+      "name": "Wide Receiver",
+      "displayName": "Wide Receiver",
+      "abbreviation": "WR",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 3
+     },
+     "status": {
+      "id": "29",
+      "name": "Practice Squad",
+      "type": "practice-squad",
+      "abbreviation": "Practice Squad"
+     }
+    },
+    {
+     "id": "4427408",
+     "firstName": "Jahfari",
+     "lastName": "Harvey",
+     "fullName": "Jahfari Harvey",
+     "displayName": "Jahfari Harvey",
+     "shortName": "J. Harvey",
+     "weight": 255.0,
+     "displayWeight": "255 lbs",
+     "height": 74.0,
+     "displayHeight": "6' 2\"",
+     "age": 25,
+     "dateOfBirth": "2001-05-02T07:00Z",
+     "slug": "jahfari-harvey",
+     "position": {
+      "id": "31",
+      "name": "Defensive End",
+      "displayName": "Defensive End",
+      "abbreviation": "DE",
+      "leaf": true,
+      "parent": {
+       "id": "71",
+       "name": "Defense",
+       "displayName": "Defense",
+       "abbreviation": "DEF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 1
+     },
+     "status": {
+      "id": "29",
+      "name": "Practice Squad",
+      "type": "practice-squad",
+      "abbreviation": "Practice Squad"
+     }
+    },
+    {
+     "id": "4685424",
+     "firstName": "Dane",
+     "lastName": "Key",
+     "fullName": "Dane Key",
+     "displayName": "Dane Key",
+     "shortName": "D. Key",
+     "weight": 210.0,
+     "displayWeight": "210 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 23,
+     "dateOfBirth": "2003-07-01T07:00Z",
+     "slug": "dane-key",
+     "jersey": "32",
+     "position": {
+      "id": "1",
+      "name": "Wide Receiver",
+      "displayName": "Wide Receiver",
+      "abbreviation": "WR",
+      "leaf": true,
+      "parent": {
+       "id": "70",
+       "name": "Offense",
+       "displayName": "Offense",
+       "abbreviation": "OFF",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "29",
+      "name": "Practice Squad",
+      "type": "practice-squad",
+      "abbreviation": "Practice Squad"
+     }
+    }
+   ]
+  }
+ ]
+}

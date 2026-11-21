@@ -41,6 +41,7 @@ scanner/
   projection.py    the projection model, graded against the book
   priors.py        last season's ratings, the prior each team starts from
   priors.json      those ratings by sport and ESPN team id (scripts/build_priors.py)
+  injuries.py      injury reports, rosters and depth charts: who is out and what it costs
   stakes.py        what the model would stake (recorded, never placed)
   card.py          the daily card: five picks by rule, locked, graded, public
   grid.py          every final score's exact chance: the one source of odds
@@ -48,7 +49,8 @@ scanner/
 tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
                    fetch_history.py, build_sim_tables.py and grade_sim.py, and the
-                   model's build_priors.py, fit_priors.py and fit_players.py
+                   model's build_priors.py, fit_priors.py, fit_players.py,
+                   fetch_box_scores.py and fit_injuries.py
 docs/              winprob_report.md
 ```
 
@@ -105,6 +107,9 @@ All settings are environment variables. Defaults are from the build brief.
 | `STAKE_MAX_SHARE` | `0.05` | Largest suggestion as a share of the bankroll |
 | `STAKE_GATE_GAMES` | `50` | Graded projections per sport before the sheet shows stakes |
 | `PLAYERS_ENABLED` | `true` | Player lines for every upcoming game, graded at the final |
+| `INJURIES_ENABLED` | `true` | Read each game's injury report; move the projection and the lines for the men out |
+| `ROSTERS_ENABLED` | `true` | Read each team's roster (and NFL depth chart) daily for its injured list and starters |
+| `ROSTER_SPORTS` | `nfl,nba,nhl` | Sports whose rosters are read (ESPN carries no report for college) |
 | `CARD_ENABLED` | `true` | The daily card: picks chosen by rule, locked, graded, public at `/card` |
 | `CARD_PICKS` | `5` | Picks on a card, one per game |
 | `CARD_LOCK_TIME` | `10:00` | When the card locks each day, `HH:MM` in `CARD_TZ` |
@@ -129,6 +134,9 @@ Secrets live only in the host's secrets store. `.env` is git-ignored.
   `GET /v2/leagues/{slug}/events`; prices from `markets.bbo` and `markets.book`.
 - **ESPN scoreboard** (unofficial, undocumented) for the real game situation.
   All ESPN parsing is isolated in `scores.py` and every field is validated.
+- **ESPN game summaries, rosters and depth charts** (unofficial) for the game
+  log, the injury reports and who starts; parsed in `gamelog.py` and
+  `injuries.py`, read-only, a request every quarter second at most.
 
 ## Polymarket findings (milestone 2)
 
@@ -472,8 +480,8 @@ college; totals 13.5 and 16.75: real totals miss the NFL's closing number by
 13.2, and the model's own college projections miss by 16.1 and 16.8 when they
 have seen only earlier games). A first-half score is the projection times the
 league's first-half share. Turnover luck is mostly washed out by the yards
-half; injuries are not in it, of the weather only the wind is, and of rest only
-the back-to-back.
+half; of the weather only the wind is in it, of rest only the back-to-back,
+and of injuries what ESPN lists before the game, as below.
 
 The wind is the one condition that moves a total by more than noise, and the
 market prices only part of it. `scanner/weather.py` takes each mph of
@@ -509,6 +517,43 @@ the season's schedule in the log, played or still to come, so a side whose
 game yesterday is not yet stored still shows as tired. The sheet's projection
 block names the tired side. The history files carry the same adjustment, so
 the widths and tables describe what the scanner projects.
+
+A missing man is the one thing the book knows that the box scores do not, so
+the model reads the same report. `scanner/injuries.py` takes each upcoming
+game's injury list from its ESPN summary (re-read hourly with the venue and
+weather; the NFL, NBA and NHL publish one, college does not) and each side's
+roster page (read about once a day for teams with a game in the next two days,
+a dozen teams a pass, `ROSTER_SPORTS`), which adds the men on injured reserve
+or suspended, and in the NFL the depth chart, which names the starter at every
+spot. Each listed man is given a chance of missing the game by his status
+(out, injured reserve and a suspension in full; doubtful 0.9; day-to-day 0.45;
+questionable 0.4; a practice report that says active, nothing) and a worth in
+the sport's own units from his lines in the log: in basketball his production
+a game (points, assists at 0.7, rebounds at 0.5) above a replacement's 8 (6
+in college); in hockey a skater's points a game plus 0.03 a minute of ice time
+above 0.6, and the starting goalie (most ice time this season) as a unit of his
+own; in football the starting quarterback (rank one on the depth chart, else
+the man who threw most last game) as a unit of his own, a back's or receiver's
+rushing and receiving yards a game, and any other starter on the depth chart
+as a head. The ratings were fit on the games the side actually played, so a
+man who has already missed most of them is already priced in: his worth is
+scaled by the share of the side's last ten games he played, and a man the log
+has never seen costs nothing. Worth times chance times share, summed and
+capped (12 points in basketball, 1.5 goals, 14 points in football), comes off
+the side's projected score before the blend; the margin moves, the total
+moves with it, and the sheet's projection block names the men and the cost,
+with the whole report in its own block. The coefficients a unit (0.15 points
+of margin in the NBA, 0.12 in college, 0.25 goals a unit and 0.25 for the
+starting goalie in the NHL, 4.5 points for a quarterback, 0.012 a yard and 0.4
+a starter in football) are set by hand from what lines move when a star sits,
+until `scripts/fit_injuries.py` has fitted them on seasons of box scores
+(`scripts/fetch_box_scores.py` gathers those); every graded projection records
+its miss with and without the adjustment, and the scorecard shows both, so the
+report has to earn its place. The player lines read the same list: a man at
+least 0.75 likely out gets no line, and in the sports with playing time his
+minutes go to the men who stay in proportion to their own; a man in doubt
+keeps his line, marked with the chance (`availability` in its parameters).
+`INJURIES_ENABLED=false` leaves the model as it was. Nothing is sent or placed.
 
 The shrinkage is fit per sport on history (`scripts/fit_shrinkage.py`): every
 game rated only on its season's earlier games, with the scanner's own

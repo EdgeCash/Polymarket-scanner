@@ -28,6 +28,7 @@ from scanner.card import (
 from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
+from scanner.injuries import describe as describe_injuries
 from scanner.players import SPORT_STATS, chance_over, simulate_player
 from scanner.projection import book_margin, tuning_for
 from scanner.rest import describe as describe_rest
@@ -354,6 +355,14 @@ def _projection_rows(part: dict, sport: str) -> list[tuple[str, str]]:
         ("Avg total miss: model / blend / book", trio(part["total_error"])),
         ("Brier score: model / blend / book", trio(part["brier"], 3)),
     ]
+    injured = part.get("injuries") or {}
+    if injured.get("games"):
+        rows.append(
+            (
+                f"Margin miss with / without the injury report ({injured['games']} games moved)",
+                f"{_fmt(injured.get('with'), 2)} / {_fmt(injured.get('without'), 2)}",
+            )
+        )
     for bucket in part.get("buckets") or ():
         rows.append(
             (
@@ -731,7 +740,8 @@ def _players_section(ps: dict, settings: Settings) -> str:
         "game in football) shrunk toward his position's league rate, times his projected "
         "playing time from his last five games, scaled by how the game projection sees his "
         "team's scoring and the pace. The spread is a negative binomial mixed over his "
-        "minutes. Only players who played their team's last game are projected. Actual above "
+        "minutes. Only players who played their team's last game and are not listed out are "
+        "projected; an absent man's minutes go to those who stay. Actual above "
         "the median (a tie counted as half) should sit near 50% and inside the band near 80% "
         "if the spread is honest; "
         "the miss is the average distance from the projected mean. Nothing is sent or placed.</p>"
@@ -796,6 +806,13 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['staked']} stakes open"
     if gl.get("player_lines"):
         text += f", {gl['player_lines']} player lines"
+    if gl.get("injured"):
+        text += f", {gl['injured']} projections moved for injuries"
+    if gl.get("rosters_on_file"):
+        teams = sum(gl["rosters_on_file"].values())
+        text += f", rosters for {teams} teams"
+        if gl.get("rosters_pending"):
+            text += f" ({gl['rosters_pending']} due)"
     if gl.get("error"):
         text += f"; error: {gl['error']}"
     return text
@@ -1036,6 +1053,12 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
             f"<tr><td class='label'>Rest</td><td colspan='4' class='left'>"
             f"{html.escape(rest_text)} on the model's margin</td></tr>"
         )
+    injury_text = describe_injuries(raw.get("injuries"), home, away, profile.unit)
+    if injury_text:
+        body += (
+            f"<tr><td class='label'>Injuries</td><td colspan='4' class='left'>"
+            f"{html.escape(injury_text)} on the model's margin</td></tr>"
+        )
     head = (
         "<tr><th class='label'></th><th>Model</th><th>Blend</th><th>Book</th>"
         "<th>Polymarket</th></tr>"
@@ -1188,6 +1211,56 @@ def _lines_table(sport: str, lines: list[dict], game_href: str, side_abbr: str) 
     return f"<div class='wrap'><table class='sheet'>{head}{body}</table></div>"
 
 
+def _injuries_block(sheet: dict, settings: Settings) -> str:
+    """Each side's injury report as the model read it: who, what, how likely out, the cost."""
+    if not settings.INJURIES_ENABLED:
+        return ""
+    proj = sheet.get("projection") or {}
+    listed = (proj.get("raw") or {}).get("injuries") or {}
+    report = sheet.get("injuries")
+    if report is None and not listed:
+        return ""  # the sport publishes no report
+    unit = LOGS[sheet["sport"]].unit
+    tables = []
+    for side in ("away", "home"):
+        team = sheet[side]["abbreviation"]
+        rows = listed.get(side)
+        if rows is None:
+            rows = [{**e, "weight": None, "cost": None} for e in (report or {}).get(side) or []]
+        if not rows:
+            tables.append(f"<p class='note'>{html.escape(team)}: nobody listed.</p>")
+            continue
+        body = "".join(
+            f"<tr><td class='left'>{html.escape(r.get('name') or '')}</td>"
+            f"<td>{html.escape(r.get('position') or '–')}</td>"
+            f"<td class='left'>{html.escape(str(r.get('status') or '').replace('_', ' '))}"
+            + (f" ({html.escape(str(r['detail']))})" if r.get("detail") else "")
+            + "</td>"
+            f"<td>{'–' if r.get('weight') is None else f'{r["weight"] * 100:.0f}%'}</td>"
+            f"<td>{'–' if r.get('cost') is None else f'{r["cost"]:.1f}'}</td></tr>"
+            for r in rows
+        )
+        loss = listed.get(f"{side}_loss")
+        foot = (
+            f"<tr><td class='label' colspan='4'>{html.escape(team)} loses</td>"
+            f"<td>{loss:.1f} {html.escape(unit)}</td></tr>"
+            if loss is not None
+            else ""
+        )
+        tables.append(
+            f"<table class='model'><tr><th class='left'>{html.escape(team)}</th><th>Pos</th>"
+            f"<th class='left'>Status</th><th>Chance out</th><th>Cost</th></tr>{body}{foot}</table>"
+        )
+    return (
+        "<h2>Injuries</h2>" + "".join(tables) + "<p class='note'>ESPN's report for the game, "
+        "read with the summary each hour, plus the roster's injured reserve and suspensions, "
+        "read daily. The chance is how often that status keeps a man out; the cost is his usual "
+        "production above a replacement's, in the model's own units, times that chance and the "
+        "share of his side's recent games he played. The sum comes off his side's projected "
+        "score before the blend. Graded with and without on the scorecard.</p>"
+    )
+
+
 def _players_block(sheet: dict, settings: Settings) -> str:
     """The game's player lines on the sheet: each side's leaders, median and 80% band."""
     if not settings.PLAYERS_ENABLED or not settings.PROJECTION_ENABLED:
@@ -1302,6 +1375,7 @@ def render_matchup(sheet: dict, settings: Settings) -> str:
 {_strip(sheet, settings)}
 {_projection_block(sheet, settings)}
 {_stake_block(sheet, settings)}
+{_injuries_block(sheet, settings)}
 {_players_block(sheet, settings)}
 {sections}
 <p class="note">{footnote}</p>
@@ -1689,9 +1763,10 @@ def render_card(
         f"{settings.CARD_PICKS} surest sides against the book are locked by a fixed rule: one per "
         "game, ranked by the gap between the model's number and the book's in that sport's "
         "usual spread of results, weighted by how often the sport's closing line has moved the "
-        "model's way. The model is built from this season's box scores alone: it does not know "
-        "about injuries, rest or weather, and the book does, so a big gap is as likely a missing "
-        "player as an edge. That is why every pick is graded at the final, misses included, and "
+        "model's way. The model is built from this season's box scores, with the injury report, "
+        "rest and the wind read before each game; what it has not heard the book may have, so a "
+        "big gap is as likely a missing player as an edge. That is why every pick is graded at "
+        "the final, misses included, and "
         "why the record is kept rank by rank. Units are one unit a pick at the book's price. "
         "The pictures are the model's own numbers played out 100,000 times. Nothing here is "
         "advice and nothing is placed.</p>"
@@ -1913,8 +1988,9 @@ def render_props_index(
     note = (
         "<p class='note'>A line is the median of the player's projected stat, with the band "
         "the model gives an 80% chance; every line is graded at the final and the record above "
-        "says whether the bands hold. The model knows the box scores and nothing else: no "
-        "injury news, no rotation changes. Research, not advice; nothing is placed.</p>"
+        "says whether the bands hold. The model knows the box scores and the injury report: a "
+        "man listed out gets no line and his minutes go to those who stay; a rotation change "
+        "it has not read, it does not know. Research, not advice; nothing is placed.</p>"
     )
     label = html.escape(_zone_label(settings.CARD_TZ))
     return f"""{_props_head("Player lines")}
@@ -2087,7 +2163,8 @@ def render_props_player(
         "Each line is the player's rate (shrunk toward his position's league rate while his "
         "games are few) times his projected playing time, scaled by the game projection, "
         "spread as a negative binomial over the uncertainty in his minutes. Only players who "
-        "played their team's last game are projected; nothing here knows about injuries. "
+        "played their team's last game and are not listed out are projected; an absent man's "
+        "minutes go to those who stay. "
         "Graded at the final on the scorecard. Research, not advice; nothing is placed."
     )
     return f"""{_props_head(title)}
@@ -2123,8 +2200,8 @@ def render_home(
         "A projection model built from this season's box scores, its "
         f"{settings.CARD_PICKS} surest sides each day and every leader's stat line for every "
         "game, all written down before the games and graded at the final, misses included. The "
-        "model knows nothing of injuries, rest or weather. Nothing here is advice and nothing is "
-        "placed."
+        "model reads the injury report, the rest and the wind before each game and nothing else "
+        "the book knows. Nothing here is advice and nothing is placed."
     )
     card_note = (
         f"Locked by a fixed rule at {lock} {zone}, one side per game, ranked by the gap from "

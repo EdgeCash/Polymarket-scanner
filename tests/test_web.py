@@ -928,3 +928,69 @@ def test_the_owners_pages_link_to_the_card_and_the_player_lines():
     for path in ("/health", "/scorecard", "/matchups"):
         page = client.get(f"{path}?token=phone-secret").text
         assert 'href="/card">Daily card</a>' in page and 'href="/props">Player lines</a>' in page
+
+
+def test_the_sheet_shows_the_injury_report_and_the_scorecard_grades_it():
+    from datetime import datetime
+
+    from scanner.gamelog import parse_game_summary, parse_week_scoreboard
+    from scanner.projection import fit, grade, project
+    from tests.conftest import load_fixture
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    diary = Diary(":memory:")
+    at_time = datetime.fromisoformat("2026-10-28T16:00:00+00:00")
+    record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
+    diary.store_football_game(record, at_time)
+    _, _, slate = parse_week_scoreboard(load_fixture("espn_nba_day.json"), "nba")
+    game = next(g for g in slate if g.home.abbreviation == "BOS")
+    diary.store_football_upcoming(replace_slate(game, completed=False, date=at_time), at_time)
+    report = {
+        "home": [
+            {
+                "player_id": "1",
+                "name": "Jayson Tatum",
+                "position": "F",
+                "status": "out",
+                "detail": "Ankle",
+                "return_date": None,
+                "reported_at": None,
+            }
+        ],
+        "away": [],
+    }
+    diary.update_football_upcoming_extra("nba", game.game_id, {"injuries": report}, at_time)
+    absent = {
+        "home": [
+            {"player_id": "1", "name": "Jayson Tatum", "position": "F", "status": "out",
+             "detail": "Ankle", "weight": 1.0, "cost": 4.4}
+        ],
+        "away": [],
+    }  # fmt: skip
+    ratings = fit(diary.football_games("nba"), "nba")
+    projection = project(
+        ratings, game.home.team_id, game.away.team_id, False, None, {"injuries": absent}
+    )
+    diary.upsert_projection(
+        "nba", game.game_id, at_time, "BOS", game.away.abbreviation, projection, at_time
+    )
+    client = TestClient(create_app(settings, diary, RuntimeStatus()))
+    page = client.get(f"/matchup/nba/{game.game_id}?token=phone-secret").text
+    assert "<h2>Injuries</h2>" in page and "<td class='label'>Injuries</td>" in page
+    assert "BOS without Tatum (out): margin -4.4 points on the model's margin" in page
+    assert "<td class='left'>Jayson Tatum</td><td>F</td><td class='left'>out (Ankle)</td>" in page
+    assert "<td>100%</td><td>4.4</td>" in page and "BOS loses</td><td>4.4 points</td>" in page
+    assert ": nobody listed.</p>" in page
+    # The scorecard reads the record with and without the report.
+    graded = grade(projection, 110, 100, None)
+    from scanner.web import _projection_rows
+
+    rows = dict(_projection_rows({**_summary_for([graded]), "buckets": []}, "nba"))
+    label = "Margin miss with / without the injury report (1 games moved)"
+    assert label in rows and rows[label].count(" / ") == 1
+
+
+def _summary_for(grades):
+    from scanner.projection import summarise
+
+    return summarise(grades, "nba")

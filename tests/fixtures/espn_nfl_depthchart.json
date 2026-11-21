@@ -1,0 +1,370 @@
+{
+ "team": {
+  "id": "7"
+ },
+ "depthchart": [
+  {
+   "name": "Base 3-4 D",
+   "positions": {
+    "lde": {
+     "position": {
+      "abbreviation": "LDE"
+     },
+     "athletes": [
+      {
+       "displayName": "Zach Allen",
+       "id": "3915282",
+       "injuries": [],
+       "shortName": "Z. Allen"
+      },
+      {
+       "displayName": "Sai'vion Jones",
+       "id": "4603189",
+       "injuries": [],
+       "shortName": "S. Jones"
+      },
+      {
+       "displayName": "Matt Henningsen",
+       "id": "4242358",
+       "injuries": [],
+       "shortName": "M. Henningsen"
+      }
+     ]
+    },
+    "nt": {
+     "position": {
+      "abbreviation": "NT"
+     },
+     "athletes": [
+      {
+       "displayName": "D.J. Jones",
+       "id": "3894915",
+       "injuries": [],
+       "shortName": "D.J. Jones"
+      },
+      {
+       "displayName": "Jordan Jackson",
+       "id": "4261090",
+       "injuries": [],
+       "shortName": "J. Jackson"
+      }
+     ]
+    },
+    "wlb": {
+     "position": {
+      "abbreviation": "WLB"
+     },
+     "athletes": [
+      {
+       "displayName": "Jonathon Cooper",
+       "id": "4040608",
+       "injuries": [],
+       "shortName": "J. Cooper"
+      },
+      {
+       "displayName": "Dondrea Tillman",
+       "id": "5216101",
+       "injuries": [],
+       "shortName": "D. Tillman"
+      },
+      {
+       "displayName": "Jonah Elliss",
+       "id": "4687592",
+       "injuries": [
+        {
+         "date": "2026-10-24T23:23Z",
+         "longComment": "Elliss was already ruled out for Sunday's game against the Cardinals due to an ankle injury, which is severe enough for him to warrant a stint on injured reserve. He'll be required to miss at least four games, so the earliest he can return is Week 12 against the Steelers on Friday, Nov. 27. The Broncos will get some pass-rushing reinforcement after Jonathon Cooper was activated from the commissioner's exempt list.",
+         "shortComment": "The Broncos placed Elliss (ankle) on injured reserve Saturday, Aric DiLalla of the team's official site reports.",
+         "status": "Injured Reserve",
+         "type": {
+          "abbreviation": "IR",
+          "description": "Injured Reserve",
+          "id": "5",
+          "name": "INJURY_STATUS_IR"
+         }
+        }
+       ],
+       "shortName": "J. Elliss"
+      }
+     ]
+    },
+    "lcb": {
+     "position": {
+      "abbreviation": "LCB"
+     },
+     "athletes": [
+      {
+       "displayName": "Pat Surtain II",
+       "id": "4372012",
+       "injuries": [],
+       "shortName": "P. Surtain II"
+      },
+      {
+       "displayName": "Jahdae Barron",
+       "id": "4430925",
+       "injuries": [],
+       "shortName": "J. Barron"
+      }
+     ]
+    },
+    "fs": {
+     "position": {
+      "abbreviation": "FS"
+     },
+     "athletes": [
+      {
+       "displayName": "Brandon Jones",
+       "id": "4039059",
+       "injuries": [
+        {
+         "date": "2026-11-21T00:10Z",
+         "longComment": "Jones strung together three limited practices Week 11 prep, and he has a chance to return from a one-game absence due to a hamstring injury that he picked up in Week 8 against the Chiefs. JL Skinner figures to be the top candidate to start alongside Talanoa Hufanga at safety if Jones is not cleared to play against Las Vegas.",
+         "shortComment": "Jones (hamstring) is listed as questionable for Sunday's game against the Raiders, Aric DiLalla of the Broncos' official site reports.",
+         "status": "Questionable",
+         "type": {
+          "abbreviation": "Q",
+          "description": "questionable",
+          "id": "2",
+          "name": "INJURY_STATUS_QUESTIONABLE"
+         }
+        }
+       ],
+       "shortName": "B. Jones"
+      },
+      {
+       "displayName": "JL Skinner",
+       "id": "4428503",
+       "injuries": [],
+       "shortName": "J. Skinner"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "Special Teams",
+   "positions": {
+    "pk": {
+     "position": {
+      "abbreviation": "PK"
+     },
+     "athletes": [
+      {
+       "displayName": "Wil Lutz",
+       "id": "2985659",
+       "injuries": [],
+       "shortName": "W. Lutz"
+      }
+     ]
+    },
+    "p": {
+     "position": {
+      "abbreviation": "P"
+     },
+     "athletes": [
+      {
+       "displayName": "Jeremy Crawshaw",
+       "id": "4589212",
+       "injuries": [],
+       "shortName": "J. Crawshaw"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "3WR 1TE",
+   "positions": {
+    "wr1": {
+     "position": {
+      "abbreviation": "WR"
+     },
+     "athletes": [
+      {
+       "displayName": "Jaylen Waddle",
+       "id": "4372016",
+       "injuries": [],
+       "shortName": "J. Waddle"
+      },
+      {
+       "displayName": "Troy Franklin",
+       "id": "4431280",
+       "injuries": [],
+       "shortName": "T. Franklin"
+      }
+     ]
+    },
+    "wr2": {
+     "position": {
+      "abbreviation": "WR"
+     },
+     "athletes": [
+      {
+       "displayName": "Courtland Sutton",
+       "id": "3128429",
+       "injuries": [],
+       "shortName": "C. Sutton"
+      },
+      {
+       "displayName": "Marvin Mims Jr.",
+       "id": "4686472",
+       "injuries": [],
+       "shortName": "M. Mims Jr."
+      }
+     ]
+    },
+    "lt": {
+     "position": {
+      "abbreviation": "LT"
+     },
+     "athletes": [
+      {
+       "displayName": "Garett Bolles",
+       "id": "4035662",
+       "injuries": [],
+       "shortName": "G. Bolles"
+      },
+      {
+       "displayName": "Matt Peart",
+       "id": "3921936",
+       "injuries": [],
+       "shortName": "M. Peart"
+      },
+      {
+       "displayName": "Frank Crum",
+       "id": "4361691",
+       "injuries": [
+        {
+         "date": "2026-08-31T23:20Z",
+         "longComment": "The offensive tackle can return for Denver's Week 5 matchup with the Chargers at the earliest. Crum suffered a leg injury during the Broncos' second preseason against the Packers and missed the last week of training camp. The third-year pro projects as a depth tackle even when healthy.",
+         "shortComment": "Crum (undisclosed) was placed on injured reserve with a designation to return by the Broncos on Sunday, Aric DiLalla of the team's official site reports.",
+         "status": "Injured Reserve",
+         "type": {
+          "abbreviation": "IR",
+          "description": "Injured Reserve",
+          "id": "5",
+          "name": "INJURY_STATUS_IR"
+         }
+        }
+       ],
+       "shortName": "F. Crum"
+      }
+     ]
+    },
+    "c": {
+     "position": {
+      "abbreviation": "C"
+     },
+     "athletes": [
+      {
+       "displayName": "Luke Wattenberg",
+       "id": "4039018",
+       "injuries": [],
+       "shortName": "L. Wattenberg"
+      },
+      {
+       "displayName": "Alex Forsyth",
+       "id": "4242503",
+       "injuries": [],
+       "shortName": "A. Forsyth"
+      },
+      {
+       "displayName": "Michael Deiter",
+       "id": "3121541",
+       "injuries": [],
+       "shortName": "M. Deiter"
+      }
+     ]
+    },
+    "qb": {
+     "position": {
+      "abbreviation": "QB"
+     },
+     "athletes": [
+      {
+       "displayName": "Bo Nix",
+       "id": "4426338",
+       "injuries": [],
+       "shortName": "B. Nix"
+      },
+      {
+       "displayName": "Jarrett Stidham",
+       "id": "3892775",
+       "injuries": [],
+       "shortName": "J. Stidham"
+      },
+      {
+       "displayName": "Sam Ehlinger",
+       "id": "4241820",
+       "injuries": [],
+       "shortName": "S. Ehlinger"
+      }
+     ]
+    },
+    "te": {
+     "position": {
+      "abbreviation": "TE"
+     },
+     "athletes": [
+      {
+       "displayName": "Evan Engram",
+       "id": "3051876",
+       "injuries": [],
+       "shortName": "E. Engram"
+      },
+      {
+       "displayName": "Adam Trautman",
+       "id": "3911853",
+       "injuries": [],
+       "shortName": "A. Trautman"
+      },
+      {
+       "displayName": "Nate Adkins",
+       "id": "4383440",
+       "injuries": [],
+       "shortName": "N. Adkins"
+      }
+     ]
+    },
+    "rb": {
+     "position": {
+      "abbreviation": "RB"
+     },
+     "athletes": [
+      {
+       "displayName": "Jonah Coleman",
+       "id": "4702555",
+       "injuries": [],
+       "shortName": "J. Coleman"
+      },
+      {
+       "displayName": "J.K. Dobbins",
+       "id": "4241985",
+       "injuries": [],
+       "shortName": "J.K. Dobbins"
+      },
+      {
+       "displayName": "RJ Harvey",
+       "id": "4568490",
+       "injuries": [
+        {
+         "date": "2026-10-31T20:18Z",
+         "longComment": "Harvey was already ruled out for Sunday's contest against the Chiefs, but now that he's on IR, the second-year running back will be required to miss at least the next four games. That means the earliest that he is eligible to return is Week 13 against the Dolphins on Sunday, Dec. 6. In Harvey's absence, the Broncos' backfield will be led by J.K. Dobbins and rookie fourth-rounder Jonah Coleman.",
+         "shortComment": "The Broncos placed Harvey (knee) on injured reserve Saturday, Ian Rapoport of NFL Network reports.",
+         "status": "Injured Reserve",
+         "type": {
+          "abbreviation": "IR",
+          "description": "Injured Reserve",
+          "id": "5",
+          "name": "INJURY_STATUS_IR"
+         }
+        }
+       ],
+       "shortName": "R. Harvey"
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

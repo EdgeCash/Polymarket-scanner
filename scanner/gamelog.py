@@ -39,6 +39,8 @@ from scanner.config import (
     GAMELOG_UPCOMING_HOURS,
     GAMELOG_UPCOMING_REFRESH_MINUTES,
     PLAYER_REFRESH_MINUTES,
+    ROSTER_FETCHES_PER_PASS,
+    ROSTER_REFRESH_HOURS,
     Settings,
 )
 from scanner.diary import FOOTBALL_GAME_VERSION, Diary
@@ -865,9 +867,11 @@ def _first_half_yards(raw: dict, home: TeamRef) -> dict[str, dict[str, int]] | N
 
 
 def parse_upcoming_summary(raw: Any) -> dict:
-    """Venue, weather and ESPN's projection for a game still to come."""
+    """Venue, weather, ESPN's projection and each side's injury report for a game to come."""
     if not isinstance(raw, dict):
         return {}
+    from scanner.injuries import parse_injury_report
+
     info = raw.get("gameInfo") if isinstance(raw.get("gameInfo"), dict) else {}
     venue = info.get("venue") if isinstance(info.get("venue"), dict) else {}
     weather = info.get("weather") if isinstance(info.get("weather"), dict) else {}
@@ -891,7 +895,28 @@ def parse_upcoming_summary(raw: Any) -> dict:
             }
     except (TypeError, ValueError):
         pass
+    sides = _summary_sides(raw)
+    if sides:
+        report = parse_injury_report(raw, sides["home"], sides["away"])
+        if report is not None:
+            out["injuries"] = report
     return out
+
+
+def _summary_sides(raw: dict) -> dict[str, str] | None:
+    """{"home": team id, "away": team id} from a summary's header."""
+    header = raw.get("header") if isinstance(raw.get("header"), dict) else {}
+    competitions = header.get("competitions")
+    competition = competitions[0] if isinstance(competitions, list) and competitions else {}
+    out: dict[str, str] = {}
+    for competitor in (competition or {}).get("competitors") or []:
+        if not isinstance(competitor, dict) or competitor.get("homeAway") not in ("home", "away"):
+            continue
+        team = competitor.get("team") if isinstance(competitor.get("team"), dict) else {}
+        team_id = team.get("id") or competitor.get("id")
+        if team_id is not None:
+            out[competitor["homeAway"]] = str(team_id)
+    return out if set(out) == {"home", "away"} else None
 
 
 # -- figures ---------------------------------------------------------------------
@@ -1456,6 +1481,7 @@ def build_sheet(
         "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
         "weather": extra.get("weather"),
         "predictor": extra.get("predictor"),
+        "injuries": extra.get("injuries"),
         "book": book,
         "implied": implied,
         "win_probability": None if fair is None else {"home": fair[0], "away": fair[1]},
@@ -1515,6 +1541,15 @@ class ScoreboardFeed:
     def summary(self, sport: str, game_id: str) -> Any:
         return self._get(f"{SCOREBOARD_BASE}/{SPORTS[sport].path}/summary?event={game_id}")
 
+    def roster(self, sport: str, team_id: str) -> Any:
+        return self._get(f"{SCOREBOARD_BASE}/{SPORTS[sport].path}/teams/{team_id}/roster")
+
+    def depth_chart(self, sport: str, team_id: str) -> Any:
+        return self._get(f"{SCOREBOARD_BASE}/{SPORTS[sport].path}/teams/{team_id}/depthcharts")
+
+
+DEPTH_CHART_SPORTS = ("nfl",)  # ESPN publishes a depth chart for these
+
 
 class GameLogError(Exception):
     """A scoreboard or summary could not be read."""
@@ -1537,6 +1572,9 @@ class RefreshSummary:
     player_lines: int = 0  # player lines written this pass
     player_graded: int = 0  # player lines graded this pass
     days_pending: int = 0  # season days still to read when the budget ran out (by day)
+    rosters: int = 0  # team rosters (and depth charts) read this pass
+    rosters_pending: int = 0  # teams whose roster is due but waited for the next pass
+    injured: int = 0  # upcoming games whose projection moved for an injury report
     errors: list[str] = field(default_factory=list)
 
 
@@ -1555,6 +1593,9 @@ class GameLog:
         self.feed = feed or ScoreboardFeed()
         self._now = now
         self.last_card: dict | None = None  # the last daily card this process locked
+        # Each upcoming game's absentees' chance of missing it, found while projecting
+        # and used for the player lines in the same refresh: {(sport, game_id): {id: chance}}.
+        self._availability: dict[tuple[str, str], dict[str, float]] = {}
 
     # -- refresh --------------------------------------------------------------------
 
@@ -1599,6 +1640,7 @@ class GameLog:
                 )
         self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
+        self._refresh_rosters(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
@@ -1652,9 +1694,93 @@ class GameLog:
             budget = self._store_slate(sport, season, key, past, stored, now, budget, summary)
         self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
+        self._refresh_rosters(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
+
+    def _refresh_rosters(self, sport, now, summary) -> None:
+        """Read the roster (and depth chart) of each team with a game coming up, about once a
+        day, nearest game first, a few teams a pass."""
+        if sport not in self.settings.roster_sports:
+            return
+        from scanner.injuries import parse_depth_chart, parse_roster
+
+        stale = now - timedelta(hours=ROSTER_REFRESH_HOURS)
+        due: list[tuple[str, str]] = []
+        for row in self.diary.football_upcoming(sport):
+            for side in ("home", "away"):
+                due.append((row["date"], str(row["slate"][side]["team_id"])))
+        seen: set[str] = set()
+        budget = ROSTER_FETCHES_PER_PASS
+        for _, team_id in sorted(due):
+            if team_id in seen:
+                continue
+            seen.add(team_id)
+            fetched = self.diary.roster_fetched_at(sport, team_id)
+            if fetched is not None and fetched > stale:
+                continue
+            if budget <= 0:
+                summary.rosters_pending += 1
+                continue
+            budget -= 1
+            try:
+                players = parse_roster(self.feed.roster(sport, team_id))
+                depth = (
+                    parse_depth_chart(self.feed.depth_chart(sport, team_id))
+                    if sport in DEPTH_CHART_SPORTS
+                    else {}
+                )
+            except GameLogError as exc:
+                summary.errors.append(f"{sport} roster {team_id}: {exc}")
+                continue
+            by_id = {p["player_id"]: p for p in players}
+            for player_id, spot in depth.items():
+                row = by_id.setdefault(
+                    player_id,
+                    {
+                        "player_id": player_id,
+                        "name": spot["name"],
+                        "position": None,
+                        "status": "active",
+                    },
+                )
+                row["depth_rank"], row["depth_slot"] = spot["rank"], spot["slot"]
+            self.diary.store_roster(sport, team_id, list(by_id.values()), now)
+            summary.rosters += 1
+
+    def _absentees(self, sport, slate, extra, rows, contexts) -> dict[str, list[dict]] | None:
+        """Both sides' likely absentees for one upcoming game, or None when nothing is known."""
+        from scanner.injuries import SPORTS as INJURY_SPORTS
+        from scanner.injuries import SideContext, absentees
+
+        if not self.settings.INJURIES_ENABLED or sport not in INJURY_SPORTS:
+            return None
+        report = extra.get("injuries") if isinstance(extra.get("injuries"), dict) else None
+        sides: dict[str, list[dict]] = {}
+        for side in ("home", "away"):
+            team_id = str(slate[side]["team_id"])
+            context = contexts.get(team_id)
+            if context is None:
+                roster = (
+                    self.diary.roster(sport, team_id)
+                    if sport in self.settings.roster_sports
+                    else []
+                )
+                depth = {
+                    r["player_id"]: {
+                        "rank": r["depth_rank"],
+                        "slot": r["depth_slot"] or "",
+                        "name": r["name"],
+                    }
+                    for r in roster
+                    if r.get("depth_rank") is not None
+                }
+                context = contexts[team_id] = SideContext.build(team_id, rows, roster, depth)
+            sides[side] = absentees(sport, (report or {}).get(side), context)
+        if not sides["home"] and not sides["away"]:
+            return None
+        return sides
 
     def _project(self, sport, season, now, summary) -> None:
         """Fit the model to the log and write a projection for every upcoming game.
@@ -1662,6 +1788,7 @@ class GameLog:
         A projection keeps updating as games come in until kickoff, then locks; it
         is graded once the game's own record lands in the log.
         """
+        from scanner.injuries import availability
         from scanner.priors import priors_for
         from scanner.projection import fit, project
         from scanner.rest import days_since_last
@@ -1670,6 +1797,10 @@ class GameLog:
         records = self.diary.football_games(sport, season)
         ratings = fit(records, sport, priors_for(sport, season))
         upcoming = self.diary.football_upcoming(sport)
+        player_rows = (
+            self.diary.player_games(sport, season) if self.settings.INJURIES_ENABLED else []
+        )
+        contexts: dict = {}
         # Every game on the season's schedule by team, played or to come, so each side's
         # rest can be counted (a back-to-back moves basketball's and hockey's margins).
         schedule: dict[str, list[datetime]] = {}
@@ -1695,6 +1826,10 @@ class GameLog:
                 for side in ("home", "away")
             }
             book = BookLine.from_dict(slate.get("book")) if slate.get("book") else None
+            absent = self._absentees(sport, slate, extra, player_rows, contexts)
+            self._availability[(sport, row["game_id"])] = (
+                {**availability(absent["home"]), **availability(absent["away"])} if absent else {}
+            )
             projection = project(
                 ratings,
                 slate["home"]["team_id"],
@@ -1702,15 +1837,19 @@ class GameLog:
                 bool(slate.get("neutral")),
                 book,
                 # The venue from the scoreboard (its indoor flag) with the summary's
-                # weather, as the sheet shows them: football's totals move for the wind.
+                # weather, as the sheet shows them: football's totals move for the wind;
+                # the injury report and roster move the margin.
                 {
                     "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
                     "weather": extra.get("weather"),
                     "rest": rest,
+                    "injuries": absent,
                 },
             )
             if projection is None:
                 continue
+            if (projection["raw"].get("injuries") or {}).get("margin"):
+                summary.injured += 1
             self.diary.upsert_projection(
                 sport,
                 row["game_id"],
@@ -1747,13 +1886,12 @@ class GameLog:
         if stakes_on:
             self.diary.grade_stakes(sport, now)
         if self.settings.PLAYERS_ENABLED:
-            self._project_players(sport, season, now, summary)
+            self._project_players(sport, season, now, summary, player_rows or None)
 
-    def _project_players(self, sport, season, now, summary) -> None:
+    def _project_players(self, sport, season, now, summary, rows=None) -> None:
         """Write every leader's stat line for each upcoming game, at most once an hour."""
         from scanner.players import project_game, team_averages
 
-        rows = None
         averages = None
         for row in self.diary.football_upcoming(sport):
             kickoff = datetime.fromisoformat(row["date"])
@@ -1764,6 +1902,7 @@ class GameLog:
                 continue
             if rows is None:
                 rows = self.diary.player_games(sport, season)
+            if averages is None:
                 averages = team_averages(self.diary.football_games(sport, season), sport)
             stored = self.diary.projection(sport, row["game_id"])
             lines = project_game(
@@ -1774,6 +1913,7 @@ class GameLog:
                 rows,
                 averages,
                 now,
+                self._availability.get((sport, row["game_id"])),
             )
             summary.player_lines += self.diary.replace_player_projections(
                 sport, row["game_id"], lines, now

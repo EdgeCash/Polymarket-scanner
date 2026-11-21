@@ -1,0 +1,618 @@
+{
+ "team": {
+  "id": "1",
+  "abbreviation": "BOS"
+ },
+ "athletes": [
+  {
+   "position": "Centers",
+   "items": [
+    {
+     "id": "5275337",
+     "alternateId": "5275337",
+     "firstName": "James",
+     "lastName": "Hagens",
+     "fullName": "James Hagens",
+     "displayName": "James Hagens",
+     "shortName": "J. Hagens",
+     "weight": 186.0,
+     "displayWeight": "186 lbs",
+     "height": 71.0,
+     "displayHeight": "5' 11\"",
+     "age": 20,
+     "dateOfBirth": "2006-11-03T08:00Z",
+     "birthCountry": {
+      "abbreviation": "USA"
+     },
+     "slug": "james-hagens",
+     "jersey": "44",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "1",
+      "name": "Center",
+      "displayName": "Center",
+      "abbreviation": "C",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [
+      {
+       "status": "Injured Reserve",
+       "date": "2026-11-07T17:30Z"
+      }
+     ],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4270247",
+     "alternateId": "3988749",
+     "firstName": "Michael",
+     "lastName": "Eyssimont",
+     "fullName": "Michael Eyssimont",
+     "displayName": "Michael Eyssimont",
+     "shortName": "M. Eyssimont",
+     "weight": 196.0,
+     "displayWeight": "196 lbs",
+     "height": 72.0,
+     "displayHeight": "6' 0\"",
+     "age": 30,
+     "dateOfBirth": "1996-09-09T07:00Z",
+     "debutYear": 2016,
+     "birthCountry": {
+      "abbreviation": "USA"
+     },
+     "slug": "michael-eyssimont",
+     "jersey": "81",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "1",
+      "name": "Center",
+      "displayName": "Center",
+      "abbreviation": "C",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 5
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4268466",
+     "alternateId": "4268466",
+     "firstName": "Morgan",
+     "lastName": "Geekie",
+     "fullName": "Morgan Geekie",
+     "displayName": "Morgan Geekie",
+     "shortName": "M. Geekie",
+     "weight": 212.0,
+     "displayWeight": "212 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 28,
+     "dateOfBirth": "1998-07-20T07:00Z",
+     "debutYear": 2020,
+     "birthCountry": {
+      "abbreviation": "CAN"
+     },
+     "slug": "morgan-geekie",
+     "jersey": "39",
+     "hand": {
+      "type": "RIGHT",
+      "abbreviation": "R",
+      "displayValue": "Right"
+     },
+     "position": {
+      "id": "1",
+      "name": "Center",
+      "displayName": "Center",
+      "abbreviation": "C",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 7
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4587985",
+     "alternateId": "4587985",
+     "firstName": "Mark",
+     "lastName": "Kastelic",
+     "fullName": "Mark Kastelic",
+     "displayName": "Mark Kastelic",
+     "shortName": "M. Kastelic",
+     "weight": 231.0,
+     "displayWeight": "231 lbs",
+     "height": 76.0,
+     "displayHeight": "6' 4\"",
+     "age": 27,
+     "dateOfBirth": "1999-03-11T08:00Z",
+     "debutYear": 2019,
+     "birthCountry": {
+      "abbreviation": "USA"
+     },
+     "slug": "mark-kastelic",
+     "jersey": "47",
+     "hand": {
+      "type": "RIGHT",
+      "abbreviation": "R",
+      "displayValue": "Right"
+     },
+     "position": {
+      "id": "1",
+      "name": "Center",
+      "displayName": "Center",
+      "abbreviation": "C",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 6
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Left Wings",
+   "items": [
+    {
+     "id": "4064780",
+     "alternateId": "4064780",
+     "firstName": "Tanner",
+     "lastName": "Jeannot",
+     "fullName": "Tanner Jeannot",
+     "displayName": "Tanner Jeannot",
+     "shortName": "T. Jeannot",
+     "weight": 222.0,
+     "displayWeight": "222 lbs",
+     "height": 74.0,
+     "displayHeight": "6' 2\"",
+     "age": 29,
+     "dateOfBirth": "1997-05-29T07:00Z",
+     "birthCountry": {
+      "abbreviation": "CAN"
+     },
+     "slug": "tanner-jeannot",
+     "jersey": "84",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "2",
+      "name": "Left Wing",
+      "displayName": "Left Wing",
+      "abbreviation": "LW",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 7
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Right Wings",
+   "items": [
+    {
+     "id": "3114778",
+     "alternateId": "3114778",
+     "firstName": "David",
+     "lastName": "Pastrnak",
+     "fullName": "David Pastrnak",
+     "displayName": "David Pastrnak",
+     "shortName": "D. Pastrnak",
+     "weight": 199.0,
+     "displayWeight": "199 lbs",
+     "height": 72.0,
+     "displayHeight": "6' 0\"",
+     "age": 30,
+     "dateOfBirth": "1996-05-25T07:00Z",
+     "debutYear": 2014,
+     "birthCountry": {
+      "abbreviation": "CZE"
+     },
+     "slug": "david-pastrnak",
+     "jersey": "88",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "3",
+      "name": "Right Wing",
+      "displayName": "Right Wing",
+      "abbreviation": "RW",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 13
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4697438",
+     "alternateId": "4697438",
+     "firstName": "JJ",
+     "lastName": "Peterka",
+     "fullName": "JJ Peterka",
+     "displayName": "JJ Peterka",
+     "shortName": "J. Peterka",
+     "weight": 184.0,
+     "displayWeight": "184 lbs",
+     "height": 72.0,
+     "displayHeight": "6' 0\"",
+     "age": 24,
+     "dateOfBirth": "2002-01-14T08:00Z",
+     "birthCountry": {
+      "abbreviation": "GER"
+     },
+     "slug": "jj-peterka",
+     "jersey": "10",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "3",
+      "name": "Right Wing",
+      "displayName": "Right Wing",
+      "abbreviation": "RW",
+      "leaf": true,
+      "parent": {
+       "id": "20",
+       "name": "Forward",
+       "displayName": "Forward",
+       "abbreviation": "F",
+       "leaf": true
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 5
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Defense",
+   "items": [
+    {
+     "id": "4392308",
+     "alternateId": "4392308",
+     "firstName": "Jonathan",
+     "lastName": "Aspirot",
+     "fullName": "Jonathan Aspirot",
+     "displayName": "Jonathan Aspirot",
+     "shortName": "J. Aspirot",
+     "weight": 216.0,
+     "displayWeight": "216 lbs",
+     "height": 72.0,
+     "displayHeight": "6' 0\"",
+     "age": 27,
+     "dateOfBirth": "1999-05-16T07:00Z",
+     "birthCountry": {
+      "abbreviation": "CAN"
+     },
+     "slug": "jonathan-aspirot",
+     "jersey": "45",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "4",
+      "name": "Defense",
+      "displayName": "Defense",
+      "abbreviation": "D",
+      "leaf": true,
+      "parent": {
+       "id": "27",
+       "name": "Skater",
+       "displayName": "Skater",
+       "abbreviation": "S",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 2
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "3941946",
+     "alternateId": "3941946",
+     "firstName": "Will",
+     "lastName": "Borgen",
+     "fullName": "Will Borgen",
+     "displayName": "Will Borgen",
+     "shortName": "W. Borgen",
+     "weight": 200.0,
+     "displayWeight": "200 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 29,
+     "dateOfBirth": "1996-12-19T08:00Z",
+     "debutYear": 2019,
+     "birthCountry": {
+      "abbreviation": "USA"
+     },
+     "slug": "will-borgen",
+     "jersey": "17",
+     "hand": {
+      "type": "RIGHT",
+      "abbreviation": "R",
+      "displayValue": "Right"
+     },
+     "position": {
+      "id": "4",
+      "name": "Defense",
+      "displayName": "Defense",
+      "abbreviation": "D",
+      "leaf": true,
+      "parent": {
+       "id": "27",
+       "name": "Skater",
+       "displayName": "Skater",
+       "abbreviation": "S",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 7
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "5103647",
+     "alternateId": "5103647",
+     "firstName": "Frederic",
+     "lastName": "Brunet",
+     "fullName": "Frederic Brunet",
+     "displayName": "Frederic Brunet",
+     "shortName": "F. Brunet",
+     "weight": 203.0,
+     "displayWeight": "203 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 23,
+     "dateOfBirth": "2003-08-21T07:00Z",
+     "birthCountry": {
+      "abbreviation": "CAN"
+     },
+     "slug": "frederic-brunet",
+     "jersey": "42",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "4",
+      "name": "Defense",
+      "displayName": "Defense",
+      "abbreviation": "D",
+      "leaf": true,
+      "parent": {
+       "id": "27",
+       "name": "Skater",
+       "displayName": "Skater",
+       "abbreviation": "S",
+       "leaf": false
+      }
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  },
+  {
+   "position": "Goalies",
+   "items": [
+    {
+     "id": "4392765",
+     "alternateId": "4392765",
+     "firstName": "Michael",
+     "lastName": "DiPietro",
+     "fullName": "Michael DiPietro",
+     "displayName": "Michael DiPietro",
+     "shortName": "M. DiPietro",
+     "weight": 207.0,
+     "displayWeight": "207 lbs",
+     "height": 73.0,
+     "displayHeight": "6' 1\"",
+     "age": 27,
+     "dateOfBirth": "1999-06-09T07:00Z",
+     "debutYear": 2019,
+     "birthCountry": {
+      "abbreviation": "CAN"
+     },
+     "slug": "michael-dipietro",
+     "jersey": "30",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "5",
+      "name": "Goaltender",
+      "displayName": "Goaltender",
+      "abbreviation": "G",
+      "leaf": false
+     },
+     "injuries": [],
+     "experience": {
+      "years": 0
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    },
+    {
+     "id": "4712036",
+     "alternateId": "4712036",
+     "firstName": "Jeremy",
+     "lastName": "Swayman",
+     "fullName": "Jeremy Swayman",
+     "displayName": "Jeremy Swayman",
+     "shortName": "J. Swayman",
+     "weight": 196.0,
+     "displayWeight": "196 lbs",
+     "height": 75.0,
+     "displayHeight": "6' 3\"",
+     "age": 27,
+     "dateOfBirth": "1998-11-24T08:00Z",
+     "birthCountry": {
+      "abbreviation": "USA"
+     },
+     "slug": "jeremy-swayman",
+     "jersey": "1",
+     "hand": {
+      "type": "LEFT",
+      "abbreviation": "L",
+      "displayValue": "Left"
+     },
+     "position": {
+      "id": "5",
+      "name": "Goaltender",
+      "displayName": "Goaltender",
+      "abbreviation": "G",
+      "leaf": false
+     },
+     "injuries": [],
+     "experience": {
+      "years": 7
+     },
+     "status": {
+      "id": "1",
+      "name": "Active",
+      "type": "active",
+      "abbreviation": "Active"
+     }
+    }
+   ]
+  }
+ ]
+}
