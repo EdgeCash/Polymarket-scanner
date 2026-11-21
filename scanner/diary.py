@@ -309,6 +309,32 @@ CREATE TABLE IF NOT EXISTS player_projections (
     PRIMARY KEY (sport, game_id, player_id, stat)
 );
 CREATE INDEX IF NOT EXISTS player_projections_open ON player_projections (sport, outcome, kickoff);
+-- Each team's roster as ESPN lists it (who is on injured reserve or suspended, and
+-- in the NFL where each man sits on the depth chart), read about once a day for
+-- the teams with a game coming up. The game's own injury report lives in
+-- football_upcoming.extra, read with its summary.
+CREATE TABLE IF NOT EXISTS rosters (
+    sport TEXT NOT NULL,
+    team_id TEXT NOT NULL,
+    player_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    position TEXT,
+    status TEXT NOT NULL,
+    grp TEXT,
+    jersey TEXT,
+    experience INTEGER,
+    depth_rank INTEGER,
+    depth_slot TEXT,
+    fetched_at TEXT NOT NULL,
+    PRIMARY KEY (sport, team_id, player_id)
+);
+CREATE TABLE IF NOT EXISTS roster_fetches (
+    sport TEXT NOT NULL,
+    team_id TEXT NOT NULL,
+    fetched_at TEXT NOT NULL,
+    players INTEGER NOT NULL,
+    PRIMARY KEY (sport, team_id)
+);
 CREATE TABLE IF NOT EXISTS cards (
     card_date TEXT PRIMARY KEY,
     locked_at TEXT NOT NULL,
@@ -1118,6 +1144,65 @@ class Diary:
                 "SELECT * FROM football_upcoming WHERE sport = ? AND game_id = ?", (sport, game_id)
             ).fetchone()
         return self._upcoming_row(row) if row else None
+
+    # -- rosters ------------------------------------------------------------------
+
+    def store_roster(self, sport: str, team_id: str, players: list[dict], at: datetime) -> None:
+        """Replace a team's roster with what ESPN lists now; each row may carry its depth
+        chart rank and slot."""
+        with self._lock:
+            self._conn.execute(
+                "DELETE FROM rosters WHERE sport = ? AND team_id = ?", (sport, str(team_id))
+            )
+            for player in players:
+                self._conn.execute(
+                    """INSERT OR REPLACE INTO rosters (sport, team_id, player_id, name, position,
+                       status, grp, jersey, experience, depth_rank, depth_slot, fetched_at)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        sport,
+                        str(team_id),
+                        str(player["player_id"]),
+                        player.get("name") or "",
+                        player.get("position"),
+                        player.get("status") or "active",
+                        player.get("group"),
+                        None if player.get("jersey") is None else str(player["jersey"]),
+                        player.get("experience"),
+                        player.get("depth_rank"),
+                        player.get("depth_slot"),
+                        _iso(at),
+                    ),
+                )
+            self._conn.execute(
+                "INSERT OR REPLACE INTO roster_fetches (sport, team_id, fetched_at, players) "
+                "VALUES (?,?,?,?)",
+                (sport, str(team_id), _iso(at), len(players)),
+            )
+
+    def roster(self, sport: str, team_id: str) -> list[dict]:
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT * FROM rosters WHERE sport = ? AND team_id = ? ORDER BY name",
+                (sport, str(team_id)),
+            ).fetchall()
+        return [{**dict(r), "group": r["grp"]} for r in rows]
+
+    def roster_fetched_at(self, sport: str, team_id: str) -> datetime | None:
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT fetched_at FROM roster_fetches WHERE sport = ? AND team_id = ?",
+                (sport, str(team_id)),
+            ).fetchone()
+        return _parse(row["fetched_at"]) if row else None
+
+    def roster_counts(self) -> dict[str, int]:
+        """Teams with a roster on file, per sport."""
+        with self._lock:
+            rows = self._conn.execute(
+                "SELECT sport, COUNT(*) AS n FROM roster_fetches GROUP BY sport"
+            ).fetchall()
+        return {r["sport"]: int(r["n"]) for r in rows}
 
     # -- the projection model's record ------------------------------------------
 

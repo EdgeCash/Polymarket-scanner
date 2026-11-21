@@ -1,0 +1,258 @@
+{
+ "team": {
+  "id": "7",
+  "abbreviation": "DEN"
+ },
+ "athletes": [
+  {
+   "id": "4432181",
+   "firstName": "Julian",
+   "lastName": "Strawther",
+   "fullName": "Julian Strawther",
+   "displayName": "Julian Strawther",
+   "shortName": "J. Strawther",
+   "weight": 205.0,
+   "displayWeight": "205 lbs",
+   "height": 78.0,
+   "displayHeight": "6' 6\"",
+   "age": 24,
+   "dateOfBirth": "2002-04-18T07:00Z",
+   "slug": "julian-strawther",
+   "jersey": "1",
+   "hand": {
+    "type": "LEFT",
+    "abbreviation": "L",
+    "displayValue": "Left"
+   },
+   "position": {
+    "id": "3",
+    "name": "Guard",
+    "displayName": "Guard",
+    "abbreviation": "G",
+    "leaf": false
+   },
+   "injuries": [
+    {
+     "status": "Out",
+     "date": "2026-10-17T00:52Z"
+    }
+   ],
+   "experience": {
+    "years": 4
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "4277848",
+   "firstName": "Marvin",
+   "lastName": "Bagley III",
+   "fullName": "Marvin Bagley III",
+   "displayName": "Marvin Bagley III",
+   "shortName": "M. Bagley III",
+   "weight": 235.0,
+   "displayWeight": "235 lbs",
+   "height": 82.0,
+   "displayHeight": "6' 10\"",
+   "age": 27,
+   "dateOfBirth": "1999-03-14T08:00Z",
+   "debutYear": 2018,
+   "slug": "marvin-bagley-iii",
+   "jersey": "3",
+   "hand": {
+    "type": "BOTH",
+    "abbreviation": "B",
+    "displayValue": "Both"
+   },
+   "position": {
+    "id": "7",
+    "name": "Forward",
+    "displayName": "Forward",
+    "abbreviation": "F",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 9
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "4431767",
+   "firstName": "Christian",
+   "lastName": "Braun",
+   "fullName": "Christian Braun",
+   "displayName": "Christian Braun",
+   "shortName": "C. Braun",
+   "weight": 220.0,
+   "displayWeight": "220 lbs",
+   "height": 78.0,
+   "displayHeight": "6' 6\"",
+   "age": 25,
+   "dateOfBirth": "2001-04-17T07:00Z",
+   "slug": "christian-braun",
+   "jersey": "0",
+   "position": {
+    "id": "3",
+    "name": "Guard",
+    "displayName": "Guard",
+    "abbreviation": "G",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 5
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "4698719",
+   "firstName": "Trevon",
+   "lastName": "Brazile",
+   "fullName": "Trevon Brazile",
+   "displayName": "Trevon Brazile",
+   "shortName": "T. Brazile",
+   "weight": 220.0,
+   "displayWeight": "220 lbs",
+   "height": 82.0,
+   "displayHeight": "6' 10\"",
+   "age": 23,
+   "dateOfBirth": "2003-01-07T08:00Z",
+   "slug": "trevon-brazile",
+   "jersey": "7",
+   "position": {
+    "id": "7",
+    "name": "Forward",
+    "displayName": "Forward",
+    "abbreviation": "F",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 0
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "3978",
+   "firstName": "DeMar",
+   "lastName": "DeRozan",
+   "fullName": "DeMar DeRozan",
+   "displayName": "DeMar DeRozan",
+   "shortName": "D. DeRozan",
+   "weight": 220.0,
+   "displayWeight": "220 lbs",
+   "height": 78.0,
+   "displayHeight": "6' 6\"",
+   "age": 37,
+   "dateOfBirth": "1989-08-07T07:00Z",
+   "debutYear": 2009,
+   "citizenship": "USA",
+   "slug": "demar-derozan",
+   "jersey": "10",
+   "position": {
+    "id": "3",
+    "name": "Guard",
+    "displayName": "Guard",
+    "abbreviation": "G",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 18
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "4065813",
+   "firstName": "Alpha",
+   "lastName": "Diallo",
+   "fullName": "Alpha Diallo",
+   "displayName": "Alpha Diallo",
+   "shortName": "A. Diallo",
+   "weight": 210.0,
+   "displayWeight": "210 lbs",
+   "height": 79.0,
+   "displayHeight": "6' 7\"",
+   "age": 29,
+   "dateOfBirth": "1997-06-29T07:00Z",
+   "slug": "alpha-diallo",
+   "jersey": "11",
+   "position": {
+    "id": "7",
+    "name": "Forward",
+    "displayName": "Forward",
+    "abbreviation": "F",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 0
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  },
+  {
+   "id": "3064290",
+   "firstName": "Aaron",
+   "lastName": "Gordon",
+   "fullName": "Aaron Gordon",
+   "displayName": "Aaron Gordon",
+   "shortName": "A. Gordon",
+   "weight": 235.0,
+   "displayWeight": "235 lbs",
+   "height": 80.0,
+   "displayHeight": "6' 8\"",
+   "age": 31,
+   "dateOfBirth": "1995-09-16T07:00Z",
+   "debutYear": 2014,
+   "slug": "aaron-gordon",
+   "jersey": "32",
+   "position": {
+    "id": "7",
+    "name": "Forward",
+    "displayName": "Forward",
+    "abbreviation": "F",
+    "leaf": false
+   },
+   "injuries": [],
+   "experience": {
+    "years": 13
+   },
+   "status": {
+    "id": "1",
+    "name": "Active",
+    "type": "active",
+    "abbreviation": "Active"
+   }
+  }
+ ]
+}

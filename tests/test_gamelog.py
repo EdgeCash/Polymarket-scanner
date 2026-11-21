@@ -463,6 +463,7 @@ class FakeFeed:
         self.calls: list[tuple] = []
         self.fail_summaries = False
         self.broken: set[str] = set()  # game ids whose summary has no usable box score
+        self.upcoming_summary = None  # a summary to serve for upcoming-1 instead of the fixture
 
     def week(self, sport, week=None):
         self.calls.append(("week", sport, week))
@@ -482,8 +483,16 @@ class FakeFeed:
         raw = load_fixture(fixture)
         raw["header"]["competitions"][0]["id"] = game_id  # the same box score under the asked id
         if game_id == "upcoming-1":
-            return load_fixture("espn_cfb_summary_upcoming.json")
+            return self.upcoming_summary or load_fixture("espn_cfb_summary_upcoming.json")
         return raw
+
+    def roster(self, sport, team_id):
+        self.calls.append(("roster", sport, team_id))
+        return load_fixture("espn_nfl_roster.json")
+
+    def depth_chart(self, sport, team_id):
+        self.calls.append(("depth_chart", sport, team_id))
+        return load_fixture("espn_nfl_depthchart.json")
 
 
 def add_upcoming(feed, sport="nfl", game_id="upcoming-1", hours=20):
@@ -945,6 +954,14 @@ class FakeDailyFeed:
             raw["header"]["competitions"][0]["status"]["type"]["completed"] = False
         return raw
 
+    def roster(self, sport, team_id):
+        self.calls.append(("roster", sport, team_id))
+        return load_fixture("espn_nba_roster.json" if sport == "nba" else "espn_nhl_roster.json")
+
+    def depth_chart(self, sport, team_id):
+        self.calls.append(("depth_chart", sport, team_id))
+        return {"depthchart": []}
+
 
 NBA_NOW = datetime.fromisoformat("2026-10-28T16:00:00+00:00")  # noon in New York on the 28th
 
@@ -1262,3 +1279,101 @@ def test_the_projection_takes_the_upcoming_games_weather_from_its_extras():
     assert raw["weather"]["gust"] == 5.0 and raw["weather"]["wind"] == pytest.approx(wind, abs=0.05)
     assert raw["weather"]["total"] == pytest.approx(WIND_PER_MPH * wind - BASELINE, abs=0.01)
     assert raw["weather"]["indoors"] is False
+
+
+# -- injuries and rosters -----------------------------------------------------------------
+
+
+def test_rosters_are_read_once_a_day_for_the_teams_with_a_game_coming_up(monkeypatch):
+    import scanner.gamelog as gamelog_module
+
+    log, diary, feed = build()
+    add_upcoming(feed)
+    summary = log.refresh("nfl", NOW, budget=0)
+    rosters = [c for c in feed.calls if c[0] in ("roster", "depth_chart")]
+    teams = {c[2] for c in rosters}
+    assert summary.rosters == 2 and len(rosters) == 4 and len(teams) == 2
+    stored = diary.roster("nfl", teams.pop())
+    by_name = {r["name"]: r for r in stored}
+    assert by_name["Bo Nix"]["depth_rank"] == 1 and by_name["Bo Nix"]["depth_slot"] == "QB"
+    assert by_name["Tyler Badie"]["status"] == "injured_reserve"
+    assert (
+        by_name["Sam Ehlinger"]["depth_rank"] == 3 and by_name["Sam Ehlinger"]["group"] == "offense"
+    )
+    assert diary.roster_counts() == {"nfl": 2}
+    # Within the day nothing is read again; after it, both teams are.
+    log.refresh("nfl", NOW + timedelta(hours=12), budget=0)
+    assert len([c for c in feed.calls if c[0] == "roster"]) == 2
+    monkeypatch.setattr(gamelog_module, "ROSTER_FETCHES_PER_PASS", 1)
+    later = log.refresh("nfl", NOW + timedelta(hours=25), budget=0)
+    assert later.rosters == 1 and later.rosters_pending == 1
+    assert len([c for c in feed.calls if c[0] == "roster"]) == 3
+    # College has no roster to read, and the switch turns it off everywhere.
+    assert log.refresh("cfb", NOW, budget=0).rosters == 0
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nfl", ROSTERS_ENABLED=False)
+    quiet_feed = FakeFeed()
+    add_upcoming(quiet_feed)
+    GameLog(settings, Diary(":memory:"), feed=quiet_feed, now=lambda: NOW).refresh(
+        "nfl", NOW, budget=0
+    )
+    assert not [c for c in quiet_feed.calls if c[0] == "roster"]
+
+
+def test_the_injury_report_moves_the_projection_and_drops_the_man_from_the_lines():
+    log, diary, feed = build()
+    add_upcoming(feed)
+    raw = load_fixture("espn_nfl_summary_upcoming.json")
+    depth = load_fixture("espn_nfl_depthchart.json")
+    nix = next(
+        a
+        for chart in depth["depthchart"]
+        for slot, spot in chart["positions"].items()
+        if slot == "qb"
+        for a in spot["athletes"]
+        if a["displayName"] == "Bo Nix"
+    )
+    raw["injuries"][0]["injuries"].append(
+        {
+            "status": "Out",
+            "date": "2026-11-20T22:18Z",
+            "athlete": {
+                "id": nix["id"],
+                "displayName": "Bo Nix",
+                "position": {"abbreviation": "QB"},
+            },
+            "details": {"type": "Knee"},
+        }
+    )
+    feed.upcoming_summary = raw
+    summary = log.refresh("nfl", NOW, budget=0)
+    assert summary.projected == 1 and summary.injured == 1
+    row = diary.football_upcoming_game("nfl", "upcoming-1")
+    report = row["extra"]["injuries"]
+    assert [e["name"] for e in report["home"]][-1] == "Bo Nix" and len(report["away"]) == 4
+    projection = diary.projection("nfl", "upcoming-1")["projection"]
+    listed = projection["raw"]["injuries"]
+    from scanner.injuries import RULES
+
+    quarterback = RULES["nfl"].coefficients["quarterback"]
+    nix_cost = next(e for e in listed["home"] if e["name"] == "Bo Nix")
+    assert nix_cost["status"] == "out" and nix_cost["cost"] == quarterback  # the starter
+    assert listed["home_loss"] == quarterback and listed["margin"] == -quarterback
+    # Visitors listed questionable or doubtful with no lines and no depth chart rank cost nothing.
+    assert listed["away_loss"] == 0.0
+    sheet = sheet_from_diary(diary, "nfl", "upcoming-1")
+    assert sheet["injuries"] == report
+    # The same game without the report projects 4.5 points more for the home side.
+    plain_log, plain_diary, plain_feed = build()
+    add_upcoming(plain_feed)
+    plain_log.refresh("nfl", NOW, budget=0)
+    plain = plain_diary.projection("nfl", "upcoming-1")["projection"]["raw"]
+    assert projection["raw"]["margin"] == pytest.approx(plain["margin"] - quarterback)
+    assert "injuries" in plain  # the roster's injured list is read even without a report
+    assert plain["injuries"]["margin"] == 0.0
+    off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nfl", INJURIES_ENABLED=False)
+    off_feed = FakeFeed()
+    add_upcoming(off_feed)
+    off_feed.upcoming_summary = raw
+    off_diary = Diary(":memory:")
+    GameLog(off, off_diary, feed=off_feed, now=lambda: NOW).refresh("nfl", NOW, budget=0)
+    assert "injuries" not in off_diary.projection("nfl", "upcoming-1")["projection"]["raw"]

@@ -127,6 +127,9 @@ RECENT_GAMES = 5  # playing time is projected from this many recent games
 RECENT_WEIGHTS = (0.35, 0.25, 0.2, 0.1, 0.1)
 EXPOSURE_GRID = 15  # the mixture over playing time uses this many quantiles
 GOALIE = "G"
+# A man whose chance of missing the game (from the injury report) is at least this
+# gets no line: out, doubtful and injured reserve. Questionable and day-to-day keep theirs.
+ABSENT_FROM = 0.75
 
 
 @dataclass
@@ -435,15 +438,21 @@ def project_game(
     player_rows: list[dict],
     records_avg: dict,
     now: datetime,
+    availability: dict[str, float] | None = None,
 ) -> list[dict]:
     """Every projected line for a game: one row per (player, stat), the leaders by mean.
 
     ``player_rows`` are the diary's player lines for the sport's season,
-    ``records_avg`` each team's average points and the league's per side.
+    ``records_avg`` each team's average points and the league's per side, and
+    ``availability`` each listed man's chance of missing the game from the injury
+    report (scanner.injuries): a man likely out gets no line, and in the sports with
+    playing time his minutes go to the men who stay, in proportion to their own; a man
+    in doubt keeps his line, marked with the chance.
     """
     stats = SPORT_STATS.get(sport)
     if not stats:
         return []
+    availability = availability or {}
     by_id = seasons(player_rows, sport)
     rates = league_rates(by_id, sport)
     factors = game_factors(projection, slate, records_avg)
@@ -454,11 +463,18 @@ def project_game(
         team = slate[side]
         team_id = team["team_id"]
         opponent = slate["away" if side == "home" else "home"]
-        squad = [
+        regulars = [
             s
             for s in by_id.values()
             if s.team_id == team_id and s.played_last and len(s.games) >= PLAYER_MIN_GAMES
         ]
+        squad = [s for s in regulars if availability.get(s.player_id, 0.0) < ABSENT_FROM]
+        boost = 1.0
+        if exposure_key is not None:
+            absent = sum(exposure_projection(s, sport)[0] for s in regulars if s not in squad)
+            staying = sum(exposure_projection(s, sport)[0] for s in squad)
+            if absent > 0 and staying > 0:
+                boost = 1.0 + absent / staying
         candidates: dict[str, list[dict]] = {stat: [] for stat in stats}
         for season in squad:
             is_goalie = (season.position or "") == GOALIE and sport == "nhl"
@@ -467,6 +483,8 @@ def project_game(
                 continue
             rout = blowout_factor(sport, projection, mu)
             mu *= rout
+            if boost > 1.0 and not is_goalie:
+                mu = min(mu * boost, cap)
             for stat in stats:
                 if (stat == "saves") != is_goalie:
                     continue
@@ -490,6 +508,8 @@ def project_game(
                     "games": len(season.games),
                     "prior": PRIOR_EXPOSURE[sport],
                     "blowout": rout,
+                    "boost": round(boost, 3),
+                    "availability": availability.get(season.player_id, 0.0),
                 }
                 pmf = distribution(params)
                 summary = summarise_pmf(pmf)

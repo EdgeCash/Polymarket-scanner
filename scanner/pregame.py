@@ -594,6 +594,10 @@ class PregameScanner:
             "staked": sum(s.staked for s in summaries),
             "player_lines": sum(s.player_lines for s in summaries),
             "player_graded": sum(s.player_graded for s in summaries),
+            "rosters": sum(s.rosters for s in summaries),
+            "rosters_pending": sum(s.rosters_pending for s in summaries),
+            "injured": sum(s.injured for s in summaries),
+            "rosters_on_file": self.diary.roster_counts(),
             "card": self.gamelog.last_card,
             "error": "; ".join(short_error(e) for e in errors[:2]) or None,
         }

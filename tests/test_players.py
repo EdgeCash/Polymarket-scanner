@@ -376,3 +376,37 @@ def test_the_lines_carry_the_rout_factor_and_the_sports_dispersion():
     )
     light = [line for line in points if line["params"]["blowout"] == 1.0]
     assert light and all(line["params"]["exposure_mu"] < 0.6 * 48 for line in light)
+
+
+def test_a_man_listed_out_gets_no_line_and_his_minutes_go_to_those_who_stay():
+    diary, record = nba_diary(3)
+    rows = diary.player_games("nba")
+    averages = team_averages(diary.football_games("nba"), "nba")
+    slate = {
+        "game_id": "up",
+        "home": {"team_id": record.home.team_id, "abbreviation": "BOS"},
+        "away": {"team_id": record.away.team_id, "abbreviation": "BKN"},
+    }
+    kickoff = NOW + timedelta(hours=8)
+    plain = project_game("nba", slate, kickoff, None, rows, averages, NOW)
+    tatum = next(r for r in rows if r["name"] == "Jayson Tatum")["player_id"]
+    other = next(
+        r
+        for r in plain
+        if r["team_abbr"] == "BOS" and r["stat"] == "points" and r["player_id"] != tatum
+    )
+    hurt = project_game(
+        "nba", slate, kickoff, None, rows, averages, NOW, {tatum: 1.0, other["player_id"]: 0.4}
+    )
+    assert not [r for r in hurt if r["player_id"] == tatum]
+    same = next(r for r in hurt if r["player_id"] == other["player_id"] and r["stat"] == "points")
+    assert same["params"]["boost"] > 1.0 and same["params"]["availability"] == 0.4
+    assert same["params"]["exposure_mu"] == pytest.approx(
+        min(other["params"]["exposure_mu"] * same["params"]["boost"], 48.0), rel=1e-3
+    )
+    assert same["mean"] > other["mean"]
+    # The visitors, with nobody listed, are exactly as before.
+    assert [r for r in hurt if r["team_abbr"] == "BKN"] == [
+        r for r in plain if r["team_abbr"] == "BKN"
+    ]
+    assert all(r["params"]["boost"] == 1.0 for r in plain)

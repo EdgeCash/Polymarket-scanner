@@ -24,6 +24,7 @@ from statistics import NormalDist
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
 from scanner.grid import margin_for_win, win_chance
+from scanner.injuries import margin_adjustment as injury_adjustment
 from scanner.rest import margin_adjustment
 from scanner.weather import total_adjustment
 
@@ -415,10 +416,12 @@ def project(
 ) -> dict | None:
     """One game's projection, raw and blended with the book, or None without ratings.
 
-    ``conditions`` is the game's ``venue`` and ``weather`` as the log has them, and
-    each side's ``rest`` in days; in football the wind moves the raw total
-    (scanner.weather), split evenly between the sides, and in basketball and hockey
-    a back-to-back moves the raw margin (scanner.rest), both before the blend.
+    ``conditions`` is the game's ``venue`` and ``weather`` as the log has them, each
+    side's ``rest`` in days and each side's ``injuries`` (its absentees with their
+    cost, from scanner.injuries); in football the wind moves the raw total
+    (scanner.weather), split evenly between the sides, in basketball and hockey a
+    back-to-back moves the raw margin (scanner.rest), and the men listed out move
+    the raw margin in every sport with a report, all before the blend.
     """
     home, away = ratings.team(home_id), ratings.team(away_id)
     if home is None or away is None:
@@ -442,6 +445,16 @@ def project(
     if rest:
         home_points += rest["margin"] / 2.0
         away_points -= rest["margin"] / 2.0
+    injuries = None
+    if conditions and conditions.get("injuries"):
+        injuries = injury_adjustment(
+            ratings.sport,
+            conditions["injuries"].get("home"),
+            conditions["injuries"].get("away"),
+        )
+    if injuries:
+        home_points -= injuries["home_loss"]
+        away_points -= injuries["away_loss"]
     margin = home_points - away_points
     total = home_points + away_points
     games_used = min(home["games"], away["games"])
@@ -469,6 +482,8 @@ def project(
         raw["weather"] = weather
     if rest:
         raw["rest"] = rest
+    if injuries:
+        raw["injuries"] = injuries
     book_parts = _book_parts(book, ratings.sport)
 
     def blend_of(key: str) -> float:
@@ -593,6 +608,17 @@ def grade(projection: dict, final_home: int, final_away: int, close: BookLine | 
         if ou and close_parts.get("total") is not None:
             moved = close_parts["total"] - book["total"]
             clv["total"] = moved if ou["side"] == "over" else -moved
+    injuries = None
+    listed = raw.get("injuries") or {}
+    if raw.get("margin") is not None and (listed.get("home_loss") or listed.get("away_loss")):
+        # The same raw margin had the absentees' cost put back: what the model would have
+        # said without the injury report, so the scorecard can tell whether it helped.
+        without = raw["margin"] - listed["margin"]
+        injuries = {
+            "margin": listed["margin"],
+            "error_with": abs(raw["margin"] - actual_margin),
+            "error_without": abs(without - actual_margin),
+        }
     return {
         "final": {"home": final_home, "away": final_away},
         "margin_error": error("margin", actual_margin),
@@ -601,6 +627,7 @@ def grade(projection: dict, final_home: int, final_away: int, close: BookLine | 
         "ats": ats,
         "ou": ou,
         "clv": clv,
+        "injuries": injuries,
     }
 
 
@@ -632,8 +659,16 @@ def summarise(grades: list[dict], sport: str | None = None) -> dict:
     clv_total = [(g.get("clv") or {}).get("total") for g in grades]
     closed = [v for v in clv_margin if v is not None]
     moved = [v for v in closed if v != 0]
+    injured = [g["injuries"] for g in grades if g.get("injuries")]
     return {
         "graded": len(grades),
+        # Games whose projection moved for an injury report: the raw margin's miss with
+        # the move and without it. "With" below "without" is the report earning its place.
+        "injuries": {
+            "games": len(injured),
+            "with": _mean([i["error_with"] for i in injured]),
+            "without": _mean([i["error_without"] for i in injured]),
+        },
         "buckets": [f"{b:g}" for b in buckets],
         "margin_error": {s: _mean([g["margin_error"].get(s) for g in grades]) for s in sources},
         "total_error": {s: _mean([g["total_error"].get(s) for g in grades]) for s in sources},

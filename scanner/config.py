@@ -72,6 +72,9 @@ CARD_LATE_MINUTES = 30.0  # a card locked later than this after its time is mark
 PLAYER_MIN_GAMES = 2  # games a player needs before his line is projected
 PLAYER_REFRESH_MINUTES = 60.0  # how often a game's player lines are projected again
 PLAYER_MAX_PMF = 1e-6  # the tail of a stored distribution is cut below this probability
+ROSTER_REFRESH_HOURS = 24.0  # how often a team's roster (and depth chart) is read again
+ROSTER_FETCHES_PER_PASS = 12  # teams whose roster is read in one pass, nearest game first
+ROSTER_SPORT_KEYS = ("nfl", "nba", "nhl")  # sports whose rosters and injury reports ESPN carries
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -155,6 +158,13 @@ class Settings(BaseSettings):
     # Player lines: every leader's stat line for every upcoming game, as a whole
     # distribution, recorded and graded at the final. Never sent.
     PLAYERS_ENABLED: bool = True
+    # Injuries and rosters: each upcoming game's injury report (read with its summary),
+    # and each side's roster and depth chart (read daily) move the projection's margin
+    # and drop the men listed out from the player lines. Recorded and graded with and
+    # without the adjustment. College publishes no reports, so it is unmoved.
+    INJURIES_ENABLED: bool = True
+    ROSTERS_ENABLED: bool = True
+    ROSTER_SPORTS: str = ",".join(ROSTER_SPORT_KEYS)
     CARD_ENABLED: bool = True
     CARD_PICKS: int = Field(5, ge=1, le=20)
     CARD_LOCK_TIME: str = "10:00"
@@ -220,6 +230,21 @@ class Settings(BaseSettings):
     @property
     def gamelog_sports(self) -> tuple[str, ...]:
         return tuple(n for n in self.GAMELOG_SPORTS.split(",") if n)
+
+    @field_validator("ROSTER_SPORTS")
+    @classmethod
+    def _check_roster_sports(cls, value: str) -> str:
+        names = [part.strip().lower() for part in value.split(",") if part.strip()]
+        unknown = [n for n in names if n not in ROSTER_SPORT_KEYS]
+        if unknown:
+            raise ValueError(f"unknown roster sport(s) {unknown}; choose from {ROSTER_SPORT_KEYS}")
+        return ",".join(names)
+
+    @property
+    def roster_sports(self) -> tuple[str, ...]:
+        if not self.ROSTERS_ENABLED:
+            return ()
+        return tuple(n for n in self.ROSTER_SPORTS.split(",") if n and n in self.gamelog_sports)
 
     @field_validator("CARD_LOCK_TIME")
     @classmethod
