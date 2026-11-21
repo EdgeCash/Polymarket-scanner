@@ -250,6 +250,15 @@ def test_football_counts_the_quarterback_skill_yards_and_other_starters():
     # A starter the box score never lists (an offensive lineman) still counts as a head.
     assert out["garett_bolles"]["played_share"] == 1.0
     assert out["garett_bolles"]["cost"] == pytest.approx(rule.coefficients["starters"])
+    # A starter who records stats but has none this season has not played: nothing lost.
+    depth["new_qb"] = {"rank": 1, "slot": "QB", "name": "New Qb"}
+    depth["bo_nix"]["rank"] = 2
+    hurt_all_year = absentees(
+        "nfl",
+        [{"player_id": "new_qb", "name": "New Qb", "position": "QB", "status": "injured_reserve"}],
+        SideContext.build("DEN", rows, [], depth),
+    )
+    assert hurt_all_year[0]["units"] == {"quarterback": 1.0} and hurt_all_year[0]["cost"] == 0.0
     # Without a depth chart the quarterback is whoever threw most in the last game.
     assert SideContext.build("DEN", rows, [], {}).quarterback_one() == "bo_nix"
     assert SideContext.build("DEN", [], [], {}).quarterback_one() is None

@@ -51,6 +51,8 @@ UNKNOWN_STATUS_WEIGHT = 0.5
 RECENT_TEAM_GAMES = 10  # the window a player's share of his side's games is counted over
 RECENT_PLAYER_GAMES = 10  # his production is the mean of this many of his latest lines
 SKILL_POSITIONS = ("RB", "FB", "WR", "TE")
+# Football positions the box score never lists, so a starter there has no lines to count.
+UNLISTED_POSITIONS = ("OT", "OG", "OL", "C", "G", "T", "LT", "RT", "LG", "RG", "LS")
 QUARTERBACK = "QB"
 GOALIE = "G"
 
@@ -424,13 +426,14 @@ def absentees(sport: str, report: list[dict] | None, context: SideContext) -> li
                 units["skill_yards"] = context.recent(player_id, football_yards)
             elif context.is_starter(player_id):
                 units["starters"] = 1.0
-        share = (
-            context.played_share(player_id)
-            if context.lines.get(player_id)
-            else (1.0 if context.is_starter(player_id) or player_id == goalie else 0.0)
-        )
-        if not context.team_games:
-            share = 1.0 if units else 0.0
+        if context.lines.get(player_id):
+            share = context.played_share(player_id)
+        elif not context.team_games:
+            share = 1.0 if units else 0.0  # nothing played yet: take the list at its word
+        elif sport in ("nfl", "cfb") and (position or "") in UNLISTED_POSITIONS:
+            share = 1.0 if context.is_starter(player_id) else 0.0  # a lineman has no lines
+        else:
+            share = 0.0  # listed, never played this season: the ratings never had him
         worth = sum(rule.coefficients.get(k, 0.0) * v for k, v in units.items())
         cost = round(weight * share * worth, 2)
         out.append(
