@@ -439,6 +439,7 @@ def project_game(
     records_avg: dict,
     now: datetime,
     availability: dict[str, float] | None = None,
+    starting: set[str] | None = None,
 ) -> list[dict]:
     """Every projected line for a game: one row per (player, stat), the leaders by mean.
 
@@ -447,12 +448,14 @@ def project_game(
     ``availability`` each listed man's chance of missing the game from the injury
     report (scanner.injuries): a man likely out gets no line, and in the sports with
     playing time his minutes go to the men who stay, in proportion to their own; a man
-    in doubt keeps his line, marked with the chance.
+    in doubt keeps his line, marked with the chance. ``starting`` names the men reported
+    to start (hockey's goalie): they get a line whether or not they played last time.
     """
     stats = SPORT_STATS.get(sport)
     if not stats:
         return []
     availability = availability or {}
+    starting = starting or set()
     by_id = seasons(player_rows, sport)
     rates = league_rates(by_id, sport)
     factors = game_factors(projection, slate, records_avg)
@@ -466,7 +469,9 @@ def project_game(
         regulars = [
             s
             for s in by_id.values()
-            if s.team_id == team_id and s.played_last and len(s.games) >= PLAYER_MIN_GAMES
+            if s.team_id == team_id
+            and (s.played_last or s.player_id in starting)
+            and len(s.games) >= PLAYER_MIN_GAMES
         ]
         squad = [s for s in regulars if availability.get(s.player_id, 0.0) < ABSENT_FROM]
         boost = 1.0

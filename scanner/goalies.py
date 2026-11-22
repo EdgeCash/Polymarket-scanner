@@ -22,6 +22,11 @@ those chances, less the usual, times the shots the side allows a night, is the
 goals the side's rating is off by tonight; the difference between the two sides
 moves the margin.
 
+When a starter is reported (scanner.starters reads Daily Faceoff's page: confirmed
+at warmups or by the coach, or likely from the morning skate) the guess gives way
+to the report: the named man takes the report's chance and the others share the
+rest. A named man the log has never seen is rated at the league's rate.
+
 The box score lists only the goalies who played, so the side's goalies are the
 men who have played for it lately, and history cannot say who was hurt on the
 night: the fit below knows nothing of the injury report, which can only help.
@@ -104,6 +109,15 @@ def career_for(season: int | None) -> dict[str, tuple[float, float]]:
     }
 
 
+def career_names(season: int | None) -> dict[str, str]:
+    """The names the carry-over file knows each goalie by, for matching a reported starter
+    who has not yet played for his side this season."""
+    data = _load_priors()
+    if season is None or data.get("season") != season - 1:
+        return {}
+    return {str(pid): str(v.get("name") or "") for pid, v in (data.get("goalies") or {}).items()}
+
+
 def league_save_rate(rows: list[dict]) -> float:
     saves = shots = 0.0
     for row in rows:
@@ -154,10 +168,24 @@ def quality(team: TeamGoalies, player_id: str, league: float) -> float:
 
 
 def start_chances(
-    team: TeamGoalies, back_to_back: bool, unavailable: set[str] | None = None
+    team: TeamGoalies,
+    back_to_back: bool,
+    unavailable: set[str] | None = None,
+    named: dict | None = None,
 ) -> dict[str, float]:
-    """Each goalie's chance of starting tonight, from what is known before the game."""
+    """Each goalie's chance of starting tonight, from what is known before the game.
+
+    ``named`` is the reported starter (scanner.starters): he takes the report's chance
+    and the others share what is left as the schedule and the box scores would have it.
+    """
     unavailable = unavailable or set()
+    if named and named["player_id"] not in unavailable:
+        rest = start_chances(team, back_to_back, unavailable | {named["player_id"]})
+        left = 1.0 - named["chance"] if rest else 0.0
+        return {
+            named["player_id"]: 1.0 - left,
+            **{pid: chance * left for pid, chance in rest.items()},
+        }
     recent = team.starts[-RECENT_STARTS:]
     with_side: set[str] = set().union(*team.played[-WITH_SIDE_WITHIN:]) if team.played else set()
     share = {
@@ -181,17 +209,21 @@ def expected_edge(
     league: float,
     back_to_back: bool,
     unavailable: set[str] | None = None,
+    named: dict | None = None,
 ) -> dict | None:
     """The goals a side's rating is off by tonight for who is likely in goal, with the list.
 
     None while the side has too few games for its usual goaltending to be known, or
-    when nobody is known to be available.
+    when nobody is known to be available. ``named`` is the reported starter, if any.
     """
     if team.games < MIN_TEAM_GAMES:
         return None
-    chances = start_chances(team, back_to_back, unavailable)
+    chances = start_chances(team, back_to_back, unavailable, named)
     if not chances:
         return None
+    names = dict(team.names)
+    if named:
+        names.setdefault(named["player_id"], named["name"])
     usual = sum(quality(team, pid, league) for pid in team.starts) / team.games
     tonight = sum(chance * quality(team, pid, league) for pid, chance in chances.items())
     edge = (tonight - usual) * team.shots_per_game
@@ -201,13 +233,15 @@ def expected_edge(
         "goalies": [
             {
                 "player_id": pid,
-                "name": team.names.get(pid, ""),
+                "name": names.get(pid, ""),
                 "chance": round(chance, 2),
                 "save_rate": round(quality(team, pid, league), 4),
             }
             for pid, chance in sorted(chances.items(), key=lambda kv: -kv[1])
         ],
         "usual_save_rate": round(usual, 4),
+        # How the starter is known: "confirmed" or "likely" from a report, else a guess.
+        "reported": named["status"] if named and named["player_id"] in chances else None,
     }
 
 
@@ -237,8 +271,9 @@ def describe(adjustment: dict | None, home: str, away: str) -> str:
             continue
         top = info["goalies"][0]
         surname = top["name"].split()[-1] if top["name"] else "the other goalie"
+        how = f"{info['reported']} in goal" if info.get("reported") else "likely in goal"
         parts.append(
-            f"{label} likely in goal: {surname} {top['chance'] * 100:.0f}% "
+            f"{label} {how}: {surname} {top['chance'] * 100:.0f}% "
             f"({_rate(top['save_rate'])} against {_rate(info['usual_save_rate'])} usual)"
         )
     return f"{'; '.join(parts)}: margin {adjustment['margin']:+.2f} goals" if parts else ""

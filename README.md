@@ -45,6 +45,7 @@ scanner/
   goalies.py       hockey: who is likely in goal tonight and what the gap is worth
   goalie_priors.json   every goalie's record before this season (scripts/build_goalie_priors.py)
   scratches.py     hockey: the league's own scratch list, read just before the game
+  starters.py      hockey: the reported starting goalie, confirmed or likely
   stakes.py        what the model would stake (recorded, never placed)
   card.py          the daily card: five picks by rule, locked, graded, public
   grid.py          every final score's exact chance: the one source of odds
@@ -117,6 +118,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `ROSTERS_ENABLED` | `true` | Read each team's roster (and NFL depth chart) daily for its injured list and starters |
 | `ROSTER_SPORTS` | `nfl,nba,nhl` | Sports whose rosters are read (ESPN carries no report for college) |
 | `SCRATCHES_ENABLED` | `true` | Read the NHL's scratch list from the league's API just before each game |
+| `STARTERS_ENABLED` | `true` | Read reported NHL starting goalies from Daily Faceoff's public page on game days |
 | `CARD_ENABLED` | `true` | The daily card: picks chosen by rule, locked, graded, public at `/card` |
 | `CARD_PICKS` | `5` | Picks on a card, one per game |
 | `CARD_LOCK_TIME` | `10:00` | When the card locks each day, `HH:MM` in `CARD_TZ` |
@@ -147,6 +149,11 @@ Secrets live only in the host's secrets store. `.env` is git-ignored.
 - **The NHL's own API** (api-web.nhle.com, public, no key) for the scratch list
   of each game about to start: the day's schedule and one sheet a game, parsed
   in `scratches.py`.
+- **Daily Faceoff's starting-goalies page** (www.dailyfaceoff.com, public, no
+  key) for the reported starter in each NHL game: one request for the day's
+  slate, at most every half hour on a game day, parsed in `starters.py`. Only
+  the page is read; the site's API and CMS paths, which its robots file closes,
+  are not touched.
 
 ## Polymarket findings (milestone 2)
 
@@ -630,11 +637,29 @@ games by a twentieth of a goal on average and takes the held-out miss from
 2.5924 to 2.5897 with the back-to-back fit beside it; the back-to-back itself
 falls from 0.37 to 0.32 goals when the edge is in, which was the tired side's
 second goalie all along, so `scanner/rest.py` now carries hockey's 0.45 at
-0.40. A confirmed starter would be worth three times what the guess is; no
-free source posts one where the scanner can read it. The sheet's projection
+0.40. The sheet's projection
 block names the likely
 man and his save rate against the usual, and the scorecard keeps the miss with
 and without, as it does for injuries.
+
+A confirmed starter is worth three times what that guess is, so where one is
+reported the guess gives way. `scanner/starters.py` reads Daily Faceoff's
+public starting-goalies page, which lists every game on the day's slate with
+each side's man and how firm the report is: confirmed (he led the side out for
+warmups, or the coach said so), likely (a beat writer's read of the morning
+skate), or nothing yet, which is only the site's own projection and is left
+alone. One request covers the slate, and the scanner asks at most every half
+hour while a game is inside twelve hours. The named man takes the report's
+chance and the other goalies share what is left; a man the log has not seen is
+looked up in the carry-over file by name and failing that rated at the
+league's rate; a named man the injury report or the scratch list rules out is
+not believed over them. He also gets the saves line, and the others none. A
+report is a chance, not a certainty: over ten days in November 2026 the man
+marked confirmed played the most in 61 games of 64, and the other three look
+like starters pulled early, so confirmed is taken at 0.97; likely is set by
+hand at 0.85, since the page keeps no record of what it said before a game to
+fit it on. The sheet says "confirmed in goal" or "likely in goal" with the
+chance. `STARTERS_ENABLED=false` goes back to the guess alone.
 
 The second is the scratch list. About half an hour before the puck drops the
 league posts each side's scratches on its own site (api-web.nhle.com), hurt or
@@ -937,9 +962,8 @@ last season's closing lines (collegefootballdata.com has all three behind a
 key). A prior from closing lines was at least tried where the lines are free:
 on 16 NFL seasons it missed by 13.44 where last season's results miss by
 13.44, so the market's memory of a team is no better than the scoreboard's.
-In hockey the two things left on the table are the confirmed starting goalie,
-worth three times the guess the scanner makes, and shot quality in place of
-shot counts; both live on sites with no free feed.
+In hockey the thing left on the table is shot quality in place of shot
+counts, which lives on sites with no free feed.
 
 ## Player lines
 

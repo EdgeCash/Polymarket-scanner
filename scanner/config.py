@@ -76,6 +76,8 @@ ROSTER_REFRESH_HOURS = 24.0  # how often a team's roster (and depth chart) is re
 ROSTER_FETCHES_PER_PASS = 12  # teams whose roster is read in one pass, nearest game first
 ROSTER_SPORT_KEYS = ("nfl", "nba", "nhl")  # sports whose rosters and injury reports ESPN carries
 SCRATCH_WINDOW_MINUTES = 50.0  # the NHL's scratch list is asked for this close to puck drop
+STARTER_WINDOW_HOURS = 12.0  # reported starting goalies are read for games this close
+STARTER_REFRESH_MINUTES = 30.0  # and the page is asked for at most this often
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -169,6 +171,9 @@ class Settings(BaseSettings):
     # The NHL's own scratch list, read from the league's API in the last minutes before
     # a game: the men who will not dress join the injury report as out.
     SCRATCHES_ENABLED: bool = True
+    # Reported NHL starting goalies (confirmed or likely), read from Daily Faceoff's
+    # public page on game days: the named man replaces the goalie model's guess.
+    STARTERS_ENABLED: bool = True
     CARD_ENABLED: bool = True
     CARD_PICKS: int = Field(5, ge=1, le=20)
     CARD_LOCK_TIME: str = "10:00"
