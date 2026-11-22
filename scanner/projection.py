@@ -59,6 +59,16 @@ class SportTuning:
     performance_sd: float = 0.0
     book_sigma: float | None = None
     book_error: float | None = None
+    # What a performance is made of, beyond the score and the volume stat (each off
+    # unless a fit on history earned it; scripts/fit_ratings.py):
+    # the points of margin one lost fumble or interception is worth on the day, taken
+    # back out of the score, since who recovers a fumble does not carry to next week;
+    fumble_points: float = 0.0
+    interception_points: float = 0.0
+    # the widest margin a single game may count for (a rout past it says no more);
+    margin_cap: float | None = None
+    # and how fast an old game fades: a game this many of the team's games ago counts half.
+    half_life: float | None = None
 
 
 # The sigmas are how far real results land from an expectation, measured on history:
@@ -300,6 +310,29 @@ def prior_means(priors: dict | None, tuning: SportTuning) -> tuple[dict, tuple[f
     return teams, default
 
 
+def luck_free_scores(record: GameRecord, tuning: SportTuning) -> dict[str, float]:
+    """Both sides' scores with the day's turnovers taken back out, where the sport's tuning
+    prices them: each side gives back half of what its takeaways were worth and gets back
+    half of what its giveaways cost, so the total stays and the margin moves."""
+    scores = {"home": float(record.home_score), "away": float(record.away_score)}
+    if not (tuning.fumble_points or tuning.interception_points):
+        return scores
+
+    def cost(stats: dict) -> float | None:
+        fumbles, picks = stats.get("fumbles_lost"), stats.get("interceptions")
+        if not isinstance(fumbles, int | float) or not isinstance(picks, int | float):
+            return None
+        return tuning.fumble_points * fumbles + tuning.interception_points * picks
+
+    home_cost, away_cost = cost(record.home_stats), cost(record.away_stats)
+    if home_cost is None or away_cost is None:
+        return scores
+    swing = (away_cost - home_cost) / 2.0  # what the turnovers gave the home side
+    scores["home"] -= swing
+    scores["away"] += swing
+    return scores
+
+
 def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ratings:
     """Fit offence and defence ratings from finished games (any number, even none).
 
@@ -329,28 +362,38 @@ def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ra
     points_per_volume = points_sum / volume_sum if volume_sum > 0 else None
     first_half_share = half_sum / half_total if half_total > 0 else tuning.first_half_share
 
-    # One entry per side of each game: (team, opponent, offence, defence, home term).
-    entries: dict[str, list[tuple[str, float, float, float]]] = defaultdict(list)
+    # One entry per side of each game: [team, opponent, offence, defence, home term, weight].
+    entries: dict[str, list[list]] = defaultdict(list)
     names: dict[str, str] = {}
     performances: list[float] = []
-    for record in records:
+    for record in sorted(records, key=lambda r: r.date) if tuning.half_life else records:
+        scores = luck_free_scores(record, tuning)
         perf = {}
-        for side, score, stats in (
-            ("home", record.home_score, record.home_stats),
-            ("away", record.away_score, record.away_stats),
-        ):
+        for side, stats in (("home", record.home_stats), ("away", record.away_stats)):
+            score = scores[side]
             volume = stats.get(tuning.volume_stat) if tuning.volume_stat else None
             if points_per_volume is not None and isinstance(volume, int | float) and volume > 0:
                 perf[side] = (1 - VOLUME_SHARE) * score + VOLUME_SHARE * points_per_volume * volume
             else:
                 perf[side] = float(score)
+        if tuning.margin_cap is not None:
+            over = abs(perf["home"] - perf["away"]) - tuning.margin_cap
+            if over > 0:
+                winner = "home" if perf["home"] > perf["away"] else "away"
+                loser = "away" if winner == "home" else "home"
+                perf[winner] -= over / 2.0
+                perf[loser] += over / 2.0
         h = 0.0 if record.neutral else tuning.hfa / 2.0
         home, away = record.home.team_id, record.away.team_id
         names[home], names[away] = record.home.name, record.away.name
-        entries[home].append((away, perf["home"], perf["away"], h))
-        entries[away].append((home, perf["away"], perf["home"], -h))
+        entries[home].append([away, perf["home"], perf["away"], h, 1.0])
+        entries[away].append([home, perf["away"], perf["home"], -h, 1.0])
         performances.extend((perf["home"], perf["away"]))
     league = sum(performances) / len(performances) if performances else 0.0
+    if tuning.half_life:
+        for games in entries.values():
+            for ago, entry in enumerate(reversed(games)):
+                entry[4] = 0.5 ** (ago / tuning.half_life)
 
     if prior_by_team:
         # A team with a prior and no games yet is rated at its prior alone.
@@ -367,12 +410,14 @@ def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ra
             # What the team scored, less the average, less how soft its opponents
             # were and less its home edge, over its games plus the pseudo-games,
             # which hold the team at its prior (average, without one).
-            residual = sum(off - league - defense[opp] - h for opp, off, _, h in games)
-            new_offense[team] = (residual + k * prior_of[team][0]) / (len(games) + k)
+            residual = sum(w * (off - league - defense[opp] - h) for opp, off, _, h, w in games)
+            weight = sum(entry[4] for entry in games)
+            new_offense[team] = (residual + k * prior_of[team][0]) / (weight + k)
         new_defense = {}
         for team, games in entries.items():
-            residual = sum(dfn - league - new_offense[opp] + h for opp, _, dfn, h in games)
-            new_defense[team] = (residual + k * prior_of[team][1]) / (len(games) + k)
+            residual = sum(w * (dfn - league - new_offense[opp] + h) for opp, _, dfn, h, w in games)
+            weight = sum(entry[4] for entry in games)
+            new_defense[team] = (residual + k * prior_of[team][1]) / (weight + k)
         offense, defense = new_offense, new_defense
 
     return Ratings(

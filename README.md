@@ -50,7 +50,8 @@ tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
                    fetch_history.py, build_sim_tables.py and grade_sim.py, and the
                    model's build_priors.py, fit_priors.py, fit_players.py,
-                   fetch_box_scores.py and fit_injuries.py
+                   fetch_box_scores.py, fit_injuries.py, fit_ratings.py and
+                   fit_nfl_situations.py
 docs/              winprob_report.md
 ```
 
@@ -483,7 +484,7 @@ league's first-half share. Turnover luck is mostly washed out by the yards
 half; of the weather only the wind is in it, of rest only the back-to-back,
 and of injuries what ESPN lists before the game, as below.
 
-The wind is the one condition that moves a total by more than noise, and the
+The wind is one of two conditions that move a total by more than noise, and the
 market prices only part of it. `scanner/weather.py` takes each mph of
 sustained wind off a football total at 0.27 points, linear from calm, with a
 dome or a closed roof as calm; the ratings already carry the average
@@ -499,8 +500,37 @@ misses 0.16 a mph, so the market prices about forty percent of it. ESPN
 reports a gust, not a sustained wind, so sustained is taken as two thirds of
 the gust; college football takes the NFL's fit, the one source with the wind
 on record; and a game with no weather yet, or indoors with no indoor flag, is
-left as it is. Precipitation is reported but not fit, since no history carries
-it, so it is left out.
+left as it is.
+
+Rain is the other condition that earns a place. nflverse's games file has no
+rain on record, but nflfastR's play-by-play carries each stadium's weather
+note, and `scripts/fit_nfl_situations.py` reads it for 3,357 games (2010-2026):
+a game played in rain runs 4.1 points under the same wind-adjusted expectation
+(182 games; held out on 2020-2026 the total's miss falls from 13.71 to 13.66),
+the same with the wind fit beside it, steady in every stretch since 2015, and
+the closing total still misses 3.7 of it. Snow shows nothing that holds (40
+games, and the other way). Before a game there is only a forecast, so the
+effect is weighted by ESPN's chance of precipitation, a forecast at or below
+freezing is taken as snow and moves nothing, and like the wind it is applied
+less its mean over the fitted games (one in eighteen was wet, a fifth of a
+point), so a dry day and a dome each get that back. College football takes the
+NFL's number.
+
+The same script fit the rest of an NFL game's situation and none of it earned
+a place. A divisional game ran 2.0 points under from 2010 to 2019 but half a
+point since 2020, by which time the close had caught up, and using it made the
+held-out miss worse. Coming off a bye is worth 0.8 of a point by this model's
+reckoning (422 games, give or take 0.65), which the close already carries in
+full; the estimate swings from -0.3 to +3.4 between stretches of seasons. A
+Pacific side at night against an Eastern one (71 games) and a Pacific side in
+the East's early window (140) did not hold out either, and a short week nearly
+always falls on both sides at once. `scripts/fit_ratings.py` tested what a
+rating is made of on five seasons of box scores, each game projected as the
+scanner would have seen it: taking the day's turnovers back out of the score
+made the margin's miss worse at every price tried (the yards half already
+does that work), a cap on the margin one game may count for moved it by a
+hundredth of a point, and fading old games helped one stretch and hurt
+another. The dials stay in `projection.TUNING`, switched off.
 
 A side that played the day before gives up ground, and the schedule says so
 before the market has to. `scanner/rest.py` moves the raw margin toward the
@@ -552,11 +582,14 @@ season. A unit of basketball production costs 0.13 points of margin (1,182 NBA
 games; the held-out miss falls from 14.12 to 13.99; college takes 0.12 by
 hand), a unit of hockey production 0.23 goals and the starting goalie's absence
 0.07 (1,259 games, 2.617 to 2.608; history only shows a backup's routine start,
-not an injured starter), and the starting quarterback 6.0 points (224 games, 43
-absences, 13.54 to 13.31). A back's or receiver's yards keep a hand-set 0.012 a
-yard (the box score names no positions, and every yard-earner's absence counted
-together showed nothing) and the other starters 0.4 a head (the depth chart has
-no past). Every graded projection records its miss with and without the
+not an injured starter), and the starting quarterback 4.9 points (1,119 NFL
+games over 2021-2025, 212 with a starter lost; held out 13.22 to 13.10). His
+worth does not move with how good he is by any measure the box score offers:
+terms for the starter's and the backup's adjusted yards an attempt each came
+out at nothing over 371 games started by another man. A back's or receiver's
+yards keep a hand-set 0.012 a yard (the box score names no positions; counted
+together they give 0.016 over the five seasons and nothing on the part held
+out) and the other starters 0.4 a head (the depth chart has no past). Every graded projection records its miss with and without the
 adjustment, and the scorecard shows both, so the report has to earn its place. The player lines read the same list: a man at
 least 0.75 likely out gets no line, and in the sports with playing time his
 minutes go to the men who stay in proportion to their own; a man in doubt

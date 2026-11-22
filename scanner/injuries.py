@@ -31,10 +31,15 @@ of basketball production costs 0.13 points (1,182 NBA games; the held-out miss
 falls from 14.12 to 13.99); a unit of hockey production 0.23 goals and the
 starting goalie's absence 0.07 (1,259 games, 2.617 to 2.608; the goalie's
 number describes a backup's routine start, the only kind history shows); the
-starting quarterback 6.0 points (224 games, 43 absences, 13.54 to 13.31). What
-history cannot show keeps a hand-set prior: a back's or receiver's yards (the
-box score names no positions, and every yard-earner's absence counted together
-showed nothing) and the other starters on the depth chart, which has no past.
+starting quarterback 4.9 points (1,119 NFL games over 2021-2025, 212 with a
+starter lost; held out 13.22 to 13.10). His worth does not move with how good
+he is by any measure the box score offers: a term for the starter's adjusted
+yards an attempt, and one for the backup's, each came out at nothing (371 games
+started by another man). What history cannot settle keeps a hand-set prior: a
+back's or receiver's yards (the box score names no positions; every
+yard-earner's absence counted together gives 0.016 a yard over all five seasons
+and nothing on the part held out) and the other starters on the depth chart,
+which has no past.
 The diary records every adjustment beside the projection's miss with and
 without it, so the scorecard says whether they earn their place. Nothing here
 is sent or placed.
@@ -80,10 +85,10 @@ RULES: dict[str, SportRule] = {
     "cbb": SportRule("points", 12.0, 6.0, {"production": 0.12}),  # the NBA's, by hand
     "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.23, "goalie": 0.07}),
     "nfl": SportRule(
-        "points", 14.0, 0.0, {"quarterback": 6.0, "skill_yards": 0.012, "starters": 0.4}
+        "points", 14.0, 0.0, {"quarterback": 4.9, "skill_yards": 0.012, "starters": 0.4}
     ),
     "cfb": SportRule(  # the NFL's; college publishes no report, so nothing moves
-        "points", 14.0, 0.0, {"quarterback": 6.0, "skill_yards": 0.012, "starters": 0.4}
+        "points", 14.0, 0.0, {"quarterback": 4.9, "skill_yards": 0.012, "starters": 0.4}
     ),
 }
 SPORTS = tuple(RULES)

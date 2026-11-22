@@ -44,6 +44,10 @@ DAILY_SEASONS: dict[str, dict[int, tuple[date, date]]] = {
         2025: (date(2024, 10, 4), date(2025, 4, 17)),
         2026: (date(2025, 10, 7), date(2026, 4, 16)),
     },
+    "cbb": {
+        2025: (date(2024, 11, 4), date(2025, 3, 16)),
+        2026: (date(2025, 11, 3), date(2026, 3, 15)),
+    },
 }
 WEEKS = {"nfl": 18, "cfb": 15}
 GAP_SECONDS = 0.5  # ESPN's edge answers 403 to bursts; a refusal waits and tries again
