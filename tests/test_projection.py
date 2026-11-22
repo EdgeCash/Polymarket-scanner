@@ -374,3 +374,39 @@ def test_college_basketball_has_its_own_numbers_and_its_overtime():
     assert sim["total"]["mean"] == pytest.approx(146.0, abs=1e-3)
     # Level after regulation as often as close college games are (6.2% across all).
     assert 0.04 < sim["overtime"] < 0.09 and "0" not in sim["margin"]["hist"]
+
+
+def test_the_rating_dials_are_off_until_a_fit_earns_them_and_do_what_they_say(monkeypatch):
+    from dataclasses import replace
+
+    from scanner.projection import luck_free_scores
+
+    assert all(
+        t.fumble_points == 0 and t.interception_points == 0 and t.margin_cap is None
+        and t.half_life is None
+        for t in TUNING.values()
+    )  # fmt: skip
+    games = season()
+    plain = fit(games, "nfl")
+    # Turnover luck: a side that took the ball away twice gives half of that back.
+    lucky = record("x", "A", "D", 30, 10, day=99)
+    lucky.home_stats.update(fumbles_lost=0, interceptions=0)
+    lucky.away_stats.update(fumbles_lost=2, interceptions=1)
+    assert luck_free_scores(lucky, TUNING["nfl"]) == {"home": 30.0, "away": 10.0}
+    priced = replace(TUNING["nfl"], fumble_points=4.0, interception_points=2.0)
+    assert luck_free_scores(lucky, priced) == {"home": 25.0, "away": 15.0}  # 10 points, halved
+    no_stats = record("y", "A", "D", 30, 10, day=99)
+    assert luck_free_scores(no_stats, priced) == {"home": 30.0, "away": 10.0}
+    # A cap on the margin: a 60-point rout counts as the cap and no more.
+    rout = [*games, record("z", "A", "D", 70, 10, day=100)]
+    monkeypatch.setitem(TUNING, "nfl", replace(TUNING["nfl"], margin_cap=21.0))
+    capped = fit(rout, "nfl")
+    monkeypatch.setitem(TUNING, "nfl", replace(TUNING["nfl"], margin_cap=None))
+    uncapped = fit(rout, "nfl")
+    assert capped.offense["A"] < uncapped.offense["A"]
+    assert capped.offense["A"] - capped.defense["A"] > plain.offense["A"] - plain.defense["A"] - 1
+    # Fading: with a short half-life the latest game outweighs the old ones.
+    monkeypatch.setitem(TUNING, "nfl", replace(TUNING["nfl"], half_life=2.0))
+    faded = fit(rout, "nfl")
+    assert faded.offense["A"] > uncapped.offense["A"]
+    assert faded.games["A"] == uncapped.games["A"]  # the count of games is still the count

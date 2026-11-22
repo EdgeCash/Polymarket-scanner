@@ -268,6 +268,10 @@ def main() -> None:
             label = "with intercept" if intercept else "through the origin"
             coeffs = ", ".join(f"{f} {b:.3f}" for f, b in zip(features, slopes, strict=True))
             print(f"  {label}: {coeffs}; miss held out {miss:.3f}")
+        # Every season together, for the numbers that ship once a form has held out.
+        slopes, _, _ = fit_form(table, table, list(features), intercept=False)
+        coeffs = ", ".join(f"{f} {b:.3f}" for f, b in zip(features, slopes, strict=True))
+        print(f"  fit on every game: {coeffs}")
         shipped = ", ".join(f"{f} {rule.coefficients.get(f, 0):.3f}" for f in features)
         print(f"  shipped now: {shipped}")
         # The shipped coefficients' own held-out miss, for the record.

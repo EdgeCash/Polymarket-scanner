@@ -1268,7 +1268,7 @@ def test_refresh_writes_player_lines_for_upcoming_games_and_grades_them():
 def test_the_projection_takes_the_upcoming_games_weather_from_its_extras():
     import pytest
 
-    from scanner.weather import BASELINE, GUST_TO_WIND, WIND_PER_MPH
+    from scanner.weather import BASELINE, GUST_TO_WIND, RAIN_BASELINE, WIND_PER_MPH
 
     log, diary, feed = build()
     add_upcoming(feed)
@@ -1277,7 +1277,11 @@ def test_the_projection_takes_the_upcoming_games_weather_from_its_extras():
     # The summary's 5 mph gust, outdoors: a light day, so a touch above the baseline.
     wind = 5 * GUST_TO_WIND
     assert raw["weather"]["gust"] == 5.0 and raw["weather"]["wind"] == pytest.approx(wind, abs=0.05)
-    assert raw["weather"]["total"] == pytest.approx(WIND_PER_MPH * wind - BASELINE, abs=0.01)
+    # The forecast is dry (0% rain), so the rain's baseline comes back as well.
+    assert raw["weather"]["rain"] == 0.0
+    assert raw["weather"]["total"] == pytest.approx(
+        WIND_PER_MPH * wind - BASELINE - RAIN_BASELINE, abs=0.01
+    )
     assert raw["weather"]["indoors"] is False
 
 
