@@ -352,3 +352,36 @@ def test_where_there_is_no_report_the_regulars_who_sat_out_last_time_stand_in():
     # A side with three games has no regulars to speak of yet.
     short = SideContext.build("DUKE", [r for r in rows if r["game_id"] >= "DUKE-g7"], [], {})
     assert missed_last_game("cbb", short) == []
+
+
+def test_footballs_stand_in_is_the_usual_quarterback_and_is_switched_off(monkeypatch):
+    import scanner.injuries as injuries_module
+    from scanner.injuries import missed_last_game
+
+    starter = [{"pass_att": 30, "pass_yards": 250}] * 6 + [None]  # did not throw last time
+    backup = [None] * 6 + [{"pass_att": 28, "pass_yards": 180}]
+    rows = lines("TROY", {"starter": starter, "backup": backup}, games=7)
+    context = SideContext.build("TROY", rows, [], {})
+    assert context.usual_quarterback() == "starter"
+    assert context.threw_in("backup", "TROY-g6") and not context.threw_in("starter", "TROY-g6")
+    assert context.quarterback_one() == "backup"  # the man who threw most in the last game
+    # College football's own fit did not hold out, so nothing is listed.
+    assert missed_last_game("cfb", context) == []
+    assert absentees("cfb", None, context, has_report=False) == []
+    # Switched on (as the fit script does), the usual man is listed and costs a quarterback.
+    monkeypatch.setattr(injuries_module, "PROXY_SPORTS", ("cbb", "cfb"))
+    listed = absentees("cfb", None, context, has_report=False)
+    assert [e["player_id"] for e in listed] == ["starter"]
+    assert listed[0]["units"] == {"quarterback": 1.0} and listed[0]["weight"] == 0.63
+    assert listed[0]["cost"] == pytest.approx(
+        0.63 * (6 / 7) * RULES["cfb"].coefficients["quarterback"], abs=0.01
+    )  # he played six of the side's seven games
+    # A side whose passers rotate has no usual man; one that played last time is not listed.
+    rotating = lines(
+        "TROY",
+        {"a": [{"pass_att": 10}] * 7, "b": [{"pass_att": 12}] * 6 + [None]},
+        games=7,
+    )
+    assert SideContext.build("TROY", rotating, [], {}).usual_quarterback() is None
+    healthy = lines("TROY", {"starter": [{"pass_att": 30}] * 7}, games=7)
+    assert missed_last_game("cfb", SideContext.build("TROY", healthy, [], {})) == []

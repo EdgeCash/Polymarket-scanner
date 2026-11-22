@@ -13,6 +13,8 @@ margin and of the total:
 - ``luck``: the points one lost fumble or interception is taken to be worth, removed
   from the day's score before it is rated (football only; a recovered fumble does
   not carry to next week);
+- ``threes``: the share of a side's three-point makes above the league's rate on
+  its attempts that is removed as luck (basketball);
 - ``cap``: the widest margin one game may count for;
 - ``decay``: the half-life, in a team's own games, of an old game's weight.
 
@@ -68,6 +70,10 @@ GRIDS: dict[str, dict[str, list[dict]]] = {
             for f, i in ((0, 0), (2, 0), (4, 0), (4, 2), (4, 4), (2, 2), (6, 3))
         ],
     },
+    "threes": {
+        sport: [{"three_luck": share} for share in (0.0, 0.25, 0.5, 0.75)]
+        for sport in ("nba", "cbb")
+    },
     "cap": {
         "nfl": [{"margin_cap": c} for c in (None, 35, 28, 21, 17)],
         "cfb": [{"margin_cap": c} for c in (None, 42, 35, 28, 21)],
@@ -99,6 +105,7 @@ def final_prior(records: list[GameRecord], sport: str, season) -> dict:
         pseudo_games=projection.PSEUDO_GAMES,
         fumble_points=0.0,
         interception_points=0.0,
+        three_luck=0.0,
         margin_cap=None,
         half_life=None,
     )

@@ -70,6 +70,9 @@ class SportTuning:
     # back out of the score, since who recovers a fumble does not carry to next week;
     fumble_points: float = 0.0
     interception_points: float = 0.0
+    # the share of a side's three-point makes above the league's rate on its attempts that
+    # is taken back out as luck (basketball; 0: none of it, 1: all of it);
+    three_luck: float = 0.0
     # the widest margin a single game may count for (a rout past it says no more);
     margin_cap: float | None = None
     # and how fast an old game fades: a game this many of the team's games ago counts half.
@@ -137,7 +140,11 @@ TUNING = {
     # to 13.79 on the first four and 14.56 to 14.50 on the last, the total's 18.86 to
     # 18.60 and 19.07 to 18.97; the league scores more before the new year than after
     # it, and a team is not in March what it was in November). A cap on one game's
-    # margin did nothing.
+    # margin did nothing. A quarter of a side's three-point makes above the league's
+    # rate on its own attempts is taken back out of the score as luck before the game
+    # is rated (the same five seasons: the margin 13.79 to 13.78 and 14.50 to 14.49, the
+    # total 18.60 to 18.55 and 18.97 to 18.91; at a half the margin gets worse, so most
+    # of a hot night is skill or the defence, and a quarter of it is the rim).
     "nba": SportTuning(
         hfa=2.0,
         sigma=14.0,
@@ -149,6 +156,7 @@ TUNING = {
         book_sigma=12.5,
         book_error=2.0,
         half_life=25.0,
+        three_luck=0.25,
     ),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
@@ -163,7 +171,10 @@ TUNING = {
     # is unknown keeps 4.0. An old game fades with a half-life of 20 of the side's games,
     # which is mostly the total's gain (16.76 to 16.70 and 17.41 to 17.34; the margin
     # 11.72 to 11.72 and 11.79 to 11.78). A cap on one game's margin made things worse
-    # at every level tried: in college a rout carries news.
+    # at every level tried: in college a rout carries news. A quarter of a side's
+    # three-point makes above the league's rate is taken back out as luck, as in the NBA
+    # (with the rest in place: the margin 11.69 to 11.67 and 11.73 to 11.69, the total
+    # 16.70 to 16.64 and 17.34 to 17.28).
     "cbb": SportTuning(
         hfa=4.0,
         sigma=12.0,
@@ -176,6 +187,7 @@ TUNING = {
         hfa_conference=3.0,
         hfa_nonconference=5.0,
         half_life=20.0,
+        three_luck=0.25,
     ),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead (through
@@ -351,11 +363,20 @@ def home_edge(tuning: SportTuning, neutral: bool, conference_game: bool | None) 
     return tuning.hfa
 
 
-def luck_free_scores(record: GameRecord, tuning: SportTuning) -> dict[str, float]:
-    """Both sides' scores with the day's turnovers taken back out, where the sport's tuning
-    prices them: each side gives back half of what its takeaways were worth and gets back
-    half of what its giveaways cost, so the total stays and the margin moves."""
+def luck_free_scores(
+    record: GameRecord, tuning: SportTuning, league_three_rate: float | None = None
+) -> dict[str, float]:
+    """Both sides' scores with the day's luck taken back out, where the sport's tuning
+    prices it. Turnovers: each side gives back half of what its takeaways were worth and
+    gets back half of what its giveaways cost, so the total stays and the margin moves.
+    Threes: a side's makes above the league's rate on its own attempts, at three points
+    each, times the share the tuning calls luck."""
     scores = {"home": float(record.home_score), "away": float(record.away_score)}
+    if tuning.three_luck and league_three_rate is not None:
+        for side, stats in (("home", record.home_stats), ("away", record.away_stats)):
+            made, tried = stats.get("three_made"), stats.get("three_att")
+            if isinstance(made, int | float) and isinstance(tried, int | float):
+                scores[side] -= tuning.three_luck * 3.0 * (made - tried * league_three_rate)
     if not (tuning.fumble_points or tuning.interception_points):
         return scores
 
@@ -407,8 +428,17 @@ def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ra
     entries: dict[str, list[list]] = defaultdict(list)
     names: dict[str, str] = {}
     performances: list[float] = []
+    three_rate = None
+    if tuning.three_luck:
+        made = tried = 0.0
+        for record in records:
+            for stats in (record.home_stats, record.away_stats):
+                if isinstance(stats.get("three_made"), int | float) and stats.get("three_att"):
+                    made += stats["three_made"]
+                    tried += stats["three_att"]
+        three_rate = made / tried if tried > 0 else None
     for record in sorted(records, key=lambda r: r.date) if tuning.half_life else records:
-        scores = luck_free_scores(record, tuning)
+        scores = luck_free_scores(record, tuning, three_rate)
         perf = {}
         for side, stats in (("home", record.home_stats), ("away", record.away_stats)):
             score = scores[side]

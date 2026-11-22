@@ -45,6 +45,9 @@ one: a regular who sat out his side's last game is listed as "missed last game"
 at the chance he is still out (0.63 of 15,162 such absences), and a unit of his
 production is worth 0.22 points, nearly twice the NBA's, college rotations being
 shorter (scripts/fit_absence_proxy.py on 20,642 games; held out 11.79 to 11.77).
+College football's stand-in would be the usual quarterback who did not throw last
+time; he is still out 64.5% of the time, but what that cost came out at 3.2 points
+one season and -0.7 the next, so PROXY_SPORTS leaves football out.
 
 The diary records every adjustment beside the projection's miss with and
 without it, so the scorecard says whether they earn their place. Nothing here
@@ -74,6 +77,9 @@ STATUS_WEIGHT: dict[str, float] = {
 UNKNOWN_STATUS_WEIGHT = 0.5
 # Sports with no injury report, where the last box score has to stand in for one.
 PROXY_SPORTS = ("cbb",)
+FOOTBALL = ("nfl", "cfb")
+USUAL_PASSER_GAMES = 6  # the usual quarterback is judged over this many games before the last
+USUAL_PASSER_ATTEMPTS = 15  # and threw at least this often in at least half of them
 PROXY_MIN_TEAM_GAMES = 4  # before this a side has no regulars to speak of
 PROXY_MIN_SHARE = 0.5  # a regular played at least this share of the side's recent games
 RECENT_TEAM_GAMES = 10  # the window a player's share of his side's games is counted over
@@ -368,6 +374,32 @@ class SideContext:
         spot = self.depth.get(player_id)
         return spot is not None and spot["rank"] == 1
 
+    def threw_in(self, player_id: str, game_id: str, at_least: float = 1.0) -> bool:
+        return any(
+            row["game_id"] == game_id and float(row["stats"].get("pass_att") or 0) >= at_least
+            for row in self.lines.get(player_id, [])
+        )
+
+    def usual_quarterback(self) -> str | None:
+        """The side's quarterback going into its last game: the man who threw most over
+        the games before it, if he was the regular starter in them."""
+        before = self.team_games[-(USUAL_PASSER_GAMES + 1) : -1]
+        if len(before) < 3:
+            return None
+        attempts: dict[str, float] = {}
+        started: dict[str, int] = {}
+        for player_id, rows in self.lines.items():
+            for row in rows:
+                thrown = float(row["stats"].get("pass_att") or 0)
+                if row["game_id"] in before and thrown > 0:
+                    attempts[player_id] = attempts.get(player_id, 0.0) + thrown
+                    if thrown >= USUAL_PASSER_ATTEMPTS:
+                        started[player_id] = started.get(player_id, 0) + 1
+        if not attempts:
+            return None
+        passer = max(attempts, key=attempts.get)
+        return passer if started.get(passer, 0) * 2 >= len(before) else None
+
     def quarterback_one(self) -> str | None:
         """The starting quarterback: rank one at QB on the depth chart, else the man who threw
         most in the side's last game."""
@@ -395,6 +427,22 @@ def missed_last_game(sport: str, context: SideContext) -> list[dict]:
     if sport not in PROXY_SPORTS or len(context.team_games) < PROXY_MIN_TEAM_GAMES:
         return []
     last = context.team_games[-1]
+    if sport in FOOTBALL:
+        passer = context.usual_quarterback()
+        if passer is None or context.threw_in(passer, last):
+            return []
+        return [
+            {
+                "player_id": passer,
+                "name": context.names.get(passer, ""),
+                "position": QUARTERBACK,
+                "status": "missed_last_game",
+                "detail": None,
+                "return_date": None,
+                "reported_at": None,
+                "role": QUARTERBACK,
+            }
+        ]
     out = []
     for player_id, lines in context.lines.items():
         if any(row["game_id"] == last for row in lines):
@@ -470,10 +518,14 @@ def absentees(
                 production = context.recent(player_id, hockey_production)
                 units["production"] = max(production - rule.replacement, 0.0)
         else:
-            if player_id == quarterback or (
-                quarterback is None
-                and (position or "") == QUARTERBACK
-                and context.is_starter(player_id)
+            if (
+                entry.get("role") == QUARTERBACK
+                or player_id == quarterback
+                or (
+                    quarterback is None
+                    and (position or "") == QUARTERBACK
+                    and context.is_starter(player_id)
+                )
             ):
                 units["quarterback"] = 1.0
             elif (position or "") in SKILL_POSITIONS:

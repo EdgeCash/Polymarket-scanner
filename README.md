@@ -662,6 +662,12 @@ games; an eastward zone showed 0.7 of a point, give or take 0.4, in one season
 and nothing in the other); a separate chance that a star rests on the second
 night (they sit 9.9% of those against 6.3% rested, about 0.15 of a point,
 which the back-to-back's 2.5 already holds); and a cap on one game's margin.
+One more thing did earn a place: a quarter of a side's three-point makes above
+the league's rate on its own attempts is taken back out of the score as luck
+before the game is rated (`three_luck`). On the same five seasons the margin's
+miss goes from 13.79 to 13.78 and from 14.50 to 14.49, the total's from 18.60
+to 18.55 and from 18.97 to 18.91; at a half the margin gets worse, so most of
+a hot night is skill or the defence and a quarter of it is the rim.
 In hockey neither a cap nor a fade moved the miss in the third decimal place.
 The overtime branch and the empty net were already in the score grid, and the
 back-to-back by home and road was already fit in `scripts/fit_rest.py`.
@@ -880,7 +886,10 @@ last game" at that chance, and the held-out miss goes from 11.79 to 11.77
 
 An old game fades, as in the NBA, here with a half-life of 20 of the side's
 games. The margin barely moves (11.72 to 11.72, 11.79 to 11.78) but the total
-does (16.76 to 16.70 and 17.41 to 17.34).
+does (16.76 to 16.70 and 17.41 to 17.34). And a quarter of a side's
+three-point makes above the league's rate is taken back out as luck, as in the
+NBA: with the rest in place the margin's miss goes from 11.69 to 11.67 and
+from 11.73 to 11.69, the total's from 16.70 to 16.64 and from 17.34 to 17.28.
 
 Left out, each tested on the same games: a cap on one game's margin (worse at
 35, 28 and 22: in college a rout carries news); possessions as a product
@@ -897,6 +906,40 @@ Conviction in the card is in each sport's own spread, so college sits beside
 the others on the same scale; with 360 teams and few games each, its early
 gaps from the book are noisy, which the per-sport trust weight and the record
 by sport are there to show.
+
+### College football: what was tried
+
+College football got rain (above, on the NFL's number) and the quarterback's
+4.9 points from the NFL's fit, and nothing else of its own, because the rest
+either did not hold out or could not be fit from what is free to read.
+
+Tested on eight seasons of FBS games (5,705, from cfbfastR's schedules, each
+projected from earlier weeks alone) and left out: a home edge of its own
+outside the conference (hosts beat the projection by 2.6 points there, give or
+take 0.9, but using it helped two held-out seasons by 0.03 and hurt a third by
+as much; the flag is stored with each game all the same); altitude (1.8 points
+for a high host against a lowland visitor, give or take 1.4, and anywhere from
+-4.5 to +9.0 by season); and fading old games (the margin's miss gets worse at
+every half-life tried). The stand-in for an injury report was fit for the
+quarterback on two seasons of box scores: a regular starter who did not throw
+in his side's last game is still out the next time 64.5% of the time (259
+cases), but the margin moved 3.2 points a case in 2024 and -0.7 in 2025 (1.2
+together, give or take 1.4), so it is not used. The same stand-in in the NFL
+is worth 3.8 points, give or take 1.2, over five seasons, where the injury
+report already says it better.
+
+Not fit, for want of a source the scanner or the fits can read for nothing: a
+wind and rain coefficient of college's own (no free history of game weather);
+the conferences' own availability reports, which the SEC, the Big 12 and the
+Big Ten now publish before each game and which would replace the stand-in
+with the real thing; and a prior from recruiting, returning production or
+last season's closing lines (collegefootballdata.com has all three behind a
+key). A prior from closing lines was at least tried where the lines are free:
+on 16 NFL seasons it missed by 13.44 where last season's results miss by
+13.44, so the market's memory of a team is no better than the scoreboard's.
+In hockey the two things left on the table are the confirmed starting goalie,
+worth three times the guess the scanner makes, and shot quality in place of
+shot counts; both live on sites with no free feed.
 
 ## Player lines
 
