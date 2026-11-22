@@ -383,9 +383,10 @@ def test_the_rating_dials_are_off_until_a_fit_earns_them_and_do_what_they_say(mo
 
     assert all(
         t.fumble_points == 0 and t.interception_points == 0 and t.margin_cap is None
-        and t.half_life is None
         for t in TUNING.values()
     )  # fmt: skip
+    # Fading old games earned its place in the NBA alone.
+    assert {sport for sport, t in TUNING.items() if t.half_life} == {"nba"}
     games = season()
     plain = fit(games, "nfl")
     # Turnover luck: a side that took the ball away twice gives half of that back.

@@ -10,9 +10,10 @@ how much of the side's usual strength goes with them.
 A player's worth is measured from his own lines in the game log, in units the
 fit is in. Basketball counts his production a game (points, with assists at 0.7
 and rebounds at 0.5, the usual box-score weights) above what a replacement
-supplies; hockey counts a skater's points a game with a little for his ice time,
-and the starting goalie (the one with the most ice time this season) as a unit
-of his own; football counts the starting quarterback as a unit of his own, a
+supplies; hockey counts a skater's points a game with a little for his ice time
+(a goalie is listed at no cost here: who is likely in net, and what the gap to
+the side's usual goaltending is worth, is scanner.goalies' business, which reads
+this list for who is ruled out); football counts the starting quarterback as a unit of his own, a
 back's or receiver's yards a game, and any other starter on the depth chart
 as a head. A status is a chance of missing the game, not a certainty: "out",
 injured reserve and a suspension count in full, "doubtful" nearly so,
@@ -20,18 +21,17 @@ injured reserve and a suspension count in full, "doubtful" nearly so,
 games the side actually played, so a man who has already missed most of them
 is already priced in: his worth is scaled by the share of the side's recent
 games he played. The sum, times the sport's coefficient a unit, comes off the
-side's projected points; the margin moves, the total does not.
+side's projected points, so the margin moves and the total with it.
 
-The coefficients are fit by scripts/fit_injuries.py on the 2024-25 seasons of
-box scores (scripts/fetch_box_scores.py), where an absence is a man who played
-his side's previous game and not this one, valued exactly as this module values
-him the day before, against an absence-blind expected margin from ratings fit
+The coefficients are fit by scripts/fit_injuries.py on seasons of box scores
+(scripts/fetch_box_scores.py and scripts/bulk_box_scores.py), where an absence
+is a man who played his side's previous game and not this one, valued exactly
+as this module values him the day before, against an absence-blind expected margin from ratings fit
 on the season's earlier games, held out on the last 30% of each season. A unit
-of basketball production costs 0.13 points (1,182 NBA games; the held-out miss
-falls from 14.12 to 13.99); a unit of hockey production 0.23 goals and the
-starting goalie's absence 0.07 (1,259 games, 2.617 to 2.608; the goalie's
-number describes a backup's routine start, the only kind history shows); the
-starting quarterback 4.9 points (1,119 NFL games over 2021-2025, 212 with a
+of basketball production costs 0.115 points (5,913 NBA games over five seasons;
+the held-out miss falls from 14.22 to 14.09); a unit of a skater's production
+0.23 goals (2,490 NHL games over two seasons, 2.627 to 2.619); the starting
+quarterback 4.9 points (1,119 NFL games over 2021-2025, 212 with a
 starter lost; held out 13.22 to 13.10). His worth does not move with how good
 he is by any measure the box score offers: a term for the starter's adjusted
 yards an attempt, and one for the backup's, each came out at nothing (371 games
@@ -81,9 +81,9 @@ class SportRule:
 
 
 RULES: dict[str, SportRule] = {
-    "nba": SportRule("points", 12.0, 8.0, {"production": 0.13}),
+    "nba": SportRule("points", 12.0, 8.0, {"production": 0.115}),
     "cbb": SportRule("points", 12.0, 6.0, {"production": 0.12}),  # the NBA's, by hand
-    "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.23, "goalie": 0.07}),
+    "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.23}),  # goalies: scanner.goalies
     "nfl": SportRule(
         "points", 14.0, 0.0, {"quarterback": 4.9, "skill_yards": 0.012, "starters": 0.4}
     ),
@@ -371,17 +371,6 @@ class SideContext:
                     best, attempts = player_id, float(row["stats"]["pass_att"])
         return best
 
-    def goalie_one(self) -> str | None:
-        """The starting goalie: the one with the most ice time this season."""
-        best, most = None, 0.0
-        for player_id, rows in self.lines.items():
-            if (self.positions.get(player_id) or "") != GOALIE:
-                continue
-            toi = sum(float(r["stats"].get("toi") or 0) for r in rows)
-            if toi > most:
-                best, most = player_id, toi
-        return best
-
 
 def absentees(sport: str, report: list[dict] | None, context: SideContext) -> list[dict]:
     """One side's likely absentees with their worth in the sport's units.
@@ -415,7 +404,6 @@ def absentees(sport: str, report: list[dict] | None, context: SideContext) -> li
             "reported_at": None,
         }
     quarterback = context.quarterback_one() if sport in ("nfl", "cfb") else None
-    goalie = context.goalie_one() if sport == "nhl" else None
     out: list[dict] = []
     for player_id, entry in listed.items():
         weight = status_weight(entry["status"])
@@ -425,9 +413,8 @@ def absentees(sport: str, report: list[dict] | None, context: SideContext) -> li
             production = context.recent(player_id, basketball_production)
             units["production"] = max(production - rule.replacement, 0.0)
         elif sport == "nhl":
-            if (position or "") == GOALIE or context.positions.get(player_id) == GOALIE:
-                units["goalie"] = 1.0 if player_id == goalie else 0.0
-            else:
+            # Who is in goal is scanner.goalies' business: a goalie is listed, at no cost.
+            if GOALIE not in ((position or ""), context.positions.get(player_id)):
                 production = context.recent(player_id, hockey_production)
                 units["production"] = max(production - rule.replacement, 0.0)
         else:

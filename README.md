@@ -42,6 +42,9 @@ scanner/
   priors.py        last season's ratings, the prior each team starts from
   priors.json      those ratings by sport and ESPN team id (scripts/build_priors.py)
   injuries.py      injury reports, rosters and depth charts: who is out and what it costs
+  goalies.py       hockey: who is likely in goal tonight and what the gap is worth
+  goalie_priors.json   every goalie's record before this season (scripts/build_goalie_priors.py)
+  scratches.py     hockey: the league's own scratch list, read just before the game
   stakes.py        what the model would stake (recorded, never placed)
   card.py          the daily card: five picks by rule, locked, graded, public
   grid.py          every final score's exact chance: the one source of odds
@@ -50,8 +53,9 @@ tests/             pytest suite; fixtures/ holds saved API responses
 scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
                    fetch_history.py, build_sim_tables.py and grade_sim.py, and the
                    model's build_priors.py, fit_priors.py, fit_players.py,
-                   fetch_box_scores.py, fit_injuries.py, fit_ratings.py and
-                   fit_nfl_situations.py
+                   fetch_box_scores.py, bulk_box_scores.py, fit_injuries.py,
+                   fit_ratings.py, fit_nfl_situations.py, fit_goalies.py and
+                   build_goalie_priors.py
 docs/              winprob_report.md
 ```
 
@@ -111,6 +115,7 @@ All settings are environment variables. Defaults are from the build brief.
 | `INJURIES_ENABLED` | `true` | Read each game's injury report; move the projection and the lines for the men out |
 | `ROSTERS_ENABLED` | `true` | Read each team's roster (and NFL depth chart) daily for its injured list and starters |
 | `ROSTER_SPORTS` | `nfl,nba,nhl` | Sports whose rosters are read (ESPN carries no report for college) |
+| `SCRATCHES_ENABLED` | `true` | Read the NHL's scratch list from the league's API just before each game |
 | `CARD_ENABLED` | `true` | The daily card: picks chosen by rule, locked, graded, public at `/card` |
 | `CARD_PICKS` | `5` | Picks on a card, one per game |
 | `CARD_LOCK_TIME` | `10:00` | When the card locks each day, `HH:MM` in `CARD_TZ` |
@@ -138,6 +143,9 @@ Secrets live only in the host's secrets store. `.env` is git-ignored.
 - **ESPN game summaries, rosters and depth charts** (unofficial) for the game
   log, the injury reports and who starts; parsed in `gamelog.py` and
   `injuries.py`, read-only, a request every quarter second at most.
+- **The NHL's own API** (api-web.nhle.com, public, no key) for the scratch list
+  of each game about to start: the day's schedule and one sheet a game, parsed
+  in `scratches.py`.
 
 ## Polymarket findings (milestone 2)
 
@@ -535,7 +543,7 @@ another. The dials stay in `projection.TUNING`, switched off.
 A side that played the day before gives up ground, and the schedule says so
 before the market has to. `scanner/rest.py` moves the raw margin toward the
 rested side when the other is on a back-to-back: 2.5 points in the NBA, 0.45
-goals in the NHL, fit by `scripts/fit_rest.py` against a rest-blind expected
+goals in the NHL (carried at 0.40 since the goalie model below took its share), fit by `scripts/fit_rest.py` against a rest-blind expected
 margin from ratings fit only on each season's earlier games (4,661 NBA games
 and 4,947 NHL games, 2021-22 to 2024-25, held out on 2024-25: the NBA's margin
 miss falls from 14.22 to 14.13, hockey's from 2.563 to 2.553). The two sides'
@@ -578,11 +586,12 @@ with the whole report in its own block. The coefficients a unit are fit by
 played his side's previous game and not this one, valued as the scanner values
 him the day before, regressed against an absence-blind expected margin from
 ratings fit on the season's earlier games and held out on the last 30% of each
-season. A unit of basketball production costs 0.13 points of margin (1,182 NBA
-games; the held-out miss falls from 14.12 to 13.99; college takes 0.12 by
-hand), a unit of hockey production 0.23 goals and the starting goalie's absence
-0.07 (1,259 games, 2.617 to 2.608; history only shows a backup's routine start,
-not an injured starter), and the starting quarterback 4.9 points (1,119 NFL
+season. A unit of basketball production costs 0.115 points of margin (5,913 NBA
+games over five seasons, from `scripts/bulk_box_scores.py`; the held-out miss
+falls from 14.22 to 14.09; college takes 0.12 by hand), a unit of a skater's
+production 0.23 goals (2,490 NHL games over two seasons, 2.627 to 2.619; the
+goalie has a model of his own, below), and the starting quarterback 4.9 points
+(1,119 NFL
 games over 2021-2025, 212 with a starter lost; held out 13.22 to 13.10). His
 worth does not move with how good he is by any measure the box score offers:
 terms for the starter's and the backup's adjusted yards an attempt each came
@@ -595,6 +604,66 @@ least 0.75 likely out gets no line, and in the sports with playing time his
 minutes go to the men who stay in proportion to their own; a man in doubt
 keeps his line, marked with the chance (`availability` in its parameters).
 `INJURIES_ENABLED=false` leaves the model as it was. Nothing is sent or placed.
+
+Hockey has two more things to read before a game. The first is the goalie.
+A side's rating carries its goaltending as it has been, in the share each man
+started; tonight has one man in net, and when he is not the usual one the
+rating is off by the gap between them: a point of save percentage is three
+tenths of a goal over a night's thirty shots. `scanner/goalies.py` rates each
+goalie by his save rate this season plus his earlier seasons at half weight
+(`scanner/goalie_priors.json`, built by `scripts/build_goalie_priors.py`; a
+single season's save rate told the fit nothing), shrunk toward the league's by
+500 league-average shots. Nobody posts the starter where the scanner
+can read it, but the schedule says most of it: on the second night of a
+back-to-back last night's man starts again one time in eleven (1,141 such
+nights over two seasons), otherwise the share of recent starts is the best guess,
+and a goalie the injury report or the scratch list rules out does not start.
+The expected save rate over those chances, less the side's usual, times the
+shots it allows, comes off what the other side is projected to score.
+`scripts/fit_goalies.py` fit it on three seasons, 2023-24 as the memory and
+2,450 games of the next two scored. The goalie who did start, known only
+afterwards, explains the margin's miss at 1.16 goals a goal of edge (give or
+take 0.30; held out 2.5924 to 2.5842), so the save rates mean what they say
+and the edge counts in full. What is known beforehand moves 1,900 of those
+games by a twentieth of a goal on average and takes the held-out miss from
+2.5924 to 2.5897 with the back-to-back fit beside it; the back-to-back itself
+falls from 0.37 to 0.32 goals when the edge is in, which was the tired side's
+second goalie all along, so `scanner/rest.py` now carries hockey's 0.45 at
+0.40. A confirmed starter would be worth three times what the guess is; no
+free source posts one where the scanner can read it. The sheet's projection
+block names the likely
+man and his save rate against the usual, and the scorecard keeps the miss with
+and without, as it does for injuries.
+
+The second is the scratch list. About half an hour before the puck drops the
+league posts each side's scratches on its own site (api-web.nhle.com), hurt or
+healthy, which ESPN's report misses or carries a day late. `scanner/scratches.py`
+asks for it only for games inside fifty minutes of their start, matches the
+league's game to ESPN's by the two sides and the hour and each man by his
+name, and counts a scratched man as out in full: a skater through the injury
+valuation above, a goalie by ruling him out of the start. An empty sheet with
+no officials named is taken as not yet posted and asked for again on the next
+pass. `SCRATCHES_ENABLED=false` switches it off.
+
+The NBA got one change to what a rating is made of and several that were
+tried and left out. An old game now fades: one 25 of the team's own games ago
+counts half (`half_life` in `projection.TUNING`). On five seasons from
+`scripts/bulk_box_scores.py` (6,163 games, each projected as the scanner would
+have seen it by `scripts/fit_ratings.py`) the margin's miss falls from 13.84 to
+13.79 over the first four and from 14.56 to 14.50 on the last, which chose
+nothing, and the total's from 18.86 to 18.60 and from 19.07 to 18.97: the
+league scores more before the new year than after it, and a team is not in
+March what it was in November. Left out, each for want of a held-out gain:
+other measures of a player's worth (points alone, the box score's game score,
+minutes; all within 0.02 of the one in use); travel into the game by distance
+or by time zones crossed, on any night or the second of a back-to-back (2,365
+games; an eastward zone showed 0.7 of a point, give or take 0.4, in one season
+and nothing in the other); a separate chance that a star rests on the second
+night (they sit 9.9% of those against 6.3% rested, about 0.15 of a point,
+which the back-to-back's 2.5 already holds); and a cap on one game's margin.
+In hockey neither a cap nor a fade moved the miss in the third decimal place.
+The overtime branch and the empty net were already in the score grid, and the
+back-to-back by home and road was already fit in `scripts/fit_rest.py`.
 
 The shrinkage is fit per sport on history (`scripts/fit_shrinkage.py`): every
 game rated only on its season's earlier games, with the scanner's own

@@ -1,0 +1,18 @@
+{
+ "gameInfo": {
+  "referees": [],
+  "linesmen": [],
+  "awayTeam": {
+   "headCoach": {
+    "default": "John Hynes"
+   },
+   "scratches": []
+  },
+  "homeTeam": {
+   "headCoach": {
+    "default": "Manny Malhotra"
+   },
+   "scratches": []
+  }
+ }
+}

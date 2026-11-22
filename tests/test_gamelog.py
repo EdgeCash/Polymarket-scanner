@@ -962,6 +962,14 @@ class FakeDailyFeed:
         self.calls.append(("depth_chart", sport, team_id))
         return {"depthchart": []}
 
+    def nhl_schedule(self, day):
+        self.calls.append(("nhl_schedule", day))
+        return getattr(self, "league_schedule", {"gameWeek": []})
+
+    def nhl_right_rail(self, game_id):
+        self.calls.append(("nhl_right_rail", game_id))
+        return getattr(self, "right_rail", {"gameInfo": {}})
+
 
 NBA_NOW = datetime.fromisoformat("2026-10-28T16:00:00+00:00")  # noon in New York on the 28th
 
@@ -1381,3 +1389,82 @@ def test_the_injury_report_moves_the_projection_and_drops_the_man_from_the_lines
     off_diary = Diary(":memory:")
     GameLog(off, off_diary, feed=off_feed, now=lambda: NOW).refresh("nfl", NOW, budget=0)
     assert "injuries" not in off_diary.projection("nfl", "upcoming-1")["projection"]["raw"]
+
+
+def test_hockey_reads_the_scratch_list_near_puck_drop_and_rules_the_goalie_out():
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nhl")
+    diary = Diary(":memory:")
+    feed = FakeDailyFeed()
+    record = parse_game_summary(load_fixture("espn_nhl_summary_final.json"), "nhl")
+    for i in range(6):  # six finals for NSH and NYI, so each side's usual goalie is known
+        diary.store_football_game(
+            replace(record, game_id=f"g{i}", date=NBA_NOW - timedelta(days=12 - 2 * i)), NBA_NOW
+        )
+    yesterday = load_fixture("espn_nhl_day.json")
+    event = next(e for e in yesterday["events"] if e["id"] == record.game_id)
+    puck_drop = NBA_NOW + timedelta(minutes=40)
+    feed.days[("nhl", "20261028")] = {
+        **yesterday,
+        "events": [scheduled_copy(event, "up-1", puck_drop)],
+    }
+    feed.league_schedule = {
+        "gameWeek": [
+            {
+                "games": [
+                    {
+                        "id": 2026020999,
+                        "startTimeUTC": puck_drop.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        "homeTeam": {"abbrev": "NSH"},
+                        "awayTeam": {"abbrev": "NYI"},
+                    }
+                ]
+            }
+        ]
+    }
+    log = GameLog(settings, diary, feed=feed, now=lambda: NBA_NOW)
+    # Two hours out nobody asks the league; the projection has each side's one goalie.
+    early = NBA_NOW - timedelta(minutes=90)
+    assert log.refresh("nhl", early, budget=0).scratches == 0
+    assert not [c for c in feed.calls if c[0].startswith("nhl_")]
+    raw = diary.projection("nhl", "up-1")["projection"]["raw"]
+    in_goal = raw["goalies"]["home"]["goalies"]
+    assert [(g["name"], g["chance"]) for g in in_goal] == [("Juuse Saros", 1.0)]
+    assert raw["goalies"]["margin"] == 0.0  # the usual man is the likely man
+    # Forty minutes out the sheet is asked for; not posted yet, so nothing is kept.
+    feed.right_rail = load_fixture("nhl_api_right_rail_early.json")
+    assert log.refresh("nhl", NBA_NOW, budget=0).scratches == 0
+    assert ("nhl_right_rail", "2026020999") in feed.calls
+    assert "scratches" not in diary.football_upcoming_game("nhl", "up-1")["extra"]
+    # Posted, with the home side's goalie scratched: he is out, and no goalie is left to rate.
+    feed.right_rail = {
+        "gameInfo": {
+            "referees": [{"fullName": {"default": "A Referee"}}],
+            "homeTeam": {
+                "scratches": [
+                    {"firstName": {"default": "Juuse"}, "lastName": {"default": "Saros"}},
+                    {"firstName": {"default": "Not"}, "lastName": {"default": "Known"}},
+                ]
+            },
+            "awayTeam": {"scratches": []},
+        }
+    }
+    later = NBA_NOW + timedelta(minutes=15)
+    assert log.refresh("nhl", later, budget=0).scratches == 1
+    extra = diary.football_upcoming_game("nhl", "up-1")["extra"]
+    assert extra["scratches"]["home"] == ["Juuse Saros", "Not Known"]
+    assert extra["scratches"]["away"] == [] and extra["scratches"]["read_at"] == later.isoformat()
+    raw = diary.projection("nhl", "up-1")["projection"]["raw"]
+    saros = next(e for e in raw["injuries"]["home"] if e["name"] == "Juuse Saros")
+    assert saros["status"] == "out" and saros["detail"] == "scratch" and saros["cost"] == 0.0
+    assert raw["goalies"]["home"] is None and raw["goalies"]["away"] is not None
+    # Once read it is not asked for again, and the hourly summary keeps it.
+    asked = len([c for c in feed.calls if c[0] == "nhl_right_rail"])
+    log.refresh("nhl", later + timedelta(minutes=10), budget=0)
+    assert len([c for c in feed.calls if c[0] == "nhl_right_rail"]) == asked
+    off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nhl", SCRATCHES_ENABLED=False)
+    quiet = FakeDailyFeed()
+    quiet.days, quiet.league_schedule, quiet.right_rail = feed.days, feed.league_schedule, {}
+    GameLog(off, Diary(":memory:"), feed=quiet, now=lambda: NBA_NOW).refresh(
+        "nhl", NBA_NOW, budget=0
+    )
+    assert not [c for c in quiet.calls if c[0].startswith("nhl_")]

@@ -8,7 +8,10 @@ back-to-back (4,947 games, 2021-22 to 2024-25, held out on 2024-25), in the NBA
 2.5 points (4,661 games, the held-out margin miss 14.13 against 14.22); long
 rest adds nothing and the total does not move in either. The two sides'
 coefficients are not told apart by the data (NBA home -2.8, away +2.4), so one
-serves both. A back-to-back is a game on the day after the side's last one, by the
+serves both. Hockey's 0.45 is carried at 0.40: a twentieth of a goal of it was the
+tired side's second goalie, which scanner.goalies now counts on its own (the
+back-to-back fit beside the goaltending edge falls by that much,
+scripts/fit_goalies.py). A back-to-back is a game on the day after the side's last one, by the
 local date (a 7 pm Eastern tip is the next day in UTC), counted from every
 game on the season's schedule, played or still to come. Nothing moves when a
 side's last game is unknown, or outside these two sports.
@@ -21,7 +24,7 @@ from zoneinfo import ZoneInfo
 
 EASTERN = ZoneInfo("America/New_York")
 # Points (goals) of margin the rested side gains when the other side is on a back-to-back.
-BACK_TO_BACK_EDGE = {"nhl": 0.45, "nba": 2.5}
+BACK_TO_BACK_EDGE = {"nhl": 0.40, "nba": 2.5}
 SPORTS = tuple(BACK_TO_BACK_EDGE)
 
 

@@ -28,6 +28,7 @@ from scanner.card import (
 from scanner.config import Settings
 from scanner.diary import Diary
 from scanner.gamelog import LOGS, SECTIONS, sheet_from_diary
+from scanner.goalies import describe as describe_goalies
 from scanner.injuries import describe as describe_injuries
 from scanner.players import SPORT_STATS, chance_over, simulate_player
 from scanner.projection import book_margin, tuning_for
@@ -355,14 +356,15 @@ def _projection_rows(part: dict, sport: str) -> list[tuple[str, str]]:
         ("Avg total miss: model / blend / book", trio(part["total_error"])),
         ("Brier score: model / blend / book", trio(part["brier"], 3)),
     ]
-    injured = part.get("injuries") or {}
-    if injured.get("games"):
-        rows.append(
-            (
-                f"Margin miss with / without the injury report ({injured['games']} games moved)",
-                f"{_fmt(injured.get('with'), 2)} / {_fmt(injured.get('without'), 2)}",
+    for key, what in (("injuries", "the injury report"), ("goalies", "the likely goalie")):
+        moved = part.get(key) or {}
+        if moved.get("games"):
+            rows.append(
+                (
+                    f"Margin miss with / without {what} ({moved['games']} games moved)",
+                    f"{_fmt(moved.get('with'), 2)} / {_fmt(moved.get('without'), 2)}",
+                )
             )
-        )
     for bucket in part.get("buckets") or ():
         rows.append(
             (
@@ -808,6 +810,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['player_lines']} player lines"
     if gl.get("injured"):
         text += f", {gl['injured']} projections moved for injuries"
+    if gl.get("scratches"):
+        text += f", {gl['scratches']} scratch lists read"
     if gl.get("rosters_on_file"):
         teams = sum(gl["rosters_on_file"].values())
         text += f", rosters for {teams} teams"
@@ -1058,6 +1062,12 @@ def _projection_block(sheet: dict, settings: Settings) -> str:
         body += (
             f"<tr><td class='label'>Injuries</td><td colspan='4' class='left'>"
             f"{html.escape(injury_text)} on the model's margin</td></tr>"
+        )
+    goalie_text = describe_goalies(raw.get("goalies"), home, away)
+    if goalie_text:
+        body += (
+            f"<tr><td class='label'>In goal</td><td colspan='4' class='left'>"
+            f"{html.escape(goalie_text)} on the model's margin</td></tr>"
         )
     head = (
         "<tr><th class='label'></th><th>Model</th><th>Blend</th><th>Book</th>"

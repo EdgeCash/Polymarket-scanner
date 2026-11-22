@@ -597,6 +597,7 @@ class PregameScanner:
             "rosters": sum(s.rosters for s in summaries),
             "rosters_pending": sum(s.rosters_pending for s in summaries),
             "injured": sum(s.injured for s in summaries),
+            "scratches": sum(s.scratches for s in summaries),
             "rosters_on_file": self.diary.roster_counts(),
             "card": self.gamelog.last_card,
             "error": "; ".join(short_error(e) for e in errors[:2]) or None,
