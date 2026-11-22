@@ -1,2578 +1,2965 @@
 {
  "cbb": {
-  "built": "2026-11-18",
-  "games": 6195,
+  "built": "2026-11-22",
+  "games": 6194,
   "league_points": 75.05,
+  "roster": {
+   "coefficients": {
+    "arrivals": 0.6821,
+    "arrivals_production": 2.2183,
+    "arrivals_rating": 0.1147,
+    "back_production": 5.7496,
+    "conference_gone": 0.3154,
+    "const": -1.9719,
+    "rating_back": 0.8213,
+    "rating_gone": 0.2857,
+    "share": 7.1964
+   },
+   "fit_on": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "team_seasons": 1445
+  },
   "season": 2026,
   "strangers": 361,
   "teams": {
    "103": {
-    "abbr": null,
-    "defense": -10.43,
-    "games": 31,
+    "abbr": "BC",
+    "arrivals": 5.0,
+    "defense": -10.763,
     "name": null,
-    "offense": -0.218
+    "offense": 1.708,
+    "returning": 0.0
    },
    "104": {
-    "abbr": null,
-    "defense": -2.626,
-    "games": 34,
+    "abbr": "BU",
+    "arrivals": 0.76,
+    "defense": -0.416,
     "name": null,
-    "offense": 3.842
+    "offense": 1.463,
+    "returning": 0.42
    },
    "107": {
-    "abbr": null,
-    "defense": -4.046,
-    "games": 33,
+    "abbr": "HC",
+    "arrivals": 0.0,
+    "defense": -2.533,
     "name": null,
-    "offense": -3.1
+    "offense": -3.626,
+    "returning": 0.29
    },
    "108": {
-    "abbr": null,
-    "defense": -12.183,
-    "games": 29,
+    "abbr": "HARV",
+    "arrivals": 0.0,
+    "defense": -10.194,
     "name": null,
-    "offense": -0.228
+    "offense": -0.311,
+    "returning": 0.83
    },
    "111": {
-    "abbr": null,
-    "defense": 1.874,
-    "games": 31,
+    "abbr": "NE",
+    "arrivals": 0.75,
+    "defense": 1.636,
     "name": null,
-    "offense": 5.935
+    "offense": 4.888,
+    "returning": 0.34
    },
    "112358": {
-    "abbr": null,
-    "defense": -5.563,
-    "games": 34,
+    "abbr": "LIU",
+    "arrivals": 1.31,
+    "defense": -1.745,
     "name": null,
-    "offense": 3.225
+    "offense": -0.32,
+    "returning": 0.01
    },
    "113": {
-    "abbr": null,
-    "defense": -1.91,
-    "games": 33,
+    "abbr": "MASS",
+    "arrivals": 1.09,
+    "defense": -0.16,
     "name": null,
-    "offense": 8.973
+    "offense": 6.046,
+    "returning": 0.24
    },
    "116": {
-    "abbr": null,
-    "defense": -5.286,
-    "games": 32,
+    "abbr": "MSM",
+    "arrivals": 0.81,
+    "defense": -3.791,
     "name": null,
-    "offense": -1.674
+    "offense": -2.336,
+    "returning": 0.24
    },
    "119": {
-    "abbr": null,
-    "defense": -12.689,
-    "games": 34,
+    "abbr": "TOW",
+    "arrivals": 0.49,
+    "defense": -8.159,
     "name": null,
-    "offense": -0.778
+    "offense": -3.167,
+    "returning": 0.26
    },
    "12": {
-    "abbr": null,
-    "defense": -15.096,
-    "games": 34,
+    "abbr": "ARIZ",
+    "arrivals": 1.24,
+    "defense": -7.775,
     "name": null,
-    "offense": 18.312
+    "offense": 10.553,
+    "returning": 0.27
    },
    "120": {
-    "abbr": null,
-    "defense": -6.532,
-    "games": 33,
+    "abbr": "MD",
+    "arrivals": 3.15,
+    "defense": -7.73,
     "name": null,
-    "offense": 3.285
+    "offense": 4.972,
+    "returning": 0.25
    },
    "127": {
-    "abbr": null,
-    "defense": -15.496,
-    "games": 32,
+    "abbr": "MSU",
+    "arrivals": 0.63,
+    "defense": -11.14,
     "name": null,
-    "offense": 11.414
+    "offense": 7.75,
+    "returning": 0.6
    },
    "13": {
-    "abbr": null,
-    "defense": 4.654,
-    "games": 33,
+    "abbr": "CP",
+    "arrivals": 0.0,
+    "defense": 2.883,
     "name": null,
-    "offense": 11.436
+    "offense": 10.782,
+    "returning": 0.78
    },
    "130": {
-    "abbr": null,
-    "defense": -14.797,
-    "games": 34,
+    "abbr": "MICH",
+    "arrivals": 1.92,
+    "defense": -8.932,
     "name": null,
-    "offense": 20.399
+    "offense": 13.705,
+    "returning": 0.35
    },
    "135": {
-    "abbr": null,
-    "defense": -13.192,
-    "games": 32,
+    "abbr": "MINN",
+    "arrivals": 1.08,
+    "defense": -10.661,
     "name": null,
-    "offense": 2.284
+    "offense": 1.416,
+    "returning": 0.6
    },
    "139": {
-    "abbr": null,
-    "defense": -8.971,
-    "games": 33,
+    "abbr": "SLU",
+    "arrivals": 0.82,
+    "defense": -6.559,
     "name": null,
-    "offense": 16.977
+    "offense": 13.281,
+    "returning": 0.59
    },
    "140": {
-    "abbr": null,
-    "defense": 2.38,
-    "games": 31,
+    "abbr": "KC",
+    "arrivals": 1.97,
+    "defense": -0.187,
     "name": null,
-    "offense": -2.526
+    "offense": 0.33,
+    "returning": 0.0
    },
    "142": {
-    "abbr": null,
-    "defense": -8.886,
-    "games": 32,
+    "abbr": "MIZ",
+    "arrivals": 3.33,
+    "defense": -8.279,
     "name": null,
-    "offense": 9.739
+    "offense": 9.123,
+    "returning": 0.33
    },
    "145": {
-    "abbr": null,
-    "defense": -9.525,
-    "games": 35,
+    "abbr": "MISS",
+    "arrivals": 3.52,
+    "defense": -8.561,
     "name": null,
-    "offense": 6.522
+    "offense": 6.174,
+    "returning": 0.3
    },
    "147": {
-    "abbr": null,
-    "defense": -8.591,
-    "games": 32,
+    "abbr": "MTST",
+    "arrivals": 0.17,
+    "defense": -6.619,
     "name": null,
-    "offense": 5.534
+    "offense": 4.143,
+    "returning": 0.65
    },
    "149": {
-    "abbr": null,
-    "defense": -5.636,
-    "games": 34,
+    "abbr": "MONT",
+    "arrivals": 0.0,
+    "defense": -2.183,
     "name": null,
-    "offense": 5.165
+    "offense": 1.815,
+    "returning": 0.21
    },
    "150": {
-    "abbr": null,
-    "defense": -20.418,
-    "games": 34,
+    "abbr": "DUKE",
+    "arrivals": 1.8,
+    "defense": -14.083,
     "name": null,
-    "offense": 15.042
+    "offense": 9.527,
+    "returning": 0.43
    },
    "151": {
-    "abbr": null,
-    "defense": -2.155,
-    "games": 31,
+    "abbr": "ECU",
+    "arrivals": 2.73,
+    "defense": -3.031,
     "name": null,
-    "offense": 1.519
+    "offense": 2.409,
+    "returning": 0.07
    },
    "152": {
-    "abbr": null,
-    "defense": -6.352,
-    "games": 33,
+    "abbr": "NCSU",
+    "arrivals": 3.6,
+    "defense": -5.338,
     "name": null,
-    "offense": 16.089
+    "offense": 13.589,
+    "returning": 0.28
    },
    "153": {
-    "abbr": null,
-    "defense": -11.422,
-    "games": 32,
+    "abbr": "UNC",
+    "arrivals": 3.43,
+    "defense": -7.908,
     "name": null,
-    "offense": 12.452
+    "offense": 8.788,
+    "returning": 0.17
    },
    "154": {
-    "abbr": null,
-    "defense": -6.686,
-    "games": 33,
+    "abbr": "WAKE",
+    "arrivals": 3.29,
+    "defense": -4.429,
     "name": null,
-    "offense": 10.798
+    "offense": 7.977,
+    "returning": 0.04
    },
    "155": {
-    "abbr": null,
-    "defense": -2.297,
-    "games": 35,
+    "abbr": "UND",
+    "arrivals": 0.5,
+    "defense": -0.202,
     "name": null,
-    "offense": 4.13
+    "offense": 1.814,
+    "returning": 0.2
    },
    "156": {
-    "abbr": null,
-    "defense": -7.406,
-    "games": 32,
+    "abbr": "CREI",
+    "arrivals": 3.08,
+    "defense": -7.753,
     "name": null,
-    "offense": 7.851
+    "offense": 8.107,
+    "returning": 0.38
    },
    "158": {
-    "abbr": null,
-    "defense": -16.015,
-    "games": 32,
+    "abbr": "NEB",
+    "arrivals": 3.0,
+    "defense": -13.308,
     "name": null,
-    "offense": 9.665
+    "offense": 7.91,
+    "returning": 0.4
    },
    "159": {
-    "abbr": null,
-    "defense": -1.602,
-    "games": 27,
+    "abbr": "DART",
+    "arrivals": 0.46,
+    "defense": -0.1,
     "name": null,
-    "offense": 5.41
+    "offense": 3.323,
+    "returning": 0.32
    },
    "16": {
-    "abbr": null,
-    "defense": 1.572,
-    "games": 31,
+    "abbr": "SAC",
+    "arrivals": 2.93,
+    "defense": 0.434,
     "name": null,
-    "offense": 7.169
+    "offense": 6.998,
+    "returning": 0.33
    },
    "160": {
-    "abbr": null,
-    "defense": -1.683,
-    "games": 30,
+    "abbr": "UNH",
+    "arrivals": 0.72,
+    "defense": -0.916,
     "name": null,
-    "offense": -0.974
+    "offense": -1.416,
+    "returning": 0.42
    },
    "161": {
-    "abbr": null,
-    "defense": -5.125,
-    "games": 32,
+    "abbr": "FDU",
+    "arrivals": 0.72,
+    "defense": -3.427,
     "name": null,
-    "offense": -3.081
+    "offense": -3.784,
+    "returning": 0.24
    },
    "163": {
-    "abbr": null,
-    "defense": -7.74,
-    "games": 29,
+    "abbr": "PRIN",
+    "arrivals": 0.0,
+    "defense": -7.302,
     "name": null,
-    "offense": -1.129
+    "offense": -0.105,
+    "returning": 1.0
    },
    "164": {
-    "abbr": null,
-    "defense": -6.058,
-    "games": 33,
+    "abbr": "RUTG",
+    "arrivals": 2.33,
+    "defense": -6.503,
     "name": null,
-    "offense": 4.192
+    "offense": 4.802,
+    "returning": 0.53
    },
    "166": {
-    "abbr": null,
-    "defense": -6.585,
-    "games": 32,
+    "abbr": "NMSU",
+    "arrivals": 3.29,
+    "defense": -4.637,
     "name": null,
-    "offense": 4.739
+    "offense": 2.959,
+    "returning": 0.21
    },
    "167": {
-    "abbr": null,
-    "defense": -8.822,
-    "games": 33,
+    "abbr": "UNM",
+    "arrivals": 1.34,
+    "defense": -5.427,
     "name": null,
-    "offense": 11.352
+    "offense": 7.477,
+    "returning": 0.32
    },
    "171": {
-    "abbr": null,
-    "defense": -6.756,
-    "games": 28,
+    "abbr": "COLU",
+    "arrivals": 0.22,
+    "defense": -4.459,
     "name": null,
-    "offense": 5.614
+    "offense": 3.442,
+    "returning": 0.45
    },
    "172": {
-    "abbr": null,
-    "defense": 4.363,
-    "games": 28,
+    "abbr": "COR",
+    "arrivals": 0.0,
+    "defense": 5.427,
     "name": null,
-    "offense": 18.16
+    "offense": 13.495,
+    "returning": 0.4
    },
    "179": {
-    "abbr": null,
-    "defense": -4.363,
-    "games": 34,
+    "abbr": "SBU",
+    "arrivals": 1.46,
+    "defense": -1.199,
     "name": null,
-    "offense": 7.674
+    "offense": 3.859,
+    "returning": 0.05
    },
    "183": {
-    "abbr": null,
-    "defense": -7.167,
-    "games": 32,
+    "abbr": "SYR",
+    "arrivals": 3.89,
+    "defense": -6.633,
     "name": null,
-    "offense": 8.45
+    "offense": 7.63,
+    "returning": 0.16
    },
    "189": {
-    "abbr": null,
-    "defense": -7.938,
-    "games": 32,
+    "abbr": "BGSU",
+    "arrivals": 1.56,
+    "defense": -4.123,
     "name": null,
-    "offense": 7.593
+    "offense": 4.137,
+    "returning": 0.2
    },
    "193": {
-    "abbr": null,
-    "defense": -3.457,
-    "games": 32,
+    "abbr": "M-OH",
+    "arrivals": 1.61,
+    "defense": -1.992,
     "name": null,
-    "offense": 16.443
+    "offense": 13.279,
+    "returning": 0.49
    },
    "194": {
-    "abbr": null,
-    "defense": -9.971,
-    "games": 33,
+    "abbr": "OSU",
+    "arrivals": 2.3,
+    "defense": -7.068,
     "name": null,
-    "offense": 13.153
+    "offense": 9.727,
+    "returning": 0.33
    },
    "195": {
-    "abbr": null,
-    "defense": -1.656,
-    "games": 32,
+    "abbr": "OHIO",
+    "arrivals": 1.45,
+    "defense": -2.258,
     "name": null,
-    "offense": 6.644
+    "offense": 6.48,
+    "returning": 0.39
    },
    "197": {
-    "abbr": null,
-    "defense": -0.893,
-    "games": 33,
+    "abbr": "OKST",
+    "arrivals": 3.55,
+    "defense": -1.872,
     "name": null,
-    "offense": 15.711
+    "offense": 14.502,
+    "returning": 0.2
    },
    "198": {
-    "abbr": null,
-    "defense": -2.593,
-    "games": 33,
+    "abbr": "ORU",
+    "arrivals": 0.51,
+    "defense": -2.083,
     "name": null,
-    "offense": 1.006
+    "offense": 0.776,
+    "returning": 0.52
    },
    "2": {
-    "abbr": null,
-    "defense": -6.956,
-    "games": 33,
+    "abbr": "AUB",
+    "arrivals": 2.88,
+    "defense": -5.936,
     "name": null,
-    "offense": 14.347
+    "offense": 12.351,
+    "returning": 0.34
    },
    "2000": {
-    "abbr": null,
-    "defense": -6.522,
-    "games": 33,
+    "abbr": "ACU",
+    "arrivals": 0.09,
+    "defense": -4.322,
     "name": null,
-    "offense": -0.267
+    "offense": -1.394,
+    "returning": 0.22
    },
    "2005": {
-    "abbr": null,
-    "defense": -1.789,
-    "games": 32,
+    "abbr": "AF",
+    "arrivals": 0.0,
+    "defense": -1.837,
     "name": null,
-    "offense": -6.831
+    "offense": -5.479,
+    "returning": 0.98
    },
    "2006": {
-    "abbr": null,
-    "defense": -5.761,
-    "games": 34,
+    "abbr": "AKR",
+    "arrivals": 3.44,
+    "defense": -2.795,
     "name": null,
-    "offense": 15.519
+    "offense": 11.265,
+    "returning": 0.26
    },
    "201": {
-    "abbr": null,
-    "defense": -7.611,
-    "games": 34,
+    "abbr": "OU",
+    "arrivals": 3.07,
+    "defense": -7.768,
     "name": null,
-    "offense": 12.498
+    "offense": 12.054,
+    "returning": 0.39
    },
    "2010": {
-    "abbr": null,
-    "defense": -3.055,
-    "games": 33,
+    "abbr": "AAMU",
+    "arrivals": 0.5,
+    "defense": -1.919,
     "name": null,
-    "offense": -2.352
+    "offense": -2.701,
+    "returning": 0.31
    },
    "2011": {
-    "abbr": null,
-    "defense": 0.212,
-    "games": 32,
+    "abbr": "ALST",
+    "arrivals": 1.16,
+    "defense": 1.784,
     "name": null,
-    "offense": -0.174
+    "offense": -1.714,
+    "returning": 0.05
    },
    "2016": {
-    "abbr": null,
-    "defense": 1.688,
-    "games": 32,
+    "abbr": "ALCN",
+    "arrivals": 0.86,
+    "defense": 0.956,
     "name": null,
-    "offense": -4.383
+    "offense": -3.296,
+    "returning": 0.0
    },
    "202": {
-    "abbr": null,
-    "defense": -6.14,
-    "games": 33,
+    "abbr": "TLSA",
+    "arrivals": 4.23,
+    "defense": -2.864,
     "name": null,
-    "offense": 14.642
+    "offense": 10.08,
+    "returning": 0.15
    },
    "2026": {
-    "abbr": null,
-    "defense": -11.527,
-    "games": 32,
+    "abbr": "APP",
+    "arrivals": 0.85,
+    "defense": -7.239,
     "name": null,
-    "offense": -1.243
+    "offense": -3.459,
+    "returning": 0.23
    },
    "2029": {
-    "abbr": null,
-    "defense": 2.799,
-    "games": 32,
+    "abbr": "UAPB",
+    "arrivals": 0.59,
+    "defense": 4.154,
     "name": null,
-    "offense": 3.163
+    "offense": 1.077,
+    "returning": 0.03
    },
    "2031": {
-    "abbr": null,
-    "defense": -3.065,
-    "games": 32,
+    "abbr": "LR",
+    "arrivals": 3.63,
+    "defense": -3.544,
     "name": null,
-    "offense": 0.577
+    "offense": 1.366,
+    "returning": 0.0
    },
    "2032": {
-    "abbr": null,
-    "defense": -1.367,
-    "games": 32,
+    "abbr": "ARST",
+    "arrivals": 1.44,
+    "defense": 1.756,
     "name": null,
-    "offense": 11.752
+    "offense": 7.046,
+    "returning": 0.05
    },
    "204": {
-    "abbr": null,
-    "defense": -6.1,
-    "games": 33,
+    "abbr": "ORST",
+    "arrivals": 3.24,
+    "defense": -5.909,
     "name": null,
-    "offense": 2.75
+    "offense": 2.995,
+    "returning": 0.17
    },
    "2046": {
-    "abbr": null,
-    "defense": -5.602,
-    "games": 31,
+    "abbr": "APSU",
+    "arrivals": 0.49,
+    "defense": -3.38,
     "name": null,
-    "offense": 7.251
+    "offense": 4.836,
+    "returning": 0.29
    },
    "2050": {
-    "abbr": null,
-    "defense": -9.741,
-    "games": 31,
+    "abbr": "BALL",
+    "arrivals": 2.93,
+    "defense": -8.897,
     "name": null,
-    "offense": -4.284
+    "offense": -2.961,
+    "returning": 0.17
    },
    "2057": {
-    "abbr": null,
-    "defense": -5.627,
-    "games": 32,
+    "abbr": "BEL",
+    "arrivals": 0.48,
+    "defense": -2.177,
     "name": null,
-    "offense": 13.699
+    "offense": 8.99,
+    "returning": 0.38
    },
    "2065": {
-    "abbr": null,
-    "defense": -1.162,
-    "games": 32,
+    "abbr": "BCU",
+    "arrivals": 3.78,
+    "defense": -0.686,
     "name": null,
-    "offense": 2.985
+    "offense": 2.232,
+    "returning": 0.24
    },
    "2066": {
-    "abbr": null,
-    "defense": 0.515,
-    "games": 31,
+    "abbr": "BING",
+    "arrivals": 0.28,
+    "defense": -0.486,
     "name": null,
-    "offense": -3.103
+    "offense": -1.939,
+    "returning": 0.36
    },
    "2083": {
-    "abbr": null,
-    "defense": -1.987,
-    "games": 33,
+    "abbr": "BUCK",
+    "arrivals": 1.18,
+    "defense": -1.352,
     "name": null,
-    "offense": -2.586
+    "offense": -2.569,
+    "returning": 0.35
    },
    "2084": {
-    "abbr": null,
-    "defense": -2.959,
-    "games": 32,
+    "abbr": "BUF",
+    "arrivals": 4.33,
+    "defense": -2.387,
     "name": null,
-    "offense": 6.833
+    "offense": 5.565,
+    "returning": 0.04
    },
    "2086": {
-    "abbr": null,
-    "defense": -4.54,
-    "games": 32,
+    "abbr": "BUT",
+    "arrivals": 2.1,
+    "defense": -1.992,
     "name": null,
-    "offense": 10.932
+    "offense": 7.417,
+    "returning": 0.12
    },
    "2097": {
-    "abbr": null,
-    "defense": -0.964,
-    "games": 34,
+    "abbr": "CAM",
+    "arrivals": 0.92,
+    "defense": 1.589,
     "name": null,
-    "offense": 8.784
+    "offense": 5.045,
+    "returning": 0.0
    },
    "2099": {
-    "abbr": null,
-    "defense": -5.428,
-    "games": 31,
+    "abbr": "CAN",
+    "arrivals": 1.67,
+    "defense": -4.887,
     "name": null,
-    "offense": -7.247
+    "offense": -5.968,
+    "returning": 0.0
    },
    "21": {
-    "abbr": null,
-    "defense": -10.317,
-    "games": 33,
+    "abbr": "SDSU",
+    "arrivals": 1.63,
+    "defense": -5.806,
     "name": null,
-    "offense": 9.504
+    "offense": 5.133,
+    "returning": 0.15
    },
    "2110": {
-    "abbr": null,
-    "defense": -5.212,
-    "games": 34,
+    "abbr": "CARK",
+    "arrivals": 0.43,
+    "defense": -3.931,
     "name": null,
-    "offense": 6.878
+    "offense": 5.525,
+    "returning": 0.57
    },
    "2115": {
-    "abbr": null,
-    "defense": -3.907,
-    "games": 30,
+    "abbr": "CCSU",
+    "arrivals": 1.49,
+    "defense": -1.408,
     "name": null,
-    "offense": 1.475
+    "offense": -0.542,
+    "returning": 0.35
    },
    "2116": {
-    "abbr": null,
-    "defense": -4.753,
-    "games": 32,
+    "abbr": "UCF",
+    "arrivals": 3.24,
+    "defense": -3.628,
     "name": null,
-    "offense": 13.347
+    "offense": 10.915,
+    "returning": 0.31
    },
    "2117": {
-    "abbr": null,
-    "defense": -3.106,
-    "games": 31,
+    "abbr": "CMU",
+    "arrivals": 0.78,
+    "defense": -1.871,
     "name": null,
-    "offense": 2.57
+    "offense": 1.493,
+    "returning": 0.4
    },
    "2127": {
-    "abbr": null,
-    "defense": 1.143,
-    "games": 32,
+    "abbr": "CHSO",
+    "arrivals": 0.61,
+    "defense": 3.44,
     "name": null,
-    "offense": 9.703
+    "offense": 5.994,
+    "returning": 0.17
    },
    "213": {
-    "abbr": null,
-    "defense": -3.011,
-    "games": 32,
+    "abbr": "PSU",
+    "arrivals": 3.34,
+    "defense": -4.426,
     "name": null,
-    "offense": 6.651
+    "offense": 7.501,
+    "returning": 0.26
    },
    "2130": {
-    "abbr": null,
-    "defense": -1.559,
-    "games": 32,
+    "abbr": "CHST",
+    "arrivals": 1.91,
+    "defense": -1.261,
     "name": null,
-    "offense": -2.643
+    "offense": -2.44,
+    "returning": 0.08
    },
    "2132": {
-    "abbr": null,
-    "defense": -14.84,
-    "games": 33,
+    "abbr": "CIN",
+    "arrivals": 5.0,
+    "defense": -13.897,
     "name": null,
-    "offense": 5.396
+    "offense": 5.876,
+    "returning": 0.0
    },
    "2142": {
-    "abbr": null,
-    "defense": -2.88,
-    "games": 33,
+    "abbr": "COLG",
+    "arrivals": 0.0,
+    "defense": -1.697,
     "name": null,
-    "offense": 5.289
+    "offense": 3.668,
+    "returning": 0.53
    },
    "2154": {
-    "abbr": null,
-    "defense": 3.475,
-    "games": 31,
+    "abbr": "COPP",
+    "arrivals": 0.17,
+    "defense": 1.913,
     "name": null,
-    "offense": -5.168
+    "offense": -3.362,
+    "returning": 0.45
    },
    "2166": {
-    "abbr": null,
-    "defense": -10.772,
-    "games": 33,
+    "abbr": "DAV",
+    "arrivals": 0.96,
+    "defense": -8.593,
     "name": null,
-    "offense": 2.514
+    "offense": 1.53,
+    "returning": 0.45
    },
    "2168": {
-    "abbr": null,
-    "defense": -11.185,
-    "games": 34,
+    "abbr": "DAY",
+    "arrivals": 1.82,
+    "defense": -7.731,
     "name": null,
-    "offense": 5.452
+    "offense": 2.886,
+    "returning": 0.24
    },
    "2169": {
-    "abbr": null,
-    "defense": -4.569,
-    "games": 31,
+    "abbr": "DSU",
+    "arrivals": 2.04,
+    "defense": -4.433,
     "name": null,
-    "offense": -10.84
+    "offense": -8.653,
+    "returning": 0.25
    },
    "2172": {
-    "abbr": null,
-    "defense": 2.4,
-    "games": 32,
+    "abbr": "DEN",
+    "arrivals": 1.79,
+    "defense": 2.348,
     "name": null,
-    "offense": 10.682
+    "offense": 8.942,
+    "returning": 0.27
    },
    "2174": {
-    "abbr": null,
-    "defense": -2.837,
-    "games": 32,
+    "abbr": "DETM",
+    "arrivals": 0.0,
+    "defense": -1.22,
     "name": null,
-    "offense": 5.382
+    "offense": 3.436,
+    "returning": 0.39
    },
    "218": {
-    "abbr": null,
-    "defense": -6.799,
-    "games": 32,
+    "abbr": "TEM",
+    "arrivals": 2.76,
+    "defense": -5.739,
     "name": null,
-    "offense": 3.714
+    "offense": 3.06,
+    "returning": 0.33
    },
    "2181": {
-    "abbr": null,
-    "defense": -4.451,
-    "games": 34,
+    "abbr": "DRKE",
+    "arrivals": 1.68,
+    "defense": -3.502,
     "name": null,
-    "offense": 5.866
+    "offense": 4.608,
+    "returning": 0.46
    },
    "2182": {
-    "abbr": null,
-    "defense": -10.463,
-    "games": 33,
+    "abbr": "DREX",
+    "arrivals": 0.59,
+    "defense": -7.444,
     "name": null,
-    "offense": -2.312
+    "offense": -3.402,
+    "returning": 0.16
    },
    "2184": {
-    "abbr": null,
-    "defense": -4.069,
-    "games": 33,
+    "abbr": "DUQ",
+    "arrivals": 1.84,
+    "defense": -1.614,
     "name": null,
-    "offense": 8.434
+    "offense": 5.338,
+    "returning": 0.13
    },
    "219": {
-    "abbr": null,
-    "defense": -5.655,
-    "games": 29,
+    "abbr": "PENN",
+    "arrivals": 0.4,
+    "defense": -5.089,
     "name": null,
-    "offense": 6.545
+    "offense": 5.915,
+    "returning": 0.78
    },
    "2193": {
-    "abbr": null,
-    "defense": -8.598,
-    "games": 34,
+    "abbr": "ETSU",
+    "arrivals": 2.57,
+    "defense": -5.448,
     "name": null,
-    "offense": 5.173
+    "offense": 2.482,
+    "returning": 0.14
    },
    "2197": {
-    "abbr": null,
-    "defense": -6.437,
-    "games": 33,
+    "abbr": "EIU",
+    "arrivals": 0.0,
+    "defense": -4.039,
     "name": null,
-    "offense": -3.105
+    "offense": -4.147,
+    "returning": 0.1
    },
    "2198": {
-    "abbr": null,
-    "defense": 1.193,
-    "games": 32,
+    "abbr": "EKU",
+    "arrivals": 0.8,
+    "defense": 1.603,
     "name": null,
-    "offense": 6.966
+    "offense": 5.509,
+    "returning": 0.28
    },
    "2199": {
-    "abbr": null,
-    "defense": -7.57,
-    "games": 31,
+    "abbr": "EMU",
+    "arrivals": 2.04,
+    "defense": -6.679,
     "name": null,
-    "offense": -0.108
+    "offense": 0.165,
+    "returning": 0.34
    },
    "221": {
-    "abbr": null,
-    "defense": -10.664,
-    "games": 33,
+    "abbr": "PITT",
+    "arrivals": 4.9,
+    "defense": -8.764,
     "name": null,
-    "offense": 3.233
+    "offense": 2.463,
+    "returning": 0.02
    },
    "2210": {
-    "abbr": null,
-    "defense": -1.263,
-    "games": 32,
+    "abbr": "ELON",
+    "arrivals": 1.58,
+    "defense": -0.505,
     "name": null,
-    "offense": 6.923
+    "offense": 5.278,
+    "returning": 0.28
    },
    "2217": {
-    "abbr": null,
-    "defense": -3.445,
-    "games": 34,
+    "abbr": "FAIR",
+    "arrivals": 0.9,
+    "defense": -2.488,
     "name": null,
-    "offense": 3.147
+    "offense": 2.186,
+    "returning": 0.5
    },
    "222": {
-    "abbr": null,
-    "defense": -11.887,
-    "games": 32,
+    "abbr": "VILL",
+    "arrivals": 3.36,
+    "defense": -9.296,
     "name": null,
-    "offense": 8.722
+    "offense": 6.673,
+    "returning": 0.15
    },
    "2226": {
-    "abbr": null,
-    "defense": -4.74,
-    "games": 33,
+    "abbr": "FAU",
+    "arrivals": 2.74,
+    "defense": -2.22,
     "name": null,
-    "offense": 8.538
+    "offense": 5.431,
+    "returning": 0.13
    },
    "2229": {
-    "abbr": null,
-    "defense": -0.638,
-    "games": 32,
+    "abbr": "FIU",
+    "arrivals": 1.79,
+    "defense": 1.334,
     "name": null,
-    "offense": 9.797
+    "offense": 6.449,
+    "returning": 0.0
    },
    "2230": {
-    "abbr": null,
-    "defense": -11.891,
-    "games": 32,
+    "abbr": "FOR",
+    "arrivals": 1.67,
+    "defense": -10.432,
     "name": null,
-    "offense": -0.51
+    "offense": -0.015,
+    "returning": 0.49
    },
    "2239": {
-    "abbr": null,
-    "defense": 0.764,
-    "games": 34,
+    "abbr": "CSUF",
+    "arrivals": 0.0,
+    "defense": 1.982,
     "name": null,
-    "offense": 10.149
+    "offense": 7.607,
+    "returning": 0.44
    },
    "2241": {
-    "abbr": null,
-    "defense": 4.808,
-    "games": 33,
+    "abbr": "GWEB",
+    "arrivals": 1.15,
+    "defense": 2.395,
     "name": null,
-    "offense": -2.393
+    "offense": -0.317,
+    "returning": 0.32
    },
    "2244": {
-    "abbr": null,
-    "defense": -12.434,
-    "games": 32,
+    "abbr": "GMU",
+    "arrivals": 3.7,
+    "defense": -9.557,
     "name": null,
-    "offense": 2.972
+    "offense": 1.608,
+    "returning": 0.15
    },
    "2247": {
-    "abbr": null,
-    "defense": -3.694,
-    "games": 32,
+    "abbr": "GAST",
+    "arrivals": 3.55,
+    "defense": -4.322,
     "name": null,
-    "offense": -0.537
+    "offense": 0.784,
+    "returning": 0.02
    },
    "225": {
-    "abbr": null,
-    "defense": -7.262,
-    "games": 27,
+    "abbr": "BRWN",
+    "arrivals": 0.0,
+    "defense": -6.413,
     "name": null,
-    "offense": -1.014
+    "offense": -0.456,
+    "returning": 0.79
    },
    "2250": {
-    "abbr": null,
-    "defense": -15.282,
-    "games": 33,
+    "abbr": "GONZ",
+    "arrivals": 3.29,
+    "defense": -12.367,
     "name": null,
-    "offense": 15.081
+    "offense": 12.235,
+    "returning": 0.14
    },
    "2253": {
-    "abbr": null,
-    "defense": -11.739,
-    "games": 32,
+    "abbr": "GCU",
+    "arrivals": 2.64,
+    "defense": -11.018,
     "name": null,
-    "offense": 5.856
+    "offense": 6.013,
+    "returning": 0.47
    },
    "2261": {
-    "abbr": null,
-    "defense": -6.35,
-    "games": 32,
+    "abbr": "HAMP",
+    "arrivals": 3.1,
+    "defense": -4.972,
     "name": null,
-    "offense": -0.356
+    "offense": -0.826,
+    "returning": 0.09
    },
    "227": {
-    "abbr": null,
-    "defense": -10.738,
-    "games": 32,
+    "abbr": "URI",
+    "arrivals": 1.64,
+    "defense": -8.697,
     "name": null,
-    "offense": 1.181
+    "offense": 0.5,
+    "returning": 0.31
    },
    "2272": {
-    "abbr": null,
-    "defense": -5.742,
-    "games": 34,
+    "abbr": "HPU",
+    "arrivals": 3.41,
+    "defense": -4.632,
     "name": null,
-    "offense": 15.984
+    "offense": 13.345,
+    "returning": 0.32
    },
    "2275": {
-    "abbr": null,
-    "defense": -11.789,
-    "games": 34,
+    "abbr": "HOF",
+    "arrivals": 1.84,
+    "defense": -6.049,
     "name": null,
-    "offense": 5.857
+    "offense": 0.873,
+    "returning": 0.11
    },
    "2277": {
-    "abbr": null,
-    "defense": -5.327,
-    "games": 32,
+    "abbr": "HCU",
+    "arrivals": 3.09,
+    "defense": -4.881,
     "name": null,
-    "offense": -2.95
+    "offense": -2.211,
+    "returning": 0.2
    },
    "228": {
-    "abbr": null,
-    "defense": -15.738,
-    "games": 34,
+    "abbr": "CLEM",
+    "arrivals": 2.36,
+    "defense": -11.241,
     "name": null,
-    "offense": 6.237
+    "offense": 3.167,
+    "returning": 0.16
    },
    "2287": {
-    "abbr": null,
-    "defense": -11.301,
-    "games": 32,
+    "abbr": "ILST",
+    "arrivals": 2.74,
+    "defense": -8.878,
     "name": null,
-    "offense": 5.398
+    "offense": 3.872,
+    "returning": 0.34
    },
    "2294": {
-    "abbr": null,
-    "defense": -15.515,
-    "games": 33,
+    "abbr": "IOWA",
+    "arrivals": 1.13,
+    "defense": -11.53,
     "name": null,
-    "offense": 7.921
+    "offense": 5.038,
+    "returning": 0.56
    },
    "2296": {
-    "abbr": null,
-    "defense": 5.066,
-    "games": 33,
+    "abbr": "JKST",
+    "arrivals": 0.89,
+    "defense": 3.248,
     "name": null,
-    "offense": -0.685
+    "offense": 0.415,
+    "returning": 0.53
    },
    "23": {
-    "abbr": null,
-    "defense": -2.38,
-    "games": 33,
+    "abbr": "SJSU",
+    "arrivals": 1.57,
+    "defense": -2.299,
     "name": null,
-    "offense": 2.813
+    "offense": 2.701,
+    "returning": 0.08
    },
    "2305": {
-    "abbr": null,
-    "defense": -14.377,
-    "games": 33,
+    "abbr": "KU",
+    "arrivals": 3.05,
+    "defense": -12.092,
     "name": null,
-    "offense": 10.362
+    "offense": 8.603,
+    "returning": 0.39
    },
    "2306": {
-    "abbr": null,
-    "defense": -1.62,
-    "games": 32,
+    "abbr": "KSU",
+    "arrivals": 4.16,
+    "defense": -2.115,
     "name": null,
-    "offense": 11.711
+    "offense": 10.69,
+    "returning": 0.05
    },
    "2309": {
-    "abbr": null,
-    "defense": -1.154,
-    "games": 33,
+    "abbr": "KENT",
+    "arrivals": 1.86,
+    "defense": 0.926,
     "name": null,
-    "offense": 12.097
+    "offense": 8.576,
+    "returning": 0.12
    },
    "231": {
-    "abbr": null,
-    "defense": -7.91,
-    "games": 34,
+    "abbr": "FUR",
+    "arrivals": 1.97,
+    "defense": -5.854,
     "name": null,
-    "offense": 3.483
+    "offense": 2.101,
+    "returning": 0.32
    },
    "232": {
-    "abbr": null,
-    "defense": -5.857,
-    "games": 32,
+    "abbr": "COFC",
+    "arrivals": 3.39,
+    "defense": -5.256,
     "name": null,
-    "offense": 4.937
+    "offense": 4.433,
+    "returning": 0.15
    },
    "2320": {
-    "abbr": null,
-    "defense": -7.885,
-    "games": 31,
+    "abbr": "LAM",
+    "arrivals": 2.42,
+    "defense": -5.499,
     "name": null,
-    "offense": -0.342
+    "offense": -1.529,
+    "returning": 0.0
    },
    "2325": {
-    "abbr": null,
-    "defense": -6.25,
-    "games": 32,
+    "abbr": "LAS",
+    "arrivals": 2.64,
+    "defense": -5.561,
     "name": null,
-    "offense": -0.245
+    "offense": -0.083,
+    "returning": 0.25
    },
    "2329": {
-    "abbr": null,
-    "defense": -2.323,
-    "games": 34,
+    "abbr": "LEH",
+    "arrivals": 0.0,
+    "defense": -2.085,
     "name": null,
-    "offense": 2.16
+    "offense": 1.864,
+    "returning": 0.78
    },
    "233": {
-    "abbr": null,
-    "defense": 1.518,
-    "games": 32,
+    "abbr": "SDAK",
+    "arrivals": 1.87,
+    "defense": 1.733,
     "name": null,
-    "offense": 6.548
+    "offense": 5.172,
+    "returning": 0.21
    },
    "2330": {
-    "abbr": null,
-    "defense": -2.208,
-    "games": 32,
+    "abbr": "LEM",
+    "arrivals": 1.97,
+    "defense": -0.151,
     "name": null,
-    "offense": 2.435
+    "offense": 0.176,
+    "returning": 0.02
    },
    "2335": {
-    "abbr": null,
-    "defense": -7.634,
-    "games": 32,
+    "abbr": "LIB",
+    "arrivals": 1.47,
+    "defense": -4.168,
     "name": null,
-    "offense": 6.654
+    "offense": 3.412,
+    "returning": 0.1
    },
    "2344": {
-    "abbr": null,
-    "defense": -2.659,
-    "games": 32,
+    "abbr": "LONG",
+    "arrivals": 1.36,
+    "defense": -1.711,
     "name": null,
-    "offense": 4.585
+    "offense": 3.365,
+    "returning": 0.27
    },
    "2348": {
-    "abbr": null,
-    "defense": -12.607,
-    "games": 34,
+    "abbr": "LT",
+    "arrivals": 0.57,
+    "defense": -7.65,
     "name": null,
-    "offense": -2.13
+    "offense": -4.859,
+    "returning": 0.1
    },
    "2349": {
-    "abbr": null,
-    "defense": 0.2,
-    "games": 33,
+    "abbr": "UML",
+    "arrivals": 0.97,
+    "defense": 1.417,
     "name": null,
-    "offense": 3.941
+    "offense": 2.144,
+    "returning": 0.11
    },
    "235": {
-    "abbr": null,
-    "defense": -5.408,
-    "games": 32,
+    "abbr": "MEM",
+    "arrivals": 4.44,
+    "defense": -5.264,
     "name": null,
-    "offense": 5.863
+    "offense": 5.7,
+    "returning": 0.11
    },
    "2350": {
-    "abbr": null,
-    "defense": -3.898,
-    "games": 33,
+    "abbr": "LUC",
+    "arrivals": 2.67,
+    "defense": -5.043,
     "name": null,
-    "offense": -0.864
+    "offense": 0.892,
+    "returning": 0.15
    },
    "2351": {
-    "abbr": null,
-    "defense": -7.377,
-    "games": 32,
+    "abbr": "LMU",
+    "arrivals": 2.67,
+    "defense": -5.445,
     "name": null,
-    "offense": 3.269
+    "offense": 2.073,
+    "returning": 0.13
    },
    "2352": {
-    "abbr": null,
-    "defense": 1.143,
-    "games": 32,
+    "abbr": "L-MD",
+    "arrivals": 0.3,
+    "defense": 1.919,
     "name": null,
-    "offense": 3.454
+    "offense": 1.945,
+    "returning": 0.24
    },
    "236": {
-    "abbr": null,
-    "defense": -2.83,
-    "games": 32,
+    "abbr": "UTC",
+    "arrivals": 0.51,
+    "defense": -0.509,
     "name": null,
-    "offense": 3.26
+    "offense": 1.001,
+    "returning": 0.1
    },
    "2363": {
-    "abbr": null,
-    "defense": 3.051,
-    "games": 32,
+    "abbr": "MAN",
+    "arrivals": 1.34,
+    "defense": 2.79,
     "name": null,
-    "offense": 3.139
+    "offense": 2.419,
+    "returning": 0.07
    },
    "2368": {
-    "abbr": null,
-    "defense": -11.573,
-    "games": 31,
+    "abbr": "MRST",
+    "arrivals": 0.68,
+    "defense": -7.319,
     "name": null,
-    "offense": -1.586
+    "offense": -3.831,
+    "returning": 0.27
    },
    "2377": {
-    "abbr": null,
-    "defense": -10.588,
-    "games": 33,
+    "abbr": "MCN",
+    "arrivals": 0.55,
+    "defense": -5.474,
     "name": null,
-    "offense": 8.939
+    "offense": 4.122,
+    "returning": 0.23
    },
    "2378": {
-    "abbr": null,
-    "defense": -7.61,
-    "games": 32,
+    "abbr": "UMBC",
+    "arrivals": 0.8,
+    "defense": -2.634,
     "name": null,
-    "offense": 3.384
+    "offense": -1.008,
+    "returning": 0.08
    },
    "2379": {
-    "abbr": null,
-    "defense": -6.112,
-    "games": 32,
+    "abbr": "UMES",
+    "arrivals": 2.01,
+    "defense": -3.274,
     "name": null,
-    "offense": -7.449
+    "offense": -8.129,
+    "returning": 0.07
    },
    "238": {
-    "abbr": null,
-    "defense": -10.117,
-    "games": 34,
+    "abbr": "VAN",
+    "arrivals": 3.18,
+    "defense": -7.264,
     "name": null,
-    "offense": 17.542
+    "offense": 13.664,
+    "returning": 0.25
    },
    "2382": {
-    "abbr": null,
-    "defense": -2.962,
-    "games": 32,
+    "abbr": "MER",
+    "arrivals": 1.42,
+    "defense": -0.699,
     "name": null,
-    "offense": 9.989
+    "offense": 6.667,
+    "returning": 0.24
    },
    "2385": {
-    "abbr": null,
-    "defense": -7.535,
-    "games": 34,
+    "abbr": "MERC",
+    "arrivals": 0.7,
+    "defense": -5.131,
     "name": null,
-    "offense": -1.68
+    "offense": -2.797,
+    "returning": 0.22
    },
    "239": {
-    "abbr": null,
-    "defense": -6.029,
-    "games": 32,
+    "abbr": "BAY",
+    "arrivals": 3.01,
+    "defense": -4.629,
     "name": null,
-    "offense": 13.975
+    "offense": 11.54,
+    "returning": 0.25
    },
    "2390": {
-    "abbr": null,
-    "defense": -10.795,
-    "games": 33,
+    "abbr": "MIA",
+    "arrivals": 3.01,
+    "defense": -9.31,
     "name": null,
-    "offense": 12.485
+    "offense": 10.794,
+    "returning": 0.4
    },
    "2393": {
-    "abbr": null,
-    "defense": -7.004,
-    "games": 32,
+    "abbr": "MTSU",
+    "arrivals": 1.92,
+    "defense": -4.087,
     "name": null,
-    "offense": 5.386
+    "offense": 2.739,
+    "returning": 0.25
    },
    "24": {
-    "abbr": null,
-    "defense": -9.148,
-    "games": 32,
+    "abbr": "STAN",
+    "arrivals": 2.22,
+    "defense": -6.113,
     "name": null,
-    "offense": 8.311
+    "offense": 5.356,
+    "returning": 0.16
    },
    "2400": {
-    "abbr": null,
-    "defense": 4.385,
-    "games": 33,
+    "abbr": "MVSU",
+    "arrivals": 0.03,
+    "defense": 1.881,
     "name": null,
-    "offense": -8.712
+    "offense": -5.462,
+    "returning": 0.05
    },
    "2405": {
-    "abbr": null,
-    "defense": -7.07,
-    "games": 34,
+    "abbr": "MONM",
+    "arrivals": 2.03,
+    "defense": -5.261,
     "name": null,
-    "offense": 3.278
+    "offense": 1.993,
+    "returning": 0.3
    },
    "2413": {
-    "abbr": null,
-    "defense": -2.737,
-    "games": 33,
+    "abbr": "MORE",
+    "arrivals": 0.0,
+    "defense": -1.15,
     "name": null,
-    "offense": 3.358
+    "offense": 1.814,
+    "returning": 0.39
    },
    "2415": {
-    "abbr": null,
-    "defense": 4.791,
-    "games": 30,
+    "abbr": "MORG",
+    "arrivals": 2.54,
+    "defense": 3.618,
     "name": null,
-    "offense": 1.596
+    "offense": 1.704,
+    "returning": 0.23
    },
    "242": {
-    "abbr": null,
-    "defense": -4.113,
-    "games": 31,
+    "abbr": "RICE",
+    "arrivals": 1.29,
+    "defense": -2.873,
     "name": null,
-    "offense": 2.412
+    "offense": 1.487,
+    "returning": 0.24
    },
    "2426": {
-    "abbr": null,
-    "defense": -10.658,
-    "games": 33,
+    "abbr": "NAVY",
+    "arrivals": 0.0,
+    "defense": -6.466,
     "name": null,
-    "offense": 1.98
+    "offense": -1.118,
+    "returning": 0.4
    },
    "2427": {
-    "abbr": null,
-    "defense": -7.344,
-    "games": 32,
+    "abbr": "UNCA",
+    "arrivals": 1.13,
+    "defense": -4.839,
     "name": null,
-    "offense": 0.106
+    "offense": -1.121,
+    "returning": 0.21
    },
    "2428": {
-    "abbr": null,
-    "defense": 0.457,
-    "games": 32,
+    "abbr": "NCCU",
+    "arrivals": 2.35,
+    "defense": 1.77,
     "name": null,
-    "offense": -0.844
+    "offense": -2.151,
+    "returning": 0.03
    },
    "2429": {
-    "abbr": null,
-    "defense": -5.46,
-    "games": 34,
+    "abbr": "CLT",
+    "arrivals": 3.76,
+    "defense": -5.206,
     "name": null,
-    "offense": 3.306
+    "offense": 3.395,
+    "returning": 0.09
    },
    "2430": {
-    "abbr": null,
-    "defense": 1.245,
-    "games": 34,
+    "abbr": "UNCG",
+    "arrivals": 0.74,
+    "defense": 2.148,
     "name": null,
-    "offense": 5.067
+    "offense": 3.359,
+    "returning": 0.01
    },
    "2433": {
-    "abbr": null,
-    "defense": 5.761,
-    "games": 32,
+    "abbr": "ULM",
+    "arrivals": 0.95,
+    "defense": 3.448,
     "name": null,
-    "offense": 2.172
+    "offense": 3.099,
+    "returning": 0.0
    },
    "2437": {
-    "abbr": null,
-    "defense": -3.452,
-    "games": 33,
+    "abbr": "OMA",
+    "arrivals": 0.77,
+    "defense": -1.131,
     "name": null,
-    "offense": 3.453
+    "offense": 1.304,
+    "returning": 0.2
    },
    "2439": {
-    "abbr": null,
-    "defense": -1.86,
-    "games": 33,
+    "abbr": "UNLV",
+    "arrivals": 2.22,
+    "defense": -1.014,
     "name": null,
-    "offense": 10.63
+    "offense": 8.335,
+    "returning": 0.22
    },
    "2440": {
-    "abbr": null,
-    "defense": -8.754,
-    "games": 34,
+    "abbr": "NEV",
+    "arrivals": 2.59,
+    "defense": -6.451,
     "name": null,
-    "offense": 7.497
+    "offense": 5.315,
+    "returning": 0.36
    },
    "2441": {
-    "abbr": null,
-    "defense": -8.789,
-    "games": 31,
+    "abbr": "NHVN",
+    "arrivals": 0.0,
+    "defense": -6.181,
     "name": null,
-    "offense": -5.758
+    "offense": -6.1,
+    "returning": 0.24
    },
    "2443": {
-    "abbr": null,
-    "defense": -1.015,
-    "games": 33,
+    "abbr": "UNO",
+    "arrivals": 1.83,
+    "defense": 0.929,
     "name": null,
-    "offense": 6.676
+    "offense": 3.708,
+    "returning": 0.19
    },
    "2447": {
-    "abbr": null,
-    "defense": -3.086,
-    "games": 33,
+    "abbr": "NICH",
+    "arrivals": 1.09,
+    "defense": -0.999,
     "name": null,
-    "offense": 3.11
+    "offense": 0.919,
+    "returning": 0.1
    },
    "2448": {
-    "abbr": null,
-    "defense": -0.462,
-    "games": 30,
+    "abbr": "NCAT",
+    "arrivals": 1.99,
+    "defense": 0.846,
     "name": null,
-    "offense": 3.512
+    "offense": 1.798,
+    "returning": 0.13
    },
    "2449": {
-    "abbr": null,
-    "defense": -8.763,
-    "games": 34,
+    "abbr": "NDSU",
+    "arrivals": 1.89,
+    "defense": -4.127,
     "name": null,
-    "offense": 7.779
+    "offense": 3.355,
+    "returning": 0.23
    },
    "245": {
-    "abbr": null,
-    "defense": -4.7,
-    "games": 32,
+    "abbr": "TA&M",
+    "arrivals": 3.71,
+    "defense": -4.508,
     "name": null,
-    "offense": 17.13
+    "offense": 15.167,
+    "returning": 0.26
    },
    "2450": {
-    "abbr": null,
-    "defense": -0.734,
-    "games": 32,
+    "abbr": "NORF",
+    "arrivals": 1.46,
+    "defense": 1.113,
     "name": null,
-    "offense": 2.386
+    "offense": 0.371,
+    "returning": 0.0
    },
    "2453": {
-    "abbr": null,
-    "defense": -2.006,
-    "games": 30,
+    "abbr": "UNA",
+    "arrivals": 1.73,
+    "defense": -2.199,
     "name": null,
-    "offense": -2.84
+    "offense": -1.778,
+    "returning": 0.13
    },
    "2454": {
-    "abbr": null,
-    "defense": 7.444,
-    "games": 32,
+    "abbr": "UNF",
+    "arrivals": 1.0,
+    "defense": 5.715,
     "name": null,
-    "offense": 7.3
+    "offense": 6.948,
+    "returning": 0.42
    },
    "2458": {
-    "abbr": null,
-    "defense": -3.121,
-    "games": 32,
+    "abbr": "UNCO",
+    "arrivals": 1.57,
+    "defense": -0.458,
     "name": null,
-    "offense": 10.076
+    "offense": 6.356,
+    "returning": 0.17
    },
    "2459": {
-    "abbr": null,
-    "defense": -2.76,
-    "games": 30,
+    "abbr": "NIU",
+    "arrivals": 3.22,
+    "defense": -3.727,
     "name": null,
-    "offense": -2.047
+    "offense": -0.042,
+    "returning": 0.0
    },
    "2460": {
-    "abbr": null,
-    "defense": -18.233,
-    "games": 35,
+    "abbr": "UNI",
+    "arrivals": 2.65,
+    "defense": -13.059,
     "name": null,
-    "offense": 0.566
+    "offense": -2.018,
+    "returning": 0.1
    },
    "2463": {
-    "abbr": null,
-    "defense": 0.789,
-    "games": 34,
+    "abbr": "CSUN",
+    "arrivals": 2.72,
+    "defense": 1.31,
     "name": null,
-    "offense": 10.097
+    "offense": 7.817,
+    "returning": 0.17
    },
    "2464": {
-    "abbr": null,
-    "defense": -3.973,
-    "games": 32,
+    "abbr": "NAU",
+    "arrivals": 0.73,
+    "defense": -2.62,
     "name": null,
-    "offense": -0.662
+    "offense": -1.056,
+    "returning": 0.28
    },
    "2466": {
-    "abbr": null,
-    "defense": -5.153,
-    "games": 32,
+    "abbr": "NWST",
+    "arrivals": 1.12,
+    "defense": -3.902,
     "name": null,
-    "offense": -1.522
+    "offense": -1.776,
+    "returning": 0.19
    },
    "2473": {
-    "abbr": null,
-    "defense": -0.007,
-    "games": 32,
+    "abbr": "OAK",
+    "arrivals": 1.64,
+    "defense": 2.453,
     "name": null,
-    "offense": 12.08
+    "offense": 7.788,
+    "returning": 0.1
    },
    "248": {
-    "abbr": null,
-    "defense": -20.617,
-    "games": 34,
+    "abbr": "HOU",
+    "arrivals": 3.08,
+    "defense": -14.899,
     "name": null,
-    "offense": 9.213
+    "offense": 5.251,
+    "returning": 0.23
    },
    "2483": {
-    "abbr": null,
-    "defense": -8.964,
-    "games": 32,
+    "abbr": "ORE",
+    "arrivals": 4.02,
+    "defense": -9.785,
     "name": null,
-    "offense": 4.139
+    "offense": 5.663,
+    "returning": 0.2
    },
    "249": {
-    "abbr": null,
-    "defense": -11.777,
-    "games": 33,
+    "abbr": "UNT",
+    "arrivals": 0.92,
+    "defense": -9.062,
     "name": null,
-    "offense": 0.121
+    "offense": -0.784,
+    "returning": 0.39
    },
    "2492": {
-    "abbr": null,
-    "defense": -0.538,
-    "games": 32,
+    "abbr": "PEPP",
+    "arrivals": 2.91,
+    "defense": -1.79,
     "name": null,
-    "offense": 2.194
+    "offense": 3.296,
+    "returning": 0.05
    },
    "25": {
-    "abbr": null,
-    "defense": -8.409,
-    "games": 32,
+    "abbr": "CAL",
+    "arrivals": 1.97,
+    "defense": -5.646,
     "name": null,
-    "offense": 8.364
+    "offense": 5.709,
+    "returning": 0.11
    },
    "250": {
-    "abbr": null,
-    "defense": -12.546,
-    "games": 32,
+    "abbr": "UTA",
+    "arrivals": 0.75,
+    "defense": -7.322,
     "name": null,
-    "offense": -0.79
+    "offense": -3.852,
+    "returning": 0.06
    },
    "2501": {
-    "abbr": null,
-    "defense": -2.376,
-    "games": 34,
+    "abbr": "PORT",
+    "arrivals": 1.83,
+    "defense": -1.815,
     "name": null,
-    "offense": 4.209
+    "offense": 3.634,
+    "returning": 0.26
    },
    "2502": {
-    "abbr": null,
-    "defense": -8.901,
-    "games": 31,
+    "abbr": "PRST",
+    "arrivals": 1.18,
+    "defense": -4.058,
     "name": null,
-    "offense": 3.781
+    "offense": -0.107,
+    "returning": 0.02
    },
    "2504": {
-    "abbr": null,
-    "defense": 0.065,
-    "games": 35,
+    "abbr": "PV",
+    "arrivals": 1.95,
+    "defense": 2.154,
     "name": null,
-    "offense": 2.913
+    "offense": 0.578,
+    "returning": 0.04
    },
    "2506": {
-    "abbr": null,
-    "defense": -7.401,
-    "games": 33,
+    "abbr": "PRES",
+    "arrivals": 0.0,
+    "defense": -6.408,
     "name": null,
-    "offense": -0.323
+    "offense": 0.069,
+    "returning": 0.7
    },
    "2507": {
-    "abbr": null,
-    "defense": 1.713,
-    "games": 33,
+    "abbr": "PROV",
+    "arrivals": 4.37,
+    "defense": 0.657,
     "name": null,
-    "offense": 17.553
+    "offense": 15.693,
+    "returning": 0.13
    },
    "2509": {
-    "abbr": null,
-    "defense": -14.006,
-    "games": 35,
+    "abbr": "PUR",
+    "arrivals": 0.0,
+    "defense": -7.103,
     "name": null,
-    "offense": 14.884
+    "offense": 7.884,
+    "returning": 0.42
    },
    "251": {
-    "abbr": null,
-    "defense": -7.418,
-    "games": 32,
+    "abbr": "TEX",
+    "arrivals": 2.44,
+    "defense": -5.309,
     "name": null,
-    "offense": 14.116
+    "offense": 11.198,
+    "returning": 0.13
    },
    "2511": {
-    "abbr": null,
-    "defense": 2.284,
-    "games": 34,
+    "abbr": "QUC",
+    "arrivals": 0.83,
+    "defense": 2.502,
     "name": null,
-    "offense": 11.805
+    "offense": 9.542,
+    "returning": 0.4
    },
    "2514": {
-    "abbr": null,
-    "defense": -3.542,
-    "games": 32,
+    "abbr": "QUIN",
+    "arrivals": 0.52,
+    "defense": -0.861,
     "name": null,
-    "offense": 5.067
+    "offense": 2.081,
+    "returning": 0.26
    },
    "2515": {
-    "abbr": null,
-    "defense": 0.395,
-    "games": 32,
+    "abbr": "RAD",
+    "arrivals": 1.59,
+    "defense": 1.055,
     "name": null,
-    "offense": 7.891
+    "offense": 5.968,
+    "returning": 0.09
    },
    "252": {
-    "abbr": null,
-    "defense": -7.345,
-    "games": 34,
+    "abbr": "BYU",
+    "arrivals": 2.29,
+    "defense": -5.019,
     "name": null,
-    "offense": 17.356
+    "offense": 13.469,
+    "returning": 0.27
    },
    "2520": {
-    "abbr": null,
-    "defense": -0.88,
-    "games": 29,
+    "abbr": "RID",
+    "arrivals": 1.42,
+    "defense": -1.63,
     "name": null,
-    "offense": -5.65
+    "offense": -4.001,
+    "returning": 0.0
    },
    "2523": {
-    "abbr": null,
-    "defense": -7.978,
-    "games": 33,
+    "abbr": "RMU",
+    "arrivals": 2.21,
+    "defense": -5.55,
     "name": null,
-    "offense": 4.572
+    "offense": 2.703,
+    "returning": 0.24
    },
    "2529": {
-    "abbr": null,
-    "defense": 0.85,
-    "games": 33,
+    "abbr": "SHU",
+    "arrivals": 0.86,
+    "defense": 1.712,
     "name": null,
-    "offense": 4.808
+    "offense": 2.941,
+    "returning": 0.16
    },
    "253": {
-    "abbr": null,
-    "defense": 1.486,
-    "games": 32,
+    "abbr": "SUU",
+    "arrivals": 0.45,
+    "defense": 1.466,
     "name": null,
-    "offense": 6.118
+    "offense": 4.949,
+    "returning": 0.24
    },
    "2534": {
-    "abbr": null,
-    "defense": -4.856,
-    "games": 33,
+    "abbr": "SHSU",
+    "arrivals": 0.44,
+    "defense": -1.309,
     "name": null,
-    "offense": 10.984
+    "offense": 6.513,
+    "returning": 0.24
    },
    "2535": {
-    "abbr": null,
-    "defense": -3.549,
-    "games": 32,
+    "abbr": "SAM",
+    "arrivals": 2.09,
+    "defense": -2.689,
     "name": null,
-    "offense": 5.754
+    "offense": 4.636,
+    "returning": 0.36
    },
    "2539": {
-    "abbr": null,
-    "defense": -6.74,
-    "games": 33,
+    "abbr": "SF",
+    "arrivals": 0.78,
+    "defense": -3.255,
     "name": null,
-    "offense": 5.414
+    "offense": 2.094,
+    "returning": 0.01
    },
    "254": {
-    "abbr": null,
-    "defense": -4.674,
-    "games": 32,
+    "abbr": "UTAH",
+    "arrivals": 3.05,
+    "defense": -5.287,
     "name": null,
-    "offense": 6.463
+    "offense": 6.837,
+    "returning": 0.01
    },
    "2540": {
-    "abbr": null,
-    "defense": -6.181,
-    "games": 32,
+    "abbr": "UCSB",
+    "arrivals": 2.26,
+    "defense": -6.23,
     "name": null,
-    "offense": 5.121
+    "offense": 5.313,
+    "returning": 0.55
    },
    "2541": {
-    "abbr": null,
-    "defense": -7.594,
-    "games": 34,
+    "abbr": "SCU",
+    "arrivals": 1.16,
+    "defense": -4.558,
     "name": null,
-    "offense": 14.884
+    "offense": 10.599,
+    "returning": 0.49
    },
    "2545": {
-    "abbr": null,
-    "defense": -7.154,
-    "games": 31,
+    "abbr": "SELA",
+    "arrivals": 3.33,
+    "defense": -5.906,
     "name": null,
-    "offense": -3.609
+    "offense": -3.422,
+    "returning": 0.03
    },
    "2546": {
-    "abbr": null,
-    "defense": -6.105,
-    "games": 33,
+    "abbr": "SEMO",
+    "arrivals": 0.87,
+    "defense": -3.188,
     "name": null,
-    "offense": 3.277
+    "offense": 0.682,
+    "returning": 0.25
    },
    "2547": {
-    "abbr": null,
-    "defense": -12.333,
-    "games": 33,
+    "abbr": "SEA",
+    "arrivals": 0.94,
+    "defense": -8.94,
     "name": null,
-    "offense": 1.39
+    "offense": -0.28,
+    "returning": 0.46
    },
    "2550": {
-    "abbr": null,
-    "defense": -16.367,
-    "games": 33,
+    "abbr": "HALL",
+    "arrivals": 4.11,
+    "defense": -13.431,
     "name": null,
-    "offense": 1.996
+    "offense": 1.239,
+    "returning": 0.18
    },
    "256": {
-    "abbr": null,
-    "defense": -4.68,
-    "games": 33,
+    "abbr": "JMU",
+    "arrivals": 3.09,
+    "defense": -2.654,
     "name": null,
-    "offense": 3.651
+    "offense": 1.65,
+    "returning": 0.15
    },
    "2561": {
-    "abbr": null,
-    "defense": -9.027,
-    "games": 34,
+    "abbr": "SIE",
+    "arrivals": 0.75,
+    "defense": -4.778,
     "name": null,
-    "offense": 0.703
+    "offense": -2.493,
+    "returning": 0.22
    },
    "2565": {
-    "abbr": null,
-    "defense": -10.715,
-    "games": 32,
+    "abbr": "SIUE",
+    "arrivals": 1.33,
+    "defense": -7.115,
     "name": null,
-    "offense": -1.995
+    "offense": -3.544,
+    "returning": 0.25
    },
    "2567": {
-    "abbr": null,
-    "defense": -6.92,
-    "games": 33,
+    "abbr": "SMU",
+    "arrivals": 3.66,
+    "defense": -4.662,
     "name": null,
-    "offense": 15.118
+    "offense": 11.75,
+    "returning": 0.16
    },
    "2569": {
-    "abbr": null,
-    "defense": 1.513,
-    "games": 32,
+    "abbr": "SCST",
+    "arrivals": 0.95,
+    "defense": 0.675,
     "name": null,
-    "offense": -4.774
+    "offense": -3.615,
+    "returning": 0.3
    },
    "257": {
-    "abbr": null,
-    "defense": -5.14,
-    "games": 32,
+    "abbr": "RICH",
+    "arrivals": 3.28,
+    "defense": -4.526,
     "name": null,
-    "offense": 6.26
+    "offense": 5.459,
+    "returning": 0.22
    },
    "2571": {
-    "abbr": null,
-    "defense": -5.812,
-    "games": 32,
+    "abbr": "SDST",
+    "arrivals": 0.9,
+    "defense": -4.112,
     "name": null,
-    "offense": 4.6
+    "offense": 2.945,
+    "returning": 0.42
    },
    "2572": {
-    "abbr": null,
-    "defense": -4.416,
-    "games": 35,
+    "abbr": "USM",
+    "arrivals": 1.51,
+    "defense": -2.479,
     "name": null,
-    "offense": 3.967
+    "offense": 1.99,
+    "returning": 0.15
    },
    "2579": {
-    "abbr": null,
-    "defense": -7.96,
-    "games": 32,
+    "abbr": "SC",
+    "arrivals": 3.42,
+    "defense": -7.293,
     "name": null,
-    "offense": 5.373
+    "offense": 5.205,
+    "returning": 0.04
    },
    "258": {
-    "abbr": null,
-    "defense": -14.11,
-    "games": 34,
+    "abbr": "UVA",
+    "arrivals": 2.03,
+    "defense": -11.315,
     "name": null,
-    "offense": 12.16
+    "offense": 9.692,
+    "returning": 0.51
    },
    "2582": {
-    "abbr": null,
-    "defense": 0.837,
-    "games": 34,
+    "abbr": "SOU",
+    "arrivals": 2.17,
+    "defense": 2.423,
     "name": null,
-    "offense": 5.531
+    "offense": 3.099,
+    "returning": 0.13
    },
    "259": {
-    "abbr": null,
-    "defense": -7.776,
-    "games": 32,
+    "abbr": "VT",
+    "arrivals": 3.14,
+    "defense": -6.922,
     "name": null,
-    "offense": 10.728
+    "offense": 9.434,
+    "returning": 0.37
    },
    "2598": {
-    "abbr": null,
-    "defense": 3.848,
-    "games": 31,
+    "abbr": "SFPA",
+    "arrivals": 0.0,
+    "defense": 3.485,
     "name": null,
-    "offense": 0.994
+    "offense": 0.587,
+    "returning": 0.0
    },
    "2599": {
-    "abbr": null,
-    "defense": -12.497,
-    "games": 34,
+    "abbr": "SJU",
+    "arrivals": 2.5,
+    "defense": -8.315,
     "name": null,
-    "offense": 13.24
+    "offense": 8.969,
+    "returning": 0.18
    },
    "26": {
-    "abbr": null,
-    "defense": -11.88,
-    "games": 34,
+    "abbr": "UCLA",
+    "arrivals": 1.43,
+    "defense": -8.533,
     "name": null,
-    "offense": 10.137
+    "offense": 7.054,
+    "returning": 0.43
    },
    "2603": {
-    "abbr": null,
-    "defense": -8.173,
-    "games": 33,
+    "abbr": "JOES",
+    "arrivals": 1.46,
+    "defense": -5.573,
     "name": null,
-    "offense": 4.158
+    "offense": 2.125,
+    "returning": 0.36
    },
    "2608": {
-    "abbr": null,
-    "defense": -15.676,
-    "games": 32,
+    "abbr": "SMC",
+    "arrivals": 1.14,
+    "defense": -9.35,
     "name": null,
-    "offense": 9.032
+    "offense": 3.656,
+    "returning": 0.27
    },
    "261": {
-    "abbr": null,
-    "defense": -6.354,
-    "games": 34,
+    "abbr": "UVM",
+    "arrivals": 1.61,
+    "defense": -4.062,
     "name": null,
-    "offense": 2.185
+    "offense": 0.454,
+    "returning": 0.27
    },
    "2612": {
-    "abbr": null,
-    "defense": -6.915,
-    "games": 29,
+    "abbr": "SPU",
+    "arrivals": 0.77,
+    "defense": -3.905,
     "name": null,
-    "offense": 0.16
+    "offense": -1.816,
+    "returning": 0.26
    },
    "2617": {
-    "abbr": null,
-    "defense": -10.528,
-    "games": 33,
+    "abbr": "SFA",
+    "arrivals": 1.71,
+    "defense": -5.829,
     "name": null,
-    "offense": 5.761
+    "offense": 1.764,
+    "returning": 0.24
    },
    "2619": {
-    "abbr": null,
-    "defense": -6.079,
-    "games": 32,
+    "abbr": "STBK",
+    "arrivals": 1.51,
+    "defense": -4.297,
     "name": null,
-    "offense": 2.033
+    "offense": 0.675,
+    "returning": 0.34
    },
    "2623": {
-    "abbr": null,
-    "defense": -5.725,
-    "games": 34,
+    "abbr": "MOST",
+    "arrivals": 0.0,
+    "defense": -2.55,
     "name": null,
-    "offense": 4.311
+    "offense": 1.444,
+    "returning": 0.22
    },
    "2627": {
-    "abbr": null,
-    "defense": -4.245,
-    "games": 32,
+    "abbr": "TAR",
+    "arrivals": 2.08,
+    "defense": -2.703,
     "name": null,
-    "offense": 4.366
+    "offense": 2.702,
+    "returning": 0.16
    },
    "2628": {
-    "abbr": null,
-    "defense": -11.029,
-    "games": 33,
+    "abbr": "TCU",
+    "arrivals": 2.02,
+    "defense": -9.675,
     "name": null,
-    "offense": 9.185
+    "offense": 8.188,
+    "returning": 0.51
    },
    "2630": {
-    "abbr": null,
-    "defense": -12.9,
-    "games": 33,
+    "abbr": "UTM",
+    "arrivals": 0.09,
+    "defense": -7.976,
     "name": null,
-    "offense": -3.029
+    "offense": -5.485,
+    "returning": 0.18
    },
    "2633": {
-    "abbr": null,
-    "defense": -16.26,
-    "games": 33,
+    "abbr": "TENN",
+    "arrivals": 4.5,
+    "defense": -12.823,
     "name": null,
-    "offense": 10.134
+    "offense": 7.782,
+    "returning": 0.1
    },
    "2634": {
-    "abbr": null,
-    "defense": -2.66,
-    "games": 32,
+    "abbr": "TNST",
+    "arrivals": 1.87,
+    "defense": 0.316,
     "name": null,
-    "offense": 8.97
+    "offense": 5.045,
+    "returning": 0.05
    },
    "2635": {
-    "abbr": null,
-    "defense": -2.45,
-    "games": 31,
+    "abbr": "TNTC",
+    "arrivals": 2.56,
+    "defense": -2.505,
     "name": null,
-    "offense": 1.151
+    "offense": 1.471,
+    "returning": 0.17
    },
    "2636": {
-    "abbr": null,
-    "defense": 0.96,
-    "games": 30,
+    "abbr": "UTSA",
+    "arrivals": 3.54,
+    "defense": -1.784,
     "name": null,
-    "offense": -1.461
+    "offense": 1.434,
+    "returning": 0.13
    },
    "2638": {
-    "abbr": null,
-    "defense": -6.974,
-    "games": 31,
+    "abbr": "UTEP",
+    "arrivals": 3.05,
+    "defense": -6.229,
     "name": null,
-    "offense": -0.668
+    "offense": -0.067,
+    "returning": 0.0
    },
    "264": {
-    "abbr": null,
-    "defense": -9.713,
-    "games": 33,
+    "abbr": "WASH",
+    "arrivals": 3.46,
+    "defense": -8.292,
     "name": null,
-    "offense": 8.943
+    "offense": 7.694,
+    "returning": 0.21
    },
    "2640": {
-    "abbr": null,
-    "defense": 1.307,
-    "games": 30,
+    "abbr": "TXSO",
+    "arrivals": 0.49,
+    "defense": 2.35,
     "name": null,
-    "offense": 1.185
+    "offense": -0.288,
+    "returning": 0.08
    },
    "2641": {
-    "abbr": null,
-    "defense": -12.628,
-    "games": 32,
+    "abbr": "TTU",
+    "arrivals": 3.73,
+    "defense": -9.951,
     "name": null,
-    "offense": 13.105
+    "offense": 10.441,
+    "returning": 0.21
    },
    "2643": {
-    "abbr": null,
-    "defense": -1.106,
-    "games": 33,
+    "abbr": "CIT",
+    "arrivals": 1.29,
+    "defense": -1.702,
     "name": null,
-    "offense": -1.704
+    "offense": -0.617,
+    "returning": 0.14
    },
    "2649": {
-    "abbr": null,
-    "defense": -4.989,
-    "games": 34,
+    "abbr": "TOL",
+    "arrivals": 0.8,
+    "defense": -2.324,
     "name": null,
-    "offense": 9.362
+    "offense": 6.207,
+    "returning": 0.36
    },
    "265": {
-    "abbr": null,
-    "defense": -3.541,
-    "games": 32,
+    "abbr": "WSU",
+    "arrivals": 2.49,
+    "defense": -1.006,
     "name": null,
-    "offense": 7.21
+    "offense": 4.185,
+    "returning": 0.0
    },
    "2653": {
-    "abbr": null,
-    "defense": -6.116,
-    "games": 33,
+    "abbr": "TROY",
+    "arrivals": 2.76,
+    "defense": -3.379,
     "name": null,
-    "offense": 7.681
+    "offense": 4.855,
+    "returning": 0.09
    },
    "2655": {
-    "abbr": null,
-    "defense": -3.679,
-    "games": 33,
+    "abbr": "TULN",
+    "arrivals": 2.66,
+    "defense": -3.07,
     "name": null,
-    "offense": 2.686
+    "offense": 2.168,
+    "returning": 0.25
    },
    "2670": {
-    "abbr": null,
-    "defense": -8.367,
-    "games": 34,
+    "abbr": "VCU",
+    "arrivals": 1.94,
+    "defense": -6.925,
     "name": null,
-    "offense": 12.62
+    "offense": 10.492,
+    "returning": 0.59
    },
    "2674": {
-    "abbr": null,
-    "defense": -7.975,
-    "games": 33,
+    "abbr": "VAL",
+    "arrivals": 0.69,
+    "defense": -6.317,
     "name": null,
-    "offense": 2.606
+    "offense": 1.753,
+    "returning": 0.47
    },
    "2678": {
-    "abbr": null,
-    "defense": 1.234,
-    "games": 32,
+    "abbr": "VMI",
+    "arrivals": 0.16,
+    "defense": -0.218,
     "name": null,
-    "offense": -1.775
+    "offense": -0.09,
+    "returning": 0.45
    },
    "2681": {
-    "abbr": null,
-    "defense": -3.284,
-    "games": 31,
+    "abbr": "WAG",
+    "arrivals": 0.95,
+    "defense": -1.059,
     "name": null,
-    "offense": 0.847
+    "offense": -1.18,
+    "returning": 0.0
    },
    "269": {
-    "abbr": null,
-    "defense": -6.776,
-    "games": 32,
+    "abbr": "MARQ",
+    "arrivals": 2.12,
+    "defense": -7.353,
     "name": null,
-    "offense": 7.288
+    "offense": 7.797,
+    "returning": 0.54
    },
    "2692": {
-    "abbr": null,
-    "defense": -1.9,
-    "games": 32,
+    "abbr": "WEB",
+    "arrivals": 0.34,
+    "defense": 0.971,
     "name": null,
-    "offense": 8.428
+    "offense": 4.727,
+    "returning": 0.09
    },
    "2698": {
-    "abbr": null,
-    "defense": -0.631,
-    "games": 32,
+    "abbr": "WGA",
+    "arrivals": 0.99,
+    "defense": -0.089,
     "name": null,
-    "offense": 2.822
+    "offense": 2.074,
+    "returning": 0.19
    },
    "27": {
-    "abbr": null,
-    "defense": -2.68,
-    "games": 32,
+    "abbr": "UCR",
+    "arrivals": 1.02,
+    "defense": -1.723,
     "name": null,
-    "offense": 1.741
+    "offense": 0.935,
+    "returning": 0.18
    },
    "270": {
-    "abbr": null,
-    "defense": -2.21,
-    "games": 32,
+    "abbr": "MILW",
+    "arrivals": 0.24,
+    "defense": -0.683,
     "name": null,
-    "offense": 4.039
+    "offense": 2.522,
+    "returning": 0.29
    },
    "2710": {
-    "abbr": null,
-    "defense": 0.242,
-    "games": 31,
+    "abbr": "WIU",
+    "arrivals": 0.0,
+    "defense": -0.768,
     "name": null,
-    "offense": -5.512
+    "offense": -3.848,
+    "returning": 0.17
    },
    "2711": {
-    "abbr": null,
-    "defense": -0.901,
-    "games": 31,
+    "abbr": "WMU",
+    "arrivals": 4.5,
+    "defense": -2.607,
     "name": null,
-    "offense": 4.168
+    "offense": 5.357,
+    "returning": 0.0
    },
    "2717": {
-    "abbr": null,
-    "defense": -2.324,
-    "games": 31,
+    "abbr": "WCU",
+    "arrivals": 2.12,
+    "defense": -1.123,
     "name": null,
-    "offense": 6.095
+    "offense": 4.377,
+    "returning": 0.15
    },
    "2724": {
-    "abbr": null,
-    "defense": -9.673,
-    "games": 33,
+    "abbr": "WICH",
+    "arrivals": 1.53,
+    "defense": -9.022,
     "name": null,
-    "offense": 7.245
+    "offense": 6.953,
+    "returning": 0.69
    },
    "2729": {
-    "abbr": null,
-    "defense": -1.556,
-    "games": 32,
+    "abbr": "W&M",
+    "arrivals": 1.62,
+    "defense": 1.35,
     "name": null,
-    "offense": 11.49
+    "offense": 7.179,
+    "returning": 0.0
    },
    "2737": {
-    "abbr": null,
-    "defense": -3.884,
-    "games": 34,
+    "abbr": "WIN",
+    "arrivals": 1.66,
+    "defense": -0.161,
     "name": null,
-    "offense": 10.284
+    "offense": 5.743,
+    "returning": 0.11
    },
    "2739": {
-    "abbr": null,
-    "defense": -6.422,
-    "games": 33,
+    "abbr": "GB",
+    "arrivals": 1.73,
+    "defense": -4.978,
     "name": null,
-    "offense": 2.668
+    "offense": 1.902,
+    "returning": 0.32
    },
    "2747": {
-    "abbr": null,
-    "defense": -1.655,
-    "games": 32,
+    "abbr": "WOF",
+    "arrivals": 0.42,
+    "defense": 0.223,
     "name": null,
-    "offense": 5.571
+    "offense": 3.056,
+    "returning": 0.21
    },
    "275": {
-    "abbr": null,
-    "defense": -7.346,
-    "games": 34,
+    "abbr": "WIS",
+    "arrivals": 1.88,
+    "defense": -5.238,
     "name": null,
-    "offense": 16.138
+    "offense": 12.691,
+    "returning": 0.45
    },
    "2750": {
-    "abbr": null,
-    "defense": -7.269,
-    "games": 34,
+    "abbr": "WRST",
+    "arrivals": 1.37,
+    "defense": -4.434,
     "name": null,
-    "offense": 7.104
+    "offense": 4.311,
+    "returning": 0.32
    },
    "2751": {
-    "abbr": null,
-    "defense": -7.838,
-    "games": 32,
+    "abbr": "WYO",
+    "arrivals": 1.4,
+    "defense": -5.1,
     "name": null,
-    "offense": 6.823
+    "offense": 4.332,
+    "returning": 0.43
    },
    "2752": {
-    "abbr": null,
-    "defense": -1.388,
-    "games": 33,
+    "abbr": "XAV",
+    "arrivals": 3.57,
+    "defense": -3.665,
     "name": null,
-    "offense": 11.324
+    "offense": 12.049,
+    "returning": 0.29
    },
    "2754": {
-    "abbr": null,
-    "defense": -6.596,
-    "games": 32,
+    "abbr": "YSU",
+    "arrivals": 1.75,
+    "defense": -3.252,
     "name": null,
-    "offense": 4.332
+    "offense": 1.052,
+    "returning": 0.05
    },
    "2755": {
-    "abbr": null,
-    "defense": -5.918,
-    "games": 33,
+    "abbr": "GRAM",
+    "arrivals": 2.06,
+    "defense": -3.155,
     "name": null,
-    "offense": -2.912
+    "offense": -4.393,
+    "returning": 0.05
    },
    "276": {
-    "abbr": null,
-    "defense": -1.524,
-    "games": 32,
+    "abbr": "MRSH",
+    "arrivals": 1.74,
+    "defense": 0.565,
     "name": null,
-    "offense": 9.148
+    "offense": 5.91,
+    "returning": 0.26
    },
    "277": {
-    "abbr": null,
-    "defense": -16.933,
-    "games": 32,
+    "abbr": "WVU",
+    "arrivals": 3.62,
+    "defense": -14.599,
     "name": null,
-    "offense": 0.66
+    "offense": 0.826,
+    "returning": 0.14
    },
    "2771": {
-    "abbr": null,
-    "defense": -10.051,
-    "games": 34,
+    "abbr": "MRMK",
+    "arrivals": 0.87,
+    "defense": -5.842,
     "name": null,
-    "offense": -0.626
+    "offense": -3.371,
+    "returning": 0.18
    },
    "278": {
-    "abbr": null,
-    "defense": -7.627,
-    "games": 32,
+    "abbr": "FRES",
+    "arrivals": 1.37,
+    "defense": -4.254,
     "name": null,
-    "offense": 3.258
+    "offense": 0.52,
+    "returning": 0.0
    },
    "279": {
-    "abbr": null,
-    "defense": -11.061,
-    "games": 33,
+    "abbr": "PAC",
+    "arrivals": 2.04,
+    "defense": -6.935,
     "name": null,
-    "offense": 2.565
+    "offense": -0.235,
+    "returning": 0.09
    },
    "28": {
-    "abbr": null,
-    "defense": -9.307,
-    "games": 34,
+    "abbr": "UCSD",
+    "arrivals": 1.82,
+    "defense": -8.11,
     "name": null,
-    "offense": 3.247
+    "offense": 3.149,
+    "returning": 0.64
    },
    "2803": {
-    "abbr": null,
-    "defense": -3.689,
-    "games": 31,
+    "abbr": "BRY",
+    "arrivals": 0.94,
+    "defense": -3.462,
     "name": null,
-    "offense": -4.85
+    "offense": -3.893,
+    "returning": 0.26
    },
    "2815": {
-    "abbr": null,
-    "defense": -3.342,
-    "games": 33,
+    "abbr": "LIN",
+    "arrivals": 1.66,
+    "defense": -0.464,
     "name": null,
-    "offense": 6.1
+    "offense": 2.739,
+    "returning": 0.0
    },
    "282": {
-    "abbr": null,
-    "defense": -4.179,
-    "games": 32,
+    "abbr": "INST",
+    "arrivals": 2.47,
+    "defense": -2.449,
     "name": null,
-    "offense": 4.953
+    "offense": 3.112,
+    "returning": 0.0
    },
    "2837": {
-    "abbr": null,
-    "defense": -3.289,
-    "games": 32,
+    "abbr": "ETAM",
+    "arrivals": 0.93,
+    "defense": -2.157,
     "name": null,
-    "offense": 0.214
+    "offense": -0.374,
+    "returning": 0.07
    },
    "284": {
-    "abbr": null,
-    "defense": -6.814,
-    "games": 33,
+    "abbr": "STO",
+    "arrivals": 1.41,
+    "defense": -4.992,
     "name": null,
-    "offense": -4.653
+    "offense": -4.744,
+    "returning": 0.1
    },
    "2856": {
-    "abbr": null,
-    "defense": -11.339,
-    "games": 33,
+    "abbr": "CBU",
+    "arrivals": 0.62,
+    "defense": -6.115,
     "name": null,
-    "offense": 2.652
+    "offense": -1.296,
+    "returning": 0.14
    },
    "2870": {
-    "abbr": null,
-    "defense": -3.548,
-    "games": 32,
+    "abbr": "PFW",
+    "arrivals": 1.04,
+    "defense": -1.711,
     "name": null,
-    "offense": 4.933
+    "offense": 3.272,
+    "returning": 0.28
    },
    "288": {
-    "abbr": null,
-    "defense": -3.976,
-    "games": 32,
+    "abbr": "LIP",
+    "arrivals": 1.17,
+    "defense": -2.553,
     "name": null,
-    "offense": 6.573
+    "offense": 4.865,
+    "returning": 0.43
    },
    "2885": {
-    "abbr": null,
-    "defense": -2.984,
-    "games": 33,
+    "abbr": "NJIT",
+    "arrivals": 1.35,
+    "defense": -2.026,
     "name": null,
-    "offense": -2.565
+    "offense": -2.81,
+    "returning": 0.36
    },
    "290": {
-    "abbr": null,
-    "defense": 1.702,
-    "games": 37,
+    "abbr": "GASO",
+    "arrivals": 0.9,
+    "defense": 3.572,
     "name": null,
-    "offense": 8.99
+    "offense": 5.578,
+    "returning": 0.02
    },
    "2900": {
-    "abbr": null,
-    "defense": -6.89,
-    "games": 33,
+    "abbr": "STMN",
+    "arrivals": 0.66,
+    "defense": -2.638,
     "name": null,
-    "offense": 9.816
+    "offense": 5.061,
+    "returning": 0.28
    },
    "2908": {
-    "abbr": null,
-    "defense": -4.719,
-    "games": 32,
+    "abbr": "UPST",
+    "arrivals": 1.28,
+    "defense": -1.889,
     "name": null,
-    "offense": 1.445
+    "offense": -0.775,
+    "returning": 0.07
    },
    "2916": {
-    "abbr": null,
-    "defense": -3.134,
-    "games": 31,
+    "abbr": "UIW",
+    "arrivals": 2.47,
+    "defense": -0.77,
     "name": null,
-    "offense": 3.787
+    "offense": 1.302,
+    "returning": 0.0
    },
    "292": {
-    "abbr": null,
-    "defense": -7.733,
-    "games": 33,
+    "abbr": "RGV",
+    "arrivals": 0.58,
+    "defense": -3.119,
     "name": null,
-    "offense": 5.481
+    "offense": 1.145,
+    "returning": 0.08
    },
    "2934": {
-    "abbr": null,
-    "defense": 2.702,
-    "games": 32,
+    "abbr": "CSUB",
+    "arrivals": 0.95,
+    "defense": 1.205,
     "name": null,
-    "offense": 1.185
+    "offense": 2.107,
+    "returning": 0.06
    },
    "294": {
-    "abbr": null,
-    "defense": -6.563,
-    "games": 32,
+    "abbr": "JAX",
+    "arrivals": 1.95,
+    "defense": -4.721,
     "name": null,
-    "offense": -0.732
+    "offense": -1.182,
+    "returning": 0.26
    },
    "295": {
-    "abbr": null,
-    "defense": -1.878,
-    "games": 33,
+    "abbr": "ODU",
+    "arrivals": 1.36,
+    "defense": -0.72,
     "name": null,
-    "offense": 4.654
+    "offense": 3.097,
+    "returning": 0.29
    },
    "299": {
-    "abbr": null,
-    "defense": -2.072,
-    "games": 32,
+    "abbr": "LBSU",
+    "arrivals": 1.23,
+    "defense": -0.793,
     "name": null,
-    "offense": 2.856
+    "offense": 1.579,
+    "returning": 0.05
    },
    "30": {
-    "abbr": null,
-    "defense": -4.421,
-    "games": 32,
+    "abbr": "USC",
+    "arrivals": 3.62,
+    "defense": -4.24,
     "name": null,
-    "offense": 10.785
+    "offense": 9.643,
+    "returning": 0.24
    },
    "300": {
-    "abbr": null,
-    "defense": -10.934,
-    "games": 34,
+    "abbr": "UCI",
+    "arrivals": 0.51,
+    "defense": -6.317,
     "name": null,
-    "offense": 4.115
+    "offense": 0.753,
+    "returning": 0.27
    },
    "301": {
-    "abbr": null,
-    "defense": -0.933,
-    "games": 33,
+    "abbr": "USD",
+    "arrivals": 4.06,
+    "defense": -2.042,
     "name": null,
-    "offense": 4.578
+    "offense": 5.061,
+    "returning": 0.0
    },
    "302": {
-    "abbr": null,
-    "defense": -4.567,
-    "games": 33,
+    "abbr": "UCD",
+    "arrivals": 0.5,
+    "defense": -3.434,
     "name": null,
-    "offense": 5.512
+    "offense": 4.322,
+    "returning": 0.53
    },
    "304": {
-    "abbr": null,
-    "defense": -3.939,
-    "games": 33,
+    "abbr": "IDST",
+    "arrivals": 0.01,
+    "defense": -1.129,
     "name": null,
-    "offense": 3.313
+    "offense": 0.545,
+    "returning": 0.04
    },
    "305": {
-    "abbr": null,
-    "defense": -11.644,
-    "games": 32,
+    "abbr": "DEP",
+    "arrivals": 3.27,
+    "defense": -10.914,
     "name": null,
-    "offense": 1.233
+    "offense": 2.108,
+    "returning": 0.35
    },
    "3084": {
-    "abbr": null,
-    "defense": -8.664,
-    "games": 33,
+    "abbr": "UVU",
+    "arrivals": 0.83,
+    "defense": -5.28,
     "name": null,
-    "offense": 8.891
+    "offense": 5.482,
+    "returning": 0.38
    },
    "309": {
-    "abbr": null,
-    "defense": -7.531,
-    "games": 33,
+    "abbr": "UL",
+    "arrivals": 2.32,
+    "defense": -7.157,
     "name": null,
-    "offense": -6.228
+    "offense": -4.607,
+    "returning": 0.21
    },
    "3101": {
-    "abbr": null,
-    "defense": -3.161,
-    "games": 34,
+    "abbr": "UTU",
+    "arrivals": 0.23,
+    "defense": -1.365,
     "name": null,
-    "offense": 6.076
+    "offense": 3.781,
+    "returning": 0.22
    },
    "311": {
-    "abbr": null,
-    "defense": -7.821,
-    "games": 32,
+    "abbr": "ME",
+    "arrivals": 1.13,
+    "defense": -6.139,
     "name": null,
-    "offense": -7.878
+    "offense": -7.163,
+    "returning": 0.27
    },
    "314": {
-    "abbr": null,
-    "defense": -2.17,
-    "games": 32,
+    "abbr": "IONA",
+    "arrivals": 2.37,
+    "defense": -1.471,
     "name": null,
-    "offense": 3.909
+    "offense": 2.771,
+    "returning": 0.27
    },
    "315": {
-    "abbr": null,
-    "defense": -5.284,
-    "games": 30,
+    "abbr": "NIA",
+    "arrivals": 1.87,
+    "defense": -5.267,
     "name": null,
-    "offense": -6.578
+    "offense": -4.798,
+    "returning": 0.1
    },
    "322": {
-    "abbr": null,
-    "defense": -2.494,
-    "games": 32,
+    "abbr": "LAF",
+    "arrivals": 0.12,
+    "defense": -1.522,
     "name": null,
-    "offense": -1.301
+    "offense": -1.835,
+    "returning": 0.25
    },
    "3229": {
-    "abbr": null,
-    "defense": 39.712,
-    "games": 10,
+    "abbr": "VUL",
+    "arrivals": null,
+    "defense": 31.246,
     "name": null,
-    "offense": -11.349
+    "offense": -9.388,
+    "returning": null
    },
    "324": {
-    "abbr": null,
-    "defense": -5.799,
-    "games": 32,
+    "abbr": "CCU",
+    "arrivals": 1.84,
+    "defense": -4.343,
     "name": null,
-    "offense": 1.071
+    "offense": 0.424,
+    "returning": 0.21
    },
    "325": {
-    "abbr": null,
-    "defense": 4.947,
-    "games": 33,
+    "abbr": "CLE",
+    "arrivals": 1.66,
+    "defense": 4.299,
     "name": null,
-    "offense": 7.296
+    "offense": 6.043,
+    "returning": 0.0
    },
    "326": {
-    "abbr": null,
-    "defense": -6.01,
-    "games": 32,
+    "abbr": "TXST",
+    "arrivals": 2.76,
+    "defense": -6.422,
     "name": null,
-    "offense": 1.055
+    "offense": 2.286,
+    "returning": 0.4
    },
    "328": {
-    "abbr": null,
-    "defense": -10.435,
-    "games": 34,
+    "abbr": "USU",
+    "arrivals": 3.13,
+    "defense": -8.822,
     "name": null,
-    "offense": 13.476
+    "offense": 11.404,
+    "returning": 0.25
    },
    "331": {
-    "abbr": null,
-    "defense": -2.041,
-    "games": 33,
+    "abbr": "EWU",
+    "arrivals": 1.07,
+    "defense": -0.211,
     "name": null,
-    "offense": 7.839
+    "offense": 5.148,
+    "returning": 0.26
    },
    "333": {
-    "abbr": null,
-    "defense": -2.947,
-    "games": 32,
+    "abbr": "ALA",
+    "arrivals": 1.47,
+    "defense": -0.345,
     "name": null,
-    "offense": 23.398
+    "offense": 17.809,
+    "returning": 0.34
    },
    "338": {
-    "abbr": null,
-    "defense": -2.307,
-    "games": 34,
+    "abbr": "KENN",
+    "arrivals": 2.19,
+    "defense": -1.061,
     "name": null,
-    "offense": 11.761
+    "offense": 9.096,
+    "returning": 0.31
    },
    "339": {
-    "abbr": null,
-    "defense": -3.452,
-    "games": 32,
+    "abbr": "EVAN",
+    "arrivals": 0.63,
+    "defense": -3.291,
     "name": null,
-    "offense": -0.852
+    "offense": -0.501,
+    "returning": 0.32
    },
    "344": {
-    "abbr": null,
-    "defense": -3.495,
-    "games": 32,
+    "abbr": "MSST",
+    "arrivals": 3.83,
+    "defense": -5.177,
     "name": null,
-    "offense": 8.607
+    "offense": 9.642,
+    "returning": 0.21
    },
    "349": {
-    "abbr": null,
-    "defense": 0.314,
-    "games": 32,
+    "abbr": "ARMY",
+    "arrivals": 0.0,
+    "defense": -0.142,
     "name": null,
-    "offense": 0.495
+    "offense": 0.83,
+    "returning": 0.56
    },
    "350": {
-    "abbr": null,
-    "defense": -10.337,
-    "games": 32,
+    "abbr": "UNCW",
+    "arrivals": 0.98,
+    "defense": -6.572,
     "name": null,
-    "offense": 4.589
+    "offense": 1.941,
+    "returning": 0.24
    },
    "356": {
-    "abbr": null,
-    "defense": -12.906,
-    "games": 32,
+    "abbr": "ILL",
+    "arrivals": 0.72,
+    "defense": -7.334,
     "name": null,
-    "offense": 16.898
+    "offense": 10.714,
+    "returning": 0.43
    },
    "357": {
-    "abbr": null,
-    "defense": -9.764,
-    "games": 33,
+    "abbr": "AMCC",
+    "arrivals": 2.39,
+    "defense": -6.333,
     "name": null,
-    "offense": 0.999
+    "offense": -0.917,
+    "returning": 0.12
    },
    "36": {
-    "abbr": null,
-    "defense": -9.73,
-    "games": 33,
+    "abbr": "CSU",
+    "arrivals": 0.73,
+    "defense": -7.658,
     "name": null,
-    "offense": 5.811
+    "offense": 4.403,
+    "returning": 0.58
    },
    "38": {
-    "abbr": null,
-    "defense": -3.982,
-    "games": 32,
+    "abbr": "COLO",
+    "arrivals": 1.35,
+    "defense": -2.406,
     "name": null,
-    "offense": 11.504
+    "offense": 8.829,
+    "returning": 0.36
    },
    "399": {
-    "abbr": null,
-    "defense": -3.575,
-    "games": 32,
+    "abbr": "UALB",
+    "arrivals": 0.45,
+    "defense": -1.685,
     "name": null,
-    "offense": 0.538
+    "offense": -0.851,
+    "returning": 0.2
    },
    "41": {
-    "abbr": null,
-    "defense": -17.365,
-    "games": 34,
+    "abbr": "CONN",
+    "arrivals": 3.17,
+    "defense": -12.968,
     "name": null,
-    "offense": 9.644
+    "offense": 6.412,
+    "returning": 0.33
    },
    "43": {
-    "abbr": null,
-    "defense": -8.539,
-    "games": 30,
+    "abbr": "YALE",
+    "arrivals": 0.0,
+    "defense": -4.281,
     "name": null,
-    "offense": 10.97
+    "offense": 6.284,
+    "returning": 0.37
    },
    "44": {
-    "abbr": null,
-    "defense": -5.113,
-    "games": 32,
+    "abbr": "AMER",
+    "arrivals": 0.0,
+    "defense": -5.138,
     "name": null,
-    "offense": 2.612
+    "offense": 3.101,
+    "returning": 0.84
    },
    "45": {
-    "abbr": null,
-    "defense": -5.585,
-    "games": 33,
+    "abbr": "GW",
+    "arrivals": 3.33,
+    "defense": -2.897,
     "name": null,
-    "offense": 12.606
+    "offense": 8.815,
+    "returning": 0.12
    },
    "46": {
-    "abbr": null,
-    "defense": -8.319,
-    "games": 34,
+    "abbr": "GTWN",
+    "arrivals": 1.57,
+    "defense": -6.268,
     "name": null,
-    "offense": 6.2
+    "offense": 4.41,
+    "returning": 0.31
    },
    "47": {
-    "abbr": null,
-    "defense": -5.95,
-    "games": 33,
+    "abbr": "HOW",
+    "arrivals": 0.99,
+    "defense": -3.724,
     "name": null,
-    "offense": 4.267
+    "offense": 2.259,
+    "returning": 0.51
    },
    "48": {
-    "abbr": null,
-    "defense": -5.145,
-    "games": 31,
+    "abbr": "DEL",
+    "arrivals": 2.52,
+    "defense": -4.22,
     "name": null,
-    "offense": -1.73
+    "offense": -1.694,
+    "returning": 0.26
    },
    "5": {
-    "abbr": null,
-    "defense": -5.703,
-    "games": 32,
+    "abbr": "UAB",
+    "arrivals": 3.06,
+    "defense": -2.96,
     "name": null,
-    "offense": 7.912
+    "offense": 4.909,
+    "returning": 0.1
    },
    "50": {
-    "abbr": null,
-    "defense": -3.005,
-    "games": 31,
+    "abbr": "FAMU",
+    "arrivals": 1.23,
+    "defense": -1.487,
     "name": null,
-    "offense": -2.994
+    "offense": -3.569,
+    "returning": 0.13
    },
    "52": {
-    "abbr": null,
-    "defense": -4.797,
-    "games": 33,
+    "abbr": "FSU",
+    "arrivals": 2.94,
+    "defense": -3.308,
     "name": null,
-    "offense": 12.342
+    "offense": 9.711,
+    "returning": 0.1
    },
    "526": {
-    "abbr": null,
-    "defense": -3.399,
-    "games": 34,
+    "abbr": "FGCU",
+    "arrivals": 0.3,
+    "defense": -0.616,
     "name": null,
-    "offense": 3.757
+    "offense": 1.072,
+    "returning": 0.14
    },
    "55": {
-    "abbr": null,
-    "defense": -9.522,
-    "games": 32,
+    "abbr": "JXST",
+    "arrivals": 1.95,
+    "defense": -6.114,
     "name": null,
-    "offense": 1.489
+    "offense": -0.796,
+    "returning": 0.0
    },
    "56": {
-    "abbr": null,
-    "defense": -0.205,
-    "games": 33,
+    "abbr": "STET",
+    "arrivals": 1.14,
+    "defense": -0.785,
     "name": null,
-    "offense": 1.323
+    "offense": 1.842,
+    "returning": 0.39
    },
    "57": {
-    "abbr": null,
-    "defense": -13.985,
-    "games": 33,
+    "abbr": "FLA",
+    "arrivals": 0.75,
+    "defense": -12.062,
     "name": null,
-    "offense": 17.796
+    "offense": 15.459,
+    "returning": 0.77
    },
    "58": {
-    "abbr": null,
-    "defense": -5.439,
-    "games": 33,
+    "abbr": "USF",
+    "arrivals": 4.24,
+    "defense": -2.294,
     "name": null,
-    "offense": 16.555
+    "offense": 11.809,
+    "returning": 0.13
    },
    "59": {
-    "abbr": null,
-    "defense": -3.423,
-    "games": 31,
+    "abbr": "GT",
+    "arrivals": 2.59,
+    "defense": -3.415,
     "name": null,
-    "offense": 5.829
+    "offense": 5.387,
+    "returning": 0.14
    },
    "6": {
-    "abbr": null,
-    "defense": -7.529,
-    "games": 32,
+    "abbr": "USA",
+    "arrivals": 0.85,
+    "defense": -3.531,
     "name": null,
-    "offense": 2.572
+    "offense": -0.709,
+    "returning": 0.11
    },
    "61": {
-    "abbr": null,
-    "defense": -4.507,
-    "games": 32,
+    "abbr": "UGA",
+    "arrivals": 1.82,
+    "defense": -2.997,
     "name": null,
-    "offense": 19.992
+    "offense": 16.189,
+    "returning": 0.44
    },
    "62": {
-    "abbr": null,
-    "defense": -8.749,
-    "games": 32,
+    "abbr": "HAW",
+    "arrivals": 1.75,
+    "defense": -5.09,
     "name": null,
-    "offense": 6.288
+    "offense": 3.044,
+    "returning": 0.1
    },
    "66": {
-    "abbr": null,
-    "defense": -16.977,
-    "games": 34,
+    "abbr": "ISU",
+    "arrivals": 3.0,
+    "defense": -12.853,
     "name": null,
-    "offense": 13.943
+    "offense": 10.258,
+    "returning": 0.4
    },
    "68": {
-    "abbr": null,
-    "defense": -8.297,
-    "games": 32,
+    "abbr": "BOIS",
+    "arrivals": 2.07,
+    "defense": -5.249,
     "name": null,
-    "offense": 8.959
+    "offense": 5.998,
+    "returning": 0.27
    },
    "70": {
-    "abbr": null,
-    "defense": -7.482,
-    "games": 35,
+    "abbr": "IDHO",
+    "arrivals": 0.34,
+    "defense": -3.012,
     "name": null,
-    "offense": 6.169
+    "offense": 2.03,
+    "returning": 0.14
    },
    "71": {
-    "abbr": null,
-    "defense": -5.29,
-    "games": 33,
+    "abbr": "BRAD",
+    "arrivals": 1.16,
+    "defense": -1.475,
     "name": null,
-    "offense": 8.802
+    "offense": 4.297,
+    "returning": 0.13
    },
    "77": {
-    "abbr": null,
-    "defense": -10.75,
-    "games": 34,
+    "abbr": "NU",
+    "arrivals": 2.78,
+    "defense": -8.02,
     "name": null,
-    "offense": 6.266
+    "offense": 4.192,
+    "returning": 0.22
    },
    "79": {
-    "abbr": null,
-    "defense": -10.065,
-    "games": 32,
+    "abbr": "SIU",
+    "arrivals": 0.0,
+    "defense": -5.92,
     "name": null,
-    "offense": 4.106
+    "offense": 0.768,
+    "returning": 0.3
    },
    "8": {
-    "abbr": null,
-    "defense": -5.535,
-    "games": 34,
+    "abbr": "ARK",
+    "arrivals": 1.1,
+    "defense": -0.469,
     "name": null,
-    "offense": 21.049
+    "offense": 13.774,
+    "returning": 0.14
    },
    "82": {
-    "abbr": null,
-    "defense": -9.797,
-    "games": 34,
+    "abbr": "UIC",
+    "arrivals": 1.43,
+    "defense": -7.827,
     "name": null,
-    "offense": 5.695
+    "offense": 4.454,
+    "returning": 0.45
    },
    "84": {
-    "abbr": null,
-    "defense": -10.052,
-    "games": 32,
+    "abbr": "IU",
+    "arrivals": 3.62,
+    "defense": -8.205,
     "name": null,
-    "offense": 10.987
+    "offense": 8.968,
+    "returning": 0.17
    },
    "85": {
-    "abbr": null,
-    "defense": 7.363,
-    "games": 32,
+    "abbr": "IUIN",
+    "arrivals": 1.13,
+    "defense": 6.504,
     "name": null,
-    "offense": 10.605
+    "offense": 9.006,
+    "returning": 0.13
    },
    "87": {
-    "abbr": null,
-    "defense": -6.95,
-    "games": 31,
+    "abbr": "ND",
+    "arrivals": 2.51,
+    "defense": -6.375,
     "name": null,
-    "offense": 7.462
+    "offense": 6.762,
+    "returning": 0.34
    },
    "88": {
-    "abbr": null,
-    "defense": -3.084,
-    "games": 30,
+    "abbr": "USI",
+    "arrivals": 1.88,
+    "defense": -2.994,
     "name": null,
-    "offense": -2.182
+    "offense": -1.487,
+    "returning": 0.15
    },
    "9": {
-    "abbr": null,
-    "defense": -6.367,
-    "games": 33,
+    "abbr": "ASU",
+    "arrivals": 4.25,
+    "defense": -7.048,
     "name": null,
-    "offense": 8.995
+    "offense": 9.337,
+    "returning": 0.09
    },
    "91": {
-    "abbr": null,
-    "defense": 1.368,
-    "games": 32,
+    "abbr": "BELL",
+    "arrivals": 0.0,
+    "defense": 2.054,
     "name": null,
-    "offense": 6.609
+    "offense": 4.791,
+    "returning": 0.48
    },
    "93": {
-    "abbr": null,
-    "defense": -0.263,
-    "games": 32,
+    "abbr": "MUR",
+    "arrivals": 1.81,
+    "defense": 0.191,
     "name": null,
-    "offense": 13.835
+    "offense": 11.297,
+    "returning": 0.28
    },
    "94": {
-    "abbr": null,
-    "defense": -2.806,
-    "games": 34,
+    "abbr": "NKU",
+    "arrivals": 1.69,
+    "defense": 0.275,
     "name": null,
-    "offense": 9.73
+    "offense": 5.837,
+    "returning": 0.24
    },
    "96": {
-    "abbr": null,
-    "defense": -11.497,
-    "games": 34,
+    "abbr": "UK",
+    "arrivals": 3.31,
+    "defense": -9.144,
     "name": null,
-    "offense": 12.66
+    "offense": 10.215,
+    "returning": 0.18
    },
    "97": {
-    "abbr": null,
-    "defense": -10.763,
-    "games": 33,
+    "abbr": "LOU",
+    "arrivals": 3.29,
+    "defense": -7.189,
     "name": null,
-    "offense": 16.877
+    "offense": 12.396,
+    "returning": 0.11
    },
    "98": {
-    "abbr": null,
-    "defense": -4.464,
-    "games": 32,
+    "abbr": "WKU",
+    "arrivals": 1.89,
+    "defense": -4.091,
     "name": null,
-    "offense": 8.116
+    "offense": 7.319,
+    "returning": 0.38
    },
    "99": {
-    "abbr": null,
-    "defense": -5.912,
-    "games": 32,
+    "abbr": "LSU",
+    "arrivals": 2.4,
+    "defense": -4.085,
     "name": null,
-    "offense": 11.963
+    "offense": 9.324,
+    "returning": 0.0
    }
   },
   "unknown": {
-   "defense": 13.6,
-   "offense": -13.6
-  }
+   "defense": 12.24,
+   "offense": -12.24
+  },
+  "weighted": true
  },
  "cfb": {
   "built": "2026-11-18",

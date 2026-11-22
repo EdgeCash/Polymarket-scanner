@@ -319,3 +319,36 @@ def test_the_projection_moves_its_margin_for_the_absentees_and_grades_with_and_w
     assert summary["injuries"]["with"] == pytest.approx(graded["injuries"]["error_with"])
     assert summary["injuries"]["without"] == pytest.approx(graded["injuries"]["error_without"])
     assert summarise([], "nba")["injuries"] == {"games": 0, "with": None, "without": None}
+
+
+def test_where_there_is_no_report_the_regulars_who_sat_out_last_time_stand_in():
+    from scanner.injuries import STATUS_WEIGHT, missed_last_game
+
+    rule = RULES["cbb"]
+    rows = lines(
+        "DUKE",
+        {
+            "star": [nba_stats(20, 4, 6)] * 9 + [None],  # sat out the last game
+            "sixth_man": [nba_stats(4, 1, 2, 12)] * 9 + [None],  # sat out too, a replacement
+            "long_gone": [nba_stats(18, 3, 5)] * 3 + [None] * 7,  # out for weeks: priced in
+            "playing": [nba_stats(15, 3, 5)] * 10,
+        },
+    )
+    context = SideContext.build("DUKE", rows, [], {})
+    stand_in = missed_last_game("cbb", context)
+    assert [e["player_id"] for e in stand_in] == ["star"]
+    assert stand_in[0]["status"] == "missed_last_game"
+    out = absentees("cbb", None, context, has_report=False)
+    assert [e["player_id"] for e in out] == ["star"]
+    units = 20 + 0.7 * 4 + 0.5 * 6 - rule.replacement
+    assert out[0]["weight"] == STATUS_WEIGHT["missed_last_game"] == 0.63
+    assert out[0]["played_share"] == 0.9 and out[0]["units"] == {"production": pytest.approx(units)}
+    assert out[0]["cost"] == pytest.approx(
+        0.63 * 0.9 * rule.coefficients["production"] * units, abs=0.01
+    )
+    # With a report (even an empty one) the report is the word, and the pros never use it.
+    assert absentees("cbb", [], context) == []
+    assert missed_last_game("nba", context) == [] and missed_last_game("cfb", context) == []
+    # A side with three games has no regulars to speak of yet.
+    short = SideContext.build("DUKE", [r for r in rows if r["game_id"] >= "DUKE-g7"], [], {})
+    assert missed_last_game("cbb", short) == []

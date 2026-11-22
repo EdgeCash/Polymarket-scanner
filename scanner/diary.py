@@ -389,11 +389,16 @@ ALERT_TYPES = (AlertType.WINNER.value, AlertType.CLINCHED_OVER.value, AlertType.
 # The stored game format. Rows written by an older parser are re-read once so that
 # fields the parser has since learned (first-half yards, the closing line) fill in.
 # Bump it when parse_game_summary learns something worth a re-read.
-FOOTBALL_GAME_VERSION = 3  # 3: per-player lines are kept beside the team box scores
+FOOTBALL_GAME_VERSION = 4  # 4: whether the game was inside a conference (college)
+# What each sport's stored games must have been read by to count as current: only the
+# college sports need the conference flag, so the rest are not read again for it.
+REQUIRED_GAME_VERSION = {"cbb": 4, "cfb": 4}
+DEFAULT_REQUIRED_GAME_VERSION = 3
 # Columns added after a table first shipped: (table, column, definition).
 MIGRATIONS = (
     ("football_games", "version", "INTEGER NOT NULL DEFAULT 1"),
     ("football_games", "book", "TEXT"),
+    ("football_games", "conference_game", "INTEGER"),
 )
 
 OUTCOME_WIN = "win"
@@ -903,7 +908,8 @@ class Diary:
                 """INSERT OR REPLACE INTO football_games (sport, game_id, season, week, date,
                    neutral, home_id, home_abbr, home_name, away_id, away_abbr, away_name,
                    home_score, away_score, home_lines, away_lines, home_stats, away_stats,
-                   fetched_at, version, book) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                   fetched_at, version, book, conference_game)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (
                     record.sport,
                     record.game_id,
@@ -926,6 +932,7 @@ class Diary:
                     _iso(at),
                     FOOTBALL_GAME_VERSION,
                     book,
+                    None if record.conference_game is None else int(record.conference_game),
                 ),
             )
             if not record.players:
@@ -1021,7 +1028,11 @@ class Diary:
             rows = self._conn.execute(
                 "SELECT game_id FROM football_games WHERE sport = ? AND version < ? "
                 "ORDER BY date LIMIT ?",
-                (sport, FOOTBALL_GAME_VERSION, -1 if limit is None else limit),
+                (
+                    sport,
+                    REQUIRED_GAME_VERSION.get(sport, DEFAULT_REQUIRED_GAME_VERSION),
+                    -1 if limit is None else limit,
+                ),
             ).fetchall()
         return [str(r["game_id"]) for r in rows]
 
@@ -1067,6 +1078,9 @@ class Diary:
                     home_stats=json.loads(r["home_stats"]),
                     away_stats=json.loads(r["away_stats"]),
                     book=BookLine.from_dict(json.loads(r["book"])) if r["book"] else None,
+                    conference_game=(
+                        None if r["conference_game"] is None else bool(r["conference_game"])
+                    ),
                 )
             )
         return out

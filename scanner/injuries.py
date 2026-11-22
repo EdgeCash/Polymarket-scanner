@@ -40,6 +40,12 @@ back's or receiver's yards (the box score names no positions; every
 yard-earner's absence counted together gives 0.016 a yard over all five seasons
 and nothing on the part held out) and the other starters on the depth chart,
 which has no past.
+College basketball publishes no report, so the last box score stands in for
+one: a regular who sat out his side's last game is listed as "missed last game"
+at the chance he is still out (0.63 of 15,162 such absences), and a unit of his
+production is worth 0.22 points, nearly twice the NBA's, college rotations being
+shorter (scripts/fit_absence_proxy.py on 20,642 games; held out 11.79 to 11.77).
+
 The diary records every adjustment beside the projection's miss with and
 without it, so the scorecard says whether they earn their place. Nothing here
 is sent or placed.
@@ -61,8 +67,15 @@ STATUS_WEIGHT: dict[str, float] = {
     "questionable": 0.4,
     "probable": 0.1,
     "active": 0.0,
+    # No report at all (college): a regular who sat out his side's last game is still
+    # out for the next one about this often (scripts/fit_absence_proxy.py).
+    "missed_last_game": 0.63,
 }
 UNKNOWN_STATUS_WEIGHT = 0.5
+# Sports with no injury report, where the last box score has to stand in for one.
+PROXY_SPORTS = ("cbb",)
+PROXY_MIN_TEAM_GAMES = 4  # before this a side has no regulars to speak of
+PROXY_MIN_SHARE = 0.5  # a regular played at least this share of the side's recent games
 RECENT_TEAM_GAMES = 10  # the window a player's share of his side's games is counted over
 RECENT_PLAYER_GAMES = 10  # his production is the mean of this many of his latest lines
 SKILL_POSITIONS = ("RB", "FB", "WR", "TE")
@@ -82,7 +95,7 @@ class SportRule:
 
 RULES: dict[str, SportRule] = {
     "nba": SportRule("points", 12.0, 8.0, {"production": 0.115}),
-    "cbb": SportRule("points", 12.0, 6.0, {"production": 0.12}),  # the NBA's, by hand
+    "cbb": SportRule("points", 12.0, 6.0, {"production": 0.22}),
     "nhl": SportRule("goals", 1.5, 0.6, {"production": 0.23}),  # goalies: scanner.goalies
     "nfl": SportRule(
         "points", 14.0, 0.0, {"quarterback": 4.9, "skill_yards": 0.012, "starters": 0.4}
@@ -372,18 +385,57 @@ class SideContext:
         return best
 
 
-def absentees(sport: str, report: list[dict] | None, context: SideContext) -> list[dict]:
+def missed_last_game(sport: str, context: SideContext) -> list[dict]:
+    """Report entries for the regulars who sat out a side's last game, where the sport
+    publishes no report: the nearest thing to one the box scores hold.
+
+    A regular has played at least PROXY_MIN_SHARE of the side's recent games (the one
+    he missed counted against him) and produces more than a replacement.
+    """
+    if sport not in PROXY_SPORTS or len(context.team_games) < PROXY_MIN_TEAM_GAMES:
+        return []
+    last = context.team_games[-1]
+    out = []
+    for player_id, lines in context.lines.items():
+        if any(row["game_id"] == last for row in lines):
+            continue
+        if context.played_share(player_id) < PROXY_MIN_SHARE:
+            continue
+        if context.recent(player_id, basketball_production) <= RULES[sport].replacement:
+            continue
+        out.append(
+            {
+                "player_id": player_id,
+                "name": context.names.get(player_id, ""),
+                "position": context.positions.get(player_id),
+                "status": "missed_last_game",
+                "detail": None,
+                "return_date": None,
+                "reported_at": None,
+            }
+        )
+    return out
+
+
+def absentees(
+    sport: str, report: list[dict] | None, context: SideContext, has_report: bool = True
+) -> list[dict]:
     """One side's likely absentees with their worth in the sport's units.
 
     The report is the game's injury list for the side; the roster adds anyone on
-    injured reserve or suspended that the report leaves out. Each entry carries the
-    man's status, the chance it keeps him out, his units by feature and how much of
-    the side's margin that costs, before the side's cap.
+    injured reserve or suspended that the report leaves out, and where the sport
+    publishes no report at all (``has_report`` false) the regulars who sat out the
+    side's last game stand in for one. Each entry carries the man's status, the
+    chance it keeps him out, his units by feature and how much of the side's margin
+    that costs, before the side's cap.
     """
     if sport not in RULES:
         return []
     rule = RULES[sport]
     listed: dict[str, dict] = {}
+    if not has_report:
+        for entry in missed_last_game(sport, context):
+            listed[entry["player_id"]] = entry
     for entry in report or []:
         listed[entry["player_id"]] = dict(entry)
     for player_id, row in context.roster.items():

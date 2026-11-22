@@ -54,8 +54,9 @@ scripts/           smoke_live.py (by hand), train_winprob.py, the simulator's
                    fetch_history.py, build_sim_tables.py and grade_sim.py, and the
                    model's build_priors.py, fit_priors.py, fit_players.py,
                    fetch_box_scores.py, bulk_box_scores.py, fit_injuries.py,
-                   fit_ratings.py, fit_nfl_situations.py, fit_goalies.py and
-                   build_goalie_priors.py
+                   fit_ratings.py, fit_nfl_situations.py, fit_goalies.py,
+                   build_goalie_priors.py, fit_absence_proxy.py,
+                   fit_roster_prior.py and build_roster_priors.py
 docs/              winprob_report.md
 ```
 
@@ -829,11 +830,69 @@ It is the NBA's path with three differences: ESPN's Division I listing
 (`groups=50`, the same filter the pre-game scan uses; a visitor from outside
 Division I appears with its games against Division I sides and is usually
 thin), two halves instead of four quarters (the sheet's "1st half" is the
-first line score), and its own numbers in `TUNING` (home court 4, a margin
+first line score), and its own numbers in `TUNING` (home court 4 then, a margin
 spread of 12, a total spread of 17, a first-half share of 0.47 until the log
 says otherwise). Opening night listed 182 games, so the backfill takes a few
 passes per day and the matchups page is long on a Saturday. The simulator's
 overtime for college is five minutes at a slightly lower pace than the NBA's.
+
+Four things were then fit for college on four seasons of box scores (20,642
+rated games, 2022-23 to 2025-26, from `scripts/bulk_box_scores.py`), and each
+earned a place.
+
+The home edge is two numbers. Home sides fell 1.0 to 1.5 points short of the
+single 4.0 inside their own conference in every one of the four seasons and
+beat it by 1.7 to 3.1 outside it, whether the host was favoured or not: a
+conference visitor knows the gym and the trip, a November guest does not.
+ESPN's scoreboard and summary both say whether a game is inside a conference
+(`conferenceCompetition`), so the log now keeps it (version 4 of the game
+record; college games stored before it are read once more, 40 a pass, to fill
+it in), and `TUNING` carries 3.0 inside and 5.0 outside, with 4.0 for a game
+whose kind is unknown. With the ratings fit again on those edges the margin's
+miss goes from 11.72 to 11.69 over the first three seasons and from 11.79 to
+11.73 on the last, which chose nothing (`scripts/fit_ratings.py --only home`).
+
+The prior is a forecast of this season, not a copy of the last. Two fifths of
+a college side's minutes come back in a usual year and the portal moves the
+rest, and every player keeps ESPN's athlete id from one side to the next, so
+the box scores say who is back, who has arrived and what each did last season.
+`scripts/fit_roster_prior.py` fits a side's final rating on the rating split by
+the share of minutes returning, that share, the newcomers in starter-equivalents
+(capped at the minutes the returning men leave open) with their old sides'
+ratings, what both groups produced a minute against the league, and the
+conference's level for the share that left. On the season left out it misses
+a side's final rating by 4.16 points where last season's rating alone misses
+by 4.74 (1,445 team-seasons), and played through whole seasons in place of
+the plain prior it takes the margin's miss from 11.66 to 11.59 over the season
+and from 12.45 to 12.27 in its first 45 days. `scripts/build_roster_priors.py` writes
+the forecast into `scanner/priors.json` (366 sides for 2026-27, from who has
+played so far this season; 3.0 points from the plain prior on average), marked
+`weighted` so the scanner takes it whole.
+
+There is no injury report, so the last box score stands in for one. A regular
+(half of the side's last ten games, more production than a replacement) who
+sat out his side's last game is still out the next time 63% of the time
+(15,162 such absences), and the margin moves 0.137 points a unit sat out, so a
+unit actually lost is worth 0.22, nearly twice the NBA's: college rotations
+are shorter. `scanner/injuries.py` lists those men with the status "missed
+last game" at that chance, and the held-out miss goes from 11.79 to 11.77
+(`scripts/fit_absence_proxy.py`). The player lines already left such men out.
+
+An old game fades, as in the NBA, here with a half-life of 20 of the side's
+games. The margin barely moves (11.72 to 11.72, 11.79 to 11.78) but the total
+does (16.76 to 16.70 and 17.41 to 17.34).
+
+Left out, each tested on the same games: a cap on one game's margin (worse at
+35, 28 and 22: in college a rout carries news); possessions as a product
+beside the two sides' own paces (the ratings already carry pace, and the
+product added nothing held out); altitude (a high host beat the projection by
+1.1 against lowland visitors, but lowland hosts beat it by 1.7 against high
+visitors, so it is not the air); a home edge of its own for each side (a
+side's home miss in earlier seasons predicts its next at a correlation of 0.17)
+or for each conference (which was the conference split above in disguise).
+Together the split home edge, the fade and the roster prior take the margin's
+miss over the four seasons from 11.66 to 11.53 (12.45 to 12.26 in the first 45
+days) and the total's from 16.92 to 16.85, before the stand-in for the report.
 Conviction in the card is in each sport's own spread, so college sits beside
 the others on the same scale; with 360 teams and few games each, its early
 gaps from the book are noisy, which the per-sport trust weight and the record

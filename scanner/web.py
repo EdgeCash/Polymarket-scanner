@@ -1261,6 +1261,15 @@ def _injuries_block(sheet: dict, settings: Settings) -> str:
             f"<table class='model'><tr><th class='left'>{html.escape(team)}</th><th>Pos</th>"
             f"<th class='left'>Status</th><th>Chance out</th><th>Cost</th></tr>{body}{foot}</table>"
         )
+    if report is None:
+        return (
+            "<h2>Likely absences</h2>" + "".join(tables) + "<p class='note'>No injury report "
+            "is published for this sport, so the last box score stands in for one: a regular "
+            "who sat out his side's last game is listed with the chance he is still out, and "
+            "the cost is his usual production above a replacement's times that chance and the "
+            "share of his side's recent games he played. The sum comes off his side's projected "
+            "score before the blend. Graded with and without on the scorecard.</p>"
+        )
     return (
         "<h2>Injuries</h2>" + "".join(tables) + "<p class='note'>ESPN's report for the game, "
         "read with the summary each hour, plus the roster's injured reserve and suspensions, "

@@ -113,6 +113,7 @@ class SlateGame:
     ranks: dict  # {"home": 12, "away": None} from ESPN's poll rank (college)
     venue: dict  # {"name", "city", "state", "indoor"}
     book: BookLine | None
+    conference_game: bool | None = None  # both sides in one conference (college); None unknown
 
     def as_dict(self) -> dict:
         return {
@@ -134,6 +135,7 @@ class SlateGame:
             "ranks": self.ranks,
             "venue": self.venue,
             "book": self.book.as_dict() if self.book else None,
+            "conference_game": self.conference_game,
         }
 
 
@@ -181,6 +183,7 @@ class GameRecord:
     away_stats: dict
     book: BookLine | None = None  # the book's closing line, from the summary's pickcenter
     players: tuple[PlayerLine, ...] = ()  # every player the box score lists, both sides
+    conference_game: bool | None = None  # both sides in one conference (college); None unknown
 
 
 @dataclass(frozen=True, slots=True)
@@ -237,6 +240,11 @@ def _time(value: Any) -> datetime | None:
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=UTC)
     return parsed.astimezone(UTC)
+
+
+def _flag(value: Any) -> bool | None:
+    """A yes-or-no field that may be missing: None when the feed does not say."""
+    return value if isinstance(value, bool) else None
 
 
 def _team_ref(team: Any, fallback_id: Any = None) -> TeamRef | None:
@@ -363,6 +371,7 @@ def parse_week_scoreboard(raw: Any, sport: str) -> tuple[int | None, int | None,
                     "indoor": venue.get("indoor"),
                 },
                 book=book,
+                conference_game=_flag(competition.get("conferenceCompetition")),
             )
         )
     if season is None:  # a day's scoreboard names the season on each event only
@@ -818,6 +827,7 @@ def parse_game_summary(raw: Any, sport: str) -> GameRecord | None:
         away_stats=stats["away"],
         book=book,
         players=players,
+        conference_game=_flag(competition.get("conferenceCompetition")),
     )
 
 
@@ -1800,7 +1810,7 @@ class GameLog:
             scratches = as_report(scratched.get(side) or [], context.names, context.positions)
             out_ids = {e["player_id"] for e in scratches}
             listed = [e for e in listed if e["player_id"] not in out_ids] + scratches
-            sides[side] = absentees(sport, listed, context)
+            sides[side] = absentees(sport, listed, context, has_report=report is not None)
         if not sides["home"] and not sides["away"]:
             return None
         return sides
@@ -1892,6 +1902,7 @@ class GameLog:
                     "venue": {**(slate.get("venue") or {}), **(extra.get("venue") or {})},
                     "weather": extra.get("weather"),
                     "rest": rest,
+                    "conference_game": slate.get("conference_game"),
                     "injuries": absent,
                     "goalies": self._goalie_edges(
                         sport, season, slate, rest, absent, player_rows, goalie_cache

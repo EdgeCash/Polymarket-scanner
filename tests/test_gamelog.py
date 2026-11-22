@@ -1200,7 +1200,7 @@ def test_player_lines_are_stored_with_the_game_and_read_back_by_team():
     diary = Diary(":memory:")
     record = parse_game_summary(load_fixture("espn_nba_summary_final.json"), "nba")
     diary.store_football_game(record, NOW)
-    assert FOOTBALL_GAME_VERSION == 3 and diary.football_games_stale("nba") == []
+    assert FOOTBALL_GAME_VERSION == 4 and diary.football_games_stale("nba") == []
     rows = diary.player_games("nba")
     assert len(rows) == 27 and diary.player_game_counts() == {"nba": 1}
     tatum = next(r for r in rows if r["name"] == "Jayson Tatum")
@@ -1468,3 +1468,37 @@ def test_hockey_reads_the_scratch_list_near_puck_drop_and_rules_the_goalie_out()
         "nhl", NBA_NOW, budget=0
     )
     assert not [c for c in quiet.calls if c[0].startswith("nhl_")]
+
+
+# -- the college home edge and the stand-in for a report --------------------------------------
+
+
+def test_the_conference_flag_is_read_stored_and_asked_of_old_college_games_only():
+    from scanner.diary import REQUIRED_GAME_VERSION
+
+    _, _, games = parse_week_scoreboard(load_fixture("espn_cfb_week4.json"), "cfb")
+    assert [g.conference_game for g in games] == [False, True, True]
+    assert games[0].as_dict()["conference_game"] is False
+    # A feed that does not say leaves it unknown.
+    _, _, nfl = parse_week_scoreboard(load_fixture("espn_nfl_week4.json"), "nfl")
+    assert all(g.conference_game is None for g in nfl) or all(
+        isinstance(g.conference_game, bool) for g in nfl
+    )
+    record = parse_game_summary(load_fixture("espn_cfb_summary_final.json"), "cfb")
+    assert record.conference_game is False
+    diary = Diary(":memory:")
+    diary.store_football_game(record, NOW)
+    diary.store_football_game(replace(record, game_id="c", conference_game=True), NOW)
+    diary.store_football_game(replace(record, game_id="u", conference_game=None), NOW)
+    stored = {g.game_id: g.conference_game for g in diary.football_games("cfb")}
+    assert stored == {record.game_id: False, "c": True, "u": None}
+    # A college game stored by the parser before the flag is read again; a pro game is not.
+    assert REQUIRED_GAME_VERSION == {"cbb": 4, "cfb": 4}
+    diary.mark_football_game_version("cfb", "c", 3)
+    assert diary.football_games_stale("cfb") == ["c"]
+    nfl_record = parse_game_summary(load_fixture("espn_nfl_summary_final.json"), "nfl")
+    diary.store_football_game(nfl_record, NOW)
+    diary.mark_football_game_version("nfl", nfl_record.game_id, 3)
+    assert diary.football_games_stale("nfl") == []
+    diary.mark_football_game_version("nfl", nfl_record.game_id, 2)
+    assert diary.football_games_stale("nfl") == [nfl_record.game_id]

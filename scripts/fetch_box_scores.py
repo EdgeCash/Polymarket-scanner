@@ -98,6 +98,7 @@ def record_dict(record) -> dict:
         "home_stats": record.home_stats,
         "away_stats": record.away_stats,
         "book": record.book.as_dict() if record.book else None,
+        "conference_game": record.conference_game,
         "players": [
             {
                 "team_id": p.team_id,

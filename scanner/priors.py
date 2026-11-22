@@ -7,6 +7,11 @@ rating by ESPN team id, and a default for a team it does not know (a newcomer,
 or a visitor from outside the division, rated like the weakest tenth of the
 set). The projection shrinks a team toward its share of that rating instead of
 toward average, so a 25-point favourite is not a 3-point favourite in November.
+
+College basketball's entry is a forecast instead (``scripts/build_roster_priors.py``):
+each side's rating as its roster predicts it, from who is back, who has arrived
+and what they produced last season. It is marked ``weighted`` and the projection
+takes it whole, where the others are taken at the sport's prior weight.
 """
 
 from __future__ import annotations

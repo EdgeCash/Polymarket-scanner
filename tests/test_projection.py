@@ -385,8 +385,8 @@ def test_the_rating_dials_are_off_until_a_fit_earns_them_and_do_what_they_say(mo
         t.fumble_points == 0 and t.interception_points == 0 and t.margin_cap is None
         for t in TUNING.values()
     )  # fmt: skip
-    # Fading old games earned its place in the NBA alone.
-    assert {sport for sport, t in TUNING.items() if t.half_life} == {"nba"}
+    # Fading old games earned its place in basketball, pro and college.
+    assert {sport for sport, t in TUNING.items() if t.half_life} == {"nba", "cbb"}
     games = season()
     plain = fit(games, "nfl")
     # Turnover luck: a side that took the ball away twice gives half of that back.
@@ -411,3 +411,55 @@ def test_the_rating_dials_are_off_until_a_fit_earns_them_and_do_what_they_say(mo
     faded = fit(rout, "nfl")
     assert faded.offense["A"] > uncapped.offense["A"]
     assert faded.games["A"] == uncapped.games["A"]  # the count of games is still the count
+
+
+def test_the_home_edge_can_differ_inside_a_conference_and_outside_one(monkeypatch):
+    from dataclasses import replace
+
+    from scanner.projection import home_edge
+
+    plain = TUNING["cfb"]
+    assert home_edge(plain, False, True) == home_edge(plain, False, None) == plain.hfa
+    assert home_edge(plain, True, True) == 0.0
+    split = replace(plain, hfa_conference=2.0, hfa_nonconference=6.0)
+    assert home_edge(split, False, True) == 2.0 and home_edge(split, False, False) == 6.0
+    assert home_edge(split, False, None) == plain.hfa and home_edge(split, True, False) == 0.0
+    monkeypatch.setitem(TUNING, "cfb", split)
+    games = [replace(g, sport="cfb", conference_game=i % 2 == 0) for i, g in enumerate(season())]
+    ratings = fit(games, "cfb")
+    inside = project(ratings, "A", "D", False, None, {"conference_game": True})
+    outside = project(ratings, "A", "D", False, None, {"conference_game": False})
+    unknown = project(ratings, "A", "D", False, None)
+    assert outside["raw"]["margin"] - inside["raw"]["margin"] == pytest.approx(4.0)
+    assert unknown["raw"]["margin"] - inside["raw"]["margin"] == pytest.approx(plain.hfa - 2.0)
+    assert inside["league"]["hfa"] == 2.0 and outside["league"]["hfa"] == 6.0
+    assert inside["raw"]["total"] == pytest.approx(outside["raw"]["total"])
+    neutral = project(ratings, "A", "D", True, None, {"conference_game": False})
+    assert neutral["raw"]["margin"] == pytest.approx(inside["raw"]["margin"] - 2.0)
+
+
+def test_a_weighted_prior_is_taken_whole_and_a_plain_one_at_the_sports_share():
+    from scanner.projection import prior_means
+
+    teams = {"A": {"offense": 4.0, "defense": -2.0}}
+    plain = {"season": 2025, "teams": teams, "unknown": {"offense": -10.0, "defense": 10.0}}
+    by_team, default = prior_means(plain, TUNING["cbb"])
+    share = TUNING["cbb"].prior_weight
+    assert by_team["A"] == (pytest.approx(share * 4.0), pytest.approx(share * -2.0))
+    assert default == (pytest.approx(share * -10.0), pytest.approx(share * 10.0))
+    by_team, default = prior_means({**plain, "weighted": True}, TUNING["cbb"])
+    assert by_team["A"] == (4.0, -2.0) and default == (-10.0, 10.0)
+    assert prior_means(None, TUNING["cbb"]) == ({}, (0.0, 0.0))
+
+
+def test_the_shipped_college_basketball_prior_is_this_seasons_roster_forecast():
+    from scanner import priors
+
+    priors.reload()
+    entry = priors.priors_for("cbb", 2027)
+    assert entry is not None and entry["weighted"] is True and len(entry["teams"]) > 300
+    assert set(entry["roster"]["coefficients"]) >= {"rating_back", "share", "arrivals"}
+    nets = [v["offense"] - v["defense"] for v in entry["teams"].values()]
+    assert -60 < min(nets) < 0 < max(nets) < 40
+    # The other sports keep last season's ratings at their usual weight.
+    assert not priors.priors_for("nba", 2027).get("weighted")

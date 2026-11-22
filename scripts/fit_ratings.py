@@ -9,6 +9,7 @@ as the running scanner would have seen it; only the sport's tuning is changed, o
 dial at a time, and each setting is scored by the root-mean-square miss of the
 margin and of the total:
 
+- ``home``: the home edge inside a conference and outside one (college);
 - ``luck``: the points one lost fumble or interception is taken to be worth, removed
   from the day's score before it is rated (football only; a recovered fumble does
   not carry to next week);
@@ -39,7 +40,24 @@ import scanner.projection as projection  # noqa: E402
 from scanner.gamelog import GameRecord  # noqa: E402
 from scanner.rest import days_since_last  # noqa: E402
 
+HOME_EDGES = {
+    "cbb": (
+        (None, None),
+        (3.0, 6.3),
+        (3.0, 5.5),
+        (2.8, 7.0),
+        (3.3, 5.0),
+        (3.0, 4.8),
+        (3.5, 5.5),
+        (3.2, 5.2),
+    ),  # fmt: skip
+    "cfb": ((None, None), (2.2, 4.5), (2.5, 4.5), (2.0, 5.5), (2.5, 3.5)),
+}
 GRIDS: dict[str, dict[str, list[dict]]] = {
+    "home": {
+        sport: [{"hfa_conference": c, "hfa_nonconference": n} for c, n in grid]
+        for sport, grid in HOME_EDGES.items()
+    },
     "luck": {
         "nfl": [
             {"fumble_points": f, "interception_points": i}
@@ -89,7 +107,12 @@ def final_prior(records: list[GameRecord], sport: str, season) -> dict:
     finally:
         projection.TUNING[sport] = saved
     teams = {
-        team: {"offense": ratings.offense[team], "defense": ratings.defense[team], "name": team}
+        team: {
+            "offense": ratings.offense[team],
+            "defense": ratings.defense[team],
+            "name": team,
+            "games": ratings.games.get(team, 0),
+        }
         for team in ratings.offense
         if ratings.games.get(team, 0) >= projection.MIN_GAMES
     }
@@ -102,8 +125,14 @@ def final_prior(records: list[GameRecord], sport: str, season) -> dict:
     }
 
 
-def walk(sport: str, records: list[GameRecord], overrides: dict) -> list[dict]:
-    """Every rated game's miss under one setting of the sport's tuning."""
+def walk(
+    sport: str, records: list[GameRecord], overrides: dict, priors: dict | None = None
+) -> list[dict]:
+    """Every rated game's miss under one setting of the sport's tuning.
+
+    ``priors`` gives each season's prior outright (by season); without it a season
+    starts from the final ratings of the one before, as scripts/build_priors.py makes them.
+    """
     saved = projection.TUNING[sport]
     by_season: dict = defaultdict(list)
     for record in records:
@@ -120,6 +149,8 @@ def walk(sport: str, records: list[GameRecord], overrides: dict) -> list[dict]:
             earlier: list[GameRecord] = []
             ratings, rated_through = None, None
             projection.TUNING[sport] = replace(saved, **overrides)
+            if priors is not None:
+                prior = priors.get(season)
             for index, record in enumerate(games):
                 day = record.date.date()
                 if rated_through != day:
@@ -142,7 +173,7 @@ def walk(sport: str, records: list[GameRecord], overrides: dict) -> list[dict]:
                         record.away.team_id,
                         record.neutral,
                         None,
-                        {"rest": rest},
+                        {"rest": rest, "conference_game": record.conference_game},
                     )
                     if p is not None:
                         out.append(
@@ -150,6 +181,7 @@ def walk(sport: str, records: list[GameRecord], overrides: dict) -> list[dict]:
                                 "season": season,
                                 "game_id": record.game_id,
                                 "index": index / len(games),
+                                "day": (record.date - games[0].date).days,
                                 "margin": record.home_score
                                 - record.away_score
                                 - p["raw"]["margin"],
@@ -177,6 +209,7 @@ def main() -> None:
     parser.add_argument("--raw", type=Path, required=True)
     parser.add_argument("--sports", nargs="+", default=["nfl", "nba", "nhl"])
     parser.add_argument("--only", nargs="+", default=list(GRIDS))
+    parser.add_argument("--pick", type=int, default=None, help="run one setting of the grid")
     args = parser.parse_args()
     for sport in args.sports:
         records = fit_injuries.load(args.raw, sport)
@@ -191,6 +224,8 @@ def main() -> None:
             if not grid:
                 continue
             print(f"  {dial}")
+            if args.pick is not None:
+                grid = grid[args.pick : args.pick + 1]
             for overrides in grid:
                 rows = walk(sport, records, overrides)
                 before = [r for r in rows if r["season"] != last]
