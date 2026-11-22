@@ -10,7 +10,8 @@ scanner's own ratings from the season's earlier days with the season before as
 its prior, and each side's regulars who sat out its last game are found and
 valued exactly as scanner.injuries does before a game (``missed_last_game`` and
 ``absentees``, with the status weight and the coefficient set to one, so the
-units are bare). Out come:
+units are bare; in football the stand-in is the usual quarterback, when he did
+not throw in the side's last game). Out come:
 
 - how often such a man is still out tonight, which is the status's weight;
 - the margin's miss fit on the two sides' units (away less home), which is the
@@ -80,7 +81,9 @@ def build_table(sport: str, records) -> tuple[list[dict], int, int]:
                     sat += len(entries)
                     still += sum(1 for e in entries if e["player_id"] not in playing)
                     units[side] = sum(
-                        e["units"].get("production", 0.0) * e["played_share"] for e in entries
+                        (e["units"].get("production", 0.0) + e["units"].get("quarterback", 0.0))
+                        * e["played_share"]
+                        for e in entries
                     )
                 table.append(
                     {
@@ -108,7 +111,12 @@ def main() -> None:
         if not records:
             print(f"{sport}: no history in {args.raw}")
             continue
-        table, sat, still = build_table(sport, records)
+        saved = injuries.PROXY_SPORTS
+        injuries.PROXY_SPORTS = (*saved, sport)  # a sport under test stands in for itself
+        try:
+            table, sat, still = build_table(sport, records)
+        finally:
+            injuries.PROXY_SPORTS = saved
         last = max(r["season"] for r in table)
         train = [r for r in table if r["season"] != last]
         test = [r for r in table if r["season"] == last]
@@ -128,12 +136,12 @@ def main() -> None:
             f"  held out {last}: {np.sqrt(np.mean(yt**2)):.3f} -> "
             f"{np.sqrt(np.mean((yt - slope * xt) ** 2)):.3f}"
         )
-        shipped = injuries.STATUS_WEIGHT["missed_last_game"] * injuries.RULES[
-            sport
-        ].coefficients.get("production", 0.0)
+        unit = "quarterback" if sport in injuries.FOOTBALL else "production"
+        coefficient = injuries.RULES[sport].coefficients.get(unit, 0.0)
+        shipped = injuries.STATUS_WEIGHT["missed_last_game"] * coefficient
         print(
             f"  shipped now: weight {injuries.STATUS_WEIGHT['missed_last_game']}, coefficient "
-            f"{injuries.RULES[sport].coefficients.get('production')}; held out "
+            f"{coefficient} a {unit} unit; held out "
             f"{np.sqrt(np.mean((yt - shipped * xt) ** 2)):.3f}"
         )
 

@@ -387,6 +387,16 @@ def test_the_rating_dials_are_off_until_a_fit_earns_them_and_do_what_they_say(mo
     )  # fmt: skip
     # Fading old games earned its place in basketball, pro and college.
     assert {sport for sport, t in TUNING.items() if t.half_life} == {"nba", "cbb"}
+    assert all(t.three_luck in (0.0, 0.25) for t in TUNING.values())
+    # Three-point luck: a side that made 6 more threes than the league's rate on its
+    # attempts gives back the share the tuning calls luck, at three points each.
+    hot = record("h", "A", "D", 120, 100, day=98)
+    hot.home_stats.update(three_made=18, three_att=30)
+    hot.away_stats.update(three_made=12, three_att=30)
+    lucky_share = replace(TUNING["nfl"], three_luck=0.5)
+    scores = luck_free_scores(hot, lucky_share, league_three_rate=0.4)
+    assert scores == {"home": pytest.approx(120 - 0.5 * 3 * 6), "away": 100.0}
+    assert luck_free_scores(hot, lucky_share) == {"home": 120.0, "away": 100.0}  # no rate yet
     games = season()
     plain = fit(games, "nfl")
     # Turnover luck: a side that took the ball away twice gives half of that back.
