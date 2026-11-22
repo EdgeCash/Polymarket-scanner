@@ -994,3 +994,31 @@ def _summary_for(grades):
     from scanner.projection import summarise
 
     return summarise(grades, "nba")
+
+
+def test_a_sport_without_a_report_says_where_its_absences_come_from():
+    from scanner.web import _injuries_block
+
+    settings = load_settings(STATUS_TOKEN="phone-secret")
+    listed = {
+        "home": [
+            {"name": "A Regular", "position": "G", "status": "missed_last_game", "detail": None,
+             "weight": 0.63, "cost": 1.9}
+        ],
+        "away": [],
+        "home_loss": 1.9,
+        "away_loss": 0.0,
+        "margin": -1.9,
+    }  # fmt: skip
+    sheet = {
+        "sport": "cbb",
+        "home": {"abbreviation": "DUKE"},
+        "away": {"abbreviation": "UNC"},
+        "injuries": None,
+        "projection": {"raw": {"injuries": listed}},
+    }
+    block = _injuries_block(sheet, settings)
+    assert "<h2>Likely absences</h2>" in block and "No injury report is published" in block
+    assert "<td class='left'>missed last game</td><td>63%</td><td>1.9</td>" in block
+    # With nothing listed and no report there is nothing to show.
+    assert _injuries_block({**sheet, "projection": {"raw": {}}}, settings) == ""

@@ -75,6 +75,7 @@ def load(raw: Path, sport: str) -> list[GameRecord]:
                         home_stats=g["home_stats"],
                         away_stats=g["away_stats"],
                         book=BookLine.from_dict(g["book"]) if g.get("book") else None,
+                        conference_game=_conference_game(g),
                         players=tuple(
                             PlayerLine(
                                 team_id=p["team_id"],
@@ -91,6 +92,17 @@ def load(raw: Path, sport: str) -> list[GameRecord]:
                 )
     records.sort(key=lambda r: (r.date, r.game_id))
     return records
+
+
+def _conference_game(g: dict) -> bool | None:
+    """Whether a stored game was inside a conference, where the record says (the bulk
+    files carry each side's conference; ESPN's own summaries carry the flag)."""
+    if isinstance(g.get("conference_game"), bool):
+        return g["conference_game"]
+    home, away = g.get("home_conference"), g.get("away_conference")
+    if home is None or away is None:
+        return None
+    return home == away
 
 
 def player_rows(record: GameRecord) -> list[dict]:

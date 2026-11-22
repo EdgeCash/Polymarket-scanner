@@ -60,6 +60,10 @@ class SportTuning:
     performance_sd: float = 0.0
     book_sigma: float | None = None
     book_error: float | None = None
+    # College: the home edge inside a conference and outside one, where they differ
+    # (None: the one ``hfa`` for both). A game whose kind is unknown takes ``hfa``.
+    hfa_conference: float | None = None
+    hfa_nonconference: float | None = None
     # What a performance is made of, beyond the score and the volume stat (each off
     # unless a fit on history earned it; scripts/fit_ratings.py):
     # the points of margin one lost fumble or interception is worth on the day, taken
@@ -150,7 +154,16 @@ TUNING = {
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
     # (home sides fell 0.65 a game short of 3.5 over 15,460 games, 2022-23 to 2024-25).
     # With 360 teams and four games each in November, the prior is what keeps a 25-point
-    # favourite from reading as a 3-point one.
+    # favourite from reading as a 3-point one. The home edge is two numbers: over 20,642
+    # games in four seasons, each projected from earlier days alone, home sides fell 1.0 to
+    # 1.5 short of the single 4.0 inside their conference in every season and beat it by
+    # 1.7 to 3.1 outside it, host favoured or not; with 3.0 and 5.0 and the ratings fit
+    # again, the margin's miss goes from 11.72 to 11.69 on the first three seasons and
+    # 11.79 to 11.73 on the last (scripts/fit_ratings.py --only home). A game whose kind
+    # is unknown keeps 4.0. An old game fades with a half-life of 20 of the side's games,
+    # which is mostly the total's gain (16.76 to 16.70 and 17.41 to 17.34; the margin
+    # 11.72 to 11.72 and 11.79 to 11.78). A cap on one game's margin made things worse
+    # at every level tried: in college a rout carries news.
     "cbb": SportTuning(
         hfa=4.0,
         sigma=12.0,
@@ -160,6 +173,9 @@ TUNING = {
         performance_sd=11.65,
         book_sigma=10.5,
         book_error=2.5,
+        hfa_conference=3.0,
+        hfa_nonconference=5.0,
+        half_life=20.0,
     ),
     # Hockey: half goals, half what the shots say. The book's puck line sits at 1.5
     # whatever the matchup, so its margin is read off the moneyline instead (through
@@ -305,10 +321,15 @@ def book_margin(book: BookLine | None, sport: str) -> float | None:
 
 def prior_means(priors: dict | None, tuning: SportTuning) -> tuple[dict, tuple[float, float]]:
     """Each team's prior offence and defence, scaled by the sport's prior weight, and the
-    default for a team the prior does not know (a newcomer, or a visitor from outside)."""
+    default for a team the prior does not know (a newcomer, or a visitor from outside).
+
+    A prior marked ``weighted`` is already a forecast of this season's ratings (the
+    roster prior, scripts/build_roster_priors.py) and is taken as it stands."""
     r = tuning.prior_weight
     if not priors or r <= 0:
         return {}, (0.0, 0.0)
+    if priors.get("weighted"):
+        r = 1.0
     teams = {
         str(team): (r * float(v.get("offense") or 0.0), r * float(v.get("defense") or 0.0))
         for team, v in (priors.get("teams") or {}).items()
@@ -316,6 +337,18 @@ def prior_means(priors: dict | None, tuning: SportTuning) -> tuple[dict, tuple[f
     unknown = priors.get("unknown") or {}
     default = (r * float(unknown.get("offense") or 0.0), r * float(unknown.get("defense") or 0.0))
     return teams, default
+
+
+def home_edge(tuning: SportTuning, neutral: bool, conference_game: bool | None) -> float:
+    """The home side's edge for one game, in points of margin: none at a neutral site,
+    and the conference or non-conference edge where the sport's tuning tells them apart."""
+    if neutral:
+        return 0.0
+    if conference_game is True and tuning.hfa_conference is not None:
+        return tuning.hfa_conference
+    if conference_game is False and tuning.hfa_nonconference is not None:
+        return tuning.hfa_nonconference
+    return tuning.hfa
 
 
 def luck_free_scores(record: GameRecord, tuning: SportTuning) -> dict[str, float]:
@@ -391,7 +424,7 @@ def fit(records: list[GameRecord], sport: str, priors: dict | None = None) -> Ra
                 loser = "away" if winner == "home" else "home"
                 perf[winner] -= over / 2.0
                 perf[loser] += over / 2.0
-        h = 0.0 if record.neutral else tuning.hfa / 2.0
+        h = home_edge(tuning, record.neutral, record.conference_game) / 2.0
         home, away = record.home.team_id, record.away.team_id
         names[home], names[away] = record.home.name, record.away.name
         entries[home].append([away, perf["home"], perf["away"], h, 1.0])
@@ -481,7 +514,8 @@ def project(
     home, away = ratings.team(home_id), ratings.team(away_id)
     if home is None or away is None:
         return None
-    h = 0.0 if neutral else ratings.hfa / 2.0
+    edge = home_edge(tuning_for(ratings.sport), neutral, (conditions or {}).get("conference_game"))
+    h = edge / 2.0
     home_points = ratings.league_points + home["offense"] + away["defense"] + h
     away_points = ratings.league_points + away["offense"] + home["defense"] - h
     weather = None
@@ -602,7 +636,7 @@ def project(
         },
         "league": {
             "points": ratings.league_points,
-            "hfa": ratings.hfa,
+            "hfa": ratings.hfa if neutral else edge,
             "sigma": sigma,
             "sigma_total": sigma_total,
             "sigma_sport": ratings.sigma,
