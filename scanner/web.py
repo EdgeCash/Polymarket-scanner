@@ -812,6 +812,8 @@ def _gamelog_health(status: RuntimeStatus, settings: Settings) -> str:
         text += f", {gl['injured']} projections moved for injuries"
     if gl.get("scratches"):
         text += f", {gl['scratches']} scratch lists read"
+    if gl.get("starters"):
+        text += f", {gl['starters']} games with a reported goalie"
     if gl.get("rosters_on_file"):
         teams = sum(gl["rosters_on_file"].values())
         text += f", rosters for {teams} teams"

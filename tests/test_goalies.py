@@ -196,3 +196,80 @@ def test_the_carry_over_file_is_used_only_for_the_season_after_it(monkeypatch, t
     goalies._load_priors.cache_clear()
     assert goalies.career_for(2027) == {}
     goalies._load_priors.cache_clear()
+
+
+def test_the_starting_goalies_page_is_read_for_who_is_reported_and_how_firmly():
+    from scanner.starters import (
+        STATUS_CHANCE,
+        match_starters,
+        named_starter,
+        parse_starting_goalies,
+    )
+
+    with open("tests/fixtures/starting_goalies.html", encoding="utf-8") as fh:
+        listing = parse_starting_goalies(fh.read())
+    assert [(g["away"], g["home"]) for g in listing] == [
+        ("CAR", "NYR"), ("BUF", "TBL"), ("PIT", "DAL"), ("EDM", "STL"), ("CHI", "VAN"),
+    ]  # fmt: skip
+    first = listing[0]
+    assert first["start"] == datetime(2026, 11, 22, 17, 30, tzinfo=UTC)
+    assert first["home_goalie"]["name"] == "Dylan Garand"
+    assert first["home_goalie"]["status"] == "confirmed"
+    assert first["home_goalie"]["source"] == "Mollie Walker"
+    assert "warmups" in first["home_goalie"]["detail"]
+    # No report yet is the site's own projection, which is left alone; "Likely" is kept.
+    assert listing[1]["home_goalie"] is None and listing[1]["away_goalie"] is None
+    assert listing[2]["home_goalie"]["status"] == "confirmed" and listing[2]["away_goalie"] is None
+    assert listing[4]["away_goalie"]["status"] == "likely"
+    assert parse_starting_goalies("<html></html>") == [] and parse_starting_goalies(None) == []
+    assert parse_starting_goalies('<script id="__NEXT_DATA__">not json</script>') == []
+    # ESPN calls Tampa Bay TB; the page, like the league, calls it TBL.
+    kickoff = datetime(2026, 11, 22, 22, 0, tzinfo=UTC)
+    assert match_starters(listing, "TB", "BUF", kickoff) == {"home": None, "away": None}
+    blues = match_starters(listing, "STL", "EDM", datetime(2026, 11, 23, 0, 0, tzinfo=UTC))
+    assert blues["home"]["name"] == "Joel Hofer" and blues["away"] is None
+    assert match_starters(listing, "STL", "EDM", kickoff - timedelta(hours=6)) is None
+    assert match_starters(listing, "BOS", "EDM", kickoff) is None
+    known = {"77": "Joel Hofer", "78": "Jordan Binnington"}
+    named = named_starter(blues["home"], known)
+    assert named == {
+        "player_id": "77", "name": "Joel Hofer", "status": "confirmed",
+        "chance": STATUS_CHANCE["confirmed"],
+    }  # fmt: skip
+    stranger = named_starter(listing[4]["home_goalie"], known)
+    assert stranger["player_id"] == "name:nikita tolopilo" and stranger["chance"] == 0.85
+    assert named_starter(None, known) is None
+
+
+def test_a_reported_starter_takes_the_reports_chance_and_the_rest_share_what_is_left():
+    team = team_goalies(goalie_rows("BOS", "AAABAAABAA"), "BOS")
+    league = LEAGUE_SAVE_RATE
+    confirmed = {"player_id": "BOS-B", "name": "Goalie B", "status": "confirmed", "chance": 0.97}
+    chances = start_chances(team, False, None, confirmed)
+    assert chances == {"BOS-B": pytest.approx(0.97), "BOS-A": pytest.approx(0.03)}
+    # The back-to-back rule gives way to the report too.
+    assert start_chances(team, True, None, {**confirmed, "player_id": "BOS-A"})["BOS-A"] == (
+        pytest.approx(0.97)
+    )
+    edge = expected_edge(team, league, False, None, confirmed)
+    a, b = quality(team, "BOS-A", league), quality(team, "BOS-B", league)
+    usual = 0.8 * a + 0.2 * b
+    assert edge["reported"] == "confirmed" and edge["goalies"][0]["name"] == "Goalie B"
+    assert edge["edge"] == pytest.approx((0.97 * b + 0.03 * a - usual) * 30, abs=0.001)
+    # A man the log has never seen is rated at the league's rate, under his reported name.
+    new = {"player_id": "name:new man", "name": "New Man", "status": "likely", "chance": 0.85}
+    unseen = expected_edge(team, league, False, None, new)
+    assert unseen["goalies"][0] == {
+        "player_id": "name:new man", "name": "New Man", "chance": 0.85,
+        "save_rate": pytest.approx(league),
+    }  # fmt: skip
+    assert unseen["reported"] == "likely"
+    # A named man the injury report rules out is not believed over it.
+    ruled_out = expected_edge(team, league, False, {"BOS-B"}, confirmed)
+    assert ruled_out["reported"] is None and ruled_out["goalies"][0]["player_id"] == "BOS-A"
+    # With nobody else on record the named man takes it all.
+    alone = start_chances(team, False, {"BOS-A"}, confirmed)
+    assert alone == {"BOS-B": 1.0}
+    assert expected_edge(team, league, False)["reported"] is None
+    adjustment = margin_adjustment("nhl", edge, None)
+    assert describe(adjustment, "BOS", "NYR").startswith("BOS confirmed in goal: B 97% (")

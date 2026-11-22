@@ -410,3 +410,28 @@ def test_a_man_listed_out_gets_no_line_and_his_minutes_go_to_those_who_stay():
         r for r in plain if r["team_abbr"] == "BKN"
     ]
     assert all(r["params"]["boost"] == 1.0 for r in plain)
+
+
+def test_a_reported_starter_gets_a_line_though_he_sat_out_the_last_game():
+    diary, record = nba_diary(3)
+    rows = diary.player_games("nba")
+    averages = team_averages(diary.football_games("nba"), "nba")
+    slate = {
+        "game_id": "up",
+        "home": {"team_id": record.home.team_id, "abbreviation": "BOS"},
+        "away": {"team_id": record.away.team_id, "abbreviation": "BKN"},
+    }
+    kickoff = NOW + timedelta(hours=8)
+    # Take one man out of his side's last game: he has two games and did not play the third.
+    last = max(r["game_id"] for r in rows)
+    tatum = next(r for r in rows if r["name"] == "Jayson Tatum")["player_id"]
+    sat = [
+        {**r, "played": False, "stats": {}}
+        if r["player_id"] == tatum and r["game_id"] == last
+        else r
+        for r in rows
+    ]
+    without = project_game("nba", slate, kickoff, None, sat, averages, NOW)
+    assert not [r for r in without if r["player_id"] == tatum]
+    named = project_game("nba", slate, kickoff, None, sat, averages, NOW, None, {tatum})
+    assert [r for r in named if r["player_id"] == tatum and r["stat"] == "points"]

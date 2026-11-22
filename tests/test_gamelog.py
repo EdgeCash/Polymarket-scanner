@@ -962,6 +962,10 @@ class FakeDailyFeed:
         self.calls.append(("depth_chart", sport, team_id))
         return {"depthchart": []}
 
+    def starting_goalies(self):
+        self.calls.append(("starting_goalies",))
+        return getattr(self, "starters_page", "")
+
     def nhl_schedule(self, day):
         self.calls.append(("nhl_schedule", day))
         return getattr(self, "league_schedule", {"gameWeek": []})
@@ -1502,3 +1506,101 @@ def test_the_conference_flag_is_read_stored_and_asked_of_old_college_games_only(
     assert diary.football_games_stale("nfl") == []
     diary.mark_football_game_version("nfl", nfl_record.game_id, 2)
     assert diary.football_games_stale("nfl") == [nfl_record.game_id]
+
+
+def test_hockey_reads_the_reported_starting_goalie_and_takes_it_over_its_own_guess():
+    import json
+
+    settings = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nhl")
+    diary = Diary(":memory:")
+    feed = FakeDailyFeed()
+    record = parse_game_summary(load_fixture("espn_nhl_summary_final.json"), "nhl")
+    for i in range(6):
+        diary.store_football_game(
+            replace(record, game_id=f"g{i}", date=NBA_NOW - timedelta(days=12 - 2 * i)), NBA_NOW
+        )
+    yesterday = load_fixture("espn_nhl_day.json")
+    event = next(e for e in yesterday["events"] if e["id"] == record.game_id)
+    puck_drop = NBA_NOW + timedelta(hours=6)
+    feed.days[("nhl", "20261028")] = {
+        **yesterday,
+        "events": [scheduled_copy(event, "up-1", puck_drop)],
+    }
+
+    def page(home_goalie, home_status, away_goalie="Semyon Varlamov", away_status=None):
+        game = {
+            "dateGmt": puck_drop.strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+            "homeTeamAbbreviation": "NSH",
+            "awayTeamAbbreviation": "NYI",
+            "homeGoalieName": home_goalie,
+            "homeNewsStrengthName": home_status,
+            "homeNewsDetails": "Led the side out for warmups.",
+            "homeNewsSourceName": "A Beat Writer",
+            "awayGoalieName": away_goalie,
+            "awayNewsStrengthName": away_status,
+        }
+        data = {"props": {"pageProps": {"data": [game]}}}
+        return (
+            '<html><script id="__NEXT_DATA__" type="application/json">'
+            + json.dumps(data)
+            + "</script></html>"
+        )
+
+    log = GameLog(settings, diary, feed=feed, now=lambda: NBA_NOW)
+    # A man the log has never seen is confirmed for the home side: the usual goalie's
+    # chance falls to the 3% the report leaves, and the new man is rated at the league's rate.
+    feed.starters_page = page("Nobody Known", "Confirmed")
+    summary = log.refresh("nhl", NBA_NOW, budget=0)
+    assert summary.starters == 1 and feed.calls.count(("starting_goalies",)) == 1
+    extra = diary.football_upcoming_game("nhl", "up-1")["extra"]
+    assert extra["starters"]["home"]["name"] == "Nobody Known"
+    assert extra["starters"]["home"]["status"] == "confirmed"
+    assert extra["starters"]["home"]["source"] == "A Beat Writer"
+    assert extra["starters"]["away"] is None  # only the site's own projection: not used
+    in_goal = diary.projection("nhl", "up-1")["projection"]["raw"]["goalies"]
+    home = in_goal["home"]
+    assert home["reported"] == "confirmed" and in_goal["away"]["reported"] is None
+    assert [(g["name"], g["chance"]) for g in home["goalies"]] == [
+        ("Nobody Known", 0.97),
+        ("Juuse Saros", 0.03),
+    ]
+    assert home["goalies"][0]["player_id"] == "name:nobody known"
+    # Saros stopped 24 of 27 in the fixture, under the league's rate, so the unknown man
+    # at the league's rate is an edge for the home side.
+    assert home["edge"] > 0 and in_goal["margin"] == pytest.approx(home["edge"], abs=0.01)
+    # Within the half hour the page is not asked for again; after it, it is, and a
+    # change of report is taken up.
+    log.refresh("nhl", NBA_NOW + timedelta(minutes=15), budget=0)
+    assert feed.calls.count(("starting_goalies",)) == 1
+    feed.starters_page = page("Juuse Saros", "Likely")
+    later = NBA_NOW + timedelta(minutes=31)
+    # (A goalie new to the side but in the carry-over file is known by his own id there:
+    # the shipped file has last season's goalies, Saros among them.)
+    from scanner import goalies as goalie_model
+
+    assert "Juuse Saros" in goalie_model.career_names(2027).values()
+    assert log.refresh("nhl", later, budget=0).starters == 1
+    assert feed.calls.count(("starting_goalies",)) == 2
+    home = diary.projection("nhl", "up-1")["projection"]["raw"]["goalies"]["home"]
+    assert home["reported"] == "likely" and [g["chance"] for g in home["goalies"]] == [1.0]
+    assert home["edge"] == 0.0  # the usual man, and nobody else on record to share with
+    # The hourly summary keeps the report; a game outside the window asks for nothing.
+    log.refresh("nhl", NBA_NOW + timedelta(minutes=70), budget=0)
+    assert diary.football_upcoming_game("nhl", "up-1")["extra"]["starters"]["home"]["name"] == (
+        "Juuse Saros"
+    )
+    far = GameLog(settings, Diary(":memory:"), feed=FakeDailyFeed(), now=lambda: NBA_NOW)
+    far.feed.days[("nhl", "20261029")] = {
+        **yesterday,
+        "events": [scheduled_copy(event, "up-2", NBA_NOW + timedelta(hours=30))],
+    }
+    far.refresh("nhl", NBA_NOW, budget=0)
+    assert ("starting_goalies",) not in far.feed.calls
+    # Switched off, the page is never asked for and the guess stands.
+    off = load_settings(DATABASE_PATH=":memory:", GAMELOG_SPORTS="nhl", STARTERS_ENABLED=False)
+    quiet = FakeDailyFeed()
+    quiet.days, quiet.starters_page = feed.days, page("Nobody Known", "Confirmed")
+    GameLog(off, Diary(":memory:"), feed=quiet, now=lambda: NBA_NOW).refresh(
+        "nhl", NBA_NOW, budget=0
+    )
+    assert ("starting_goalies",) not in quiet.calls

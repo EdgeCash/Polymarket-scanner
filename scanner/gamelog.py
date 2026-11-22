@@ -42,6 +42,8 @@ from scanner.config import (
     ROSTER_FETCHES_PER_PASS,
     ROSTER_REFRESH_HOURS,
     SCRATCH_WINDOW_MINUTES,
+    STARTER_REFRESH_MINUTES,
+    STARTER_WINDOW_HOURS,
     Settings,
 )
 from scanner.diary import FOOTBALL_GAME_VERSION, Diary
@@ -1558,6 +1560,20 @@ class ScoreboardFeed:
     def depth_chart(self, sport: str, team_id: str) -> Any:
         return self._get(f"{SCOREBOARD_BASE}/{SPORTS[sport].path}/teams/{team_id}/depthcharts")
 
+    def starting_goalies(self) -> str:
+        """Daily Faceoff's starting-goalies page for today's slate, as text."""
+        from scanner.starters import STARTERS_URL
+
+        if self.request_count and self._gap > 0:
+            self._sleep(self._gap)
+        self.request_count += 1
+        try:
+            response = self._client.get(STARTERS_URL, follow_redirects=True)
+            response.raise_for_status()
+            return response.text
+        except httpx.HTTPError as exc:
+            raise GameLogError(f"{type(exc).__name__}: {exc}") from exc
+
     def nhl_schedule(self, day: str) -> Any:
         """The NHL's own schedule for the week of a day (YYYY-MM-DD), with its game ids."""
         from scanner.scratches import NHL_API
@@ -1599,6 +1615,7 @@ class RefreshSummary:
     rosters_pending: int = 0  # teams whose roster is due but waited for the next pass
     injured: int = 0  # upcoming games whose projection moved for an injury report
     scratches: int = 0  # games whose scratch list was read this pass
+    starters: int = 0  # upcoming games with a reported starting goalie on record
     errors: list[str] = field(default_factory=list)
 
 
@@ -1620,6 +1637,9 @@ class GameLog:
         # Each upcoming game's absentees' chance of missing it, found while projecting
         # and used for the player lines in the same refresh: {(sport, game_id): {id: chance}}.
         self._availability: dict[tuple[str, str], dict[str, float]] = {}
+        self._starters_read_at: datetime | None = None  # the starting-goalies page, last asked
+        # The men reported to start each upcoming game (hockey's goalies), for the lines.
+        self._starting: dict[tuple[str, str], set[str]] = {}
 
     # -- refresh --------------------------------------------------------------------
 
@@ -1666,6 +1686,7 @@ class GameLog:
         self._refresh_upcoming_summaries(sport, now, summary)
         self._refresh_rosters(sport, now, summary)
         self._refresh_scratches(sport, now, summary)
+        self._refresh_starters(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
@@ -1721,6 +1742,7 @@ class GameLog:
         self._refresh_upcoming_summaries(sport, now, summary)
         self._refresh_rosters(sport, now, summary)
         self._refresh_scratches(sport, now, summary)
+        self._refresh_starters(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
@@ -1815,15 +1837,20 @@ class GameLog:
             return None
         return sides
 
-    def _goalie_edges(self, sport, season, slate, rest, absent, rows, cache) -> dict | None:
-        """Each side's expected goaltending edge tonight (hockey), from the log's goalie lines."""
+    def _goalie_edges(
+        self, sport, season, slate, rest, absent, rows, cache, starters=None
+    ) -> dict | None:
+        """Each side's expected goaltending edge tonight (hockey), from the log's goalie lines
+        and, where there is one, the reported starter."""
         from scanner import goalies
+        from scanner.starters import named_starter
 
         if sport not in goalies.SPORTS or not rows:
             return None
         if "league" not in cache:
             cache["league"] = goalies.league_save_rate(rows)
             cache["career"] = goalies.career_for(season)
+            cache["career_names"] = goalies.career_names(season)
         out = {}
         for side in ("home", "away"):
             team_id = str(slate[side]["team_id"])
@@ -1834,8 +1861,13 @@ class GameLog:
                 for e in (absent or {}).get(side) or []
                 if e["weight"] >= goalies.ABSENT_FROM
             }
+            named = None
+            if self.settings.STARTERS_ENABLED:
+                # The side's own goalies first, then any goalie the carry-over file knows.
+                known = {**cache["career_names"], **cache[team_id].names}
+                named = named_starter((starters or {}).get(side), known)
             out[side] = goalies.expected_edge(
-                cache[team_id], cache["league"], rest.get(side) == 1, ruled_out
+                cache[team_id], cache["league"], rest.get(side) == 1, ruled_out, named
             )
         return out if out["home"] or out["away"] else None
 
@@ -1905,12 +1937,29 @@ class GameLog:
                     "conference_game": slate.get("conference_game"),
                     "injuries": absent,
                     "goalies": self._goalie_edges(
-                        sport, season, slate, rest, absent, player_rows, goalie_cache
+                        sport,
+                        season,
+                        slate,
+                        rest,
+                        absent,
+                        player_rows,
+                        goalie_cache,
+                        extra.get("starters"),
                     ),
                 },
             )
             if projection is None:
                 continue
+            # A reported starter settles the saves line: he gets it, the other goalies none.
+            self._starting[(sport, row["game_id"])] = set()
+            for side in ("home", "away"):
+                in_goal = ((projection["raw"].get("goalies") or {}).get(side)) or {}
+                if in_goal.get("reported"):
+                    for goalie in in_goal["goalies"]:
+                        self._availability[(sport, row["game_id"])][goalie["player_id"]] = round(
+                            1.0 - goalie["chance"], 2
+                        )
+                    self._starting[(sport, row["game_id"])].add(in_goal["goalies"][0]["player_id"])
             if (projection["raw"].get("injuries") or {}).get("margin"):
                 summary.injured += 1
             self.diary.upsert_projection(
@@ -1977,6 +2026,7 @@ class GameLog:
                 averages,
                 now,
                 self._availability.get((sport, row["game_id"])),
+                self._starting.get((sport, row["game_id"])),
             )
             summary.player_lines += self.diary.replace_player_projections(
                 sport, row["game_id"], lines, now
@@ -2056,10 +2106,53 @@ class GameLog:
             except GameLogError as exc:
                 summary.errors.append(f"{sport} upcoming {row['game_id']}: {exc}")
                 continue
-            kept = (row.get("extra") or {}).get("scratches")
-            if kept is not None:
-                extra["scratches"] = kept  # the league's list is read apart from the summary
+            for key in ("scratches", "starters"):  # read apart from the summary: kept
+                kept = (row.get("extra") or {}).get(key)
+                if kept is not None:
+                    extra[key] = kept
             self.diary.update_football_upcoming_extra(sport, row["game_id"], extra, now)
+
+    def _refresh_starters(self, sport, now, summary) -> None:
+        """Read the reported starting goalies for the day's games, at most every half hour."""
+        if sport != "nhl" or not self.settings.STARTERS_ENABLED:
+            return
+        from scanner.starters import match_starters, parse_starting_goalies
+
+        window = timedelta(hours=STARTER_WINDOW_HOURS)
+        due = [
+            row
+            for row in self.diary.football_upcoming(sport)
+            if now < datetime.fromisoformat(row["date"]) <= now + window
+        ]
+        summary.starters = sum(
+            1 for row in due if any(((row.get("extra") or {}).get("starters") or {}).values())
+        )
+        fresh = self._starters_read_at is not None and now - self._starters_read_at < timedelta(
+            minutes=STARTER_REFRESH_MINUTES
+        )
+        if not due or fresh:
+            return
+        self._starters_read_at = now
+        try:
+            listing = parse_starting_goalies(self.feed.starting_goalies())
+        except GameLogError as exc:
+            summary.errors.append(f"nhl starters: {exc}")
+            return
+        named = 0
+        for row in due:
+            slate = row["slate"]
+            found = match_starters(
+                listing,
+                slate["home"]["abbreviation"],
+                slate["away"]["abbreviation"],
+                datetime.fromisoformat(row["date"]),
+            )
+            if found is None:
+                continue
+            named += int(bool(found["home"] or found["away"]))
+            if found != ((row.get("extra") or {}).get("starters") or None):
+                self.diary.set_football_upcoming_extra_key(sport, row["game_id"], "starters", found)
+        summary.starters = named
 
     def _refresh_scratches(self, sport, now, summary) -> None:
         """Read the NHL's scratch list for each game about to start, once it is posted."""
