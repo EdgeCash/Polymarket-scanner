@@ -1,0 +1,551 @@
+{
+ "built": "2026-11-22",
+ "goalies": {
+  "2346": {
+   "name": "Marc-Andre Fleury",
+   "saves": 537.2,
+   "shots": 599.0
+  },
+  "2517899": {
+   "name": "Frederik Andersen",
+   "saves": 1083.0,
+   "shots": 1224.5
+  },
+  "2590824": {
+   "name": "John Gibson",
+   "saves": 1985.0,
+   "shots": 2202.2
+  },
+  "2590874": {
+   "name": "Jordan Binnington",
+   "saves": 1994.0,
+   "shots": 2238.5
+  },
+  "2610321": {
+   "name": "Darcy Kuemper",
+   "saves": 1893.2,
+   "shots": 2102.5
+  },
+  "2976847": {
+   "name": "Andrei Vasilevskiy",
+   "saves": 2475.8,
+   "shots": 2710.2
+  },
+  "3020225": {
+   "name": "Connor Hellebuyck",
+   "saves": 2607.2,
+   "shots": 2870.8
+  },
+  "3025540": {
+   "name": "Casey DeSmith",
+   "saves": 1207.0,
+   "shots": 1330.2
+  },
+  "3026526": {
+   "name": "Laurent Brossoit",
+   "saves": 161.8,
+   "shots": 178.0
+  },
+  "3036851": {
+   "name": "Anton Forsberg",
+   "saves": 1382.2,
+   "shots": 1527.2
+  },
+  "3037703": {
+   "name": "Antti Raanta",
+   "saves": 107.5,
+   "shots": 123.2
+  },
+  "3042020": {
+   "name": "Tristan Jarry",
+   "saves": 1476.5,
+   "shots": 1659.8
+  },
+  "3042057": {
+   "name": "Eric Comrie",
+   "saves": 887.5,
+   "shots": 991.0
+  },
+  "3042069": {
+   "name": "Spencer Martin",
+   "saves": 319.5,
+   "shots": 367.8
+  },
+  "3042084": {
+   "name": "Marcus Hogberg",
+   "saves": 152.0,
+   "shots": 174.5
+  },
+  "3042109": {
+   "name": "Juuse Saros",
+   "saves": 2670.0,
+   "shots": 2980.2
+  },
+  "3067313": {
+   "name": "Anthony Stolarz",
+   "saves": 1232.2,
+   "shots": 1356.5
+  },
+  "3067862": {
+   "name": "Matt Murray",
+   "saves": 119.5,
+   "shots": 131.0
+  },
+  "3069266": {
+   "name": "Joonas Korpisalo",
+   "saves": 1409.0,
+   "shots": 1578.0
+  },
+  "3069285": {
+   "name": "Linus Ullmark",
+   "saves": 1909.8,
+   "shots": 2122.8
+  },
+  "3095330": {
+   "name": "Pheonix Copley",
+   "saves": 68.5,
+   "shots": 78.2
+  },
+  "3095975": {
+   "name": "Charlie Lindgren",
+   "saves": 1296.5,
+   "shots": 1452.2
+  },
+  "3096217": {
+   "name": "Thatcher Demko",
+   "saves": 1058.0,
+   "shots": 1174.0
+  },
+  "3114994": {
+   "name": "Alex Nedeljkovic",
+   "saves": 1645.2,
+   "shots": 1835.8
+  },
+  "3114996": {
+   "name": "Vitek Vanecek",
+   "saves": 958.8,
+   "shots": 1083.5
+  },
+  "3115546": {
+   "name": "Jonas Johansson",
+   "saves": 1007.2,
+   "shots": 1135.0
+  },
+  "3151038": {
+   "name": "Elvis Merzlikins",
+   "saves": 1695.5,
+   "shots": 1907.0
+  },
+  "3151137": {
+   "name": "Ville Husso",
+   "saves": 745.5,
+   "shots": 841.0
+  },
+  "3151297": {
+   "name": "Igor Shesterkin",
+   "saves": 2461.0,
+   "shots": 2707.0
+  },
+  "3151341": {
+   "name": "Kaapo Kahkonen",
+   "saves": 263.8,
+   "shots": 294.8
+  },
+  "3151981": {
+   "name": "Ilya Sorokin",
+   "saves": 2568.8,
+   "shots": 2832.8
+  },
+  "3634": {
+   "name": "Jonathan Quick",
+   "saves": 1067.0,
+   "shots": 1192.2
+  },
+  "3654006": {
+   "name": "Alex Lyon",
+   "saves": 1503.5,
+   "shots": 1662.8
+  },
+  "3759": {
+   "name": "Semyon Varlamov",
+   "saves": 308.5,
+   "shots": 340.2
+  },
+  "3870": {
+   "name": "James Reimer",
+   "saves": 717.2,
+   "shots": 801.8
+  },
+  "3900505": {
+   "name": "Ilya Samsonov",
+   "saves": 576.8,
+   "shots": 647.8
+  },
+  "3904177": {
+   "name": "Mackenzie Blackwood",
+   "saves": 1860.2,
+   "shots": 2053.2
+  },
+  "3939714": {
+   "name": "Adin Hill",
+   "saves": 1319.5,
+   "shots": 1478.2
+  },
+  "3942065": {
+   "name": "Karel Vejmelka",
+   "saves": 2384.2,
+   "shots": 2652.8
+  },
+  "3942073": {
+   "name": "Joey Daccord",
+   "saves": 2212.0,
+   "shots": 2450.0
+  },
+  "3942459": {
+   "name": "Dan Vladar",
+   "saves": 1652.0,
+   "shots": 1831.5
+  },
+  "3942685": {
+   "name": "Ivan Fedotov",
+   "saves": 285.2,
+   "shots": 325.2
+  },
+  "3942714": {
+   "name": "Sam Montembeault",
+   "saves": 1605.5,
+   "shots": 1800.8
+  },
+  "4063288": {
+   "name": "David Rittich",
+   "saves": 1129.0,
+   "shots": 1260.8
+  },
+  "4063522": {
+   "name": "Connor Ingram",
+   "saves": 1263.2,
+   "shots": 1407.2
+  },
+  "4064582": {
+   "name": "Carter Hart",
+   "saves": 540.8,
+   "shots": 603.8
+  },
+  "4196914": {
+   "name": "Jake Oettinger",
+   "saves": 2314.5,
+   "shots": 2562.8
+  },
+  "4197165": {
+   "name": "Hunter Shepard",
+   "saves": 47.0,
+   "shots": 55.8
+  },
+  "4233889": {
+   "name": "Ukko-Pekka Luukkonen",
+   "saves": 1841.0,
+   "shots": 2042.5
+  },
+  "4239677": {
+   "name": "Alexandar Georgiev",
+   "saves": 975.2,
+   "shots": 1103.5
+  },
+  "4268767": {
+   "name": "Stuart Skinner",
+   "saves": 2070.0,
+   "shots": 2317.8
+  },
+  "4271212": {
+   "name": "Jiri Patera",
+   "saves": 76.8,
+   "shots": 89.0
+  },
+  "4271575": {
+   "name": "Joseph Woll",
+   "saves": 1824.5,
+   "shots": 2021.0
+  },
+  "4272674": {
+   "name": "Filip Gustavsson",
+   "saves": 2320.0,
+   "shots": 2560.2
+  },
+  "4272888": {
+   "name": "Logan Thompson",
+   "saves": 2275.2,
+   "shots": 2497.5
+  },
+  "4319911": {
+   "name": "Devin Cooley",
+   "saves": 811.8,
+   "shots": 895.0
+  },
+  "4341584": {
+   "name": "Kevin Lankinen",
+   "saves": 1885.0,
+   "shots": 2128.5
+  },
+  "4393408": {
+   "name": "Justus Annunen",
+   "saves": 1100.5,
+   "shots": 1221.5
+  },
+  "4565234": {
+   "name": "Spencer Knight",
+   "saves": 1884.0,
+   "shots": 2088.5
+  },
+  "4565259": {
+   "name": "Pyotr Kochetkov",
+   "saves": 930.8,
+   "shots": 1032.8
+  },
+  "4565260": {
+   "name": "Mads Sogaard",
+   "saves": 75.0,
+   "shots": 89.8
+  },
+  "4576894": {
+   "name": "Arturs Silovs",
+   "saves": 1027.0,
+   "shots": 1160.0
+  },
+  "4587557": {
+   "name": "Ivan Prosvetov",
+   "saves": 55.5,
+   "shots": 62.0
+  },
+  "4587815": {
+   "name": "Samuel Ersson",
+   "saves": 1444.0,
+   "shots": 1642.5
+  },
+  "4587836": {
+   "name": "Trent Miner",
+   "saves": 111.5,
+   "shots": 120.5
+  },
+  "4587845": {
+   "name": "Akira Schmid",
+   "saves": 850.8,
+   "shots": 950.2
+  },
+  "4587855": {
+   "name": "Cayden Primeau",
+   "saves": 337.8,
+   "shots": 387.8
+  },
+  "4587909": {
+   "name": "Joel Hofer",
+   "saves": 1673.2,
+   "shots": 1841.0
+  },
+  "4587952": {
+   "name": "Dustin Wolf",
+   "saves": 2209.8,
+   "shots": 2449.2
+  },
+  "4587994": {
+   "name": "Daniil Tarasov",
+   "saves": 1248.2,
+   "shots": 1396.0
+  },
+  "4588038": {
+   "name": "Magnus Chrona",
+   "saves": 56.2,
+   "shots": 65.5
+  },
+  "4588165": {
+   "name": "Lukas Dostal",
+   "saves": 2372.8,
+   "shots": 2653.0
+  },
+  "4697394": {
+   "name": "Yaroslav Askarov",
+   "saves": 1353.2,
+   "shots": 1528.2
+  },
+  "4697450": {
+   "name": "Drew Commesso",
+   "saves": 89.0,
+   "shots": 98.0
+  },
+  "4697455": {
+   "name": "Joel Blomqvist",
+   "saves": 188.0,
+   "shots": 212.5
+  },
+  "4697577": {
+   "name": "Artur Akhtyamov",
+   "saves": 71.0,
+   "shots": 81.0
+  },
+  "4697683": {
+   "name": "Nico Daws",
+   "saves": 259.5,
+   "shots": 286.0
+  },
+  "4697686": {
+   "name": "Jakub Dobes",
+   "saves": 1270.0,
+   "shots": 1407.0
+  },
+  "4697705": {
+   "name": "Dylan Garand",
+   "saves": 91.0,
+   "shots": 96.0
+  },
+  "4712036": {
+   "name": "Jeremy Swayman",
+   "saves": 2451.0,
+   "shots": 2711.5
+  },
+  "4736758": {
+   "name": "Colten Ellis",
+   "saves": 411.0,
+   "shots": 455.0
+  },
+  "4874737": {
+   "name": "Jesper Wallstedt",
+   "saves": 975.0,
+   "shots": 1067.2
+  },
+  "4894366": {
+   "name": "Jet Greaves",
+   "saves": 1630.2,
+   "shots": 1790.2
+  },
+  "4894487": {
+   "name": "Devon Levi",
+   "saves": 262.2,
+   "shots": 295.5
+  },
+  "4894703": {
+   "name": "Leevi Merilainen",
+   "saves": 529.5,
+   "shots": 604.5
+  },
+  "4894729": {
+   "name": "Arvid Soderblom",
+   "saves": 1376.2,
+   "shots": 1553.0
+  },
+  "4996097": {
+   "name": "Brandon Bussi",
+   "saves": 816.0,
+   "shots": 912.0
+  },
+  "5080225": {
+   "name": "Nikke Kokko",
+   "saves": 75.0,
+   "shots": 85.0
+  },
+  "5096": {
+   "name": "Martin Jones",
+   "saves": 129.5,
+   "shots": 143.5
+  },
+  "5104602": {
+   "name": "Clay Stevenson",
+   "saves": 109.5,
+   "shots": 120.0
+  },
+  "5111": {
+   "name": "Jake Allen",
+   "saves": 1547.2,
+   "shots": 1712.2
+  },
+  "5120237": {
+   "name": "Jaxson Stauber",
+   "saves": 70.5,
+   "shots": 79.0
+  },
+  "5144058": {
+   "name": "Georgi Romanov",
+   "saves": 103.2,
+   "shots": 117.0
+  },
+  "5174160": {
+   "name": "Dennis Hildeby",
+   "saves": 569.5,
+   "shots": 626.0
+  },
+  "5188331": {
+   "name": "Aleksei Kolosov",
+   "saves": 215.0,
+   "shots": 250.0
+  },
+  "5188366": {
+   "name": "Sergei Murashov",
+   "saves": 104.0,
+   "shots": 116.0
+  },
+  "5188437": {
+   "name": "Jacob Fowler",
+   "saves": 407.0,
+   "shots": 448.0
+  },
+  "5188534": {
+   "name": "Nikita Tolopilo",
+   "saves": 524.5,
+   "shots": 595.0
+  },
+  "5188581": {
+   "name": "Carl Lindbom",
+   "saves": 165.0,
+   "shots": 189.0
+  },
+  "5188656": {
+   "name": "Thomas Milic",
+   "saves": 54.0,
+   "shots": 62.0
+  },
+  "5382": {
+   "name": "Dustin Tokarski",
+   "saves": 59.5,
+   "shots": 66.0
+  },
+  "5452": {
+   "name": "Jacob Markstrom",
+   "saves": 1841.5,
+   "shots": 2064.8
+  },
+  "5524": {
+   "name": "Calvin Pickard",
+   "saves": 871.0,
+   "shots": 979.8
+  },
+  "5571": {
+   "name": "Sergei Bobrovsky",
+   "saves": 2086.2,
+   "shots": 2340.2
+  },
+  "5619": {
+   "name": "Petr Mrazek",
+   "saves": 1078.2,
+   "shots": 1211.0
+  },
+  "5622": {
+   "name": "Scott Wedgewood",
+   "saves": 1443.8,
+   "shots": 1576.0
+  },
+  "5657": {
+   "name": "Philipp Grubauer",
+   "saves": 1296.5,
+   "shots": 1441.8
+  },
+  "5734": {
+   "name": "Cam Talbot",
+   "saves": 1628.8,
+   "shots": 1818.5
+  }
+ },
+ "season": 2026,
+ "seasons": [
+  2024,
+  2025,
+  2026
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "gameInfo": {
+  "referees": [
+   {
+    "fullName": {
+     "default": "Furman South"
+    },
+    "sweaterNumber": 13
+   },
+   {
+    "fullName": {
+     "default": "Peter MacDougall"
+    },
+    "sweaterNumber": 38
+   }
+  ],
+  "linesmen": [
+   {
+    "fullName": {
+     "default": "Kilian McNamara"
+    },
+    "sweaterNumber": 93
+   },
+   {
+    "fullName": {
+     "default": "David Brisebois"
+    },
+    "sweaterNumber": 96
+   }
+  ],
+  "awayTeam": {
+   "headCoach": {
+    "default": "Mike Babcock"
+   },
+   "scratches": [
+    {
+     "id": 8476454,
+     "firstName": {
+      "default": "Ryan"
+     },
+     "lastName": {
+      "default": "Nugent-Hopkins"
+     }
+    },
+    {
+     "id": 8478013,
+     "firstName": {
+      "default": "Jake"
+     },
+     "lastName": {
+      "default": "Walman"
+     }
+    },
+    {
+     "id": 8479368,
+     "firstName": {
+      "default": "Max"
+     },
+     "lastName": {
+      "default": "Jones"
+     }
+    }
+   ]
+  },
+  "homeTeam": {
+   "headCoach": {
+    "default": "Rod Brind'Amour"
+   },
+   "scratches": [
+    {
+     "id": 8475235,
+     "firstName": {
+      "default": "Nicolas"
+     },
+     "lastName": {
+      "default": "Deslauriers"
+     }
+    },
+    {
+     "id": 8479976,
+     "firstName": {
+      "default": "Juuso"
+     },
+     "lastName": {
+      "default": "V\u00e4lim\u00e4ki",
+      "de": "Valimaki",
+      "es": "Valimaki",
+      "fr": "Valimaki"
+     }
+    },
+    {
+     "id": 8480829,
+     "firstName": {
+      "default": "Jesperi"
+     },
+     "lastName": {
+      "default": "Kotkaniemi"
+     }
+    }
+   ]
+  }
+ }
+}

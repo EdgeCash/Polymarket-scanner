@@ -1118,6 +1118,22 @@ class Diary:
                 (json.dumps(extra), _iso(at), sport, game_id),
             )
 
+    def set_football_upcoming_extra_key(self, sport: str, game_id: str, key: str, value) -> None:
+        """Set one key of an upcoming game's extras, leaving the rest and its fetch time."""
+        with self._lock:
+            row = self._conn.execute(
+                "SELECT extra FROM football_upcoming WHERE sport = ? AND game_id = ?",
+                (sport, game_id),
+            ).fetchone()
+            if row is None:
+                return
+            extra = json.loads(row["extra"] or "{}")
+            extra[key] = value
+            self._conn.execute(
+                "UPDATE football_upcoming SET extra = ? WHERE sport = ? AND game_id = ?",
+                (json.dumps(extra), sport, game_id),
+            )
+
     def delete_football_upcoming_before(self, sport: str, before: datetime) -> None:
         with self._lock:
             self._conn.execute(

@@ -1,0 +1,163 @@
+{
+ "gameWeek": [
+  {
+   "date": "2026-11-21",
+   "games": [
+    {
+     "id": 2026020359,
+     "startTimeUTC": "2026-11-21T18:00:00Z",
+     "gameState": "OFF",
+     "homeTeam": {
+      "abbrev": "CAR"
+     },
+     "awayTeam": {
+      "abbrev": "EDM"
+     }
+    },
+    {
+     "id": 2026020360,
+     "startTimeUTC": "2026-11-21T20:30:00Z",
+     "gameState": "OFF",
+     "homeTeam": {
+      "abbrev": "CGY"
+     },
+     "awayTeam": {
+      "abbrev": "CHI"
+     }
+    },
+    {
+     "id": 2026020361,
+     "startTimeUTC": "2026-11-21T23:00:00Z",
+     "gameState": "OFF",
+     "homeTeam": {
+      "abbrev": "FLA"
+     },
+     "awayTeam": {
+      "abbrev": "BUF"
+     }
+    },
+    {
+     "id": 2026020362,
+     "startTimeUTC": "2026-11-21T23:00:00Z",
+     "gameState": "OFF",
+     "homeTeam": {
+      "abbrev": "NSH"
+     },
+     "awayTeam": {
+      "abbrev": "PIT"
+     }
+    },
+    {
+     "id": 2026020363,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "BOS"
+     },
+     "awayTeam": {
+      "abbrev": "WSH"
+     }
+    },
+    {
+     "id": 2026020364,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "TOR"
+     },
+     "awayTeam": {
+      "abbrev": "CBJ"
+     }
+    },
+    {
+     "id": 2026020365,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "MTL"
+     },
+     "awayTeam": {
+      "abbrev": "PHI"
+     }
+    },
+    {
+     "id": 2026020366,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "OTT"
+     },
+     "awayTeam": {
+      "abbrev": "LAK"
+     }
+    },
+    {
+     "id": 2026020367,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "DET"
+     },
+     "awayTeam": {
+      "abbrev": "NYI"
+     }
+    },
+    {
+     "id": 2026020368,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "STL"
+     },
+     "awayTeam": {
+      "abbrev": "NJD"
+     }
+    },
+    {
+     "id": 2026020369,
+     "startTimeUTC": "2026-11-22T00:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "WPG"
+     },
+     "awayTeam": {
+      "abbrev": "VGK"
+     }
+    },
+    {
+     "id": 2026020370,
+     "startTimeUTC": "2026-11-22T02:00:00Z",
+     "gameState": "LIVE",
+     "homeTeam": {
+      "abbrev": "UTA"
+     },
+     "awayTeam": {
+      "abbrev": "ANA"
+     }
+    },
+    {
+     "id": 2026020371,
+     "startTimeUTC": "2026-11-22T03:00:00Z",
+     "gameState": "FUT",
+     "homeTeam": {
+      "abbrev": "VAN"
+     },
+     "awayTeam": {
+      "abbrev": "MIN"
+     }
+    },
+    {
+     "id": 2026020372,
+     "startTimeUTC": "2026-11-22T03:00:00Z",
+     "gameState": "FUT",
+     "homeTeam": {
+      "abbrev": "SJS"
+     },
+     "awayTeam": {
+      "abbrev": "SEA"
+     }
+    }
+   ]
+  }
+ ]
+}

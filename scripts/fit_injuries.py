@@ -44,7 +44,7 @@ from scanner.rest import days_since_last  # noqa: E402
 FEATURES = {
     "nba": ("production",),
     "cbb": ("production",),
-    "nhl": ("production", "goalie"),
+    "nhl": ("production",),  # the goalie is fit by scripts/fit_goalies.py
     "nfl": ("quarterback", "skill_yards"),
     "cfb": ("quarterback", "skill_yards"),
 }
@@ -56,6 +56,8 @@ def load(raw: Path, sport: str) -> list[GameRecord]:
         with open(path, encoding="utf-8") as fh:
             for line in fh:
                 g = json.loads(line)
+                if g.get("season_type") not in (None, 2):
+                    continue  # the bulk files carry the playoffs: the fits are on the season
                 records.append(
                     GameRecord(
                         sport=g["sport"],

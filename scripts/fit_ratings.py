@@ -62,7 +62,7 @@ GRIDS: dict[str, dict[str, list[dict]]] = {
         for sport, grid in {
             "nfl": (None, 16, 10, 6),
             "cfb": (None, 12, 8, 5),
-            "nba": (None, 60, 40, 25, 15),
+            "nba": (None, 40, 25, 15),
             "cbb": (None, 30, 20, 12),
             "nhl": (None, 60, 40, 25, 15),
         }.items()

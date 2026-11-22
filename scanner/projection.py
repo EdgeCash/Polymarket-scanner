@@ -23,6 +23,7 @@ from statistics import NormalDist
 
 from scanner.books import BookLine
 from scanner.gamelog import GameRecord
+from scanner.goalies import margin_adjustment as goalie_adjustment
 from scanner.grid import margin_for_win, win_chance
 from scanner.injuries import margin_adjustment as injury_adjustment
 from scanner.rest import margin_adjustment
@@ -126,7 +127,13 @@ TUNING = {
     # Basketball: points alone, and a home edge that has shrunk to a couple of points
     # (home sides fell 0.44 a game short of 2.5 over 4,730 games, 2021-22 to 2024-25).
     # The NBA's early-season miss is no wider than its late one (resting and tanking
-    # widen the spring), so no per-game widening is fit.
+    # widen the spring), so no per-game widening is fit. An old game fades: one 25 of
+    # the team's games ago counts half (scripts/fit_ratings.py on 6,163 games over five
+    # seasons, each projected as the scanner would have seen it: the margin's miss 13.84
+    # to 13.79 on the first four and 14.56 to 14.50 on the last, the total's 18.86 to
+    # 18.60 and 19.07 to 18.97; the league scores more before the new year than after
+    # it, and a team is not in March what it was in November). A cap on one game's
+    # margin did nothing.
     "nba": SportTuning(
         hfa=2.0,
         sigma=14.0,
@@ -137,6 +144,7 @@ TUNING = {
         performance_sd=0.0,
         book_sigma=12.5,
         book_error=2.0,
+        half_life=25.0,
     ),
     # College: a bigger home edge, two halves, and a wider spread of totals than the
     # shorter game would suggest, since the teams range from Duke to a visitor playing up.
@@ -462,11 +470,13 @@ def project(
     """One game's projection, raw and blended with the book, or None without ratings.
 
     ``conditions`` is the game's ``venue`` and ``weather`` as the log has them, each
-    side's ``rest`` in days and each side's ``injuries`` (its absentees with their
-    cost, from scanner.injuries); in football the wind moves the raw total
-    (scanner.weather), split evenly between the sides, in basketball and hockey a
-    back-to-back moves the raw margin (scanner.rest), and the men listed out move
-    the raw margin in every sport with a report, all before the blend.
+    side's ``rest`` in days, each side's ``injuries`` (its absentees with their
+    cost, from scanner.injuries) and in hockey each side's ``goalies`` (its expected
+    goaltending edge tonight, from scanner.goalies); in football the wind and rain
+    move the raw total (scanner.weather), split evenly between the sides, in
+    basketball and hockey a back-to-back moves the raw margin (scanner.rest), the
+    men listed out move the raw margin in every sport with a report, and the likely
+    goalie moves what the other side scores, all before the blend.
     """
     home, away = ratings.team(home_id), ratings.team(away_id)
     if home is None or away is None:
@@ -500,6 +510,15 @@ def project(
     if injuries:
         home_points -= injuries["home_loss"]
         away_points -= injuries["away_loss"]
+    goalies = None
+    if conditions and conditions.get("goalies"):
+        goalies = goalie_adjustment(
+            ratings.sport, conditions["goalies"].get("home"), conditions["goalies"].get("away")
+        )
+    if goalies:
+        # A better goalie than the side's usual takes goals off the other side's score.
+        away_points -= goalies["home_edge"]
+        home_points -= goalies["away_edge"]
     margin = home_points - away_points
     total = home_points + away_points
     games_used = min(home["games"], away["games"])
@@ -529,6 +548,8 @@ def project(
         raw["rest"] = rest
     if injuries:
         raw["injuries"] = injuries
+    if goalies:
+        raw["goalies"] = goalies
     book_parts = _book_parts(book, ratings.sport)
 
     def blend_of(key: str) -> float:
@@ -653,17 +674,19 @@ def grade(projection: dict, final_home: int, final_away: int, close: BookLine | 
         if ou and close_parts.get("total") is not None:
             moved = close_parts["total"] - book["total"]
             clv["total"] = moved if ou["side"] == "over" else -moved
-    injuries = None
-    listed = raw.get("injuries") or {}
-    if raw.get("margin") is not None and (listed.get("home_loss") or listed.get("away_loss")):
-        # The same raw margin had the absentees' cost put back: what the model would have
-        # said without the injury report, so the scorecard can tell whether it helped.
-        without = raw["margin"] - listed["margin"]
-        injuries = {
-            "margin": listed["margin"],
-            "error_with": abs(raw["margin"] - actual_margin),
-            "error_without": abs(without - actual_margin),
-        }
+    # For each adjustment that moved this game's margin, the same raw margin with the
+    # move taken back out: what the model would have said without it, so the scorecard
+    # can tell whether it helped.
+    moved = {}
+    for name in ("injuries", "goalies"):
+        move = (raw.get(name) or {}).get("margin")
+        if raw.get("margin") is not None and move:
+            moved[name] = {
+                "margin": move,
+                "error_with": abs(raw["margin"] - actual_margin),
+                "error_without": abs(raw["margin"] - move - actual_margin),
+            }
+    injuries, goalies = moved.get("injuries"), moved.get("goalies")
     return {
         "final": {"home": final_home, "away": final_away},
         "margin_error": error("margin", actual_margin),
@@ -673,6 +696,7 @@ def grade(projection: dict, final_home: int, final_away: int, close: BookLine | 
         "ou": ou,
         "clv": clv,
         "injuries": injuries,
+        "goalies": goalies,
     }
 
 
@@ -705,6 +729,7 @@ def summarise(grades: list[dict], sport: str | None = None) -> dict:
     closed = [v for v in clv_margin if v is not None]
     moved = [v for v in closed if v != 0]
     injured = [g["injuries"] for g in grades if g.get("injuries")]
+    in_goal = [g["goalies"] for g in grades if g.get("goalies")]
     return {
         "graded": len(grades),
         # Games whose projection moved for an injury report: the raw margin's miss with
@@ -713,6 +738,12 @@ def summarise(grades: list[dict], sport: str | None = None) -> dict:
             "games": len(injured),
             "with": _mean([i["error_with"] for i in injured]),
             "without": _mean([i["error_without"] for i in injured]),
+        },
+        # The same for the games moved by who was likely in goal (hockey).
+        "goalies": {
+            "games": len(in_goal),
+            "with": _mean([i["error_with"] for i in in_goal]),
+            "without": _mean([i["error_without"] for i in in_goal]),
         },
         "buckets": [f"{b:g}" for b in buckets],
         "margin_error": {s: _mean([g["margin_error"].get(s) for g in grades]) for s in sources},

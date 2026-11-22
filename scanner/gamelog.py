@@ -41,6 +41,7 @@ from scanner.config import (
     PLAYER_REFRESH_MINUTES,
     ROSTER_FETCHES_PER_PASS,
     ROSTER_REFRESH_HOURS,
+    SCRATCH_WINDOW_MINUTES,
     Settings,
 )
 from scanner.diary import FOOTBALL_GAME_VERSION, Diary
@@ -1547,6 +1548,18 @@ class ScoreboardFeed:
     def depth_chart(self, sport: str, team_id: str) -> Any:
         return self._get(f"{SCOREBOARD_BASE}/{SPORTS[sport].path}/teams/{team_id}/depthcharts")
 
+    def nhl_schedule(self, day: str) -> Any:
+        """The NHL's own schedule for the week of a day (YYYY-MM-DD), with its game ids."""
+        from scanner.scratches import NHL_API
+
+        return self._get(f"{NHL_API}/schedule/{day}")
+
+    def nhl_right_rail(self, game_id: str) -> Any:
+        """The NHL's pre-game sheet for one of its games: scratches and officials."""
+        from scanner.scratches import NHL_API
+
+        return self._get(f"{NHL_API}/gamecenter/{game_id}/right-rail")
+
 
 DEPTH_CHART_SPORTS = ("nfl",)  # ESPN publishes a depth chart for these
 
@@ -1575,6 +1588,7 @@ class RefreshSummary:
     rosters: int = 0  # team rosters (and depth charts) read this pass
     rosters_pending: int = 0  # teams whose roster is due but waited for the next pass
     injured: int = 0  # upcoming games whose projection moved for an injury report
+    scratches: int = 0  # games whose scratch list was read this pass
     errors: list[str] = field(default_factory=list)
 
 
@@ -1641,6 +1655,7 @@ class GameLog:
         self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
         self._refresh_rosters(sport, now, summary)
+        self._refresh_scratches(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
@@ -1695,6 +1710,7 @@ class GameLog:
         self._reread_stale(sport, now, budget, summary)
         self._refresh_upcoming_summaries(sport, now, summary)
         self._refresh_rosters(sport, now, summary)
+        self._refresh_scratches(sport, now, summary)
         if self.settings.PROJECTION_ENABLED:
             self._project(sport, season, now, summary)
         return summary
@@ -1753,10 +1769,12 @@ class GameLog:
         """Both sides' likely absentees for one upcoming game, or None when nothing is known."""
         from scanner.injuries import SPORTS as INJURY_SPORTS
         from scanner.injuries import SideContext, absentees
+        from scanner.scratches import as_report
 
         if not self.settings.INJURIES_ENABLED or sport not in INJURY_SPORTS:
             return None
         report = extra.get("injuries") if isinstance(extra.get("injuries"), dict) else None
+        scratched = extra.get("scratches") if isinstance(extra.get("scratches"), dict) else {}
         sides: dict[str, list[dict]] = {}
         for side in ("home", "away"):
             team_id = str(slate[side]["team_id"])
@@ -1777,10 +1795,39 @@ class GameLog:
                     if r.get("depth_rank") is not None
                 }
                 context = contexts[team_id] = SideContext.build(team_id, rows, roster, depth)
-            sides[side] = absentees(sport, (report or {}).get(side), context)
+            listed = list((report or {}).get(side) or [])
+            # The league's scratch list is the last word: a scratched man is out in full.
+            scratches = as_report(scratched.get(side) or [], context.names, context.positions)
+            out_ids = {e["player_id"] for e in scratches}
+            listed = [e for e in listed if e["player_id"] not in out_ids] + scratches
+            sides[side] = absentees(sport, listed, context)
         if not sides["home"] and not sides["away"]:
             return None
         return sides
+
+    def _goalie_edges(self, sport, season, slate, rest, absent, rows, cache) -> dict | None:
+        """Each side's expected goaltending edge tonight (hockey), from the log's goalie lines."""
+        from scanner import goalies
+
+        if sport not in goalies.SPORTS or not rows:
+            return None
+        if "league" not in cache:
+            cache["league"] = goalies.league_save_rate(rows)
+            cache["career"] = goalies.career_for(season)
+        out = {}
+        for side in ("home", "away"):
+            team_id = str(slate[side]["team_id"])
+            if team_id not in cache:
+                cache[team_id] = goalies.team_goalies(rows, team_id, cache["career"])
+            ruled_out = {
+                e["player_id"]
+                for e in (absent or {}).get(side) or []
+                if e["weight"] >= goalies.ABSENT_FROM
+            }
+            out[side] = goalies.expected_edge(
+                cache[team_id], cache["league"], rest.get(side) == 1, ruled_out
+            )
+        return out if out["home"] or out["away"] else None
 
     def _project(self, sport, season, now, summary) -> None:
         """Fit the model to the log and write a projection for every upcoming game.
@@ -1797,10 +1844,12 @@ class GameLog:
         records = self.diary.football_games(sport, season)
         ratings = fit(records, sport, priors_for(sport, season))
         upcoming = self.diary.football_upcoming(sport)
-        player_rows = (
-            self.diary.player_games(sport, season) if self.settings.INJURIES_ENABLED else []
-        )
+        from scanner import goalies
+
+        needs_rows = self.settings.INJURIES_ENABLED or sport in goalies.SPORTS
+        player_rows = self.diary.player_games(sport, season) if needs_rows else []
         contexts: dict = {}
+        goalie_cache: dict = {}
         # Every game on the season's schedule by team, played or to come, so each side's
         # rest can be counted (a back-to-back moves basketball's and hockey's margins).
         schedule: dict[str, list[datetime]] = {}
@@ -1844,6 +1893,9 @@ class GameLog:
                     "weather": extra.get("weather"),
                     "rest": rest,
                     "injuries": absent,
+                    "goalies": self._goalie_edges(
+                        sport, season, slate, rest, absent, player_rows, goalie_cache
+                    ),
                 },
             )
             if projection is None:
@@ -1993,7 +2045,48 @@ class GameLog:
             except GameLogError as exc:
                 summary.errors.append(f"{sport} upcoming {row['game_id']}: {exc}")
                 continue
+            kept = (row.get("extra") or {}).get("scratches")
+            if kept is not None:
+                extra["scratches"] = kept  # the league's list is read apart from the summary
             self.diary.update_football_upcoming_extra(sport, row["game_id"], extra, now)
+
+    def _refresh_scratches(self, sport, now, summary) -> None:
+        """Read the NHL's scratch list for each game about to start, once it is posted."""
+        if sport != "nhl" or not (
+            self.settings.SCRATCHES_ENABLED and self.settings.INJURIES_ENABLED
+        ):
+            return
+        from scanner.scratches import match_game, parse_nhl_schedule, parse_scratches
+
+        window = timedelta(minutes=SCRATCH_WINDOW_MINUTES)
+        schedules: dict[str, list[dict]] = {}
+        for row in self.diary.football_upcoming(sport):
+            kickoff = datetime.fromisoformat(row["date"])
+            if not (now < kickoff <= now + window) or (row.get("extra") or {}).get("scratches"):
+                continue
+            day = kickoff.astimezone(ESPN_ZONE).strftime("%Y-%m-%d")
+            try:
+                if day not in schedules:
+                    schedules[day] = parse_nhl_schedule(self.feed.nhl_schedule(day))
+                slate = row["slate"]
+                league_id = match_game(
+                    schedules[day],
+                    slate["home"]["abbreviation"],
+                    slate["away"]["abbreviation"],
+                    kickoff,
+                )
+                if league_id is None:
+                    continue
+                posted = parse_scratches(self.feed.nhl_right_rail(league_id))
+            except GameLogError as exc:
+                summary.errors.append(f"nhl scratches {row['game_id']}: {exc}")
+                continue
+            if posted is None:
+                continue  # not posted yet: the next pass asks again
+            self.diary.set_football_upcoming_extra_key(
+                sport, row["game_id"], "scratches", {**posted, "read_at": now.isoformat()}
+            )
+            summary.scratches += 1
 
     def refresh_all(self, now: datetime | None = None) -> list[RefreshSummary]:
         now = now or self._now()

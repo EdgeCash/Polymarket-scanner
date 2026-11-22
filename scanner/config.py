@@ -75,6 +75,7 @@ PLAYER_MAX_PMF = 1e-6  # the tail of a stored distribution is cut below this pro
 ROSTER_REFRESH_HOURS = 24.0  # how often a team's roster (and depth chart) is read again
 ROSTER_FETCHES_PER_PASS = 12  # teams whose roster is read in one pass, nearest game first
 ROSTER_SPORT_KEYS = ("nfl", "nba", "nhl")  # sports whose rosters and injury reports ESPN carries
+SCRATCH_WINDOW_MINUTES = 50.0  # the NHL's scratch list is asked for this close to puck drop
 SECRET_FIELDS = ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "STATUS_TOKEN")
 
 
@@ -165,6 +166,9 @@ class Settings(BaseSettings):
     INJURIES_ENABLED: bool = True
     ROSTERS_ENABLED: bool = True
     ROSTER_SPORTS: str = ",".join(ROSTER_SPORT_KEYS)
+    # The NHL's own scratch list, read from the league's API in the last minutes before
+    # a game: the men who will not dress join the injury report as out.
+    SCRATCHES_ENABLED: bool = True
     CARD_ENABLED: bool = True
     CARD_PICKS: int = Field(5, ge=1, le=20)
     CARD_LOCK_TIME: str = "10:00"

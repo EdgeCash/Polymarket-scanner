@@ -169,26 +169,23 @@ def test_a_basketball_absentee_costs_his_production_above_a_replacement_scaled_b
     assert absentees("mlb", report, context) == []
 
 
-def test_hockey_counts_skaters_points_and_the_starting_goalie():
+def test_hockey_counts_skaters_points_and_leaves_the_goalie_to_the_goalie_model():
     rows = lines(
         "BOS",
         {
             "star": [{"goals": 0.6, "assists": 0.8, "toi": 20 * 60}] * 10,
             "grinder": [{"goals": 0.1, "assists": 0.1, "toi": 11 * 60}] * 10,
             "starter_g": [{"saves": 28, "toi": 60 * 60}] * 8 + [None] * 2,
-            "backup_g": [None] * 8 + [{"saves": 25, "toi": 60 * 60}] * 2,
         },
     )
     for row in rows:
         if row["player_id"].endswith("_g"):
             row["position"] = "G"
     context = SideContext.build("BOS", rows, [], {})
-    assert context.goalie_one() == "starter_g"
     report = [
         {"player_id": "star", "name": "Star", "position": "C", "status": "out"},
         {"player_id": "grinder", "name": "Grinder", "position": "LW", "status": "out"},
         {"player_id": "starter_g", "name": "Starter", "position": "G", "status": "injured_reserve"},
-        {"player_id": "backup_g", "name": "Backup", "position": "G", "status": "out"},
     ]
     out = {e["player_id"]: e for e in absentees("nhl", report, context)}
     rule = RULES["nhl"]
@@ -197,9 +194,9 @@ def test_hockey_counts_skaters_points_and_the_starting_goalie():
         rule.coefficients["production"] * (production - rule.replacement), abs=0.01
     )
     assert out["grinder"]["cost"] == 0.0
-    assert out["starter_g"]["units"] == {"goalie": 1.0}
-    assert out["starter_g"]["cost"] == pytest.approx(rule.coefficients["goalie"] * 0.8, abs=0.01)
-    assert out["backup_g"]["units"] == {"goalie": 0.0} and out["backup_g"]["cost"] == 0.0
+    # The goalie is on the list (so the goalie model can rule him out) at no cost here.
+    assert out["starter_g"]["units"] == {} and out["starter_g"]["cost"] == 0.0
+    assert out["starter_g"]["weight"] == 1.0 and availability(list(out.values()))["starter_g"] == 1
 
 
 def test_football_counts_the_quarterback_skill_yards_and_other_starters():
